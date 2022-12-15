@@ -14,14 +14,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/style.css" type="text/css">
 
     <!-- 부트스트랩 아이콘 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -884,15 +884,16 @@
         }
     </script>
 
+
     <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/mixitup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+    <script src="resources/js/jquery-3.3.1.min.js"></script>
+    <script src="resources/js/bootstrap.min.js"></script>
+    <script src="resources/js/jquery.nice-select.min.js"></script>
+    <script src="resources/js/jquery-ui.min.js"></script>
+    <script src="resources/js/jquery.slicknav.js"></script>
+    <script src="resources/js/mixitup.min.js"></script>
+    <script src="resources/js/owl.carousel.min.js"></script>
+    <script src="resources/js/main.js"></script>
 
 
 </body>
