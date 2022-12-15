@@ -37,6 +37,8 @@
 
 </head>
 <body>
+	<c:set value="${ pageContext.servletContext.contextPath }" var="contextPath" scope="application"/>
+
     <!-- Header Section Begin -->
     <header class="header">
         <div class="container">
