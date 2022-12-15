@@ -1,0 +1,241 @@
+/*boardList*/
+
+.fa-heart{
+    color: crimson;
+}
+.fa-magnifying-glass {
+    margin-top: 10px;
+    color: #24E082;
+}
+.fa-comment-o {
+    color: #24E082; 
+}
+.fa-calendar-o{
+    color: #24E082; 
+}
+.blog__btn:hover{
+    background-color: #24E082;
+    color: white;
+    border-style: none;
+
+}
+
+
+
+/*boardDetail*/
+#boardTitle{
+    text-align: center;
+}
+.bi-heart{
+    margin-top: 10px;
+    color: crimson;
+}
+.fa-eye{
+    margin-top: 15px;
+    color: #24E082;
+}
+.bi-chat-dots{
+    color: #24E082;
+}
+.replyComment{
+    margin-left: 150px;
+}
+#replyContent{
+    text-align: center;
+}
+#replyTextarea{
+    margin-left: 40px;
+    width: 70%;
+    height: 3.25em;
+    resize: none;
+}
+#replyTextarea:hover{
+    border:2px solid #24E082;
+}
+
+#replySubmit{
+    margin-top: -45px;
+}
+
+/*boardWrite*/
+#fileUpload {
+    visibility: hidden;
+}
+#addFile{
+    margin-left: 630px;
+    margin-top: -40px;
+    margin-bottom: 10px;
+}
+
+.blog__details__widget{
+    float: left;
+}
+#boardWriteBtn{
+    margin-left: 310px;
+    margin-top: 20px;
+
+}
+
+#boardContent{
+    width: 100%;
+    height: 1000px;
+    resize: none;
+}
+
+
+/*해시*/  
+#tag-list{
+    padding: 16px 0;
+  }
+  
+  #tag-list > li {
+    display: inline-block;
+    margin: 0 5px;
+    font-size: 14px;
+    letter-spacing: -.5px;
+  }
+  
+  #tag{
+    height: 37px;
+    margin-top: -30px;
+    width: 140px;
+  }
+  
+  #tag-list li.tag-item {
+    padding: 4px 8px;
+    border: 1px solid #24E082;
+    color: #24E082;
+  }
+  
+  #tag-list li:hover {
+    cursor: pointer;
+    background-color: #24E082;
+    color: aliceblue;
+  }
+  
+  .del-btn {
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+
+  #tag-list{
+    list-style: none;
+  }
+  
+
+/*이벤트*/
+  
+.eventDiv{
+    width: 100%;
+}
+
+.shadow-lg {
+    -webkit-box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.175) !important;
+    box-shadow: 0 1rem 4rem rgba(0, 0, 0, 0.175) !important;
+}
+
+.text-primary {
+    color: #24E082 !important;
+}
+#eventFirst{
+    margin-top: 100px;
+}
+.mt-xl-6{
+    background-color: #ffc824;
+    border: none;
+}
+.mt-xl-6:hover{
+    border: 1px solid #ffc824;
+    background: white;
+    color: #ffc824;
+}
+#eventTitle{
+    text-align: center;
+}
+/*출석이벤트*/
+
+.attendance{
+    text-align: center;
+}
+
+#eventAttendanceBtn{
+    text-align: center;
+}
+.btn-3d.purple:hover {background-color: #D19ECB;}
+.btn-3d.purple {
+    background-color: #cb99c5;
+    box-shadow: 0 0 0 1px #cb99c5 inset,
+          0 0 0 2px rgba(255,255,255,0.15) inset,
+          0 8px 0 0 rgba(189, 142, 183, .7),
+          0 8px 0 1px rgba(0,0,0,.4),
+          0 8px 8px 1px rgba(0,0,0,0.5);
+  }
+  .btn-3d.purple:active {
+    box-shadow: 0 0 0 1px #cb99c5 inset,
+          0 0 0 2px rgba(255,255,255,0.15) inset,
+          0 0 0 1px rgba(0,0,0,0.4);
+  }
+  
+
+/*댓글이벤트*/
+
+#eventReplyBtn{
+    text-align: center;
+}
+.btn-3d {
+    position: relative;
+    display: inline-block;
+    font-size: 22px;
+    padding: 20px 60px;
+    color: white;
+    margin: 20px 10px 10px;
+    border-radius: 6px;
+    text-align: center;
+    transition: top .01s linear;
+    text-shadow: 0 1px 0 rgba(0,0,0,0.15);
+}
+.btn-3d.red:hover    {background-color: #e74c3c;}
+.btn-3d:active {
+    top: 9px;
+  }
+.btn-3d.red {
+    background-color: #e74c3c;
+    box-shadow: 0 0 0 1px #c63702 inset,
+          0 0 0 2px rgba(255,255,255,0.15) inset,
+          0 8px 0 0 #C24032,
+          0 8px 0 1px rgba(0,0,0,0.4),
+          0 8px 8px 1px rgba(0,0,0,0.5);
+  }
+.btn-3d.red:active {
+    box-shadow: 0 0 0 1px #c63702 inset,
+          0 0 0 2px rgba(255,255,255,0.15) inset,
+          0 0 0 1px rgba(0,0,0,0.4);
+  }
+
+/*리뷰이벤트*/
+
+#eventReviewBtn{
+    text-align: center;
+}
+
+.btn-3d.yellow:hover {background-color: #F0D264;}
+.btn-3d.yellow {
+    background-color: #F0D264;
+    box-shadow: 0 0 0 1px #F0D264 inset,
+          0 0 0 2px rgba(255,255,255,0.15) inset,
+          0 8px 0 0 rgba(196, 172, 83, .7),
+          0 8px 0 1px rgba(0,0,0,.4),
+          0 8px 8px 1px rgba(0,0,0,0.5);
+  }
+  .btn-3d.yellow:active {
+    box-shadow: 0 0 0 1px #F0D264 inset,
+          0 0 0 2px rgba(255,255,255,0.15) inset,
+          0 0 0 1px rgba(0,0,0,0.4);
+  }
+  
+  /*생일이벤트*/
+#eventBirthdayBtn{
+    text-align: center;
+}
