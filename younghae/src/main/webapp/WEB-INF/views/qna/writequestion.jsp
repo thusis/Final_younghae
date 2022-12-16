@@ -9,12 +9,12 @@
 <title>질문게시판 - 질문하기</title>
 
     <!--내가만든 css-->
-    <link rel="stylesheet" href="css/bn_style.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 	
 </head>
 <body>
 
-	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
+	<jsp:include page="../common/topmenubar.jsp"/>
 	
 	<!-- =================================전문가 섹션=========================================== -->
         <section class="bn_pro">
@@ -30,7 +30,7 @@
                             </div>
 
                             <div class="col-3 align-self-center">
-                                <img src="img/pro_profile1.png" class="bn_pro-profile" alt="...">
+                                <img src="resources/img/pro_profile1.png" class="bn_pro-profile" alt="...">
                             </div>
                             <div class="col-2 align-self-center">
                                 <div class="bn_pro-icon"><i class="bi bi-list-ul"></i></div>
@@ -48,7 +48,7 @@
                             </div>
 
                             <div class="col-3 align-self-center">
-                                <img src="img/pro_profile2.png" class="bn_pro-profile" alt="...">
+                                <img src="resources/img/pro_profile2.png" class="bn_pro-profile" alt="...">
                             </div>
                             <div class="col-2 align-self-center">
                                 <div class="bn_pro-icon"><i class="bi bi-list-ul"></i></div>
@@ -70,7 +70,7 @@
                                 </div>
 
                                 <div class="col-4 align-self-center">
-                                    <img src="img/pro_profile1.png" class="bn_pro-profile" alt="...">
+                                    <img src="resources/img/pro_profile1.png" class="bn_pro-profile" alt="...">
                                 </div>
                             </div>
                             <br>
@@ -97,7 +97,7 @@
                                 </div>
 
                                 <div class="col-4 align-self-center">
-                                    <img src="img/pro_profile2.png" class="bn_pro-profile" alt="...">
+                                    <img src="resources/img/pro_profile2.png" class="bn_pro-profile" alt="...">
                                 </div>
                             </div>
                             <br>

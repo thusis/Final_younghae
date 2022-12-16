@@ -4,6 +4,13 @@
 <html lang="ko">
 
 <head>
+<meta charset="UTF-8">
+<meta name="description" content="Ogani Template">
+<meta name="keywords" content="Ogani, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>나의 주문</title>
+<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 <style>
 .bn_index ul li {
 	list-style: none;
@@ -25,7 +32,7 @@
 	left: 0;
 	top: 0;
 	height: 0;
-	width: 370px;
+	width: 0px;
 	background: #ebebeb;
 	content: "";
 }
@@ -35,18 +42,14 @@
 	left: 0;
 	top: 0;
 	height: 0;
-	width: 370px;
+	width: 0px;
 	background: #ebebeb;
 	content: "";
 }
 </style>
-    <script src="${contextPath }/js/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
-	<nav>
-		<jsp:include page="../common/topmenubar.jsp" flush="true" />
-	</nav>
 	<div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
 		<ul>
 			<li><a href="#">마이페이지</a></li>

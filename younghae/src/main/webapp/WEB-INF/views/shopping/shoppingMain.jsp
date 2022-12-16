@@ -11,22 +11,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Ogani | Template</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-
-    <!-- 부트스트랩 아이콘 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-
     <style>
         .bn_nav1{
             background-color: #24E082;
@@ -212,78 +196,7 @@
 </head>
 
 <body>
-
-     <!-- Header Section Begin -->
-     <header class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-1">
-                    <div class="header__logo">
-                        <a href="#"><img src="img/logo.svg" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg">
-                    <div class="input-group mt-3">
-                        <select class="form-select form-select-sm bn_navbar-select-input">
-                            <option value="전체">전체</option>
-                            <option value="영양제">영양제</option>
-                            <option value="브랜드">브랜드</option>
-                        </select>
-                        <input type="text" class="form-control" id="bn_navbar-search-input" placeholder="영양제 이름이나 브랜드명 입력" aria-label="search" aria-describedby="search">
-                        <button class="btn bn_btn_search"><i class="bi bi-search"></i></button>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#"><p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i class="fa fa-shopping-bag"></i><span>1</span></a></li>
-                            <li><a href="#"><p style="font-size: 12px; display: inline;">마이페이지</p>&nbsp;&nbsp;<i class="bi bi-caret-down-fill"></i></a></li>
-                            <li><a href="#"><p style="font-size: 12px; display: inline;">로그아웃</p>&nbsp;&nbsp;<i class="bi bi-person-dash"></i></a></li>
-                        </ul>
-                        <!-- 로그인 안 했을 때 사용
-                        <ul>
-                            <li><a href="#"><p style="font-size: 12px; display: inline;">로그인</p>&nbsp;&nbsp;<i class="bi bi-person-check-fill"></i></a></li>
-                            <li><a href="#"><p style="font-size: 12px; display: inline;">회원가입</p>&nbsp;&nbsp;<i class="bi bi-person-plus-fill"></i></a></li>
-                        </ul> -->
-                    </div>
-                </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
-        </div>
-    </header>
-    <nav class="bn_nav1">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <nav class="yh_header__menu">
-                        <ul>
-                            <li><a href="#">영양제</a>
-                                <ul class="yh_header__menu__dropdown">
-                                    <li><a href="#">영양성분조회</a></li>
-                                    <li><a href="#">영양제 검색</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">쇼핑</a></li>
-                            <li><a href="#">Q&A</a>
-                                <ul class="yh_header__menu__dropdown">
-                                    <li><a href="#">둘러보기</a></li>
-                                    <li><a href="#">질문하기</a></li>
-                                    <li><a href="#">답변하기</a></li>
-                                    <li><a href="#">전문가 찾기</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">콘텐츠</a></li>
-                            <li><a href="#">커뮤니티</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Header Section End -->
+	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 
     <!-- Breadcrumb Section Begin -->
     <section class="breadcrumb-section set-bg" data-setbg="img/image_young.png">
@@ -609,14 +522,14 @@
                 <div class="col-lg-12">
                     <div class="featured__controls">
                         <ul>
-                            <li data-filter="*"><a href="#"><img src="img/categories/cate_all.png" class="cate_icon"><br>전체</a></li>
-                            <li data-filter=".oranges"><a href="#"><img src="img/categories/cate_eye.png" class="cate_icon"><br>눈 건강</a></li>
-                            <li data-filter=".fresh-meat"><a href="#"><img src="img/categories/cate_skin.png" class="cate_icon"><br>피부 건강</a></li>
-                            <li data-filter=".vegetables"><a href="#"><img src="img/categories/cate_fatigue.png" class="cate_icon"><br>피로감</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="img/categories/cate_intestine.png" class="cate_icon"><br>장 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="img/categories/cate_liver.png" class="cate_icon"><br>간 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="img/categories/cate_born.png" class="cate_icon"><br>관절 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="img/categories/cate_pregnent.png" class="cate_icon"><br>임산부 </a></li>
+                            <li data-filter="*"><a href="#"><img src="resources/img/categories/cate_all.png" class="cate_icon"><br>전체</a></li>
+                            <li data-filter=".oranges"><a href="#"><img src="resources/img/categories/cate_eye.png" class="cate_icon"><br>눈 건강</a></li>
+                            <li data-filter=".fresh-meat"><a href="#"><img src="resources/img/categories/cate_skin.png" class="cate_icon"><br>피부 건강</a></li>
+                            <li data-filter=".vegetables"><a href="#"><img src="resources/img/categories/cate_fatigue.png" class="cate_icon"><br>피로감</a></li>
+                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_intestine.png" class="cate_icon"><br>장 건강</a></li>
+                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_liver.png" class="cate_icon"><br>간 건강</a></li>
+                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_born.png" class="cate_icon"><br>관절 건강</a></li>
+                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_pregnent.png" class="cate_icon"><br>임산부 </a></li>
                         </ul>
                     </div>
                 </div>
@@ -772,7 +685,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                            <a href="./index.html"><img src="resources/img/logo.png" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>
@@ -825,27 +738,13 @@
                         <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
   Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
   <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
+                        <div class="footer__copyright__payment"><img src="resources/img/payment-item.png" alt=""></div>
                     </div>
                 </div>
             </div>
         </div>
 
     </footer>
-    <!-- Footer Section End -->
-
-    <!-- Js Plugins -->
-    <script src="js/jquery-3.3.1.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery.nice-select.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/mixitup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
-
-
-    <script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
 </body>
 
 </html>

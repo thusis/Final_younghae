@@ -9,7 +9,7 @@
 <title>질문게시판 - 게시글목록</title>
 
     <!--내가만든 css-->
-    <link rel="stylesheet" href="css/bn_style.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 	
 </head>
 <body>
