@@ -9,8 +9,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>카테고리 선택</title>
-
-
 <style>
 	/* 영양제 성분 카테고리*/
 	.featured__item {
