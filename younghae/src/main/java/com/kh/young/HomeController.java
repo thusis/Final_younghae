@@ -40,7 +40,7 @@ public class HomeController {
 	   @RequestMapping(value = "/", method = RequestMethod.GET)
 	   public String home2() {
 		   // 확인할 뷰 경로 적고 url에 입력
-	      return "/qna/expertFind";
+	      return "/supplement/category_select";
 	   }
 	
 }
