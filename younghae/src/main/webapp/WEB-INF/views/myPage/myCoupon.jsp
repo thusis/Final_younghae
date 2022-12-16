@@ -3,6 +3,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta charset="UTF-8">
+<meta name="description" content="Ogani Template">
+<meta name="keywords" content="Ogani, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>나의 쿠폰</title>
 <style>
 .bn_index ul li {
 	list-style: none;
@@ -19,13 +25,11 @@
 	color: #FD9F28;
 }
 </style>
-<!-- Js Plugins -->
-<script src="js/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
 	<nav>
-		<jsp:include page="../common/topmenubar.jsp" flush="true" />
+		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	</nav>
 	<div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
 		<ul>

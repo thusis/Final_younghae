@@ -3,8 +3,12 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+<meta charset="UTF-8">
+<meta name="description" content="Ogani Template">
+<meta name="keywords" content="Ogani, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>회원가입</title>
-<script src="${contextPath }/js/jquery-3.3.1.min.js"></script>
 <style>
 @import
 	url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -120,19 +124,19 @@ a[target='_blank'] {
 	}
 }
 </style>
-    
+
 </head>
 
 <body>
 	<nav>
-		<jsp:include page="../common/topmenubar.jsp" flush="true" />
+		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	</nav>
 	<div class="container">
 		<!-- <div class="row"> -->
 		<div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3 ">
 			<div class="panel" style="border: 1px solid rgb(122, 122, 122);">
 				<div class="panel-heading">
-					<a href="#"><img src="img/logo.svg" alt=""
+					<a href="#"><img src="resources/img/logo.svg" alt=""
 						style="height: 60px; width: 80px;"></a> <span
 						style="font-size: 20px; margin-left: 5px; vertical-align: middle; font-weight: bold;">회원가입</span>
 					<div style="font-size: 5px;">가입을 통해 영해의 다양한 서비스를 사용해 보세요.</div>
@@ -249,7 +253,8 @@ a[target='_blank'] {
 							</div>
 							<div class="mx-3 my-2 py-2 bordert">
 								<div class="text-center py-3">
-									<a href="#"><img src="img/kakao_login_medium_narrow.png"></a>
+									<a href="#"><img
+										src="resources/img/kakao_login_medium_narrow.png"></a>
 								</div>
 							</div>
 						</form>
@@ -330,7 +335,8 @@ a[target='_blank'] {
 								<div class="form-group py-2">
 									<div>생년월일</div>
 									<div class="input-field">
-										<input type="text" id="myBirth" placeholder="생년월일 6자를 입력해주세요. ">
+										<input type="text" id="myBirth"
+											placeholder="생년월일 6자를 입력해주세요. ">
 									</div>
 								</div>
 								<div class="form-group py-2">

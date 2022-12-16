@@ -4,6 +4,12 @@
 <html lang="ko">
 
 <head>
+<meta charset="UTF-8">
+<meta name="description" content="Ogani Template">
+<meta name="keywords" content="Ogani, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>비밀번호찾기</title>
 <style>
 @import
 	url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
@@ -119,19 +125,18 @@ a[target='_blank'] {
 	}
 }
 </style>
-    <script src="${contextPath }/js/jquery-3.3.1.min.js"></script>
 </head>
 
 <body>
 	<nav>
-		<jsp:include page="../common/topmenubar.jsp" flush="true" />
+		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	</nav>
 	<div class="container">
 		<div class="row">
 			<div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3 ">
 				<div class="panel" style="border: 1px solid rgb(122, 122, 122);">
 					<div class="panel-heading">
-						<a href="#"><img src="img/logo.svg" alt=""
+						<a href="#"><img src="resources/img/logo.svg" alt=""
 							style="height: 60px; width: 80px;"></a> <span
 							style="font-size: 20px; margin-left: 5px; vertical-align: middle; font-weight: bold;">비밀번호
 							찾기</span>

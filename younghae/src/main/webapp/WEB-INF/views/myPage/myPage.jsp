@@ -4,12 +4,17 @@
 <html lang="ko">
 
 <head>
-	    <script src="${contextPath }/js/jquery-3.3.1.min.js"></script>
+<meta charset="UTF-8">
+<meta name="description" content="Ogani Template">
+<meta name="keywords" content="Ogani, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>마이 페이지</title>
 </head>
 
 <body>
 	<nav>
-		<jsp:include page="../common/topmenubar.jsp" flush="true" />
+		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	</nav>
 	<div class="section-title" style="padding: 30px 0 10px 0;">
 		<h3>마이 페이지</h3>
@@ -18,7 +23,7 @@
 		<hr style="width: 50vw; background-color: #24E082;">
 	</div>
 	<div>
-		<img src="img/test.png">
+		<img src="resources/img/test.png">
 	</div>
 	<section class="contact spad">
 		<div class="container">
