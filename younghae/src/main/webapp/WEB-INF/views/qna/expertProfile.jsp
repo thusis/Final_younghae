@@ -9,7 +9,7 @@
 <title>질문게시판 - 전문가 상세 프로필 </title>
 
     <!--내가만든 css-->
-    <link rel="stylesheet" href="css/bn_style.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 	
 </head>
 <body>
@@ -96,7 +96,7 @@
                         </div>
 
                         <div class="col-4 align-self-center">
-                            <img src="img/pro_profile1.png" class="bn_pro-profile" alt="...">
+                            <img src="resources/img/pro_profile1.png" class="bn_pro-profile" alt="...">
                         </div>
                     </div>
 

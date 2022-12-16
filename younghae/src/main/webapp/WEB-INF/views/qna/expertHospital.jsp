@@ -9,7 +9,7 @@
 <title>질문게시판 - 질문하기</title>
 
     <!--내가만든 css-->
-    <link rel="stylesheet" href="css/bn_style.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 	
 </head>
 <body>

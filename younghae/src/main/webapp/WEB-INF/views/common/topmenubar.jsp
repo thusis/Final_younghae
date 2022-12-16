@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set value="${pageContext.servletContext.contextPath}" var="contextPath" scope="application"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +16,9 @@
     
     <!-- Google Font : (1)오가니 (2)봉은추가 font-family: 'IBM Plex Sans KR', sans-serif; 추천 -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600;700&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600;700&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
     <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
@@ -35,6 +36,15 @@
     <!--fontawesome 아이콘-->
     <script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
 
+	<!-- Js Plugins -->
+	<script src="resources/js/jquery-3.3.1.min.js"></script>
+	<script src="resources/js/bootstrap.min.js"></script>
+	<script src="resources/js/jquery.nice-select.min.js"></script>
+	<script src="resources/js/jquery-ui.min.js"></script>
+	<script src="resources/js/jquery.slicknav.js"></script>
+	<script src="resources/js/mixitup.min.js"></script>
+	<script src="resources/js/owl.carousel.min.js"></script>
+	<script src="resources/js/main.js"></script>
 </head>
 <body>
 	<c:set value="${ pageContext.servletContext.contextPath }" var="contextPath" scope="application"/>
@@ -92,7 +102,9 @@
                                     <li><a href="#">영양제 검색</a></li>
                                 </ul>
                             </li>
-                            <li><a href="#">쇼핑</a></li>
+                            <li><a href="#">쇼핑</a>
+                            
+                            </li>
                             <li><a href="#">Q&A</a>
                                 <ul class="yh_header__menu__dropdown">
                                     <li><a href="#">둘러보기</a></li>
@@ -112,24 +124,9 @@
     </nav>
     <!-- Header Section End -->
 
-    
-    <!-- Js Plugins -->
-<!--     <script src="js/jquery-3.3.1.min.js"></script> -->
 
-    <!-- Js Plugins -->
-    <script src="resources/js/jquery-3.3.1.min.js"></script>
-    <script src="resources/js/bootstrap.min.js"></script>
-    <script src="resources/js/jquery.nice-select.min.js"></script>
-    <script src="resources/js/jquery-ui.min.js"></script>
-    <script src="resources/js/jquery.slicknav.js"></script>
-    <script src="resources/js/mixitup.min.js"></script>
-    <script src="resources/js/owl.carousel.min.js"></script>
-    <script src="resources/js/main.js"></script>
-    
-    <!-- 추가 -->
-    <script src="resources/js/bootstrap.bundle.js"></script>
-        <script src="resources/js/bootstrap.bundle.min.js"></script>
-        
-    
+		<!-- 추가 -->
+		<script src="resources/js/bootstrap.bundle.js"></script>
+		<script src="resources/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

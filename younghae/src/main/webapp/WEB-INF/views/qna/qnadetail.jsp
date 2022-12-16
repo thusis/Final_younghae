@@ -9,7 +9,7 @@
 <title>질문게시판 - 질문 상세보기</title>
 
     <!--내가만든 css-->
-    <link rel="stylesheet" href="css/bn_style.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 	
 </head>
 <body>
@@ -86,7 +86,7 @@
                         <div class="latest-prdouct__slider__item">
                             <a href="#" class="latest-product__item">
                                 <div class="latest-product__item__pic">
-                                    <img src="img/latest-product/lp-1.jpg" alt="">
+                                    <img src="resources/img/latest-product/lp-1.jpg" alt="">
                                 </div>
                                 <div>
                                     <h6>Crab Pool Security</h6>
@@ -132,7 +132,7 @@
                             </div>
 
                             <div class="col-3 align-self-center">
-                                <img src="img/pro_profile1.png" class="bn_pro-profile" alt="...">
+                                <img src="resources/img/pro_profile1.png" class="bn_pro-profile" alt="...">
                             </div>
                             <div class="col-2 align-self-center">
                                 <div class="bn_pro-icon"><i class="bi bi-list-ul"></i></div>

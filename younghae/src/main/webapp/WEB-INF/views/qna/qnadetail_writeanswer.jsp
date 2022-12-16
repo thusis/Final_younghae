@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set value="${pageContext.servletContext.contextPath}" var="contextPath" scope="application"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +8,7 @@
 <title>질문게시판 - 질문 상세보기</title>
 
     <!--내가만든 css-->
-    <link rel="stylesheet" href="css/bn_style.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 	
 </head>
 <body>
@@ -103,7 +102,7 @@
                         <div class="latest-prdouct__slider__item">
                             <a href="#" class="latest-product__item">
                                 <div class="latest-product__item__pic">
-                                    <img src="img/latest-product/lp-1.jpg" alt="">
+                                    <img src="resources/img/latest-product/lp-1.jpg" alt="">
                                 </div>
                                 <div>
                                     <h6>Crab Pool Security</h6>

@@ -10,135 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>컬럼</title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="css/style.css" type="text/css">
-
-    <!-- 부트스트랩 아이콘 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-
     <style>
-        .bn_nav1 {
-            background-color: #24E082;
-        }
-
-        .yh_header__menu {
-            padding: 12px 0;
-        }
-
-        .yh_header__menu ul li {
-            color: white;
-            list-style: none;
-            display: inline-block;
-            margin-right: 50px;
-            position: relative;
-        }
-
-        .yh_header__menu ul li .yh_header__menu__dropdown {
-            position: absolute;
-            left: 0;
-            /* top: 50px; */
-            background: #222222;
-            width: max-content;
-            /* z-index: 9; */
-            padding: 5px 0;
-            -webkit-transition: all, 0.3s;
-            -moz-transition: all, 0.3s;
-            -ms-transition: all, 0.3s;
-            -o-transition: all, 0.3s;
-            transition: all, 0.3s;
-            opacity: 0;
-            visibility: hidden;
-        }
-
-        .yh_header__menu ul li .yh_header__menu__dropdown li {
-            margin-right: 0;
-            display: block;
-        }
-
-        .yh_header__menu ul li .yh_header__menu__dropdown li:hover>a {
-            color: #24E082;
-        }
-
-        .yh_header__menu ul li .yh_header__menu__dropdown li a {
-            text-transform: capitalize;
-            color: #ffffff;
-            font-weight: 400;
-            padding: 5px 15px;
-        }
-
-        .yh_header__menu ul li.active a {
-            color: #24E082;
-        }
-
-        .yh_header__menu ul li:hover .yh_header__menu__dropdown {
-            top: 30px;
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .yh_header__menu ul li:hover>a {
-            color: #FD9F28;
-        }
-
-        .yh_header__menu ul li:last-child {
-            margin-right: 0;
-        }
-
-        .yh_header__menu ul li a {
-            font-size: 14px;
-            color: #252525;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 2px;
-            -webkit-transition: all, 0.3s;
-            -moz-transition: all, 0.3s;
-            -ms-transition: all, 0.3s;
-            -o-transition: all, 0.3s;
-            transition: all, 0.3s;
-            padding: 5px 0;
-            display: block;
-        }
-
-        /* 검색창 */
-        #bn_navbar-search-input {
-            border: 0;
-            background-color: rgb(242, 242, 242);
-            border-radius: 0px 20px 20px 0px;
-        }
-
-        .bn_navbar-select-input {
-            border: 0;
-            background-color: rgb(242, 242, 242);
-            cursor: pointer;
-            border-radius: 20px 0px 0px 20px;
-            padding-left: 10px;
-
-        }
-
-        .bn_navbar-select-input option:checked,
-        .bn_navbar-select-input option:hover {
-            color: FD9F28;
-        }
-
-        .bn_btn_search {
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
-            position: absolute;
-            right: 5px;
-            top: 50%;
-            transform: translatey(-50%);
-        }
 
         /* 첨부파일 관련 CSS*/
         .filebox .upload-name {
@@ -261,89 +133,9 @@
         </div>
     </div>
     <!-- Humberger End -->
-
-    <!-- Header Section Begin -->
-    <header class="header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-1">
-                    <div class="header__logo">
-                        <a href="#"><img src="img/logo.svg" alt=""></a>
-                    </div>
-                </div>
-                <div class="col-lg-2"></div>
-                <div class="col-lg">
-                    <div class="input-group mt-3">
-                        <select class="form-select form-select-sm bn_navbar-select-input">
-                            <option value="전체">전체</option>
-                            <option value="영양제">영양제</option>
-                            <option value="브랜드">브랜드</option>
-                        </select>
-                        <input type="text" class="form-control" id="bn_navbar-search-input"
-                            placeholder="영양제 이름이나 브랜드명 입력" aria-label="search" aria-describedby="search">
-                        <button class="btn bn_btn_search"><i class="bi bi-search"></i></button>
-                    </div>
-                </div>
-                <div class="col-lg-4">
-                    <div class="header__cart">
-                        <ul>
-                            <li><a href="#">
-                                    <p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i
-                                        class="fa fa-shopping-bag"></i><span>1</span>
-                                </a></li>
-                            <li><a href="#">
-                                    <p style="font-size: 12px; display: inline;">마이페이지</p>&nbsp;&nbsp;<i
-                                        class="bi bi-caret-down-fill"></i>
-                                </a></li>
-                            <li><a href="#">
-                                    <p style="font-size: 12px; display: inline;">로그아웃</p>&nbsp;&nbsp;<i
-                                        class="bi bi-person-dash"></i>
-                                </a></li>
-                        </ul>
-                        <!-- 로그인 안 했을 때 사용
-                        <ul>
-                            <li><a href="#"><p style="font-size: 12px; display: inline;">로그인</p>&nbsp;&nbsp;<i class="bi bi-person-check-fill"></i></a></li>
-                            <li><a href="#"><p style="font-size: 12px; display: inline;">회원가입</p>&nbsp;&nbsp;<i class="bi bi-person-plus-fill"></i></a></li>
-                        </ul> -->
-                    </div>
-                </div>
-            </div>
-            <div class="humberger__open">
-                <i class="fa fa-bars"></i>
-            </div>
-        </div>
-    </header>
-    <nav class="bn_nav1">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <nav class="yh_header__menu">
-                        <ul>
-                            <li><a href="#">영양제</a>
-                                <ul class="yh_header__menu__dropdown">
-                                    <li><a href="#">영양성분조회</a></li>
-                                    <li><a href="#">영양제 검색</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">쇼핑</a></li>
-                            <li><a href="#">Q&A</a>
-                                <ul class="yh_header__menu__dropdown">
-                                    <li><a href="#">둘러보기</a></li>
-                                    <li><a href="#">질문하기</a></li>
-                                    <li><a href="#">답변하기</a></li>
-                                    <li><a href="#">전문가 찾기</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="#">콘텐츠</a></li>
-                            <li><a href="#">커뮤니티</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <!-- Header Section End -->
-
+	
+	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
+	
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
@@ -359,7 +151,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
                         <div class="blog__item">
                             <div class="blog__item__pic">
-                                <img src="img/blog/blog-2.jpg" alt="">
+                                <img src="resources/img/blog/blog-2.jpg" alt="">
                             </div>
                             <div class="blog__item__text">
                                 <ul>
@@ -379,7 +171,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
                         <div class="blog__item">
                             <div class="blog__item__pic">
-                                <img src="img/blog/blog-3.jpg" alt="">
+                                <img src="resources/img/blog/blog-3.jpg" alt="">
                             </div>
                             <div class="blog__item__text">
                                 <ul>
@@ -400,7 +192,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
                     <div class="blog__item">
                             <div class="blog__item__pic">
-                                <img src="img/blog/blog-1.jpg" alt="">
+                                <img src="resources/img/blog/blog-1.jpg" alt="">
                             </div>
                             <div class="blog__item__text">
                                 <ul>
@@ -420,7 +212,7 @@
                     <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
                         <div class="blog__item">
                             <div class="blog__item__pic">
-                                <img src="img/blog/blog-4.jpg" alt="">
+                                <img src="resources/img/blog/blog-4.jpg" alt="">
                             </div>
                             <div class="blog__item__text">
                                 <ul>
@@ -460,7 +252,7 @@
                 <div class="col-lg-3 col-md-6 col-sm-6">
                     <div class="footer__about">
                         <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
+                            <a href="./index.html"><img src="resources/img/logo.png" alt=""></a>
                         </div>
                         <ul>
                             <li>Address: 60-49 Road 11378 New York</li>
@@ -500,24 +292,13 @@
                                 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                             </p>
                         </div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
+                        <div class="footer__copyright__payment"><img src="resources/img/payment-item.png" alt=""></div>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
     <!-- Footer Section End -->
-
-        <!-- Js Plugins -->
-        <script src="js/jquery-3.3.1.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.nice-select.min.js"></script>
-        <script src="js/jquery-ui.min.js"></script>
-        <script src="js/jquery.slicknav.js"></script>
-        <script src="js/mixitup.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script src="js/main.js"></script>
-    
 
         <script>
             window.onload=()=>{

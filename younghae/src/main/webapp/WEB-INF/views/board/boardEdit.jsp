@@ -34,7 +34,7 @@
     <script src="https://kit.fontawesome.com/7a738a6e1a.js" crossorigin="anonymous"></script>
     
     <!--Soyeon-->
-    <link rel="stylesheet" href="css/soyeon.css" type="text/css">
+    <link rel="stylesheet" href="resources/css/soyeon.css" type="text/css">
 
 </head>
 <body>
