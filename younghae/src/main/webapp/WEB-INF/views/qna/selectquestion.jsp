@@ -1,20 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<c:set value="${pageContext.servletContext.contextPath}" var="contextPath" scope="application"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>질문게시판 - 질문 상세보기</title>
+<title>질문게시판 - 질문상세보기</title>
+
+	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 
     <!--내가만든 css-->
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
-	
+    
+	<!-- jQuery -->	
+<!--     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script> -->
+
+    <!-- 써머 노트 :CDN방식 -->
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
+
 </head>
 <body>
-
-	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 
     <div class="container">
         <div class="bn_index mt-5">
@@ -103,7 +110,7 @@
                         <div class="latest-prdouct__slider__item">
                             <a href="#" class="latest-product__item">
                                 <div class="latest-product__item__pic">
-                                    <img src="resources/img/latest-product/lp-1.jpg" alt="">
+                                    <img src="img/latest-product/lp-1.jpg" alt="">
                                 </div>
                                 <div>
                                     <h6>Crab Pool Security</h6>
@@ -114,6 +121,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="col-lg-10">
 
