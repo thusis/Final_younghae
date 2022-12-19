@@ -38,8 +38,13 @@ public class BoardController {
 		
 		ArrayList<Board> bList = bService.selectBoardList(pi);
 		ArrayList<Attachment> pList = bService.selectPhotoList();
-		
-		return "boardList";
+		if(bList != null) {
+			model.addAttribute("pi", pi);
+			model.addAttribute("bList", bList);
+			model.addAttribute("pList", pList);
+			return "boardList";
+		} else {
+		}
 	}
 	
 	
