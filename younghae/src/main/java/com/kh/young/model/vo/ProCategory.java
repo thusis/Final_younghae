@@ -16,4 +16,5 @@ public class ProCategory {
 	private String cateName;
 	private String cateSummary;
 	private String cateIcon;
+	private String[] Icon;
 }

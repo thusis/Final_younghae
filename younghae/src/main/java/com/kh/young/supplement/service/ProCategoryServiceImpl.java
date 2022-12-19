@@ -21,13 +21,19 @@ public class ProCategoryServiceImpl implements ProCategoryService{
 		
 	@Override
 	public int getListCount() {
+		int result = pcDAO.getListCount(sqlSession);
+		System.out.println(result);
 		return pcDAO.getListCount(sqlSession);
 	}
 
 	@Override
 	public ArrayList<ProCategory> allCategory(PageInfo pi) {
-		// TODO Auto-generated method stub
-		return null;
+		return pcDAO.allCategory(sqlSession, pi);
+	}
+
+	@Override
+	public ProCategory selectCategory(int cateNum) {
+		return pcDAO.selectCategory(sqlSession, cateNum);
 	}
 	
 }

@@ -11,4 +11,6 @@ public interface ProCategoryService {
 
 	ArrayList<ProCategory> allCategory(PageInfo pi);
 
+	ProCategory selectCategory(int cateNum);
+
 }

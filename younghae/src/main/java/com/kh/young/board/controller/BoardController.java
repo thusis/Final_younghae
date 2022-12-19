@@ -25,7 +25,7 @@ public class BoardController {
 	@Autowired
 	private BoardService bService;
 	
-	//°Ô½ÃÆÇ ¸ÞÀÎ
+	//ï¿½Ô½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	@RequestMapping("boardList.bo")
 	public String boardList(@RequestParam(value="page", required=false) Integer page, Model model) {
 		
@@ -49,7 +49,7 @@ public class BoardController {
 	}
 	
 	
-	//ÆÄÀÏ ÀúÀå¼Ò »ý¼º
+	//ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	public String[] addFile(MultipartFile file, HttpServletRequest request) {
 		String uploadPath = "C:/upload/";
 		
@@ -63,7 +63,7 @@ public class BoardController {
 		try {
 			file.transferTo(fileFolder);
 		} catch (Exception e) {
-			System.out.println("ÆÄÀÏ Àü¼Û ¿¡·¯ :" + e.getMessage());
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ :" + e.getMessage());
 		}
 		
 		String[] returnArr = new String[3];
@@ -74,9 +74,9 @@ public class BoardController {
 		return returnArr;
 	}
 	
-	//ÆÄÀÏ insert
+	//ï¿½ï¿½ï¿½ï¿½ insert
 	
 
-	//°Ô½Ã±Û insert
+	//ï¿½Ô½Ã±ï¿½ insert
 	
 }
