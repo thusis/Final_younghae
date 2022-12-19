@@ -60,42 +60,53 @@
             </ul>
         </div>
     </div>
-
     <!-- Featured Section Begin -->
-    <section class="featured spad" style="margin-left: 18%; margin-right: 18%;">
-        <div class="container">
-            <div class="row" >
-                <div class="col-lg-12">
-                    <div class="section" style="padding-left: 25%;">
-                        <input type="text" class="form-control" id="bn_navbar-search-input" placeholder="궁금한 영양 성분 검색" aria-label="search" aria-describedby="search"
-                            style="width: 70%; border-radius: 30px;">
-                        <button class="btn"
-                            style="margin-left: 63%; transform : translatey(-95%);"
-                        >
-                            <i class="bi bi-search"></i>
-                        </button>
-                        <div class="row justify-content-center" style="margin: -3%; margin-left: -38%;">
-                            <div>
-                                <button type="button" class="btn btn-secondary" style="background-color: white; color: rgb(112, 109, 109); border: none; font-weight: bold; font-size: 18px;">실시간 트렌드</button>
-                                <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">레시틴</button> &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">밀크씨슬</button> &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">종합비타민</button> &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">비타민D</button> &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">보충제</button>
-                            </div>
-                        </div>
-                    </div>
-                    <br><br>
-                    <div class="section-title">
-                        <h2 style="position: absolute; left: -5%;
-                        right: 60%; height: 4px; width: 40%; background: #24E082;
-                        content: ''; margin: 0 auto; display: inline; margin-top: 2%"></h2>
-                        <h2 style="color: #24E082; display: inline;">영양성분</h2>
-                        <h2 style="position: absolute; left: 60%;
-                        right: -5%; height: 4px; width: 40%; background: #24E082;
-                        content: ''; margin: 0 auto; display: inline; margin-top: 2%"></h2>
-                    </div>
-                    <!-- <div class="featured__controls">
+	<section class="featured spad" style="margin-left: 18%; margin-right: 18%;">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="section" style="padding-left: 25%;">
+						<input type="text" class="form-control"
+							id="bn_navbar-search-input" placeholder="궁금한 영양 성분 검색"
+							aria-label="search" aria-describedby="search"
+							style="width: 70%; border-radius: 30px;">
+						<button class="btn"
+							style="margin-left: 63%; transform: translatey(-95%);">
+							<i class="bi bi-search"></i>
+						</button>
+						<div class="row justify-content-center"
+							style="margin: -3%; margin-left: -38%;">
+							<div>
+								<button type="button" class="btn btn-secondary"
+									style="background-color: white; color: rgb(112, 109, 109); border: none; font-weight: bold; font-size: 18px;">실시간
+									트렌드</button>
+								<button type="button" class="btn btn-secondary trend"
+									style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">레시틴</button>
+								&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn btn-secondary trend"
+									style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">밀크씨슬</button>
+								&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn btn-secondary trend"
+									style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">종합비타민</button>
+								&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn btn-secondary trend"
+									style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">비타민D</button>
+								&nbsp;&nbsp;&nbsp;
+								<button type="button" class="btn btn-secondary trend"
+									style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">보충제</button>
+							</div>
+						</div>
+					</div>
+					<br>
+					<br>
+					<div class="section-title">
+						<h2
+							style="position: absolute; left: -5%; right: 60%; height: 4px; width: 40%; background: #24E082; content: ''; margin: 0 auto; display: inline; margin-top: 2%"></h2>
+						<h2 style="color: #24E082; display: inline;">영양성분</h2>
+						<h2
+							style="position: absolute; left: 60%; right: -5%; height: 4px; width: 40%; background: #24E082; content: ''; margin: 0 auto; display: inline; margin-top: 2%"></h2>
+					</div>
+					<!-- <div class="featured__controls">
                         <ul>
                             <li class="active" data-filter="*">All</li>
                             <li data-filter=".oranges">Oranges</li>
@@ -104,27 +115,48 @@
                             <li data-filter=".fastfood">Fastfood</li>
                         </ul>
                     </div> -->
-                    </div>
-                </div>
-            </div>
-            <div class="row featured__filter">
-                <c:forEach items="${ list }" var="c">
-	                <div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
-	                    <div class="featured__item">
-	                        <div class="featured__item__pic set-bg" >
-	                            <p>${ c.cateName }</p>
-	                            <!-- <ul class="featured__item__pic__hover">
+				</div>
+			</div>
+		</div>
+		<div class="row featured__filter">
+			<c:forEach items="${ list }" var="c">
+				<div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
+					<div class="featured__item">
+						<div class="featured__item__pic set-bg">
+							<input type="hidden" value="${ c.cateNum }">
+							<p>${ c.cateName }</p>
+							<!-- <ul class="featured__item__pic__hover">
 	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
 	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
 	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
 	                            </ul> -->
-	                        </div>
-	                    </div>
-	                </div>
-                </c:forEach>
-            </div>
-    </section>
-    <!-- Featured Section End -->
+						</div>
+					</div>
+				</div>
+			</c:forEach>
+
+			<!-- 페이징 -->
+			<div class="col-lg-12 text-center" style="margin-top: 8%;">
+				<div class="product__pagination blog__pagination">
+					<c:url var="goBack" value="${ loc }">
+						<c:param name="page" value="${pi.currentPage-1 }"></c:param>
+					</c:url>
+					<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a>
+					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+						<c:url var="goNum" value="${ loc}">
+							<c:param name="page" value="${p}"></c:param>
+						</c:url>
+						<a href="${goNum }">${ p }</a>
+					</c:forEach>
+					<c:url var="goNext" value="${ loc }">
+						<c:param name="page" value="${pi.currentPage+1}"></c:param>
+					</c:url>
+					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Featured Section End -->
 
     <!-- Footer Section Begin -->
     <footer class="footer spad">
@@ -195,5 +227,18 @@
     <!-- Footer Section End -->
 
 </body>
-
+	<script>
+		const Allcategory = document.getElementsByClassName("featured__item__pic set-bg");
+        for(const cate of Allcategory){
+            cate.addEventListener('click', function(){
+                console.log(this);
+                const cateNum = this.childNodes[1].value;
+                const cateName = this.childNodes[3].innerText;
+                console.log(cateNum);
+                console.log(cateName);
+                
+                location.href = '${contextPath}/selectCategory.su?cateName='+cateName+'&cateNum='+cateNum+'&page='+${pi.currentPage};
+            });
+        }
+	</script>
 </html>
