@@ -16,11 +16,11 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Reply {
-	private int reply_num;
-	private String reply_content;
-	private Date reply_date;
-	private String reply_status;
-	private int board_type;
-	private int board_num;
-	private int user_num;
+	private int replyNum;
+	private String replyContent;
+	private Date replyDate;
+	private String replyStatus;
+	private int boardType;
+	private int boardNum;
+	private int userNum;
 }
