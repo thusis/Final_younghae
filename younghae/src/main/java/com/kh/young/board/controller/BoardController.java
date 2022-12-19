@@ -1,6 +1,7 @@
 package com.kh.young.board.controller;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,22 +14,31 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.young.board.pagination.BoardPagination;
 import com.kh.young.board.service.BoardService;
+import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.PageInfo;
 
 @Controller
 public class BoardController {
 	@Autowired
 	private BoardService bService;
 	
-	
 	//게시판 메인
 	@RequestMapping("boardList.bo")
 	public String boardList(@RequestParam(value="page", required=false) Integer page, Model model) {
+		
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
 		int boardListCount = bService.getBoardListCount();
+		PageInfo pi = BoardPagination.getPageInfo(currentPage, boardListCount, 6);
+		
+		ArrayList<Board> bList = bService.selectBoardList(pi);
+		ArrayList<Attachment> pList = bService.selectPhotoList();
+		
 		return "boardList";
 	}
 	
