@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.young.board.pagination.BoardPagination;
 import com.kh.young.board.service.BoardService;
+import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.PageInfo;
@@ -34,7 +34,7 @@ public class BoardController {
 			currentPage = page;
 		}
 		int boardListCount = bService.getBoardListCount();
-		PageInfo pi = BoardPagination.getPageInfo(currentPage, boardListCount, 6);
+		PageInfo pi = Pagination.getPageInfo(currentPage, boardListCount, 6);
 		
 		ArrayList<Board> bList = bService.selectBoardList(pi);
 		ArrayList<Attachment> pList = bService.selectPhotoList();
