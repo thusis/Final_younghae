@@ -1,9 +1,5 @@
 package com.kh.young.model.vo;
 
-import java.sql.Date;
-
-import lombok.Data;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,10 +11,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Event {
-	private int event_num;
-	private String event_name;
-	private Date event_startDate;
-	private Date event_endDate;
-	private String event_status;
+public class PageInfo {
+	private int currentPage;
+	private int listCount;
+	private int pageLimit; 
+	private int maxPage;
+	private int startPage;
+	private int endPage;
+	private int boardLimit;
 }

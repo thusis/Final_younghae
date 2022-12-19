@@ -1,5 +1,8 @@
 package com.kh.young.board.dao;
 
-public class BoardDAO {
+import org.springframework.stereotype.Repository;
 
+@Repository
+public class BoardDAO {
+	
 }
