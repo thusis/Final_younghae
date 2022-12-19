@@ -1,9 +1,9 @@
-package com.kh.young.board.pagination;
+package com.kh.young.common;
 
 import com.kh.young.model.vo.PageInfo;
 
 
-public class BoardPagination {
+public class Pagination {
 	public static PageInfo getPageInfo(int currentPage, int listCount, int boardLimit) {
 		int pageLimit = 10;
 		int maxPage;
