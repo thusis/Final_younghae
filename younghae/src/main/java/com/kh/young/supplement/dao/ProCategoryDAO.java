@@ -8,5 +8,4 @@ public class ProCategoryDAO {
 		return sqlSession.selectOne("supplementMapper.getListCount");
 	}
 	
-//	dasfhkajsdfhkjsadhfkljh
 }
