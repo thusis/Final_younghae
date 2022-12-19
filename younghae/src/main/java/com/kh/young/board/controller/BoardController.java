@@ -44,6 +44,7 @@ public class BoardController {
 			model.addAttribute("pList", pList);
 			return "boardList";
 		} else {
+			return null;
 		}
 	}
 	
