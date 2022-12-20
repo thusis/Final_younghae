@@ -14,5 +14,13 @@ public interface BoardService {
 
 	ArrayList<Attachment> selectPhotoList();
 
+	int insertBoard(Board b);
+
+	int insertPhoto(Attachment photo);
+
+	int deleteBoard(int boardNo);
+
+	int deletePhoto(int boardNo);
+
 
 }

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Board {
-	private int board_num;
+	private int boardNum;
 	private String boardTitle;
 	private String boardContent;
 	private Date boardCreateDate;
