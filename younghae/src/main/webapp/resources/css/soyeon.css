@@ -83,7 +83,7 @@
 }
 
 
-/*해시*/  
+/*�빐�떆*/  
 #tag-list{
     padding: 16px 0;
   }
@@ -125,7 +125,7 @@
   }
   
 
-/*이벤트*/
+/*�씠踰ㅽ듃*/
   
 .eventDiv{
     width: 100%;
@@ -154,7 +154,7 @@
 #eventTitle{
     text-align: center;
 }
-/*출석이벤트*/
+/*異쒖꽍�씠踰ㅽ듃*/
 
 .attendance{
     text-align: center;
@@ -179,7 +179,7 @@
   }
   
 
-/*댓글이벤트*/
+/*�뙎湲��씠踰ㅽ듃*/
 
 #eventReplyBtn{
     text-align: center;
@@ -214,7 +214,7 @@
           0 0 0 1px rgba(0,0,0,0.4);
   }
 
-/*리뷰이벤트*/
+/*由щ럭�씠踰ㅽ듃*/
 
 #eventReviewBtn{
     text-align: center;
@@ -235,7 +235,18 @@
           0 0 0 1px rgba(0,0,0,0.4);
   }
   
-  /*생일이벤트*/
+  /*�깮�씪�씠踰ㅽ듃*/
 #eventBirthdayBtn{
     text-align: center;
 }
+
+/*boardList*/
+        .btn-success{
+            background-color: #24E082;
+            border: 1px solid #0aff5c;
+        }
+        .btn-success:hover{
+            background-color: white;
+            border: 1px solid #0aff5c;
+            color: #24E082;
+        }

@@ -10,13 +10,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>게시판 메인</title>
+		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 <!--Soyeon-->
 <link rel="stylesheet" href="resources/css/soyeon.css" type="text/css">
+    <link rel="stylesheet" href="css/bn_style.css" type="text/css">
 
 </head>
 <body>
 	<nav>
-		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	</nav>
 	<!-- Blog Section Begin -->
 
@@ -24,95 +25,91 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-4 col-md-5">
-					<div class="blog__sidebar">
-						<div class="blog__sidebar__search">
-							<form action="#">
-								<select>
-									<option>작성자</option>
-									<option>제목</option>
-									<option>내용</option>
-								</select> <br>
-								<br> <input type="text" placeholder="Search...">
-								<button type="submit">
-									<br>
-									<br>
-									<i class="fa-solid fa-magnifying-glass"></i>
-								</button>
-							</form>
-						</div>
-						<div class="blog__sidebar__item">
-							<h4 style="color: #ffc53e;">Categories</h4>
-							<ul>
-								<li><a href="#">운동(32)</a></li>
-								<li><a href="#">식단 (20)</a></li>
-								<li><a href="#">영양제 (5)</a></li>
-								<li><a href="#">자유 (9)</a></li>
-							</ul>
-						</div>
-						<div class="blog__sidebar__item">
-							<h4 style="color: #ffc53e;">TOP5 게시글</h4>
-							<div class="blog__sidebar__recent">
-								<a href="#" class="blog__sidebar__recent__item">
-									<div class="blog__sidebar__recent__item__pic">
-										<img src="resources/img/blog/sidebar/sr-1.jpg" alt="">
-									</div>
-									<div class="blog__sidebar__recent__item__text">
-										<h6>
-											09 Kinds Of Vegetables<br /> Protect The Liver
-										</h6>
-										<span>MAR 05, 2019</span>
-									</div>
-								</a> <a href="#" class="blog__sidebar__recent__item">
-									<div class="blog__sidebar__recent__item__pic">
-										<img src="resources/img/blog/sidebar/sr-2.jpg" alt="">
-									</div>
-									<div class="blog__sidebar__recent__item__text">
-										<h6>
-											Tips You To Balance<br /> Nutrition Meal Day
-										</h6>
-										<span>MAR 05, 2019</span>
-									</div>
-								</a> <a href="#" class="blog__sidebar__recent__item">
-									<div class="blog__sidebar__recent__item__pic">
-										<img src="resources/img/blog/sidebar/sr-3.jpg" alt="">
-									</div>
-									<div class="blog__sidebar__recent__item__text">
-										<h6>
-											4 Principles Help You Lose <br />Weight With Vegetables
-										</h6>
-										<span>MAR 05, 2019</span>
-									</div>
-								</a> <a href="#" class="blog__sidebar__recent__item">
-									<div class="blog__sidebar__recent__item__pic">
-										<img src="resources/img/blog/sidebar/sr-3.jpg" alt="">
-									</div>
-									<div class="blog__sidebar__recent__item__text">
-										<h6>
-											4 Principles Help You Lose <br />Weight With Vegetables
-										</h6>
-										<span>MAR 05, 2019</span>
-									</div>
-								</a> <a href="#" class="blog__sidebar__recent__item">
-									<div class="blog__sidebar__recent__item__pic">
-										<img src="resources/img/blog/sidebar/sr-3.jpg" alt="">
-									</div>
-									<div class="blog__sidebar__recent__item__text">
-										<h6>
-											4 Principles Help You Lose <br />Weight With Vegetables
-										</h6>
-										<span>MAR 05, 2019</span>
-									</div>
-								</a>
-							</div>
-						</div>
-						<div class="blog__sidebar__item">
-							<h4 style="color: #ffc53e;">Search By</h4>
-							<div class="blog__sidebar__item__tags">
-								<a href="#">PT</a> <a href="#">단백질 보충제</a> <a href="#">샐러드</a> <a
-									href="#">필라테스</a> <a href="#">오운완</a> <a href="#">헬린이</a>
-							</div>
-						</div>
-					</div>
+				    <div><button type="button" class="btn btn-success"  onclick="location.href='${contextPath}/boardWrite.bo' "><i class="bi bi-pencil-square"></i> 글쓰기</button></div>  
+                    <div class="blog__sidebar">
+                        <div class="blog__sidebar__search">
+                            <form action="#">
+                                <select>
+                                    <option>작성자</option>
+                                    <option>제목</option>
+                                    <option>내용</option>
+                                </select>
+                                <br><br>
+                                <input type="text" placeholder="Search...">
+                                <button type="submit"><br><br><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </form>
+                        </div>
+                        <div class="blog__sidebar__item">
+                            <h4 style="color: #ffc53e;">Categories</h4>
+                            <ul>
+                                <li><a href="#">운동(32)</a></li>
+                                <li><a href="#">식단 (20)</a></li>
+                                <li><a href="#">영양제 (5)</a></li>
+                                <li><a href="#">자유 (9)</a></li>
+                            </ul>
+                        </div>
+                        <div class="blog__sidebar__item">
+                            <h4 style="color: #ffc53e;">TOP5 게시글</h4>
+                            <div class="blog__sidebar__recent">
+                                <a href="#" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                        <img src="img/blog/sidebar/sr-1.jpg" alt="">
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <h6>09 Kinds Of Vegetables<br /> Protect The Liver</h6>
+                                        <span>MAR 05, 2019</span>
+                                    </div>
+                                </a>
+                                <a href="#" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                        <img src="img/blog/sidebar/sr-2.jpg" alt="">
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <h6>Tips You To Balance<br /> Nutrition Meal Day</h6>
+                                        <span>MAR 05, 2019</span>
+                                    </div>
+                                </a>
+                                <a href="#" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                        <img src="img/blog/sidebar/sr-3.jpg" alt="">
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
+                                        <span>MAR 05, 2019</span>
+                                    </div>
+                                </a>
+                                <a href="#" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                        <img src="img/blog/sidebar/sr-3.jpg" alt="">
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
+                                        <span>MAR 05, 2019</span>
+                                    </div>
+                                </a>
+                                <a href="#" class="blog__sidebar__recent__item">
+                                    <div class="blog__sidebar__recent__item__pic">
+                                        <img src="img/blog/sidebar/sr-3.jpg" alt="">
+                                    </div>
+                                    <div class="blog__sidebar__recent__item__text">
+                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
+                                        <span>MAR 05, 2019</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="blog__sidebar__item">
+                            <h4 style="color: #ffc53e;">Search By</h4>
+                            <div class="blog__sidebar__item__tags">
+                                <a href="#">PT</a>
+                                <a href="#">단백질 보충제</a>
+                                <a href="#">샐러드</a>
+                                <a href="#">필라테스</a>
+                                <a href="#">오운완</a>
+                                <a href="#">헬린이</a>
+                            </div>
+                        </div>
+                    </div>
 				</div>
 				<div class="col-lg-8 col-md-7">
 					<div class="row">
@@ -230,7 +227,7 @@
 						<div class="col-lg-6 col-md-6 col-sm-6">
 							<div class="blog__item">
 								<div class="blog__item__pic">
-									<img src="resources/img/blog/blog-6.jpg" alt="">
+									<img src="resources/img/blog/blog-4.jpg" alt="">
 								</div>
 								<div class="blog__item__text">
 									<ul>
@@ -240,7 +237,8 @@
 										<li><i class="fa-regular fa-eye"></i> 78</li>
 									</ul>
 									<h5>
-										<a href="#">Cooking tips make cooking simple</a>
+										<a href="#">The Moment You Need To Remove Garlic From The
+											Menu</a>
 									</h5>
 									<p>Sed quia non numquam modi tempora indunt ut labore et
 										dolore magnam aliquam quaerat</p>

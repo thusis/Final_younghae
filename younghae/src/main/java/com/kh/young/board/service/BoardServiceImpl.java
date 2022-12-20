@@ -33,4 +33,24 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.selectPhotoList(sqlSession);
 	}
 
+	@Override
+	public int insertBoard(Board b) {
+		return bDAO.insertBoard(sqlSession, b);
+	}
+
+	@Override
+	public int insertPhoto(Attachment photo) {
+		return bDAO.insertPhoto(sqlSession, photo);
+	}
+
+	@Override
+	public int deleteBoard(int boardNo) {
+		return bDAO.deleteBoard(sqlSession, boardNo);
+	}
+
+	@Override
+	public int deletePhoto(int boardNo) {
+		return bDAO.deletePhoto(sqlSession, boardNo);
+	}
+
 }
