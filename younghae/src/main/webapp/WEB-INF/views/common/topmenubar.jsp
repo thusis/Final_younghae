@@ -1,23 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set value="${pageContext.servletContext.contextPath}" var="contextPath" scope="application"/>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
     <title>메뉴바</title>
-
+    
     <!--jQuery-->
     <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    
+       
     <!-- Google Font : (1)오가니 (2)봉은추가 font-family: 'IBM Plex Sans KR', sans-serif; 추천 -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600;700&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
@@ -36,15 +36,16 @@
     <!--fontawesome 아이콘-->
     <script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
 
-	<!-- Js Plugins -->
-	<script src="resources/js/jquery-3.3.1.min.js"></script>
-	<script src="resources/js/bootstrap.min.js"></script>
-	<script src="resources/js/jquery.nice-select.min.js"></script>
-	<script src="resources/js/jquery-ui.min.js"></script>
-	<script src="resources/js/jquery.slicknav.js"></script>
-	<script src="resources/js/mixitup.min.js"></script>
-	<script src="resources/js/owl.carousel.min.js"></script>
-	<script src="resources/js/main.js"></script>
+ 	<!-- Js Plugins -->	
+<!-- 	<script src="resources/js/jquery-3.3.1.min.js"></script>	 -->
+	<script src="resources/js/bootstrap.min.js"></script>	
+	<script src="resources/js/jquery.nice-select.min.js"></script>	
+	<script src="resources/js/jquery-ui.min.js"></script>	
+	<script src="resources/js/jquery.slicknav.js"></script>	
+	<script src="resources/js/mixitup.min.js"></script>	
+	<script src="resources/js/owl.carousel.min.js"></script>	
+	<script src="resources/js/main.js"></script>	
+
 </head>
 <body>
 	<c:set value="${ pageContext.servletContext.contextPath }" var="contextPath" scope="application"/>
@@ -61,7 +62,7 @@
                 <div class="col-lg-2"></div>
                 <div class="col-lg">
                     <div class="input-group mt-3">
-                        <select class="form-select bn_navbar-select-input" style="height:50px;">
+                        <select class="form-select bn_navbar-select-input">
                             <option value="전체">전체</option>
                             <option value="영양제">영양제</option>
                             <option value="브랜드">브랜드</option>
@@ -124,9 +125,8 @@
     </nav>
     <!-- Header Section End -->
 
-
-		<!-- 추가 -->
-		<script src="resources/js/bootstrap.bundle.js"></script>
-		<script src="resources/js/bootstrap.bundle.min.js"></script>
+	<!-- 추가 -->
+	<script src="resources/js/bootstrap.bundle.js"></script>
+	<script src="resources/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

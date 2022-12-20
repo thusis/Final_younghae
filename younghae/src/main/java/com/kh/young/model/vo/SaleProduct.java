@@ -17,4 +17,5 @@ public class SaleProduct {
 	private String proCate;
 	private int proDiscountRate;
 	private int proReducedPrice;
+	private int proViewCount;
 }

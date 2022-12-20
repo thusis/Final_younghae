@@ -29,6 +29,7 @@ public class BoardController {
 	private BoardService bService;
 	
 	//Board Main
+
 	@RequestMapping("boardList.bo")
 	public String boardList(@RequestParam(value="page", required=false) Integer page, Model model) {
 		
@@ -53,6 +54,7 @@ public class BoardController {
 	
 	
 	//File resources
+
 	public String[] addFile(MultipartFile file, HttpServletRequest request) {
 		String uploadPath = "C:/upload/";
 		
