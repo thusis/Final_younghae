@@ -22,15 +22,12 @@
 	<div class="section-title">
 		<hr style="width: 50vw; background-color: #24E082;">
 	</div>
-	<div>
-		<img src="resources/img/test.png">
-	</div>
 	<section class="contact spad">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center"
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myInfo.html'">
+					onclick="location.href='${contextPath}/myInfo.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-person-lines-fill"
@@ -46,7 +43,7 @@
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center "
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myOrder.html'">
+					onclick="location.href='${contextPath}/myWriteView.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-list-stars"
@@ -64,7 +61,7 @@
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center"
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myPointView.html'">
+					onclick="location.href='${contextPath}/myPointView.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-cash-coin"
@@ -86,7 +83,7 @@
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center"
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myScrap.html'">
+					onclick="location.href='${contextPath}/myScrap.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-bookmark-star"
@@ -104,7 +101,7 @@
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center"
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myProfile.html'">
+					onclick="location.href='${contextPath}/myProfile.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-person-vcard-fill"
@@ -126,7 +123,7 @@
 			<div class="row">
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center"
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myWishList.html'">
+					onclick="location.href='${contextPath}/myWishList.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-box2-heart"
@@ -144,7 +141,7 @@
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center"
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myCart.html'">
+					onclick="location.href='${contextPath}/myCart.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-cart-check"
@@ -162,7 +159,7 @@
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center"
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myCoupon.html'">
+					onclick="location.href='${contextPath}/myCoupon.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-ticket"
@@ -178,7 +175,7 @@
 				</div>
 				<div class="col-lg-2 col-md-2 col-sm-6 text-center"
 					style="margin-left: 30px;"
-					onclick="location.href='/Users/Song/Desktop/final/ogani-master/myOrder.html'">
+					onclick="location.href='${contextPath}/myOrder.my'">
 					<div class="contact__widget">
 						<span> <svg xmlns="http://www.w3.org/2000/svg" width="60"
 								height="60" fill="currentColor" class="bi bi-wallet2"

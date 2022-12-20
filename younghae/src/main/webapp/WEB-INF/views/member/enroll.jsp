@@ -218,6 +218,16 @@ a[target='_blank'] {
 									</div>
 								</div>
 								<div class="form-group py-2">
+									<div>생년월일*</div>
+									<div>
+										<input type="radio" name="chk_info" value="M"><a
+											style="margin-right: 80px;">남</a> <input type="radio"
+											name="chk_info" value="F"><a
+											style="margin-right: 80px;">여</a> <input type="radio"
+											name="chk_info" value="N"><a>알리고싶지않음</a>
+									</div>
+								</div>
+								<div class="form-group py-2">
 									<div>전화번호</div>
 									<div class="input-field">
 										<input type="text" id="myPhone" placeholder="전화번호를 입력해주세요">
@@ -327,6 +337,16 @@ a[target='_blank'] {
 									</div>
 								</div>
 								<div class="form-group py-2">
+									<div>생년월일*</div>
+									<div>
+										<input type="radio" name="chk_info" value="M"><a
+											style="margin-right: 80px;">남</a> <input type="radio"
+											name="chk_info" value="F"><a
+											style="margin-right: 80px;">여</a> <input type="radio"
+											name="chk_info" value="N"><a>알리고싶지않음</a>
+									</div>
+								</div>
+								<div class="form-group py-2">
 									<div>전화번호</div>
 									<div class="input-field">
 										<input type="text" id="myPhone" placeholder="전화번호를 입력해주세요">
@@ -380,5 +400,8 @@ a[target='_blank'] {
 			</div>
 		</div>
 	</div>
+	<script>
+	
+	</script>
 </body>
 </html>

@@ -159,9 +159,9 @@ a[target='_blank'] {
 							<div class="form-inline " style="margin-left: 280px;">
 								<a href="#" id="forgotId"
 									style="font-size: 10px; margin-right: 10px;"
-									onclick="location.href='${contextPath}/searchIdView.mem'">아이디찾기</a>
+									onclick="location.href='${contextPath}/searchIdView.me'">아이디찾기</a>
 								<a href="#" id="forgotPwd" style="font-size: 10px;"
-									onclick="location.href='${contextPath}/searchPwdView.mem'">비밀번호
+									onclick="location.href='${contextPath}/searchPwdView.me'">비밀번호
 									찾기</a>
 							</div>
 							<div class="btn btn-primary btn-block mt-3 "
@@ -169,7 +169,7 @@ a[target='_blank'] {
 								id="login">로그인</div>
 							<div class="text-center pt-4 text-muted">
 								아직 회원이 아니신가요? <a href="#"
-									onclick="location.href='${contextPath}/enroll.mem'">회원 가입</a>
+									onclick="location.href='${contextPath}/enroll.me'">회원 가입</a>
 							</div>
 						</form>
 					</div>
