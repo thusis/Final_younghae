@@ -75,228 +75,209 @@
 					<div class="product__details__text">
 						<i class="fa-solid fa-comment-medical"
 							style="font-size: 225%; color: #24E082; margin-right: 1%;"></i>
-						<h3 style="display: inline;">${ c.cateName }</h3>
+						<h3 style="display: inline;" id="cateName">${ c.cateName }</h3>
 						<br>
 						<div class="product__details__rating">
 							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 								class="fa fa-star"></i> <i class="fa fa-star"></i> <i
 								class="fa fa-star-half-o"></i> <span>(리뷰 18)</span>
 						</div>
-						<p>
-							${ c.cateSummary }
-						</p>
-							<div class="product__details__quantity" style="width: 100%;">
-								<div class="product__details__quantity"
-									style="border: 2px solid #24E082; border-radius: 5px; padding: 5%; width: 100%;">
-									<c:if test="${ c.cateIcon ne null }">
-										<c:forEach var="w" items="${ c.cateIcon }">
-											<c:if test="${ fn:contains( w , '수술')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/knife.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">수술 전 후 지혈 늦춰짐</div>
+						<p>${ c.cateSummary }</p>
+						<input type="hidden" value="${ c.cateNum }" id="cateNum">
+						<div class="product__details__quantity" style="width: 100%;">
+							<div class="product__details__quantity"
+								style="border: 2px solid #24E082; border-radius: 5px; padding: 5%; width: 100%;">
+								<c:if test="${ c.cateIcon ne null }">
+									<c:forEach var="w" items="${ c.cateIcon }">
+										<c:if test="${ fn:contains( w , '수술')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/knife.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">수술 전 후 지혈
+												늦춰짐</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( w, '생선')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<i class="fa-solid fa-fish-fins"></i>
-												</div>
-												<div class="product__details__price mr-5"
-													style="font-size: 100%; display: inline;">생선 알레르기 주의</div>
+										<c:if test="${ fn:contains( w, '생선')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<i class="fa-solid fa-fish-fins"></i>
+											</div>
+											<div class="product__details__price mr-5"
+												style="font-size: 100%; display: inline;">생선 알레르기 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( w, '임산부')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/pregnant.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">임산부 관련 연구 부족</div>
+										<c:if test="${ fn:contains( w, '임산부')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/pregnant.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">임산부 관련 연구 부족</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( w, '폐암')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/respiratory.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">장기간 고용량 복용시 폐암 위험 증가</div>
+										<c:if test="${ fn:contains( w, '폐암')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/respiratory.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">장기간 고용량 복용시
+												폐암 위험 증가</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( w, '수유')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/baby_bottle.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">수유부 관련 연구 부족</div>
+										<c:if test="${ fn:contains( w, '수유')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/baby_bottle.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">수유부 관련 연구 부족</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( w, '갑각류')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/crustaceans.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">갑각류 알레르기 주의</div>
+										<c:if test="${ fn:contains( w, '갑각류')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/crustaceans.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">갑각류 알레르기 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( c.cateIcon, '신장')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/kidney.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">고용량 복용시 고칼슘혈증으로 인해 신장 기능 저하</div>
+										<c:if test="${ fn:contains( c.cateIcon, '신장')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/kidney.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">고용량 복용시
+												고칼슘혈증으로 인해 신장 기능 저하</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( c.cateIcon, '요로')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/body_wraning.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">요로결석 주의</div>
+										<c:if test="${ fn:contains( c.cateIcon, '요로')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/body_wraning.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">요로결석 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( c.cateIcon, '저혈압')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/body_wraning.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">저혈압 주의</div>
+										<c:if test="${ fn:contains( c.cateIcon, '저혈압')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/body_wraning.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">저혈압 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( c.cateIcon, '석류')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/body.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">석류 알레르기 주의</div>
+										<c:if test="${ fn:contains( c.cateIcon, '석류')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/body.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">석류 알레르기 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( c.cateIcon, '여성호르몬')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/body.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">여성호르몬 유사 작용 주의</div>
+										<c:if test="${ fn:contains( c.cateIcon, '여성호르몬')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/body.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">여성호르몬 유사 작용
+												주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( c.cateIcon, '장기')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/body.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">장기간 섭취시 장기 손상 우려</div>
+										<c:if test="${ fn:contains( c.cateIcon, '장기')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/body.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">장기간 섭취시 장기
+												손상 우려</div>
 													&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( c.cateIcon, '철')}">
-												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-													<img src="resources/img/warning/body_wraning.png" style="height: 30px;">
-												</div>
-												<div class="product__details__price"
-													style="font-size: 100%; display: inline;">철 중독증 우려</div>
+										<c:if test="${ fn:contains( c.cateIcon, '철')}">
+											<div class="d-inline"
+												style="font-size: 150%; color: #BC3838;">
+												<img src="resources/img/warning/body_wraning.png"
+													style="height: 30px;">
+											</div>
+											<div class="product__details__price"
+												style="font-size: 100%; display: inline;">철 중독증 우려</div>
 												&nbsp;&nbsp;
 											</c:if>
-											<c:if test="${ fn:contains( c.cateIcon, '임산부')}"></c:if>
-										</c:forEach>
-									</c:if>
-									<c:if test="${ c.cateIcon eq null }">
-										<div class="product__details__price"
-													style="font-size: 100%; display: inline;">아직 발견된 주의사항이 없네요!</div>
-									</c:if>
-								</div>
+										<%-- <c:if test="${ fn:contains( c.cateIcon, '임산부')}"></c:if> --%>
+									</c:forEach>
+								</c:if>
+								<c:if test="${ c.cateIcon eq null }">
+									<div class="product__details__price"
+										style="font-size: 100%; display: inline;">아직 발견된 주의사항이
+										없네요!</div>
+								</c:if>
 							</div>
+						</div>
 						<ul>
 							<li>
 								<div class="mb-3" name="pillItem">
 									<b style="display: inline; font-weight: 900; color: #24E082;">영양제
-										추천</b> <span
-										style="margin-left: 80%; color: #24E082; font-weight: 700;">더보기
-										&gt; &gt;</span>
+										추천</b>
+									<button type="button"
+										style="margin-left: 80%; color: #24E082; font-weight: 700;  background-color: white; border: none;"
+										id="productMore">더보기 &gt; &gt;</button>
 								</div>
 							</li>
 							<li>
 								<div class="row">
-									<div class="product__details__quantity"
-										style="border: 2px solid #24E082; border-radius: 10px; width: 30%; height: 380px; margin-right: 3.25%;">
-										<div style="text-align: center; padding-top: 5%;">
-											<div name="getItemImg">
-												<img src="resources/img/product/details/product-details-1.jpg"
-													style="height: 5%; width: 50%;">
-											</div>
-											<div name="getItemName"
-												class="text-left fs-5 font-weight-bold pl-2">&nbsp;
-												뉴트리코어 식물성 알티지 오메가3</div>
-											<div class="fs-5 text-left pr-3 pt-3 mb-5">&nbsp; 눈 건강
-											</div>
-											<div class="text-left pr-2 pt-3">
-												<div class="product__details__rating"
-													style="float: left; padding-left: 5%;">
-													<i class="fa fa-star"
-														style="color: rgb(247, 247, 75); font-size: 130%;"></i>
+									<c:forEach var="item" items="${ product }" begin="0" end="2"
+										step="1" varStatus="status">
+										<div class="product__details__quantity"
+											style="border: 2px solid #24E082; border-radius: 10px; width: 30%; height: 380px; margin-right: 3.25%;">
+											<div style="text-align: center; padding-top: 5%;">
+												<div name="getItemImg">
+													<img src="${ item.proImage }"
+														style="height: 5%; width: 50%;">
 												</div>
-												<div name="reviewRank"
-													style="float: left; padding-left: 1%; padding-top: 1.5%;">
-													<p style="color: black; font-size: 130%;">4.8</p>
+												<div name="getItemName"
+													class="text-left fs-5 font-weight-bold pl-2">&nbsp;
+													${ item.proName }</div>
+												<div class="fs-5 text-left pr-3 pt-3 mb-5">&nbsp; ${ item.proEffect }
 												</div>
-												<div class="text-right font-weight-bold pr-2% pt--3">
-													52,100</div>
+												<div class="text-left pr-2 pt1">
+													<div class="product__details__rating"
+														style="float: left; padding-left: 5%;">
+														<i class="fa fa-star"
+															style="color: rgb(247, 247, 75); font-size: 130%;"></i>
+													</div>
+													<div name="reviewRank"
+														style="float: left; padding-left: 1%; padding-top: 1.5%;">
+														<p style="color: black; font-size: 130%;">${ item.proGrade }</p>
+													</div>
+													<div class="text-right font-weight-bold pr-2% pt--3">
+														${ item.proPrice }</div>
+												</div>
+												<br>
+												<br>
 											</div>
 										</div>
-									</div>
-									<div class="product__details__quantity"
-										style="border: 2px solid #24E082; border-radius: 10px; width: 30%; height: 380px; margin-right: 3%;">
-										<div style="text-align: center; padding-top: 4%;">
-											<div name="getItemImg">
-												<img src="resources/img/product/details/product-details-1.jpg"
-													style="height: 5%; width: 50%;">
-											</div>
-											<div name="getItemName"
-												class="text-left fs-5 font-weight-bold pl-2">종근당건강
-												프로메가 알티지 오메가3 듀얼</div>
-											<div class="fs-5 text-left pr-3 pt-3 mb-4">&nbsp; 눈 건강
-											</div>
-											<div class="text-left pr-2 pt-3">
-												<div class="product__details__rating"
-													style="float: left; padding-left: 5%;">
-													<i class="fa fa-star"
-														style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-												</div>
-												<div name="reviewRank"
-													style="float: left; padding-left: 1%; padding-top: 1.5%;">
-													<p style="color: black; font-size: 130%;">4.8</p>
-												</div>
-												<div class="text-right font-weight-bold pr-2%">52,100
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="product__details__quantity"
-										style="border: 2px solid #24E082; border-radius: 10px; width: 30%; height: 380px; margin-right: 3%;">
-										<div style="text-align: center; padding-top: 4%;">
-											<div name="getItemImg">
-												<img src="resources/img/product/details/product-details-1.jpg"
-													style="height: 5%; width: 50%;">
-											</div>
-											<div name="getItemName"
-												class="text-left fs-5 font-weight-bold pl-2">&nbsp;
-												뉴트리코어 식물성 알티지 오메가3</div>
-											<div class="fs-5 text-left pr-3 pt-5 mb-4">&nbsp; 눈 건강
-											</div>
-											<div class="text-left pr-2 pt-3">
-												<div class="product__details__rating"
-													style="float: left; padding-left: 5%;">
-													<i class="fa fa-star"
-														style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-												</div>
-												<div name="reviewRank"
-													style="float: left; padding-left: 1%; padding-top: 1.5%;">
-													<p style="color: black; font-size: 130%;">4.8</p>
-												</div>
-												<div class="text-right font-weight-bold pr-2%">52,100
-												</div>
-											</div>
-										</div>
-									</div>
+									</c:forEach>
 								</div>
-
 							</li>
 						</ul>
 					</div>
@@ -320,100 +301,41 @@
 							<div class="tab-pane active" id="tabs-1" role="tabpanel">
 								<div class="product__details__tab__desc">
 									<h6>리뷰</h6>
-									<div class="product__details__quantity"
-										style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 3%; padding-bottom: 5%;">
-										<div name="reviewDetail">
-											<div name="reviewImg"
-												style="float: left; padding-right: -20%;">
-												<i class="bi bi-person-circle"
-													style="font-size: 350%; color: #24E082;"></i>
+									<c:forEach items="${ review }" var="re">
+										<div class="product__details__quantity"
+											style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 3%; padding-bottom: 5%;">
+											<div name="reviewDetail">
+												<div name="reviewImg"
+													style="float: left; padding-right: -20%;">
+													<i class="bi bi-person-circle"
+														style="font-size: 350%; color: #24E082;"></i>
+												</div>
+												<div name="reviewNickName"
+													style="float: left; padding-top: 3.5%; padding-left: 1%;">
+													<p style="font-weight: 600;">집가고싶당</p>
+												</div>
+												<div class="product__details__rating"
+													style="float: left; padding-top: 3.5%; padding-left: 20%;">
+													<i class="fa fa-star"
+														style="color: rgb(247, 247, 75); font-size: 130%;"></i>
+												</div>
+												<div name="reviewRank"
+													style="float: left; padding-top: 3.5%; padding-left: 1%;">
+													<p style="color: black; font-size: 130%;">4.8</p>
+												</div>
+												<div name="reviewImg"
+													style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 4%;">
+													<img src="resources/img/product/details/product-details-1.jpg"
+														class=".img-fluid">
+												</div>
+												<div name="reviewContent" class="text-left"
+													style="padding-top: 9%;">야채냠</div>
 											</div>
-											<div name="reviewNickName"
-												style="float: left; padding-top: 3.5%; padding-left: 1%;">
-												<p style="font-weight: 600;">집가고싶당</p>
-											</div>
-											<div class="product__details__rating"
-												style="float: left; padding-top: 3.5%; padding-left: 20%;">
-												<i class="fa fa-star"
-													style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-											</div>
-											<div name="reviewRank"
-												style="float: left; padding-top: 3.5%; padding-left: 1%;">
-												<p style="color: black; font-size: 130%;">4.8</p>
-											</div>
-											<div name="reviewImg"
-												style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 4%;">
-												<img src="resources/img/product/details/product-details-1.jpg"
-													class=".img-fluid">
-											</div>
-											<div name="reviewContent" class="text-left"
-												style="padding-top: 9%;">야채냠</div>
 										</div>
-									</div>
 									<br>
 									<br>
-									<div class="product__details__quantity"
-										style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 3%; padding-bottom: 5%;">
-										<div name="reviewDetail">
-											<div name="reviewImg"
-												style="float: left; padding-right: -20%;">
-												<i class="bi bi-person-circle"
-													style="font-size: 350%; color: #24E082;"></i>
-											</div>
-											<div name="reviewNickName"
-												style="float: left; padding-top: 3.5%; padding-left: 1%;">
-												<p style="font-weight: 600;">좋아좋아</p>
-											</div>
-											<div class="product__details__rating"
-												style="float: left; padding-top: 3.5%; padding-left: 20%;">
-												<i class="fa fa-star"
-													style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-											</div>
-											<div name="reviewRank"
-												style="float: left; padding-top: 3.5%; padding-left: 1%;">
-												<p style="color: black; font-size: 130%;">2.3</p>
-											</div>
-											<div name="reviewImg"
-												style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 4%;">
-												<img src="resources/img/product/details/product-details-1.jpg"
-													class=".img-fluid">
-											</div>
-											<div name="reviewContent" style="padding-top: 9%;">오이
-												좋아</div>
-										</div>
-									</div>
-									<br>
-									<br>
-									<div class="product__details__quantity"
-										style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%; padding-bottom: 5%;">
-										<div name="reviewDetail">
-											<div name="reviewImg"
-												style="float: left; padding-right: -20%;">
-												<i class="bi bi-person-circle"
-													style="font-size: 350%; color: #24E082;"></i>
-											</div>
-											<div name="reviewNickName"
-												style="float: left; padding-top: 3.5%; padding-left: 1%;">
-												<p style="font-weight: 600;">하하하하하하</p>
-											</div>
-											<div class="product__details__rating"
-												style="float: left; padding-top: 3.5%; padding-left: 20%;">
-												<i class="fa fa-star"
-													style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-											</div>
-											<div name="reviewRank"
-												style="float: left; padding-top: 3.5%; padding-left: 1%;">
-												<p style="color: black; font-size: 130%;">2.3</p>
-											</div>
-											<div name="reviewImg"
-												style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 4%;">
-												<img src="resources/img/product/details/product-details-1.jpg"
-													class=".img-fluid">
-											</div>
-											<div name="reviewContent" style="padding-top: 9%;">나는
-												모든게 별로~ 내 맘의 별로~~</div>
-										</div>
-									</div>
+									
+									</c:forEach>
 								</div>
 							</div>
 						</div>
@@ -506,5 +428,16 @@
 	<!-- Footer Section End -->
 
 </body>
-
+	<script>
+		window.onload=()=>{
+			const more = document.getElementById("productMore");
+			more.addEventListener('click', ()=>{
+				const cateNum = document.getElementById('cateNum').value;
+				const cateName = document.getElementById('cateName').innerText;
+				console.log(cateNum);
+				console.log(cateName);
+                location.href = '${contextPath}/productMore.su?cateNum=' + cateNum + '&cateName=' + cateName;
+			});
+		}
+	</script>
 </html>

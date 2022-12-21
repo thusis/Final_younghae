@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Supplement;
 import com.kh.young.supplement.dao.ProCategoryDAO;
 
 @Service("pcService")
@@ -34,6 +35,16 @@ public class ProCategoryServiceImpl implements ProCategoryService{
 	@Override
 	public ProCategory selectCategory(int cateNum) {
 		return pcDAO.selectCategory(sqlSession, cateNum);
+	}
+
+	@Override
+	public ArrayList<Supplement> selectCateProduct(int cateNum) {
+		return pcDAO.selectCateProduct(sqlSession, cateNum);
+	}
+
+	@Override
+	public Supplement selectPro(int proNum) {
+		return pcDAO.selectPro(sqlSession, proNum);
 	}
 	
 }
