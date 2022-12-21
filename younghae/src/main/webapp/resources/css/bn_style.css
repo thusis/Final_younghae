@@ -499,3 +499,76 @@
         background-color: #8496AE;
     }
     /* 채팅방 끝=============================================== */
+
+    .bn_homebox{
+        padding:1.25rem;
+        margin:0.25rem;
+        background-color: #24E082;
+        border-radius: 1rem;
+        font-family: 'IBM Plex Sans KR', sans-serif; 
+    }
+
+    .bn_homebox h4,.bn_homebox  h5,.bn_homebox  h6{
+        color:#f8f8fa;
+    }
+
+    .bn_homebox_2{
+        padding:1.25rem;
+        margin:0.25rem;
+        background-color: #ffffff;
+        border-radius: 1rem;
+        font-family: 'IBM Plex Sans KR', sans-serif; 
+    }
+    .bn_homebox_2_main{
+        border-left:2px solid #24E082;
+    }
+    .bn_round{
+        display: inline-block;
+        position: relative;
+        width: 2rem;
+        height: 2rem;
+        text-align: center;
+        justify-items: center;
+        vertical-align: middle;
+        line-height:2.5rem;
+        border-radius: 1rem;
+        background-color: #ffffff;
+        box-shadow: 0 0.25rem 0.5rem rgb(0 0 0 / 10%);
+    } 
+    .bn_round .btn{
+        position: absolute;
+        right: -0.1rem;
+        top: -0.05rem;
+        color:rgb(80, 78, 93);
+    }
+    .bn_round_badge{
+        position: absolute;
+        width: 0.5rem;
+        height: 0.5rem;
+        right:0rem;
+        top:0rem;
+        border-radius: 0.3rem;
+        background-color: #24E082;
+    }
+    .bn_homebox_3{
+        padding:1.25rem;
+        margin:0.5rem;
+        border-radius: 1rem;
+        font-family: 'IBM Plex Sans KR', sans-serif; 
+    }
+    .bn_homebox_3:hover{
+        border: 0.15rem solid #24E082;
+        background-color: #ffffff;
+    }
+    .bn_homebox_4{
+        padding:1.25rem;
+        padding-left: 2.25rem;
+        margin-right: 2rem;
+        background-color: #ffffff;
+        border-radius: 1rem;
+        font-family: 'IBM Plex Sans KR', sans-serif; 
+        color:darkgrey;
+    }
+	.bn_homebox:hover{
+	    cursor: pointer;
+	}

@@ -20,6 +20,13 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
+	<style>
+		#selectPillModal{
+			width: 50vw;
+			max-width: none;
+			height: 50%;
+		}
+	</style>
 </head>
 <body>
 
@@ -41,7 +48,7 @@
         <form action="${contextPath}/insertquestion.qa" method="post" enctype="multipart/form-data" >
         
             <div class="mb-5">
-                <label for="title" class="form-label bn_txt_strong">제목</label>
+                <label for="boardTitle" class="form-label bn_txt_strong">제목</label>
                 <input type="text" class="form-control m-3" id="title" name="boardTitle" placeholder="제목을 입력하세요">
             </div>
 
@@ -77,65 +84,69 @@
 	<br>
 	<br>
 	
-	<div class="modal fade" tabindex="-1" role="dialog" id="modalPillChoice" style="background-color: white;">
+	<div class="modal fade" tabindex="-1" role="dialog" id="modalPillChoice" aria-hidden="false" style="background-color: white;">
 	    <div class="modal-dialog modal-dialog-centered" role="document">
 	            <div class="modal-body p-4 text-center">
 	                <!--영양제 목록 보여줄건데 이건 include 해야 할 것 같다!-->
-	                <div class="row">
-	                    <div class="col-lg-4 col-md-6 col-sm-6">
-	                        <div class="product__item">
-	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg">
-	                                <ul class="product__item__pic__hover">
-	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                                </ul>
-	                            </div>
-	                            <div class="product__item__text">
-	                                <h6><a href="#">Crab Pool Security</a></h6>
-	                                <h5>$30.00</h5>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-4 col-md-6 col-sm-6">
-	                        <div class="product__item">
-	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg">
-	                                <ul class="product__item__pic__hover">
-	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                                </ul>
-	                            </div>
-	                            <div class="product__item__text">
-	                                <h6><a href="#">Crab Pool Security</a></h6>
-	                                <h5>$30.00</h5>
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-4 col-md-6 col-sm-6">
-	                        <div class="product__item">
-	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg">
-	                                <ul class="product__item__pic__hover">
-	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                                </ul>
-	                            </div>
-	                            <div class="product__item__text">
-	                                <h6><a href="#">Crab Pool Security</a></h6>
-	                                <h5>$30.00</h5>
-	                            </div>
-	                        </div>
-	                    </div>
-	
-	            </div>
-	            <div class="modal-footer flex-nowrap p-0">
-	                <button type="button" class="btn btn-secondary">선택</button>
-	                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	            </div>
+<!-- 	                <div class="row"> -->
+<!-- 	                    <div class="col-lg-4 col-md-6 col-sm-6"> -->
+<!-- 	                        <div class="product__item"> -->
+<!-- 	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg"> -->
+<!-- 	                                <ul class="product__item__pic__hover"> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li> -->
+<!-- 	                                </ul> -->
+<!-- 	                            </div> -->
+<!-- 	                            <div class="product__item__text"> -->
+<!-- 	                                <h6><a href="#">Crab Pool Security</a></h6> -->
+<!-- 	                                <h5>$30.00</h5> -->
+<!-- 	                            </div> -->
+<!-- 	                        </div> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="col-lg-4 col-md-6 col-sm-6"> -->
+<!-- 	                        <div class="product__item"> -->
+<!-- 	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg"> -->
+<!-- 	                                <ul class="product__item__pic__hover"> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li> -->
+<!-- 	                                </ul> -->
+<!-- 	                            </div> -->
+<!-- 	                            <div class="product__item__text"> -->
+<!-- 	                                <h6><a href="#">Crab Pool Security</a></h6> -->
+<!-- 	                                <h5>$30.00</h5> -->
+<!-- 	                            </div> -->
+<!-- 	                        </div> -->
+<!-- 	                    </div> -->
+<!-- 	                    <div class="col-lg-4 col-md-6 col-sm-6"> -->
+<!-- 	                        <div class="product__item"> -->
+<!-- 	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg"> -->
+<!-- 	                                <ul class="product__item__pic__hover"> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
+<!-- 	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li> -->
+<!-- 	                                </ul> -->
+<!-- 	                            </div> -->
+<!-- 	                            <div class="product__item__text"> -->
+<!-- 	                                <h6><a href="#">Crab Pool Security</a></h6> -->
+<!-- 	                                <h5>$30.00</h5> -->
+<!-- 	                            </div> -->
+<!-- 	                        </div> -->
+<!-- 	                    </div> -->
+<!-- 					</div> -->
+				<h5>영양제 선택</h5>
+				<form action="${contextPath}/searchSupplement.qa" method="post">
+					<input type="text" name="keyword">
+				</form>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">검색하지 않고 닫기</button>
+		        <button type="submit" class="btn btn-primary">검색하기</button>
+		      </div>
 	        </div>
 	    </div>
 	</div>
+<%-- 	<%@ include file="supplementModal.jsp" %> --%>
 	<br>
 	<br>
 	<br>
@@ -161,8 +172,10 @@
 			});
 		}
 		  
+
 		$("#selectPillBtn").click(function(){ //영양제 선택 모달창 팝업
-			$('#modalPillChoice').modal();
+			$("#modalPillChoice").modal({backdrop:'static'});
+			$('#modalPillChoice').modal("show");
 		//영양제 검색 > 영양제이름으로만 검색결과 > 뷰 > 선택 > 유저에게 보이는 창에는 영양제이름이, 전달되는 값은 영양제제품번호만
 		//모달이 아니고 팝업으로 구현 따로 창을 만들어야 함
 		});
@@ -185,6 +198,7 @@
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
 		});
 
+		
 	</script>
 	</body>
 </html>
