@@ -16,7 +16,12 @@ tmp/
 *.bak
 *.swp
 *~.nib
-*.xml
+log4j.xml
+mybatis-config.xml
+root-context.xml
+**/appServlet/*.xml
+web.xml
+pom.xml
 local.properties
 .settings/
 .loadpath
