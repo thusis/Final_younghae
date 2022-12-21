@@ -10,7 +10,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>Shopping | Details</title>
 
     <style>
             /*  구글 폰트
@@ -368,7 +368,6 @@
 </head>
 
 <body>
-<c:set value="${pageContext.servletContext.contextPath}" var="contextPath" scope="application"/>
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	<!--네비 상세-->
 	<div class="container">
@@ -390,10 +389,10 @@
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
-                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg" alt="">
+                                src=${ supplementDetail.proImage } alt="">
                         </div>
                         <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg"
+                            <img data-imgbigurl=${ supplementDetail.proImage }
                                 src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg" alt="">
                             <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"
                                 src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg" alt="">
@@ -407,21 +406,21 @@
                 <!-- /상품이미지 -->
                 <div class="col-lg-6 col-md-6" >
                     <div class="product__details__text">
-                        <h5 style="color: gray;">나우푸드</h5>
-                        <h3 style="display: inline;">울트라 오메가3</h3>
+                        <h5 style="color: gray;">${ supplementDetail.proCompany }</h5>
+                        <h3 style="display: inline;">${ supplementDetail.proName }</h3>
                         <div style="display: inline; float: right; font-size: 150%;">
                             <i class="fa-regular fa-heart"></i>&nbsp;
                             <i class="bi bi-share"></i>
                         </div><br><br>
                         <div class="product__details__rating" style="display: inline; font-size: 150%;">
-                            <i class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32
+                            <i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ supplementDetail.proGrade }
                         </div>
                         <div class="product__details" style="display: inline; font-size: 100%; float: right; margin-top: 2.5%;">
                             <span style="color: orange; text-decoration: underline;">153개의 리뷰&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>&nbsp;&nbsp;&nbsp;
                             <span id="compareproduct" style="color: rgb(242, 67, 230); text-decoration: underline;">상품 비교&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>
                         </div>
 
-                        <div style="font-size: 250%; font-weight: 600;">33,000 원</div>
+                        <div style="font-size: 250%; font-weight: 600;">${ supplementDetail.formatPrice }원</div>
                         <hr>
                         <h6 style="padding: 3%;">흡수율 높은 글루콘산 아연과 항산화 비타민C의 황금배합에 무설탕 천연 포도맛을 더했습니다.</h6>
                         <hr>
@@ -429,7 +428,7 @@
                         <table style="width: 150%;">
                             <tr>
                                 <th>혜택</th>
-                                <td>20P 적립</td>
+                                <td>${ supplementDetail.proPrice }적립</td>
                             </tr>
                             <tr>
                                 <th>배송</th>
@@ -442,7 +441,7 @@
                         </table>
                         <hr>
 
-                        <h5 style="font-weight: bold; color: black;">울트라 오메가3</h5><br>
+                        <h5 style="font-weight: bold; color: black;">${ supplementDetail.proName }</h5><br>
 
 
                         <h6 style="display: inline-block; font-weight: bold; color: black; margin-top: 2%;">수량</h6>

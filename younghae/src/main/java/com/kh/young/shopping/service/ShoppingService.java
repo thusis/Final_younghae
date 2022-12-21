@@ -10,4 +10,8 @@ public interface ShoppingService {
 
 	ArrayList<Supplement> selectTrendList();
 
+	ArrayList<Supplement> selectBestsellerList();
+
+	Supplement selectDetail(int proNum);
+
 }

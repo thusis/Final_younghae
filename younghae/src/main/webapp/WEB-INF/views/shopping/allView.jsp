@@ -244,11 +244,15 @@
             </div>
             <br><br><br><br>
 
-<!-- 전체 상품 섹션-->
+            <!-- 실시간트렌드 섹션 -->
             <div class="row">
-                <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">전체 상품</p><br><br><br>
-                <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/allView.sh'">더보기</button>
-                <br>
+               <button class="col-lg-2" style="color: #FD9F28; font-weight: bold; font-size: 25px; background-color: white; border: none;" onclick="location.href='${contextPath}/allView.sh'">전체 상품</button>
+               <button class="col-lg-2" style="color: #24E082; font-weight: bold; font-size: 25px; background-color: white; border: none;" onclick="location.href='${contextPath}/bestsellerView.sh'">베스트셀러</button>
+               <button class="col-lg-2" style="color: #24E082; font-weight: bold; font-size: 25px; background-color: white; border: none;" onclick="location.href='${contextPath}/trendView.sh'">실시간트렌드</button>
+            </div>
+			<br><br>
+			
+			<div class="row">
                 <div class="col-lg-12">
                     <div class="featured__controls">
                         <ul>
@@ -264,12 +268,12 @@
                     </div>
                 </div>
             </div>
-
+			
             <div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
+               	<c:forEach items="${ allList }" var="i">
 	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
 	                    <div class="product__item">
-	                        <div class="product__item__pic set-bg">
+	                        <div class="product__item__pic set-bg" style="margin-bottom: -40px;">
 	                            <img src=${ i.proImage } style="margin-top: 30px;">
 	                            <ul class="product__item__pic__hover">
 	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
@@ -287,80 +291,7 @@
 	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
 	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
 	                            </div>
-	                        </div>
-	                        
-	                    </div>
-	                </div>
-                </c:forEach>
-            </div><br><br>
-                
-            <!-- /전체 상품 섹션-->
-            
-            <!-- 스테디셀러 영양제 섹션 -->
-            <div class="row">
-                <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">베스트셀러</p>
-                <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/bestsellerView.sh'">더보기</button>
-            </div>
-
-            <div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
-	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
-	                    <div class="product__item">
-	                        <div class="product__item__pic set-bg">
-	                            <img src=${ i.proImage } style="margin-top: 30px;">
-	                            <ul class="product__item__pic__hover">
-	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                            </ul>
-	                        </div>
-	                        <div class="product__item__text" style="text-align: left;">
-	                            <span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ i.proGrade }</span>
-	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
-	                            <h5 style="height: 2rem;">${ i.proName }</h5>
-	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
-	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem;">${ i.proEffect }</h6>
-	                            <div>
-	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
-	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
-	                            </div>
-	                        </div>
-	                        
-	                    </div>
-	                </div>
-                </c:forEach>
-            </div><br><br>
-
-            <!-- /스테디셀러 영양제 섹션 --> 
-
-            <!-- 실시간트렌드 섹션 -->
-            <div class="row">
-                <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">실시간 트렌드</p>
-                <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/trendView.sh'">더보기</button>
-            </div>
-
-            <div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
-	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
-	                    <div class="product__item">
-	                        <div class="product__item__pic set-bg">
-	                            <img src=${ i.proImage } style="margin-top: 30px;">
-	                            <ul class="product__item__pic__hover">
-	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                            </ul>
-	                        </div>
-	                        <div class="product__item__text" style="text-align: left;">
-	                            <span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ i.proGrade }</span>
-	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
-	                            <h5 style="height: 2rem;">${ i.proName }</h5>
-	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
-	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem;">${ i.proEffect }</h6>
-	                            <div>
-	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
-	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
-	                            </div>
+	                            <input type="hidden" class="proNum" value="${ i.proNum }">
 	                        </div>
 	                        
 	                    </div>
@@ -368,7 +299,8 @@
                 </c:forEach>
             </div><br><br>
             <!-- /실시간트렌드 섹션 --> 
-           
+
+
             
             <div class="product__pagination">
                 <a href="#">1</a>
@@ -451,7 +383,20 @@
 
     </footer>
     
+	<script>
+		window.onload =()=>{
+			const dives = document.getElementsByClassName('product__item');
 
+			for(const div of dives){
+				div.addEventListener('click',function(){
+					const proNum = this.querySelector('.proNum').value;
+					console.log(proNum);
+					location.href='${contextPath}/supplementDetail.sh?proNum=' + proNum;
+				});
+			}
+
+		}
+	</script>
 </body>
 
 </html>

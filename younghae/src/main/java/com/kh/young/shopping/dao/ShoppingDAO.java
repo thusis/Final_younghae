@@ -15,7 +15,15 @@ public class ShoppingDAO {
 	}
 
 	public ArrayList<Supplement> selectTrendList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList(null);
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectTrendList");
+	}
+
+	public ArrayList<Supplement> selectBestsellerList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectBestsellerList");
+	}
+
+	public Supplement selectDetail(SqlSessionTemplate sqlSession, int proNum) {
+		return sqlSession.selectOne("shoppingMapper.selectDetail", proNum);
 	}
 
 }
