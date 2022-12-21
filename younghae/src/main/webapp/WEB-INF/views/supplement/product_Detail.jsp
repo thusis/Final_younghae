@@ -160,11 +160,13 @@
                 </div>
 
                 <!-- 구매하러가기  버튼 -->
-                <div name="goShop" style="margin-left: 25%; margin-top: 2%;">
-                    <button type="button"
-                        style="display: inline; margin-left: -25%; height: 170%; width: 200%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">구매하러
-                        가기</button>
-                </div>
+                <c:if test="${ product.proSaleStatus eq 'Y' }">
+	                <div name="goShop" style="margin-left: 25%; margin-top: 2%;">
+	                    <button type="button"
+	                        style="display: inline; margin-left: -25%; height: 170%; width: 200%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">구매하러
+	                        가기</button>
+	                </div>
+                </c:if>
                 <div name="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
                     <button type="button"
                         style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;"
