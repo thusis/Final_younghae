@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="supplementMapper">
+
+	<!-- 상품 불러오기 -->
+	<select id="selectProduct" resultMap="SupplementResultSet">
+		select *
+		from product
+		where pro_status = 'Y';
+	</select>
+	
+	<!-- 성분 수 불러오기 -->
+	<select id="getListCount" resultType="_int">
+		select count(*)
+		from category
+	</select>
+	
+	<!-- 성분 내역 불러오기 -->
+	<select id="allCategory" resultMap="CategoryResultSet">
+		select *
+		from category
+	</select>
+	
+	<!-- 성분 설명 불러오기 -->
+	<select id="selectCategory" resultMap="CategoryResultSet">
+		select *
+		from category
+		where cate_num = #{cateNum}
+	</select>
+	
+	<!-- 카테고리 관련 상품 불러오기 -->
+	<select id="selectCateProduct" resultMap="SupplementResultSet">
+		select *
+		from product
+		where cate_num = #{cateNum}	
+	</select>
+	
+	<!-- 영양제 한개만 불러오기 -->
+	<select id="selectPro" resultMap="SupplementResultSet">
+		select *
+		from product
+		where pro_num = #{proNum}
+	</select>
+	
+	<!-- 성분 폼 -->
+	<resultMap type="ProCategory" id="CategoryResultSet">
+		<id column="CATE_NUM" property="cateNum"/>
+		<result column="CATE_NAME" property="cateName"/>
+		<result column="CATE_SUMMARY" property="cateSummary"/>
+		<result column="CATE_ICON" property="cateIcon"/>
+	</resultMap>
+	
+	<!-- 영양제 폼 -->
+	<resultMap type="Supplement" id="SupplementResultSet">
+		<id column="PRO_NUM" property="proNum"/>
+		<result column="PRO_IMAGE" property="proImage"/>
+		<result column="PRO_NAME" property="proName"/>
+		<result column="PRO_COMPANY" property="proCompany"/>
+		<result column="PRO_INGREDIENT" property="proIngredient"/>
+		<result column="PRO_PRICE" property="proPrice"/>
+		<result column="PRO_EFFECT" property="proEffect"/>
+		<result column="PRO_INTAKE" property="proIntake"/>
+		<result column="PRO_SALE_STATUS" property="proSaleStatus"/>
+		<result column="PRO_CREATEDATE" property="proCreateDate"/>
+		<result column="PRO_MODIFYDATE" property="proModifyDate"/>
+		<result column="PRO_GRADE" property="proGrade"/>
+		<result column="PRO_STATUS" property="proStatus"/>
+		<result column="CATE_NUM" property="cateNum"/>
+	</resultMap>
+</mapper>
