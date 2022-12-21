@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,7 +75,7 @@
 					<div class="product__details__text">
 						<i class="fa-solid fa-comment-medical"
 							style="font-size: 225%; color: #24E082; margin-right: 1%;"></i>
-						<h3 style="display: inline;">지아잔틴</h3>
+						<h3 style="display: inline;">${ c.cateName }</h3>
 						<br>
 						<div class="product__details__rating">
 							<i class="fa fa-star"></i> <i class="fa fa-star"></i> <i
@@ -81,27 +83,126 @@
 								class="fa fa-star-half-o"></i> <span>(리뷰 18)</span>
 						</div>
 						<p>
-							&nbsp; 오메가3는 생선이나 해조류에서 추출한 여러 종류의 불포화지방산을 부르는 말이에요. <br>
-							&nbsp;그 중 가장 중요한 것은 EPA 와 DHA 에요. EPA는 간에서 중성지방 합성을 줄여 혈중 지방 농도를
-							낮춰주고, 혈액 순환에 도움을 줘요. DHA는 뇌, 신경 조직, 망막의 중요 구성 성분으로 뇌세포를 손상 시키는
-							물질을 감소시켜, 기억력을 높이는데 도움을 줄 수 있어요 또, 건조한 눈을 개선해줘요
+							${ c.cateSummary }
 						</p>
-						<div class="product__details__quantity" style="width: 100%;">
-							<div class="product__details__quantity"
-								style="border: 2px solid #24E082; border-radius: 5px; padding: 5%; width: 100%;">
-								<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-									<i class="fa-solid fa-fish-fins"></i>
+							<div class="product__details__quantity" style="width: 100%;">
+								<div class="product__details__quantity"
+									style="border: 2px solid #24E082; border-radius: 5px; padding: 5%; width: 100%;">
+									<c:if test="${ c.cateIcon ne null }">
+										<c:forEach var="w" items="${ c.cateIcon }">
+											<c:if test="${ fn:contains( w , '수술')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/knife.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">수술 전 후 지혈 늦춰짐</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( w, '생선')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<i class="fa-solid fa-fish-fins"></i>
+												</div>
+												<div class="product__details__price mr-5"
+													style="font-size: 100%; display: inline;">생선 알레르기 주의</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( w, '임산부')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/pregnant.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">임산부 관련 연구 부족</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( w, '폐암')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/respiratory.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">장기간 고용량 복용시 폐암 위험 증가</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( w, '수유')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/baby_bottle.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">수유부 관련 연구 부족</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( w, '갑각류')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/crustaceans.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">갑각류 알레르기 주의</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( c.cateIcon, '신장')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/kidney.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">고용량 복용시 고칼슘혈증으로 인해 신장 기능 저하</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( c.cateIcon, '요로')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/body_wraning.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">요로결석 주의</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( c.cateIcon, '저혈압')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/body_wraning.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">저혈압 주의</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( c.cateIcon, '석류')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/body.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">석류 알레르기 주의</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( c.cateIcon, '여성호르몬')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/body.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">여성호르몬 유사 작용 주의</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( c.cateIcon, '장기')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/body.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">장기간 섭취시 장기 손상 우려</div>
+													&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( c.cateIcon, '철')}">
+												<div class="d-inline" style="font-size: 150%; color: #BC3838;">
+													<img src="resources/img/warning/body_wraning.png" style="height: 30px;">
+												</div>
+												<div class="product__details__price"
+													style="font-size: 100%; display: inline;">철 중독증 우려</div>
+												&nbsp;&nbsp;
+											</c:if>
+											<c:if test="${ fn:contains( c.cateIcon, '임산부')}"></c:if>
+										</c:forEach>
+									</c:if>
+									<c:if test="${ c.cateIcon eq null }">
+										<div class="product__details__price"
+													style="font-size: 100%; display: inline;">아직 발견된 주의사항이 없네요!</div>
+									</c:if>
 								</div>
-								<div class="product__details__price mr-5"
-									style="font-size: 100%; display: inline;">생선 알레르기 주의</div>
-								<div class="d-inline" style="font-size: 150%; color: #BC3838;">
-									<img src="resources/img/warning/knife.png" style="height: 30px;">
-								</div>
-								<div class="product__details__price"
-									style="font-size: 100%; display: inline;">수술 전 후 지혈 늦춰짐</div>
-
 							</div>
-						</div>
 						<ul>
 							<li>
 								<div class="mb-3" name="pillItem">

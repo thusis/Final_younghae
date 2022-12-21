@@ -46,7 +46,7 @@ public class ProCategoryController {
 	}
 	
 	@RequestMapping("selectCategory.su")
-	public String selectCategory(@RequestParam("cateName") String category, @RequestParam("cateNum") int cateNum,
+	public ModelAndView selectCategory(@RequestParam("cateName") String category, @RequestParam("cateNum") int cateNum,
 								@RequestParam("page") int page, ModelAndView mv) {
 		System.out.println("controller들어옴");
 		ProCategory selectCate = pcService.selectCategory(cateNum);
@@ -62,6 +62,8 @@ public class ProCategoryController {
 				System.out.println(selectCate.getIcon()[i]);
 			}
 		}
-		return null;
+		mv.addObject("c", selectCate);
+		mv.setViewName("category_select");
+		return mv;
 	}
 }
