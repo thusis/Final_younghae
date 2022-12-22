@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Supplement;
 
 @Repository("pcDAO")
 public class ProCategoryDAO {
@@ -25,6 +26,14 @@ public class ProCategoryDAO {
 
 	public ProCategory selectCategory(SqlSessionTemplate sqlSession, int cateNum) {
 		return sqlSession.selectOne("supplementMapper.selectCategory", cateNum);
+	}
+
+	public ArrayList<Supplement> selectCateProduct(SqlSessionTemplate sqlSession, int cateNum) {
+		return (ArrayList)sqlSession.selectList("supplementMapper.selectCateProduct", cateNum);
+	}
+
+	public Supplement selectPro(SqlSessionTemplate sqlSession, int proNum) {
+		return sqlSession.selectOne("supplementMapper.selectPro", proNum);
 	}
 	
 }

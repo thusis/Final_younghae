@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="qnaMapper">
+
+ 	<resultMap type="Member" id="member">
+  		<id column="USER_NUM" property="userNum"/>
+  		<result column="USER_ID" property="userId"/>
+  		<result column="USER_NAME" property="userName"/>
+  		<result column="USER_NICKNAME" property="userNickname"/>
+  		<result column="USER_EMAIL" property="email"/>
+  		<result column="USER_GENDER" property="gender"/>
+  		<result column="USER_BIRTH" property="userBirth"/>
+  		<result column="USER_PHONE" property="userPhone"/>
+  		<result column="USER_RECOMMEND" property="userRecommend"/>
+  		<result column="USER_ENROLLDATE" property="userEnrollDate"/>
+  		<result column="USER_CNUMBER" property="userCNumber"/>
+  		<result column="USER_STATUS" property="userStatus"/>
+  		<result column="USER_MODIFYDATE" property="userModifyDate"/>
+  	</resultMap>
+  	
+  	<resultMap type="QuestionRespDto" id="questionResp">
+  		<id column="BOARD_NUM" property="boardNum"/>
+  		<result column="BOARD_TITLE" property="boardTitle"/>
+  		<result column="BOARD_CONTENT" property="boardContent"/>
+  		<result column="BOARD_CREATEDATE" property="boardCreateDate"/>
+  		<result column="BOARD_MODIFYDATE" property="boardModifyDate"/>
+  		<result column="BOARD_VIEW" property="boardView"/>
+  		<result column="USER_NUM" property="userNum"/>
+  		<result column="PRO_NUM" property="proNum"/>
+  		<result column="IS_SOLVED" property="isSolved"/>
+  		<result column="ANSWERCOUNT" property="answerCount"/>
+  		<result column="REPLYCOUNT" property="replyCount"/>
+  		<result column="SCRAPCOUNT" property="scrapCount"/>
+  	</resultMap>
+
+	<resultMap type="SupplementRespDto" id="supplementResp">
+  		<id column="PRO_NUM" property="proNum"/>
+  		<result column="PRO_IMAGE" property="proImage"/>
+  		<result column="PRO_NAME" property="proName"/>
+  		<result column="PRO_COMPANY" property="proCompany"/>
+  		<result column="PRO_EFFECT" property="proEffect"/>
+  		<result column="CATE_NAME" property="cateName"/>
+	</resultMap>
+	
+	<select id="login" resultMap="member">
+		select * from member
+		where user_num=#{userNum}
+	</select>
+	
+	<select id="getListCount" resultType="_int">
+		SELECT COUNT(*) FROM QUESTION
+	</select>
+
+	<select id="selectQuestionList" resultMap="questionResp">
+		SELECT Q.QUESTION_NUM BOARD_NUM,
+	            BOARD_TITLE,
+	            BOARD_CREATEDATE, 
+	            BOARD_VIEW, 
+	            USER_NUM,
+	            IS_SOLVED,
+	            COUNT(ANSWER_NUM) ANSWERCOUNT
+		FROM QUESTION Q
+		    JOIN BOARD ON (Q.QUESTION_NUM = BOARD_NUM)
+		    JOIN ANSWER ON (Q.QUESTION_NUM = ANSWER.QUESTION_NUM)
+		WHERE BOARD_STATUS = 'Y'
+		GROUP BY Q.QUESTION_NUM, BOARD_TITLE, BOARD_CREATEDATE, BOARD_VIEW, USER_NUM, IS_SOLVED
+		ORDER BY Q.QUESTION_NUM DESC
+	</select>
+
+	<select id="getMyQuestionCount" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		WHERE BOARD_STATUS='Y' AND USER_NUM =#{userNum} AND BOARD_TYPE = '5'
+	</select>
+	
+	<select id="getIsRead" resultType="_int">
+		SELECT COUNT(*)
+		FROM BOARD
+		    JOIN QUESTION ON (BOARD_NUM = QUESTION_NUM)
+		WHERE IS_READ = 'N' AND BOARD_STATUS='Y' AND USER_NUM =#{userNum} AND BOARD_TYPE = '5'
+	</select>
+	
+<!-- 	<select id="getMyRecentQuestions" resultType="">  -->
+<!-- 으악 다시 -->
+<!-- 		SELECT BOARD_NUM, BOARD_TITLE, COUNT(ANSWER_NUM), IS_READ -->
+<!-- 		FROM BOARD -->
+<!-- 			JOIN QUESTION ON (BOARD_NUM = QUESTION_NUM) -->
+<!-- 			JOIN ANSWER ON (BOARD_NUM = QUESTION_NUM) -->
+<!-- 		WHERE IS_READ = 'N' AND BOARD_STATUS='Y' AND USER_NUM =#{userNum} AND BOARD_TYPE = '5' -->
+<!-- 		GROUP BY BOARD_NUM, BOARD_TITLE, COUNT(ANSWER_NUM), IS_READ -->
+<!-- 	</select> -->
+	
+<!-- 	<select id="getToptwoNum" resultType=""> -->
+<!-- 		SELECT BOARD_NUM -->
+<!-- 		FROM -->
+<!-- 			( -->
+<!-- 			SELECT BOARD_NUM, BOARD_VIEW -->
+<!-- 			FROM BOARD -->
+<!-- 			WHERE BOARD_STATUS='Y' AND BOARD_TYPE = '5' -->
+<!-- 			ORDER BY BOARD_VIEW DESC -->
+<!-- 			) -->
+<!-- 		<![CDATA[WHERE ROWNUM <= 2]]> -->
+<!-- 	</select> -->
+
+<!-- 	<select id="getToptwo"> -->
+<!-- 잘 안 풀리는 건 일단 두고 잘 되는 거 먼저 하자-->
+<!-- 	</select> -->
+
+	<select id="searchSupplement" resultMap="supplementResp">
+		SELECT PRO_NUM, PRO_IMAGE, PRO_NAME, PRO_COMPANY, PRO_EFFECT, CATE_NAME
+		FROM PRODUCT
+		JOIN CATEGORY USING (CATE_NUM)
+		WHERE PRO_NAME LIKE '%#{keyword}%'
+	</select>
+
+</mapper>

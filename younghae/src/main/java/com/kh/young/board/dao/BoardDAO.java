@@ -26,5 +26,21 @@ public class BoardDAO {
 	public ArrayList<Attachment> selectPhotoList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectPhotoList");
 	}
+
+	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertBoard", b);
+	}
+
+	public int insertPhoto(SqlSessionTemplate sqlSession, Attachment photo) {
+		return sqlSession.insert("boardMapper.insertPhoto", photo);
+	}
+
+	public int deleteBoard(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.deleteBoard", boardNo);
+	}
+
+	public int deletePhoto(SqlSessionTemplate sqlSession, int boardNo) {
+		return sqlSession.update("boardMapper.deletePhoto", boardNo);
+	}
 	
 }

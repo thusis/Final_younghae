@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
-import com.kh.young.model.vo.Review;
+import com.kh.young.model.vo.Supplement;
 import com.kh.young.supplement.exception.SupplementException;
 import com.kh.young.supplement.service.ProCategoryService;
 
@@ -46,11 +46,14 @@ public class ProCategoryController {
 	}
 	
 	@RequestMapping("selectCategory.su")
-	public String selectCategory(@RequestParam("cateName") String category, @RequestParam("cateNum") int cateNum,
+	public ModelAndView selectCategory(@RequestParam("cateName") String category, @RequestParam("cateNum") int cateNum,
 								@RequestParam("page") int page, ModelAndView mv) {
 		System.out.println("controller들어옴");
 		ProCategory selectCate = pcService.selectCategory(cateNum);
 		System.out.println(selectCate);
+		
+		ArrayList<Supplement> product = pcService.selectCateProduct(cateNum);
+		
 //		ArrayList<Review> reviewList = pcService.selectReview(cateNum);
 		
 		if(selectCate.getCateIcon() != null) {
@@ -62,6 +65,46 @@ public class ProCategoryController {
 				System.out.println(selectCate.getIcon()[i]);
 			}
 		}
-		return null;
+		mv.addObject("c", selectCate);
+		mv.addObject("product", product);
+		mv.setViewName("category_select");
+		return mv;
+	}
+	
+	@RequestMapping("productMore.su")
+	public String productMore(@RequestParam(value="page", required=false) Integer page,
+								@RequestParam("cateNum") int cateNum, @RequestParam("cateName") String cateName,Model model) {
+		int currentPage = 1;
+				
+		if(page != null) {
+			currentPage = page;
+		}
+		
+		ArrayList<Supplement> product = pcService.selectCateProduct(cateNum);
+		
+		int listCount = product.size();
+
+		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 9);
+		
+		
+		if(product != null) {
+			model.addAttribute("pi", pi);
+			model.addAttribute("cateName", cateName);
+			model.addAttribute("product", product);
+			
+		}
+		return "product_More";
+	}
+	
+	@RequestMapping("selectProduct.su")
+	public ModelAndView selectProduct(@RequestParam("proNum") int proNum, ModelAndView mv) {
+		Supplement product = pcService.selectPro(proNum);
+		
+		if(product != null) {
+			mv.addObject("product", product);
+			mv.setViewName("product_Detail");
+		}
+		
+		return mv;
 	}
 }

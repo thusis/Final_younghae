@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,13 +104,13 @@
                     <div class="product__details__pic">
                         <div class="product__details__pic__item">
                             <img class="product__details__pic__item--large"
-                                src="resources/img/product/details/product-details-1.jpg" alt="">
+                                src="${ product.proImage }" alt="">
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
-                        <h3 class="d-inline">닥터지 초임계 알티지 오메가3</h3>
+                        <h3 class="d-inline">${ product.proName }</h3>
                         <div class="float-right" style="font-size: 150%; color: #24E082;">
                             <i class="bi bi-bookmark-plus-fill"></i>
                         </div>
@@ -125,38 +127,32 @@
                         <div name="productInfo" class="mt-3">
                             <div name="ingredient">
                                 <div class="d-inline mr-2" name="ingredientImg">
-                                    <img src="resources/img/ingredient.png" style="height: 40px;">
+                                    <img src="resources/img/supplement/ingredient.png" style="height: 40px;">
                                 </div>
                                 <label style="font-size: 115%; font-weight: 800;">원재료 및 함량</label>
                             </div>
                             <div class="text-left pl-5">
-                                <p>EPA 및 DHA 함유유지 [영국산 정제어유,d-토코페롤(혼합형)], d-a토코페롤, 혼합제제(비타민D3, 팜유, d-a토코페롤),레몬오일(천연향료)
-                                </p>
+                                <p>${ product.proIngredient }</p>
                             </div>
                             <div name="mouth">
                                 <div class="d-inline" name="ingredientImg">
-                                    <img src="resources/img/mouth.png" style="height: 50px;">
+                                    <img src="resources/img/supplement/mouth.png" style="height: 50px;">
                                 </div>
                                 <label style="font-size: 115%; font-weight: 800;">복용방법</label>
                             </div>
                             <div class="text-left pl-5">
-                                <p>1일 1회, 1회 1정 캡슐을 물과 함께 섭취하십시오.</p>
+                            	<c:set var="intake" value="${ fn:split(product.proIntake, '/')}"/>
+                                <p>총 ${ intake[1] },  ${ intake[3] } ${ intake[0] } 복용하세요.</p>
                             </div>
                         </div>
                         <div class="product__details__quantity">
                             <div class="pl-5">
-                                <button type="button" class="btn btn-secondary trend"
-                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">혈행개선</button>
-                                &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-secondary trend"
-                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">골다공증
-                                    예방</button> &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-secondary trend"
-                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">눈
-                                    건강</button> &nbsp;&nbsp;&nbsp;
-                                <button type="button" class="btn btn-secondary trend"
-                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">세포
-                                    보호</button> &nbsp;&nbsp;&nbsp;
+                            	<c:set var="effect" value="${ fn:split(product.proEffect, ',')}"/>
+		                            <c:forEach items="${ effect }"  var="e">
+		                                <button type="button" class="btn btn-secondary trend"
+		                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">${ e }</button>
+		                                &nbsp;&nbsp;&nbsp;
+		                            </c:forEach>
                             </div>
                         </div>
                         <br><br><br><br><br><br><br><br>
@@ -164,11 +160,13 @@
                 </div>
 
                 <!-- 구매하러가기  버튼 -->
-                <div name="goShop" style="margin-left: 25%; margin-top: 2%;">
-                    <button type="button"
-                        style="display: inline; margin-left: -25%; height: 170%; width: 200%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">구매하러
-                        가기</button>
-                </div>
+                <c:if test="${ product.proSaleStatus eq 'Y' }">
+	                <div name="goShop" style="margin-left: 25%; margin-top: 2%;">
+	                    <button type="button"
+	                        style="display: inline; margin-left: -25%; height: 170%; width: 200%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">구매하러
+	                        가기</button>
+	                </div>
+                </c:if>
                 <div name="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
                     <button type="button"
                         style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;"
@@ -194,13 +192,13 @@
                                     <div class="text-left" style="margin-left: 3%;">
                                         <div name="Productbody">
                                             <div class="d-inline" name="ingredientImg">
-                                                <img src="resources/img/body.png" style="height: 60px;">
+                                                <img src="resources/img/supplement/body.png" style="height: 60px;">
                                             </div>
                                             <label style="font-size: 115%; font-weight: 900;">영양정보</label>
                                         </div>
                                         <div class="text-left pl-5">
                                             <div class="d-inline" name="ingredientImg">
-                                                <img src="resources/img/image1.png" style="height: 300px;">
+                                                <img src="resources/img/product_details/${ product.proNum }_1.png" style="height: 300px;">
                                             </div>
                                         </div>
                                     </div>
