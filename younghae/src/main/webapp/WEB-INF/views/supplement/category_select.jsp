@@ -249,6 +249,7 @@
 										step="1" varStatus="status">
 										<div class="product__details__quantity"
 											style="border: 2px solid #24E082; border-radius: 10px; width: 30%; height: 380px; margin-right: 3.25%;">
+											<input type="hidden" value="${ item.proNum }">
 											<div style="text-align: center; padding-top: 5%;">
 												<div name="getItemImg">
 													<img src="${ item.proImage }"
@@ -259,7 +260,7 @@
 													${ item.proName }</div>
 												<div class="fs-5 text-left pr-3 pt-3 mb-5">&nbsp; ${ item.proEffect }
 												</div>
-												<div class="text-left pr-2 pt1">
+												<div class="text-left pr-2">
 													<div class="product__details__rating"
 														style="float: left; padding-left: 5%;">
 														<i class="fa fa-star"
@@ -434,10 +435,21 @@
 			more.addEventListener('click', ()=>{
 				const cateNum = document.getElementById('cateNum').value;
 				const cateName = document.getElementById('cateName').innerText;
-				console.log(cateNum);
-				console.log(cateName);
+// 				console.log(cateNum);
+// 				console.log(cateName);
                 location.href = '${contextPath}/productMore.su?cateNum=' + cateNum + '&cateName=' + cateName;
 			});
+			
+			const product = document.getElementsByClassName('product__details__quantity');
+			for(const pro of product){
+				pro.addEventListener('click', function(){
+					const productSelect = this.children[0].value;
+					console.log(productSelect);
+					
+					location.href = '${contextPath}/selectProduct.su?proNum='+productSelect;
+				});
+				
+			}
 		}
 	</script>
 </html>
