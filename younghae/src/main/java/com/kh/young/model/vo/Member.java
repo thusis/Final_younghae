@@ -16,12 +16,13 @@ import lombok.ToString;
 public class Member {
 	private int userNum;
 	private String userId;
+	private String userPwd;
 	private String userName;
 	private String userNickname;
 	private String email;
 	private String gender;
 	private Date userBirth;
-	private int userPhone;
+	private String userPhone;
 	private String userRecommend;
 	private Date userEnrollDate;
 	private int userCNumber;

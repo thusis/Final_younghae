@@ -18,5 +18,9 @@ public class HomeController {
 	   public String home2() {
 	      return "/common/topmenubar";
 	   }
+	   @RequestMapping(value = "home.do", method = RequestMethod.GET)
+	   public String home() {
+	      return "/common/topmenubar";
+	   }
 	
 }

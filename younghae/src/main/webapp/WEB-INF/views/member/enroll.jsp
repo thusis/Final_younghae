@@ -151,24 +151,23 @@ a[target='_blank'] {
 				</ul>
 				<div class="tab-content">
 					<div class="tab-pane active" id="tabs-1" role="tabpanel">
-
 						<!-- 일반 회원가입시작 -->
-						<form action="${ contextPath }/insertMember.me" method="POST">
+						<form action="${ contextPath }/insertMember.me" method="POST"
+							id='insertForm'>
+							<input type="hidden" name="category" value="general">
 							<div class="panel-body p-3">
 								<div class="form-group py-2">
-									<div>
-										<label for="myId">아이디*</label>
-									</div>
+									<div>아이디*</div>
 									<div class="input-field" id="myId2">
-										<input type="text" id="myId" placeholder="아이디를 입력해주세요"
-											required>
+										<input type="text" id="myId" name="userId"
+											placeholder="아이디를 입력해주세요" required>
 									</div>
 								</div>
 								<div class="form-group py-1 pb-2">
 									<div>비밀번호*</div>
 									<div class="input-field" id="myPwd2">
-										<input type="password" id="myPwd" placeholder="비밀번호을 입력해주세요"
-											required>
+										<input type="password" id="myPwd" name="userPwd"
+											placeholder="비밀번호을 입력해주세요" required>
 									</div>
 								</div>
 								<div class="form-group py-2">
@@ -181,23 +180,23 @@ a[target='_blank'] {
 								<div class="form-group py-2">
 									<div>이름*</div>
 									<div class="input-field" id="myName2">
-										<input type="text" id="myName" placeholder="이름을 입력해주세요"
-											required>
+										<input type="text" id="myName" name="userName"
+											placeholder="이름을 입력해주세요" required>
 									</div>
 								</div>
 								<div class="form-group py-2">
 									<div>닉네임*</div>
 									<div class="input-field" id="myNickName2">
-										<input type="text" id="myNickName" placeholder="닉네임을 입력해주세요"
-											required>
+										<input type="text" id="myNickName" name="userNickname"
+											placeholder="닉네임을 입력해주세요" required>
 									</div>
 								</div>
 								<div class="form-group py-2">
 									<div>이메일*</div>
-									<div class="input-field">
+									<div class="input-field" id="myEmail2">
 										<input type="email" id="myEmail"
-											style="width: 100%; border: 0;" placeholder="이메일을 입력해주세요"
-											required>
+											style="width: 100%; border: 0;" name="email"
+											placeholder="이메일을 입력해주세요" required>
 									</div>
 								</div>
 								<div class="form-group py-2">
@@ -209,59 +208,76 @@ a[target='_blank'] {
 									<div class="input-field">
 										<input type="text" id="myEmailChk" placeholder="인증번호를 입력해주세요"
 											required>
-										<button type="button" style="border: 0; width: 50px;">확인</button>
+										<button type="button" id="checkCodeBtn"
+											style="border: 0; width: 50px;">확인</button>
 									</div>
 								</div>
 								<div class="form-group py-2">
 									<div>성별*</div>
 									<div>
-										<input type="radio" name="chk_Gender" value="M"><a
+										<input type="radio" name="gender" value="M"><a
 											style="margin-right: 80px;">남</a> <input type="radio"
-											name="chk_Gender" value="F"><a
+											name="gender" value="F"><a
 											style="margin-right: 80px;">여</a> <input type="radio"
-											name="chk_Gender" value="N"><a>알리고싶지않음</a>
+											name="gender" value="N"><a>알리고싶지않음</a>
+									</div>
+								</div>
+								<div class="form-group py-2">
+									<div>고민부위</div>
+									<div>
+										<input type="checkbox" name="userHealth" value="눈">눈
+										<input type="checkbox" name="userHealth" value="피부">피부
+										<input type="checkbox" name="userHealth" value="피로">피로
+										<input type="checkbox" name="userHealth" value="장">장
+										<input type="checkbox" name="userHealth" value="간">간
+										<input type="checkbox" name="userHealth" value="관절">관절
+										<input type="checkbox" name="userHealth" value="임산부">임산부
 									</div>
 								</div>
 								<div class="form-group py-2">
 									<div>생년월일*</div>
-									<div class="input-field">
-										<input type="text" id="myBirth"
-											placeholder="생년월일 6자를 입력해주세요. ">
-									</div>
+									<input type="date" id="myBirth" name="userBirth"
+										style="weigth: 100%;" required>
 								</div>
 								<div class="form-group py-2">
 									<div>전화번호</div>
 									<div class="input-field">
-										<input type="text" id="myPhone" placeholder="전화번호를 입력해주세요">
+										<input type="text" id="myPhone" name="userPhone"
+											placeholder="전화번호를 입력해주세요">
 									</div>
 								</div>
 								<div class="form-group py-2">
 									<div>
 										주소*
-										<button type="button" style="float: right; border: 0;">주소
-											검색</button>
+										<button type="button" id="searchAddress"
+											style="float: right; border: 0;">주소 검색</button>
+									</div>
+									<div class="input-field" style="margin-bottom: 5px">
+										<input type="text" id="myAddress1" name="userZipcode"
+											placeholder="우편번호" required readonly>
 									</div>
 									<div class="input-field">
-										<input type="text" id="myAddress1" placeholder="주소를 입력해주세요"
-											required>
+										<input type="text" id="myAddress2" name="userAddress"
+											placeholder="주소를 입력해주세요" required readonly>
 									</div>
 								</div>
 								<div class="form-group py-2">
 									<div>상세주소*</div>
 									<div class="input-field">
-										<input type="text" id="myAddress2" placeholder="상세주소를 입력해주세요"
-											required>
+										<input type="text" id="myAddress3" name="userAddressDetail"
+											placeholder="상세주소를 입력해주세요" required>
 									</div>
 								</div>
 								<div class="form-group py-2">
 									<div>추천인코드</div>
 									<div class="input-field">
-										<input type="text" id="otherRecommand"
+										<input type="text" id="otherRecommand" name="userRecommend"
 											placeholder="추천인코드를 입력해주세요">
 									</div>
 								</div>
-								<button class="btn btn-primary btn-block mt-3 "
-									style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);">회원가입</button>
+								<button type="button" class="btn btn-primary btn-block mt-3 "
+									style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);"
+									id="enrollBtn">회원가입</button>
 							</div>
 							<div class="mx-3 my-2 py-2 bordert">
 								<div class="text-center py-3">
@@ -271,136 +287,140 @@ a[target='_blank'] {
 							</div>
 						</form>
 					</div>
-
-
-
-					<!-- 전문가 회원가입시작 -->
-						<div class="tab-pane" id="tabs-2" role="tabpanel">
-							<form action="${ contextPath }/insertMemberExpert.me"
-								method="POST">
-								<div class="panel-body p-3">
-									<div class="form-group py-2">
-										<div>아이디*</div>
-										<div class="input-field" id="myIdExpert2">
-											<input type="text" id="myIdExpert" placeholder="아이디를 입력해주세요"
-												required>
-										</div>
+					
+					
+					<%-- <!-- 전문가 회원가입시작 -->
+					  <div class="tab-pane" id="tabs-2" role="tabpanel">
+						<form action="${ contextPath }/insertMember.me" method="POST"
+							id='insertForm'>
+							<input type="hidden" name="category" value="export">
+							<div class="panel-body p-3">
+								<div class="form-group py-2">
+									<div>아이디*</div>
+									<div class="input-field" id="myIdExport2">
+										<input type="text" id="myIdExport" name="userId"
+											placeholder="아이디를 입력해주세요" required>
 									</div>
-									<div class="form-group py-1 pb-2">
-										<div>비밀번호*</div>
-										<div class="input-field">
-											<input type="password" id="myPwdExpert"
-												placeholder="비밀번호을 입력해주세요" required>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>비밀번호확인*</div>
-										<div class="input-field">
-											<input type="password" id="myPwdChkExpert"
-												placeholder="비밀번호를 확인해주세요" required>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>이름*</div>
-										<div class="input-field">
-											<input type="text" id="myNameExpert" placeholder="이름을 입력해주세요"
-												required>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>닉네임*</div>
-										<div class="input-field">
-											<input type="text" id="myNickNameExpert"
-												placeholder="닉네임을 입력해주세요" required>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>이메일*</div>
-										<div class="input-field">
-											<input type="email" id="myEmailExpert"
-												style="width: 100%; border: 0;" placeholder="이메일을 입력해주세요"
-												required>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>
-											이메일 인증번호*
-											<button type="button" style="float: right; border: 0;">인증번호전송</button>
-										</div>
-										<div class="input-field">
-											<input type="text" id="myEmailChkExpert"
-												placeholder="인증번호를 입력해주세요" required>
-											<button type="button" style="border: 0; width: 50px;">확인</button>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>성별*</div>
-										<div>
-											<input type="radio" name="chkGenderExpert" value="M"><a
-												style="margin-right: 80px;">남</a> <input type="radio"
-												name="chkGenderExpert" value="F"><a
-												style="margin-right: 80px;">여</a> <input type="radio"
-												name="chkGenderExpert" value="N"><a>알리고싶지않음</a>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>전화번호</div>
-										<div class="input-field">
-											<input type="text" id="myPhoneExpert"
-												placeholder="전화번호를 입력해주세요">
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>생년월일*</div>
-										<div class="input-field">
-											<input type="text" id="myBirthExpert"
-												placeholder="생년월일 6자를 입력해주세요. ">
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>
-											주소*
-											<button type="button" style="float: right; border: 0;">주소
-												검색</button>
-										</div>
-										<div class="input-field">
-											<input type="text" id="myAddressExpert1"
-												placeholder="주소를 입력해주세요" required>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>상세주소*</div>
-										<div class="input-field">
-											<input type="text" id="myAddressExpert2"
-												placeholder="상세주소를 입력해주세요" required>
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>추천인코드</div>
-										<div class="input-field">
-											<input type="text" id="otherRecommandExpert"
-												placeholder="추천인코드를 입력해주세요">
-										</div>
-									</div>
-									<div class="form-group py-2">
-										<div>
-											전문가 인증* <label class="input-file-button" for="input-file"
-												style="float: right;">사진첨부</label> <input type="file"
-												id="input-file" style="display: none;">
-										</div>
-									</div>
-									<button class="btn btn-primary btn-block mt-3 "
-										style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);">회원가입</button>
 								</div>
-							</form>
-						</div>
-					</div>
-				</div>
+							</div>
+							<div class="form-group py-1 pb-2">
+								<div>비밀번호*</div>
+								<div class="input-field" id="myPwdExport2">
+									<input type="password" id="myPwdExport" name="userPwd"
+										placeholder="비밀번호을 입력해주세요" required>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>비밀번호확인*</div>
+								<div class="input-field" id="myPwdChkExport2">
+									<input type="password" id="myPwdChkExport" placeholder="비밀번호를 확인해주세요"
+										required>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>이름*</div>
+								<div class="input-field" id="myNameExport2">
+									<input type="text" id="myNameExport" name="userName"
+										placeholder="이름을 입력해주세요" required>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>닉네임*</div>
+								<div class="input-field" id="myNickNameExport2">
+									<input type="text" id="myNickNameExport" name="userNickname"
+										placeholder="닉네임을 입력해주세요" required>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>이메일*</div>
+								<div class="input-field" id="myEmailExport2">
+									<input type="email" id="myEmailExport"
+										style="width: 100%; border: 0;" name="email"
+										placeholder="이메일을 입력해주세요" required>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>
+									이메일 인증번호*
+									<button type="button" id="mail-Check-Btn-Export"
+										style="float: right; border: 0;">인증번호전송</button>
+								</div>
+								<div class="input-field">
+									<input type="text" id="myEmailChkExport" placeholder="인증번호를 입력해주세요"
+										required>
+									<button type="button" id="checkCodeBtnExport"
+										style="border: 0; width: 50px;">확인</button>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>성별*</div>
+								<div>
+									<input type="radio" name="gender" value="M"><a
+										style="margin-right: 80px;">남</a> <input type="radio"
+										name="gender" value="F"><a style="margin-right: 80px;">여</a>
+									<input type="radio" name="gender" value="N"><a>알리고싶지않음</a>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>생년월일*</div>
+								<input type="date" id="myBirthExport" name="userBirth"
+									style="weigth: 100%;" required>
+							</div>
+							<div class="form-group py-2">
+								<div>전화번호</div>
+								<div class="input-field">
+									<input type="text" id="myPhoneExport" name="userPhone"
+										placeholder="전화번호를 입력해주세요">
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>
+									주소*
+									<button type="button" id="searchAddressExport"
+										style="float: right; border: 0;">주소 검색</button>
+								</div>
+								<div class="input-field" style="margin-bottom: 5px">
+									<input type="text" id="myAddressExport1" name="userZipcode"
+										placeholder="우편번호" required readonly>
+								</div>
+								<div class="input-field">
+									<input type="text" id="myAddressExport2" name="userAddress"
+										placeholder="주소를 입력해주세요" required readonly>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>상세주소*</div>
+								<div class="input-field">
+									<input type="text" id="myAddressExport3" name="userAddressDetail"
+										placeholder="상세주소를 입력해주세요" required>
+								</div>
+							</div>
+							<div class="form-group py-2">
+								<div>추천인코드</div>
+								<div class="input-field">
+									<input type="text" id="otherRecommandExport" name="userRecommend"
+										placeholder="추천인코드를 입력해주세요">
+								</div>
+								<div class="form-group py-2">
+									<div>
+										전문가 인증* <label class="input-file-button" for="input-file"
+											style="float: right;">사진첨부</label> <input type="file"
+											id="input-file" style="display: none;">
+									</div>
+								</div>
+								<button class="btn btn-primary btn-block mt-3 "
+									style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="enrollBtnExpert">회원가입</button>
+							</div>
+						</form>
+					</div>  --%>
+				</div> 
 			</div>
 		</div>
+	</div>
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
 	 window.onload =()=>{
-		 
 		 
 		 let isId, isPwd, isPwd2, isName, isNickName, isEmail, isEmailCheck = false;
 		// 아이디 중복 확인
@@ -438,8 +458,7 @@ a[target='_blank'] {
          const pwd2 = document.getElementById('myPwdChk');
          const myPwd2 = document.getElementById('myPwd2');
          const myPwdChk2 = document.getElementById('myPwdChk2');
-         const regExp2 = /^(?=.*[a-zA-z])(?=.*[0-9])(?=.*[$`~!@$!%*#^?&\\(\\)\-_=+]).{5,11}$/
-//          const regExp3 = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{5,11}$/
+         const regExp2 =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
          
          const checkRegPwd = document.getElementById('checkRegPwd');
          const checkPwd = document.getElementById('checkPwd');
@@ -537,11 +556,12 @@ a[target='_blank'] {
          
          
          // 이메일 중복확인
-         document.getElementById('memberEmail').addEventListener('change',function(){
-            const email = document.getElementById('memberEmail').value;
+         document.getElementById('myEmail').addEventListener('change',function(){
+            const email = document.getElementById('myEmail').value;
+            const searchEmail = document.getElementById('myEmail');
+            const searchEmail2 = document.getElementById('myEmail2');
             console.log(email);
-            const searchEmail = document.getElementById('searchEmail');
-            const checkEmailBtn = document.getElementById('checkEmailBtn');
+            const checkEmailBtn = document.getElementById('mail-Check-Btn');
             const regExp5 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
             
             $.ajax({
@@ -554,23 +574,26 @@ a[target='_blank'] {
                      checkEmailBtn.disabled = false;
                      checkEmailBtn.style.cursor = 'pointer';
                      checkEmailBtn.style.color = 'black';
-                     searchEmail.innerText = '사용 가능한 이메일입니다.';
-                     searchEmail.style.color = 'green';
+                     searchEmail.style.backgroundColor = '#24E082';
+                     searchEmail2.style.backgroundColor = '#24E082';
                      isEmail = true;
                   } else if(data.trim() == 'yes' && !regExp5.test(this.value)){
                      checkEmailBtn.disabled = true;
                      checkEmailBtn.style.color = 'lightgray';
-                     searchEmail.innerText = '알맞은 이메일을 입력하세요.'
-                     searchEmail.style.color = 'red';
+                     searchEmail.style.backgroundColor = '#FFCECE';
+                     searchEmail2.style.backgroundColor = '#FFCECE';
                      isEmail = false;
                   } else if(data.trim() == 'no'){
                      checkEmailBtn.disabled = true;
                      checkEmailBtn.style.color = 'lightgray';
-                     searchEmail.innerText = '이미 가입된 이메일입니다.'
-                     searchEmail.style.color = 'red';
+                     searchEmail.style.backgroundColor = '#FFCECE';
+                     searchEmail2.style.backgroundColor = '#FFCECE';
                      isEmail = false;
                   } else {
-                    searchEmail.innerText = '이미 가입된 이메일입니다.'
+                	checkEmailBtn.disabled = true;
+                    checkEmailBtn.style.color = 'lightgray';
+                    searchEmail.style.backgroundColor = '#FFCECE';
+                    searchEmail2.style.backgroundColor = '#FFCECE';
                   }
                },
                error:(data)=>{
@@ -581,12 +604,10 @@ a[target='_blank'] {
          });
           
           // 인증번호 보내기
-          document.getElementById('checkEmail').style.display='none';
-          document.getElementById('checkCodeBtn').style.display='none';
-          document.getElementById('checkEmailBtn').addEventListener('click',function(){
-            const email = document.getElementById('memberEmail').value;
+          document.getElementById('mail-Check-Btn').addEventListener('click',function(){
+            const email = document.getElementById('myEmail').value;
             console.log(email);
-            const checkEmail = document.getElementById('checkEmail');
+            const checkEmail = document.getElementById('myEmailChk');
             
             $.ajax({
                type: 'get',
@@ -599,7 +620,7 @@ a[target='_blank'] {
                   alert('인증번호가 전송되었습니다.');
                   document.getElementById('checkCodeBtn').style.color = 'black';
                   document.getElementById('checkEmail').style.display='';
-                   document.getElementById('checkCodeBtn').style.display='';
+                  document.getElementById('checkCodeBtn').style.display='';
                },
                error:(data)=>{
                   console.log(data);
@@ -610,20 +631,61 @@ a[target='_blank'] {
          
           // 인증번호 확인
          document.getElementById('checkCodeBtn').addEventListener('click',function(){
-            const inputEmail = document.getElementById('checkEmail').value;
-            const resultEmail = document.getElementById('resultEmail');
+            const inputEmail = document.getElementById("myEmailChk").value;
+            const resultEmail = document.getElementById("myEmailChk");
             
             if(inputEmail == code){
-               resultEmail.innerText = '인증번호가 일치합니다.';
-               resultEmail.style.color = 'green';
+               resultEmail.style.backgroundColor = '#24E082';
                isEmailCheck = true;
             } else{
-               resultEmail.innerText  = '인증번호가 불일치합니다.';
-               resultEmail.style.color = 'red';
+               resultEmail.style.backgroundColor = '#FFCECE';
                isEmailCheck = false;
             }
          });
 		
+          // 주소검색
+         document.getElementById('searchAddress').addEventListener('click',function(){
+        	 new daum.Postcode({
+        	        oncomplete: function(data) {
+        	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+        	            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+        	            
+        	            
+        	             var roadAddr = data.roadAddress; // 도로명 주소 변수
+        	                
+        	             document.getElementById('myAddress1').value = data.zonecode;
+        	             document.getElementById("myAddress2").value = roadAddr;
+        	                
+        	        }
+        	    }).open();
+        	 
+         });
+          
+         // 회원가입 버튼 활성화
+         document.getElementById('enrollBtn').addEventListener('click',function(){
+            const enrollBtn = document.getElementById('enrollBtn');
+            
+             if(isId && isPwd && isPwd2 && isName && isNickName && isEmail && isEmailCheck){
+                document.getElementById('insertForm').submit();
+             } else {
+               alert('회원가입 폼에 맞춰주세요.');
+               if(!isId){
+                  document.getElementById('myId').focus();
+               }else if(!isPwd){
+                  document.getElementById('myPwd').focus();
+               }else if(!isPwd2){
+                  document.getElementById('myPwdChk').focus();
+               }else if(!isName){
+                  document.getElementById('myName').focus();
+               }else if(!isNickName){
+                  document.getElementById('myNickName').focus();
+               }else if(!isEmail){
+                  document.getElementById('myEmail').focus();
+               }else if(!isEmailCheck){
+                  document.getElementById('myEmailChk').focus();
+               }
+             }
+         });
          }
 	</script>
 </body>
