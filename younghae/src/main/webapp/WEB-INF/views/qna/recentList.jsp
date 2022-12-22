@@ -26,7 +26,7 @@
             </ul>
         </div>
 
-		${list }
+		${list}
         <div class="bn_boardlist mt-2">
             <table class="table">
                 <thead>
