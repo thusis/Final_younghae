@@ -34,9 +34,9 @@
 	</nav>
 	<div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
 		<ul>
-			<li><a href="#">마이페이지</a></li>
+			<li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>
 			<li>/</li>
-			<li><a href="#">내 게시글 관리</a></li>
+			<li><a href="#" onclick="location.href='${contextPath}/myWriteView.my'">내 게시글 관리</a></li>
 			<li>/</li>
 			<li><a href="#">상세보기</a></li>
 		</ul>

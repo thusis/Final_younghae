@@ -34,7 +34,7 @@
 	</nav>
 	<div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
 		<ul>
-			<li><a href="#">마이페이지</a></li>
+			<li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>
 			<li>/</li>
 			<li><a href="#">내 포인트 관리</a></li>
 		</ul>
@@ -76,7 +76,7 @@
 							최신 포인트 사용조회
 							<div class="bn_boardlist mt-2">
 								<button style="float: right; border: 0; margin-bottom: 5px;"
-									onclick="location.href='/Users/Song/Desktop/final/ogani-master/myPointDetail.html'">+</button>
+									onclick="location.href='${contextPath}/myPointDetail.my'">+</button>
 								<table class="table" style="text-align: center;">
 									<thead>
 										<tr class="text-teal-100">
