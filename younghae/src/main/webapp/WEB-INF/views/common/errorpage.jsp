@@ -160,7 +160,7 @@
 			</div>
 			<h1>앗!</h1>
 			<h2>Error 404 : Page Not Found</h2>
-			<h2>${ requestScope['javax.servlet.error.message'] }</h2>
+			<h4>${ requestScope['javax.servlet.error.message'] }</h4>
 			<a href="javascript:history.back();">뒤로 가기</a>
 		</div>
 	</div>

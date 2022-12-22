@@ -16,6 +16,7 @@ import lombok.ToString;
 public class Member {
 	private int userNum;
 	private String userId;
+	private String userPwd;
 	private String userName;
 	private String userNickname;
 	private String email;
