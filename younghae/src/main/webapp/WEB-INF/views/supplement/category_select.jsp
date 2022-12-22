@@ -228,8 +228,7 @@
 								</c:if>
 								<c:if test="${ c.cateIcon eq null }">
 									<div class="product__details__price"
-										style="font-size: 100%; display: inline;">아직 발견된 주의사항이
-										없네요!</div>
+										style="font-size: 100%; display: inline;">아직 발견된 주의사항이 없네요!</div>
 								</c:if>
 							</div>
 						</div>

@@ -43,6 +43,7 @@
             overflow: hidden;
             border: 0;
         }
+        
         /* The Close Button */
         .close {
             color: #aaaaaa;
@@ -191,18 +192,25 @@
 
                 <!-- 구매하러가기  버튼 -->
                 <c:if test="${ product.proSaleStatus eq 'Y' }">
-	                <div name="goShop" style="margin-left: 25%; margin-top: 2%;">
+	                <div name="goShop" style="margin-left: 
+	                <c:if test='${ loginUser ne null }'>25%</c:if>
+	                <c:if test='${ loginUser eq null }'>45%</c:if>
+	                ; margin-top: 2%;">
 	                    <button type="button"
-	                        style="display: inline; margin-left: -25%; height: 170%; width: 200%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">구매하러
-	                        가기</button>
+	                        style="display: inline; margin-left: -25%; height: 170%; width: 200%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">
+	                        구매하러 가기</button>
 	                </div>
                 </c:if>
-                <div name="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
-                    <button type="button"
-                        style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;"
-                        id="modalBtn">리뷰
-                        쓰기</button>
-                </div>
+                
+                <!-- 로그인 한 상태로 리뷰를 쓴 내용이 있으면 수정하기로 변환 -->
+                <c:if test="${ loginUser ne null }">
+	                <div name="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
+		                    <button type="button"
+		                        style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;"
+		                        id="modalBtn">리뷰 쓰기</button>
+	                </div>
+                </c:if>
+                
                 <!-- 리뷰 -->
                 <div class="col-lg-12">
                     <div class="product__details__tab">
@@ -439,8 +447,8 @@
 
     <!-- 리뷰쓰기 Modal -->
     <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
+        <div class="modal-content" style="width:70%;">
+            <span class="close" style="float: right;">&times;</span>
             <div class="container">
                 <div class="row g-0 text-center">
                     <div class="col-lg-12 col-md-12">
@@ -452,13 +460,13 @@
 											<img src="${ product.proImage }"
 												style="border: 1px solid #24E082; border-radius: 5%; margin: 1%; height: 80%; width: 55%; float: left; ">
 												<input type="hidden" name="proNum" value="${ product.proNum }">
-												<input type="hidden" name="userNum" value="7">
+												<input type="hidden" name="userNum" value="${ loginUser.userNum }">
 <%-- 												<input type="hidden" id="productNum" value="${ 유저번호 }"> --%>
 										</div>
 										<div class="d-inline">
 											<div class="d-inline" name="reviewName" >
 												<label
-													style="font-size: 130%; font-weight: 800; padding-top: 10%; float:left;">${ product.proName }</label>
+													style="font-size: 130%; font-weight: 800; padding-top: 10%; margin-left: 8%; float:left; width: 100%">${ product.proName }</label>
 												<br><br><br><br><br><br><br>
 												<div class="product__details__rating ml-3"
 													style="font-size: 130%; display: inline; margin: 5%; color: rgb(236, 236, 55); text-align: left;">
@@ -586,11 +594,12 @@
         // 리뷰쓰러가기 버튼
         var btn = document.getElementById("modalBtn");
         
-        btn.onclick = function () {
-            modal.style.display = "block";
-            // updateModal.style.display = "block";
+        if(${ loginUser ne null}){
+	        btn.onclick = function () {
+	            modal.style.display = "block";
+	            // updateModal.style.display = "block";
+	        }
         }
-
 
         // 닫기 버튼
         var span = document.getElementsByClassName("close")[0];
@@ -619,6 +628,17 @@
 				 console.log(file);
 				 form.submit();
             });
+
+         	$.ajax({
+	        	url:'${ contextPath }/checkReview.su',
+	        	data: {proNum: ${product.proNum}, userNum:${loginUser.userNum}},
+	        	success:(data)=>{
+	        		console.log(data);
+	        	}.
+	        	error: (data)=>{
+	        		console.log(data);
+	        	}
+    	    });
         }
         
         

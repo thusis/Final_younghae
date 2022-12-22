@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,18 +14,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.supplement.exception.SupplementException;
 import com.kh.young.supplement.service.ProCategoryService;
 
+@SessionAttributes("loginUser")
 @Controller
 public class ProCategoryController {
 
@@ -38,7 +43,8 @@ public class ProCategoryController {
 		if(page != null) {
 			currentPage = page;
 		}
-		
+		Member mem = pcService.selectMember(8);
+	      
 		int listCount = pcService.getListCount();
 		
 		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 12);
@@ -47,6 +53,7 @@ public class ProCategoryController {
 		if(all != null) {
 			model.addAttribute("pi", pi);
 			model.addAttribute("list", all);
+			model.addAttribute("loginUser", mem);
 			
 			return "category";
 		}else {
@@ -56,11 +63,12 @@ public class ProCategoryController {
 	
 	@RequestMapping("selectCategory.su")
 	public ModelAndView selectCategory(@RequestParam("cateName") String category, @RequestParam("cateNum") int cateNum,
-								@RequestParam("page") int page, ModelAndView mv) {
+								@RequestParam("page") int page, ModelAndView mv, HttpSession session) {
 		System.out.println("controller들어옴");
 		ProCategory selectCate = pcService.selectCategory(cateNum);
 		System.out.println(selectCate);
 		
+		Member m = (Member)session.getAttribute("loginUser");
 		ArrayList<Supplement> product = pcService.selectCateProduct(cateNum);
 		
 //		ArrayList<Review> reviewList = pcService.selectReview(cateNum);
@@ -76,6 +84,7 @@ public class ProCategoryController {
 		}
 		mv.addObject("c", selectCate);
 		mv.addObject("product", product);
+		mv.addObject("loginUser", m);
 		mv.setViewName("category_select");
 		return mv;
 	}
@@ -106,21 +115,25 @@ public class ProCategoryController {
 	}
 	
 	@RequestMapping("selectProduct.su")
-	public ModelAndView selectProduct(@RequestParam("proNum") int proNum, ModelAndView mv) {
+	public ModelAndView selectProduct(@RequestParam("proNum") int proNum, ModelAndView mv
+//			,HttpSession session
+			) {
 		Supplement product = pcService.selectPro(proNum);
+//		Member m = (Member)session.getAttribute("loginUser");
 		
 		if(product != null) {
 			mv.addObject("product", product);
+//			mv.addObject("loginUser", m);
 			mv.setViewName("product_Detail");
 		}
-		
 		return mv;
 	}
 	
 	@RequestMapping("insertReview.su")
 	public String insertReview(@ModelAttribute Review r, @RequestParam("file") MultipartFile file, Model model,
-								HttpServletRequest request) {
-
+								HttpServletRequest request, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
 		System.out.println(file);
 		Attachment attm = new Attachment();
 
@@ -144,6 +157,7 @@ public class ProCategoryController {
 
 		if (result + attmResult > 1) {
 			model.addAttribute("product", product);
+			model.addAttribute("loginUser", m);
 			return "product_Detail";
 		} else {
 			throw new SupplementException("insertReview 혹은 insertReviewAttm 오류");
@@ -196,5 +210,13 @@ public class ProCategoryController {
 		if (f.exists()) {
 			f.delete();
 		}
+	}
+	
+	@RequestMapping("checkReview.su")
+	public void checkReview(@ModelAttribute Review r) {
+		System.out.println(r);
+		Review review = pcService.checkReview(r);
+		
+		System.out.println(review);
 	}
 }

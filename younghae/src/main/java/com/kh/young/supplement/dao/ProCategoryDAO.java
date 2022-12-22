@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
@@ -44,6 +45,14 @@ public class ProCategoryDAO {
 
 	public int insertReviewAttm(SqlSessionTemplate sqlSession, Attachment attm) {
 		return sqlSession.insert("supplementMapper.insertReviewAttm", attm);
+	}
+
+	public Member selectMember(SqlSessionTemplate sqlSession, int i) {
+		return sqlSession.selectOne("supplementMapper.selemetMember", i);
+	}
+
+	public Review checkReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.selectOne("supplementMapper.checkReview", r);
 	}
 	
 }

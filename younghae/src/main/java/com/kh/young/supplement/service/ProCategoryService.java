@@ -3,6 +3,7 @@ package com.kh.young.supplement.service;
 import java.util.ArrayList;
 
 import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
@@ -23,5 +24,9 @@ public interface ProCategoryService {
 	int insertReview(Review r);
 
 	int insertReviewAttm(Attachment attm);
+
+	Member selectMember(int i);
+
+	Review checkReview(Review r);
 
 }
