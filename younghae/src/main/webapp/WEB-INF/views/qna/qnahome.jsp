@@ -31,7 +31,7 @@
 		</c:if>
 
 		<c:if test="${ loginUser != null }">
-		<button>logout</button>
+		<button id="logout">로그아웃</button>
         <div style="padding: 30px 0 10px 0;">
             <h3 class="text-start" style="font-weight: 700;">내가 남긴 질문</h3>
             <h6 class="mt-3"><b>전문가와 함께 건강관리를 시작하세요</b></h6>
@@ -102,7 +102,6 @@
         </div>
         </c:if>
 
-
         <div style="padding: 30px 0 10px 0;" >
 			<div class="row justify-content-between">
             <h3 class="text-start" style="display:inline-block; font-weight: 700; cursor:pointer;" onclick="location.href='${contextPath}/boardList.qa'">Q&A 최신글</h3>
@@ -127,60 +126,22 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>1</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Otto</td>
-                        <td>@mdo</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square"></i></th>
-                        <td>2</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Thornton</td>
-                        <td>@fat</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>3</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>4</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>5</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>6</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"">왜 border-bottom 생겨서 날 괴롭게 해?</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
+                    <c:forEach items="${respMap.board}" var="b" varStatus="bi" >
+	                    <tr class="questionTr">
+	                    	<c:if test="${respMap.isSolved[bi.index]  eq 'Y'}">
+	                        	<th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square-fill"></i></th>
+	                        </c:if>
+	                    	<c:if test="${respMap.isSolved[bi.index]  eq 'N'}">
+	                        	<th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square"></i></th>
+	                        </c:if>
+	                        <td>${b.boardNum}</td>
+	                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${b.boardTitle}</td>
+	                        <td>${respMap.writerInfo[bi.index].info}</td>
+	                        <td>${respMap.answerCount[bi.index]}</td>
+	                        <td>${b.boardView }</td>
+	                        <td>${b.boardCreateDate }</td>
+	                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
@@ -208,19 +169,14 @@
 
             <div class="row" style="padding: 1.25rem;">
                 <div class="col bn_homebox_4">
-                    <div class="row" id="titel1" style="font-size: 1.25rem; font-weight: 600; color:#24E082;">영양제 복용법 질문</div>
+                    <div class="row" id="titel1" style="font-size: 1.25rem; font-weight: 600; color:#24E082;">${topTwo.board[0].boardTitle}</div>
                     <div class="row" id="titel1">
-                        <span style="font-size: 0.5rem; font-weight: 600;" >20대 / 남 </span>&nbsp;&nbsp;
-                        <span style="font-size: 0.5rem;" >2022/11/07</span>
+                        <span style="font-size: 0.5rem; font-weight: 600;" >${topTwo.writerInfo[0].info}</span>&nbsp;&nbsp;
+                        <span style="font-size: 0.5rem;" >${topTwo.board[0].boardCreateDate}</span>
                     </div>
-                    <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">안녕하세요. 수험생 영양제로 챙겨 먹어보려고 하는데
-                        수험생 영양제로 멀티비타민은 먹으도 괜찮은가요?
-                        찾아보니까 수험생 영양제로 보통 한약을 먹는거 같은데
-                        저는 한약이 맞지 않거든요ㅠㅠ
-                        그래서 수험생 영양제로 피로회복 도움되는거 먹으면 되지 않을까 싶어서요
-                        영양제는 비타민B군이 다양하게 있으면 좋다고 하는데 맞나요?
-                        비타민이 수험생 영양제로 괜찮을까요??
-                        </div>
+                    <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">
+                    	${topTwo.board[0].boardContent}
+                    </div>
                     <hr style="border: 1px solid darkgrey; width: 5rem; text-align:left; margin-left: 0;">
                     <div class="row">
                         <span style="line-height:1.5rem; font-size: 1rem; font-weight: 600; color:#24E082;">약사</span>
@@ -233,25 +189,20 @@
                         추가로 햇빛을 많이 보지 못하는 경우 5000IU 단위의 비타민D 의 섭취도 면역력 및 지구력 강화에 도움이 될 수 있습니다.
                         식물성오메가3에 대한 자세한 내용은 아래를 참고하세요.</div>
                     <div class="row  justify-content-end" style="margin-right: 1.5rem;">
-                        <i class="view fa-solid fa-eye m-2"></i><span class="m-1">85</span>
+                        <i class="view fa-solid fa-eye m-2"></i><span class="m-1">${topTwo.board[0].boardView}</span>
                         <i class="save fa-regular fa-bookmark m-2"></i><span class="m-1">10</span>
 
                     </div>
                 </div>
                 <div class="col bn_homebox_4">
-                    <div class="row" id="titel1" style="font-size: 1.25rem; font-weight: 600; color:#24E082;">영양제 복용법 질문</div>
+                    <div class="row" id="titel1" style="font-size: 1.25rem; font-weight: 600; color:#24E082;">${topTwo.board[1].boardTitle}</div>
                     <div class="row" id="titel1">
-                        <span style="font-size: 0.5rem; font-weight: 600;" >20대 / 남 </span>&nbsp;&nbsp;
-                        <span style="font-size: 0.5rem;" >2022/11/07</span>
+                        <span style="font-size: 0.5rem; font-weight: 600;" >${topTwo.writerInfo[1].info}</span>&nbsp;&nbsp;
+                        <span style="font-size: 0.5rem;" >${topTwo.board[1].boardCreateDate}</span>
                     </div>
-                    <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">안녕하세요. 수험생 영양제로 챙겨 먹어보려고 하는데
-                        수험생 영양제로 멀티비타민은 먹으도 괜찮은가요?
-                        찾아보니까 수험생 영양제로 보통 한약을 먹는거 같은데
-                        저는 한약이 맞지 않거든요ㅠㅠ
-                        그래서 수험생 영양제로 피로회복 도움되는거 먹으면 되지 않을까 싶어서요
-                        영양제는 비타민B군이 다양하게 있으면 좋다고 하는데 맞나요?
-                        비타민이 수험생 영양제로 괜찮을까요??
-                        </div>
+                    <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">
+                    	${topTwo.board[1].boardContent}
+                    </div>
                     <hr style="border: 1px solid darkgrey; width: 5rem; text-align:left; margin-left: 0;">
                     <div class="row">
                         <span style="line-height:1.5rem; font-size: 1rem; font-weight: 600; color:#24E082;">약사</span>
@@ -264,7 +215,7 @@
                         추가로 햇빛을 많이 보지 못하는 경우 5000IU 단위의 비타민D 의 섭취도 면역력 및 지구력 강화에 도움이 될 수 있습니다.
                         식물성오메가3에 대한 자세한 내용은 아래를 참고하세요.</div>
                     <div class="row  justify-content-end" style="margin-right: 1.5rem;">
-                        <i class="view fa-solid fa-eye m-2"></i><span class="m-1">85</span>
+                        <i class="view fa-solid fa-eye m-2"></i><span class="m-1">${topTwo.board[0].boardView}</span>
                         <i class="save fa-regular fa-bookmark m-2"></i><span class="m-1">10</span>
 
                     </div>
@@ -280,6 +231,7 @@
 
 <script>
 window.onload=()=>{
+	
 	const loginBtn= document.getElementsByClassName("loginBtn");
 	console.log(loginBtn);
 	for(const btn of loginBtn){
@@ -289,6 +241,20 @@ window.onload=()=>{
 			location.href='${contextPath}/login.qa?userNum='+userNum;
 		})
 	}
+// 	const logout = document.getElementById('logout');
+// 	logout.addEventListener('click', function() {
+// 	   location.href='${contextPath}/logout.qa';
+// 	})
+	
+	const questionTr = document.getElementsByClassName('questionTr');
+	for(const question of questionTr){
+		question.addEventListener('click', function(){
+			const boardNum = this.querySelector('td').innerText;
+			location.href='${contextPath}/question.qa?boardNum='+boardNum;
+		})
+	}
+	
+	
 }
 </script>
 </body>

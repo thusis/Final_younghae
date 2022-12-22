@@ -26,7 +26,6 @@
             </ul>
         </div>
 
-		${list}
         <div class="bn_boardlist mt-2">
             <table class="table">
                 <thead>
@@ -43,60 +42,22 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>1</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Otto</td>
-                        <td>@mdo</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square"></i></th>
-                        <td>2</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Thornton</td>
-                        <td>@fat</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>3</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>4</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>5</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>6</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"">왜 border-bottom 생겨서 날 괴롭게 해?</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
+                    <c:forEach items="${respMap.board}" var="b" varStatus="bi" >
+	                    <tr>
+	                    	<c:if test="${respMap.isSolved[bi.index]  eq 'Y'}">
+	                        	<th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square-fill"></i></th>
+	                        </c:if>
+	                    	<c:if test="${respMap.isSolved[bi.index]  eq 'N'}">
+	                        	<th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square"></i></th>
+	                        </c:if>
+	                        <td>${b.boardNum}</td>
+	                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${b.boardTitle}</td>
+	                        <td>${respMap.writerInfo[bi.index].info}</td>
+	                        <td>${respMap.answerCount[bi.index]}</td>
+	                        <td>${b.boardView }</td>
+	                        <td>${b.boardCreateDate }</td>
+	                    </tr>
+                    </c:forEach>
                 </tbody>
             </table>
         </div>
