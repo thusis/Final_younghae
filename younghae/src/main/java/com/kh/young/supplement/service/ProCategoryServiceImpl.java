@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
@@ -51,6 +52,11 @@ public class ProCategoryServiceImpl implements ProCategoryService{
 	@Override
 	public int insertReview(Review r) {
 		return pcDAO.insertReview(sqlSession, r);
+	}
+
+	@Override
+	public int insertReviewAttm(Attachment attm) {
+		return pcDAO.insertReviewAttm(sqlSession, attm);
 	}
 	
 }

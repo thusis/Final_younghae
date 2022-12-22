@@ -258,7 +258,7 @@
 												<div name="getItemName"
 													class="text-left fs-5 font-weight-bold pl-2">&nbsp;
 													${ item.proName }</div>
-												<div class="fs-5 text-left pr-3 pt-3 mb-5">&nbsp; ${ item.proEffect }
+												<div class="fs-5 text-left pr-3 pt-1 mb-3">&nbsp; ${ item.proEffect }
 												</div>
 												<div class="text-left pr-2">
 													<div class="product__details__rating"
@@ -270,7 +270,7 @@
 														style="float: left; padding-left: 1%; padding-top: 1.5%;">
 														<p style="color: black; font-size: 130%;">${ item.proGrade }</p>
 													</div>
-													<div class="text-right font-weight-bold pr-2% pt--3">
+													<div class="text-right font-weight-bold pr-2% pt--3 mb-1 mt-1">
 														${ item.proPrice }</div>
 												</div>
 												<br>

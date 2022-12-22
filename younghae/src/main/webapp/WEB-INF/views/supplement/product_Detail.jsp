@@ -180,7 +180,7 @@
                             	<c:set var="effect" value="${ fn:split(product.proEffect, ',')}"/>
 		                            <c:forEach items="${ effect }"  var="e">
 		                                <button type="button" class="btn btn-secondary trend"
-		                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">${ e }</button>
+		                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px; margin-top: 10px;">${ e }</button>
 		                                &nbsp;&nbsp;&nbsp;
 		                            </c:forEach>
                             </div>
@@ -447,21 +447,21 @@
                         <div class="product__details__pic">
                             <div style="border: 2px solid #24E082; border-radius: 5em;">
 								<form action="${ contextPath }/insertReview.su" method="post" id="reviewFrom" enctype="multipart/form-data">
-									<div class="row" style="margin: 3%;">
-										<div class="d-inline margin-left: 5%;" name="reviewImg">
+									<div class="row" style="margin-left: 5%; margin-top:3%; padding-right: 0px;  margin-bottom: -5%;">
+										<div class="d-inline" name="reviewImg" style="margin-right: -20%;">
 											<img src="${ product.proImage }"
-												style="border: 1px solid #24E082; border-radius: 5%; margin: 3% height: 5%; width: 55%;">
+												style="border: 1px solid #24E082; border-radius: 5%; margin: 1%; height: 80%; width: 55%; float: left; ">
 												<input type="hidden" name="proNum" value="${ product.proNum }">
 												<input type="hidden" name="userNum" value="7">
 <%-- 												<input type="hidden" id="productNum" value="${ 유저번호 }"> --%>
 										</div>
 										<div class="d-inline">
-											<div class="d-inline ml-5" name="reviewName">
+											<div class="d-inline" name="reviewName" >
 												<label
-													style="font-size: 180%; font-weight: 800; padding-top: 10%;">${ product.proName }</label>
+													style="font-size: 130%; font-weight: 800; padding-top: 10%; float:left;">${ product.proName }</label>
 												<br><br><br><br><br><br><br>
-												<div class="product__details__rating ml-5"
-													style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
+												<div class="product__details__rating ml-3"
+													style="font-size: 130%; display: inline; margin: 5%; color: rgb(236, 236, 55); text-align: left;">
 													<span style="color: black; margin-right: 1.5%;">별점</span> <i
 														class="fa fa-star"></i> <i class="fa fa-star"></i> 
 														<i class="fa fa-star"></i> <i class="fa fa-star"></i> 

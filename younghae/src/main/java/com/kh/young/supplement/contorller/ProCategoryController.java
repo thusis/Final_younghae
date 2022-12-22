@@ -1,6 +1,11 @@
 package com.kh.young.supplement.contorller;
 
+import java.io.File;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.young.common.Pagination;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
@@ -112,18 +118,83 @@ public class ProCategoryController {
 	}
 	
 	@RequestMapping("insertReview.su")
-	public String insertReview(@ModelAttribute Review r, @RequestParam("file") MultipartFile file, Model model) {
-		int result = pcService.insertReview(r);
-		
+	public String insertReview(@ModelAttribute Review r, @RequestParam("file") MultipartFile file, Model model,
+								HttpServletRequest request) {
+
 		System.out.println(file);
-		
+		Attachment attm = new Attachment();
+
+		if (file != null) {
+			System.out.println(file.getOriginalFilename());
+			if(!file.getOriginalFilename().equals("")) {
+				String[] returnArr = saveFile(file, request);
+				
+				attm.setAttachName(file.getOriginalFilename());
+				attm.setAttachRename(returnArr[1]);
+				attm.setAttachPath(returnArr[0]);
+				System.out.println(returnArr[1]);
+				System.out.println(returnArr[0]);
+			}
+		}
+		int result = pcService.insertReview(r);
+				
+		int attmResult = pcService.insertReviewAttm(attm);
+
 		Supplement product = pcService.selectPro(r.getProNum());
-		
-		if(result > 0) {
+
+		if (result + attmResult > 1) {
 			model.addAttribute("product", product);
 			return "product_Detail";
-		}else {
-			throw new SupplementException("insertReview오류");
+		} else {
+			throw new SupplementException("insertReview 혹은 insertReviewAttm 오류");
+		}
+	}
+
+	// attm Save
+	// saveFile 메소드 만들기
+	public String[] saveFile(MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
+//				\\는 \를 의미함
+
+		File folder = new File(savePath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+			// folder가 존재하지 않으면 make directory 폴더를 만들어줘
+		}
+
+		// 파일 저장소(물리적으로)에 저장할 수 있게끔 하는 코드
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		int ranNum = (int) (Math.random() * 100000);
+		// 파일명 변경
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + ranNum
+				+ originFileName.substring(originFileName.lastIndexOf("."));
+
+		String renamePath = folder + "\\" + renameFileName;
+
+		try {
+			file.transferTo(new File(renamePath));
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 :" + e.getMessage());
+		}
+
+		String[] returnArr = new String[2];
+
+		returnArr[0] = savePath;
+		returnArr[1] = renameFileName;
+
+		return returnArr;
+	}
+
+	// deleteFile 메소드 만들기
+	public void deleteFile(String fileName, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
+
+		File f = new File(savePath + "\\" + fileName);
+		if (f.exists()) {
+			f.delete();
 		}
 	}
 }

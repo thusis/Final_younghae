@@ -2,6 +2,7 @@ package com.kh.young.supplement.service;
 
 import java.util.ArrayList;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
@@ -20,5 +21,7 @@ public interface ProCategoryService {
 	Supplement selectPro(int proNum);
 
 	int insertReview(Review r);
+
+	int insertReviewAttm(Attachment attm);
 
 }

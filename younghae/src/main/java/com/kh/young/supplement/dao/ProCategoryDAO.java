@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
@@ -39,6 +40,10 @@ public class ProCategoryDAO {
 
 	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.insert("supplementMapper.insertReview", r);
+	}
+
+	public int insertReviewAttm(SqlSessionTemplate sqlSession, Attachment attm) {
+		return sqlSession.insert("supplementMapper.insertReviewAttm", attm);
 	}
 	
 }
