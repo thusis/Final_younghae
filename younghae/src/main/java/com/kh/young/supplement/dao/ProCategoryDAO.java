@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 
 @Repository("pcDAO")
@@ -34,6 +35,10 @@ public class ProCategoryDAO {
 
 	public Supplement selectPro(SqlSessionTemplate sqlSession, int proNum) {
 		return sqlSession.selectOne("supplementMapper.selectPro", proNum);
+	}
+
+	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.insert("supplementMapper.insertReview", r);
 	}
 	
 }

@@ -5,13 +5,16 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.supplement.exception.SupplementException;
 import com.kh.young.supplement.service.ProCategoryService;
@@ -106,5 +109,21 @@ public class ProCategoryController {
 		}
 		
 		return mv;
+	}
+	
+	@RequestMapping("insertReview.su")
+	public String insertReview(@ModelAttribute Review r, @RequestParam("file") MultipartFile file, Model model) {
+		int result = pcService.insertReview(r);
+		
+		System.out.println(file);
+		
+		Supplement product = pcService.selectPro(r.getProNum());
+		
+		if(result > 0) {
+			model.addAttribute("product", product);
+			return "product_Detail";
+		}else {
+			throw new SupplementException("insertReview오류");
+		}
 	}
 }

@@ -42,6 +42,12 @@
 		where pro_num = #{proNum}
 	</select>
 	
+	<!-- 리뷰 작성하기 -->
+	<insert id="insertReview">
+		INSERT INTO REVIEW 
+		VALUES(SEQ_RV.NEXTVAL, #{proNum}, #{userNum}, #{rvContent}, SYSDATE, SYSDATE, 'N',  4.5, 'Y', null)
+	</insert>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>

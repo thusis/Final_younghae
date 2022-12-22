@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 
 public interface ProCategoryService {
@@ -17,5 +18,7 @@ public interface ProCategoryService {
 	ArrayList<Supplement> selectCateProduct(int cateNum);
 
 	Supplement selectPro(int proNum);
+
+	int insertReview(Review r);
 
 }

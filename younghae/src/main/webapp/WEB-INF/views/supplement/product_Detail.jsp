@@ -13,6 +13,36 @@
     <title>제품 디테일</title>
 
     <style>
+/*    		첨부파일 */
+        .filebox .upload-name {
+            display: inline-block;
+            height: 40px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid transparent;
+            width: 78%;
+            color: #999999;
+        }
+
+        .filebox label {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            vertical-align: middle;
+            background-color: #24E082;
+            cursor: pointer;
+            /* height: 78%; */
+            margin-left: 10px;
+        }
+
+        .filebox input[type="file"] {
+            position: absolute;
+            width: 0;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 0;
+        }
         /* The Close Button */
         .close {
             color: #aaaaaa;
@@ -416,57 +446,63 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="product__details__pic">
                             <div style="border: 2px solid #24E082; border-radius: 5em;">
-                                <div class="row" style="margin: 3%;">
-                                    <div class="d-inline margin-left: 5%;" name="reviewImg">
-                                        <img src="/img/product/product-12.jpg"
-                                            style="border: 1px solid #24E082; border-radius: 5%; margin: 3%">
-                                    </div>
-                                    <div class="d-inline">
-                                        <div class="d-inline ml-5" name="reviewName">
-                                            <label style="font-size: 180%;  font-weight: 800;  padding-top: 10%;">닥터린
-                                                초임계
-                                                알티지 오메가3</label>
-                                            <br><br><br><br><br><br><br>
-                                            <div class="product__details__rating ml-5"
-                                                style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
-                                                <span style="color: black; margin-right: 1.5%;">별점</span>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin: 3%;">
-                                    <div class="d-block" name="fileInput" style="width: 10%; padding-left: 2%;">
-                                        <label
-                                            style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
-                                    </div>
-                                    <div class="filebox" style="width: 60%; text-align: center;">
-                                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-                                        <label for="file" style="display: inline;">파일찾기</label>
-                                        <input type="file" id="file">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-11" style="margin-left: 3.5%; margin-bottom: 3%;">
-                                        <div style="border: 2px solid #24E082; border-radius: 1em;"
-                                            name="reviewContentBorder">
-                                            <textarea type="text" name="reviewContent"
-                                                style="border: none; margin: 1%; height: 200px; width: 97%; border: 1px solid black; resize: none;"></textarea>
-                                        </div>
-                                        <div>
-                                            <div name="writeReview" style="margin-left: 1.5%; margin-top: 2%;">
-                                                <button type="button"
-                                                    style="text-align: center; height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">리뷰
-                                                    작성</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+								<form action="${ contextPath }/insertReview.su" method="post" id="reviewFrom" enctype="multipart/form-data">
+									<div class="row" style="margin: 3%;">
+										<div class="d-inline margin-left: 5%;" name="reviewImg">
+											<img src="${ product.proImage }"
+												style="border: 1px solid #24E082; border-radius: 5%; margin: 3% height: 5%; width: 55%;">
+												<input type="hidden" name="proNum" value="${ product.proNum }">
+												<input type="hidden" name="userNum" value="7">
+<%-- 												<input type="hidden" id="productNum" value="${ 유저번호 }"> --%>
+										</div>
+										<div class="d-inline">
+											<div class="d-inline ml-5" name="reviewName">
+												<label
+													style="font-size: 180%; font-weight: 800; padding-top: 10%;">${ product.proName }</label>
+												<br><br><br><br><br><br><br>
+												<div class="product__details__rating ml-5"
+													style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
+													<span style="color: black; margin-right: 1.5%;">별점</span> <i
+														class="fa fa-star"></i> <i class="fa fa-star"></i> 
+														<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+														<i class="fa fa-star-half-o"></i>
+<!-- 														별점 넣는거 필요 -->
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin: 3%;">
+										<div class="d-block" name="fileInput"
+											style="width: 10%; padding-left: 2%;">
+											<label
+												style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
+										</div>
+										<div class="filebox" style="width: 60%; text-align: center;">
+											<input class="upload-name" value="첨부파일" placeholder="첨부파일"
+												readonly> <label for="file" style="display: inline;">파일찾기</label>
+											<input type="file" id="file" name="file">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-11"
+											style="margin-left: 3.5%; margin-bottom: 3%;">
+											<div style="border: 2px solid #24E082; border-radius: 1em;"
+												name="rvContent">
+												<textarea type="text" name="rvContent"
+													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;"></textarea>
+											</div>
+											<div>
+												<div name="writeReview"
+													style="margin-left: 1.5%; margin-top: 2%;">
+													<button type="button"  id="writeBtn"
+														style="text-align: center; height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">리뷰
+														작성</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -490,9 +526,7 @@
                                     </div>
                                     <div class="d-inline">
                                         <div class="d-inline ml-5" name="reviewName">
-                                            <label style="font-size: 180%;  font-weight: 800;  padding-top: 10%;">닥터린
-                                                초임계
-                                                알티지 오메가3</label>
+                                            <label style="font-size: 180%;  font-weight: 800;  padding-top: 10%;">${ product.proName }</label>
                                             <br><br><br><br><br><br><br>
                                             <div class="product__details__rating ml-5"
                                                 style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
@@ -578,7 +612,16 @@
                 var fileName = $("#file").val();
                 $(".upload-name").val(fileName);
             });
+            
+            const form = document.getElementById('reviewFrom');
+            document.getElementById('writeBtn').addEventListener('click', ()=>{
+				 const file = document.getElementById('file'); 
+				 console.log(file);
+				 form.submit();
+            });
         }
+        
+        
     </script>
 
 </body>
