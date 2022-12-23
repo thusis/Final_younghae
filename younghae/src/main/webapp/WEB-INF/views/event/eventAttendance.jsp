@@ -28,11 +28,15 @@
 	<br>
 	<div class="attendance">
 		<img src="resources/img/event/attend1.png"
-			style="width: 800px; height: 800px;">
+			 usemap="#attendanceMap" class="attendanceImg"/>
+<!-- 			 <h2 class="attendanceCount">7</h2> 출석횟수 -->
+		<map name="attendanceMap" id="attendanceMap" >
+		<area shape="rect" coords="361, 854, 723, 946" style="cursor:pointer;" onclick="location.href='${contextPath}/insertAttendance.ev'">
+		</map>
 	</div>
 	<div class="attendance">
 		<img src="resources/img/event/attend2.png"
-			style="width: 800px; height: 400px;">
+			style="width: 1080px; height: 600px;">
 	</div>
 
 	<br>

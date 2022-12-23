@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,11 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.young.board.exception.boardException;
 import com.kh.young.board.service.BoardService;
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
@@ -27,12 +30,24 @@ import com.kh.young.model.vo.PageInfo;
 public class BoardController {
 	@Autowired
 	private BoardService bService;
-	
+
+   @GetMapping("login.bo")
+   public String loginHome(@RequestParam("userNum") Integer userNum, HttpServletRequest request) {
+      bService.setLoginUser(userNum, request);
+      return "redirect:boardList.bo";
+   }
+   
+   @RequestMapping("logout.bo")
+   public String logoutHome(HttpServletRequest request) {
+	   ServletContext application = request.getSession().getServletContext();
+	   application.setAttribute("loginUser",null);
+	   return "redirect:boardList.bo";
+   }
 	//Board Main
 
 	@RequestMapping("boardList.bo")
 	public String boardList(@RequestParam(value="page", required=false) Integer page, Model model) {
-		
+	
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
@@ -42,13 +57,16 @@ public class BoardController {
 		
 		ArrayList<Board> bList = bService.selectBoardList(pi);
 		ArrayList<Attachment> pList = bService.selectPhotoList();
+		
+		System.out.println("bList : " + bList);
+		System.out.println("pList : " + pList);
 		if(bList != null) {
 			model.addAttribute("pi", pi);
 			model.addAttribute("bList", bList);
 			model.addAttribute("pList", pList);
 			return "boardList";
 		} else {
-			return null;
+			throw new boardException("Can't find BoardList");
 		}
 	}
 	
@@ -75,7 +93,7 @@ public class BoardController {
 		returnArr[0] = uploadPath;
 		returnArr[1] = renameFileName;
 		returnArr[2] = originFileName;
-
+		System.out.println("파일저장소 나오나");
 		return returnArr;
 	}
 	
@@ -102,6 +120,9 @@ public class BoardController {
 			photo.setAttachPath(returnArr[0]);
 		}
 		
+		photo.setSerialNumber(b.getBoardNum());
+		
+		System.out.println("photo : " + photo);
 		int result1 = bService.insertBoard(b);
 		int result2 = bService.insertPhoto(photo);
 		
@@ -109,7 +130,7 @@ public class BoardController {
 			model.addAttribute("photoName", photo.getAttachName());
 			return "redirect:boardList.bo";
 		} else {
-			return null;
+			throw new boardException("Can't insertBoard");
 		}
 		
 	}
@@ -126,7 +147,7 @@ public class BoardController {
 			model.addAttribute("photo", photo);
 			return "boardDetail";
 		} else {
-			return null;			
+			throw new boardException("게시글 상세조회 실패");			
 		}
 	}
 	
@@ -142,7 +163,7 @@ public class BoardController {
 			model.addAttribute("result2", result2);
 			return "boardDetail";
 		} else {			
-			return null;
+			throw new boardException("게시글 삭제 실패");
 		}
 	}
 	
