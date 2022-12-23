@@ -205,7 +205,7 @@
                 <!-- 로그인 한 상태로 리뷰를 쓴 내용이 있으면 수정하기로 변환 -->
                 <c:if test="${ loginUser ne null }">
 	                <div id="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
-		                    <button type="button"
+		                    <button type="button" name="reviewWriteBtn"
 		                        style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;"
 		                        id="modalBtn">리뷰 쓰기</button>
 	                </div>
@@ -448,7 +448,7 @@
     <!-- 리뷰쓰기 Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content" style="width:70%;">
-            <span class="close" style="float: right;">&times;</span>
+            <span class="close" style="align-content: right;">&times;</span>
             <div class="container">
                 <div class="row g-0 text-center">
                     <div class="col-lg-12 col-md-12">
@@ -466,7 +466,7 @@
 										<div class="d-inline">
 											<div class="d-inline" name="reviewName" >
 												<label
-													style="font-size: 130%; font-weight: 800; padding-top: 10%; margin-left: 8%; float:left; width: 100%">${ product.proName }</label>
+													style="font-size: 130%; font-weight: 800; padding-top: 10%; margin-left: 5%; float:left; width: 100%">${ product.proName }</label>
 												<br><br><br><br><br><br><br>
 												<div class="product__details__rating ml-3"
 													style="font-size: 130%; display: inline; margin: 5%; color: rgb(236, 236, 55); text-align: left;">
@@ -485,7 +485,7 @@
 											<label
 												style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
 										</div>
-										<div class="filebox" style="width: 60%; text-align: center;">
+										<div class="filebox" style="width: 65%; text-align: center;">
 											<input class="upload-name" value="첨부파일" placeholder="첨부파일"
 												readonly> <label for="file" style="display: inline;">파일찾기</label>
 											<input type="file" id="file" name="file">
@@ -496,7 +496,7 @@
 											style="margin-left: 3.5%; margin-bottom: 3%;">
 											<div style="border: 2px solid #24E082; border-radius: 1em;"
 												name="rvContent">
-												<textarea name="rvContent" id="rvContent"
+												<textarea name="rvContent" id="urvContent"
 													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;"></textarea>
 											</div>
 											<div>
@@ -519,87 +519,92 @@
     </div>
 
     <!-- 리뷰수정폼 Modal -->
-    <!-- <div id="myUdpateModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="container">
-                <div class="row g-0 text-center">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="product__details__pic">
-                            <div style="border: 2px solid #24E082; border-radius: 5em;">
-                                <div class="row" style="margin: 3%;">
-                                    <div class="d-inline margin-left: 5%;" name="reviewImg">
-                                        <img src="/img/product/product-12.jpg"
-                                            style="border: 1px solid #24E082; border-radius: 5%; margin: 3%">
-                                    </div>
-                                    <div class="d-inline">
-                                        <div class="d-inline ml-5" name="reviewName">
-                                            <label style="font-size: 180%;  font-weight: 800;  padding-top: 10%;">${ product.proName }</label>
-                                            <br><br><br><br><br><br><br>
-                                            <div class="product__details__rating ml-5"
-                                                style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
-                                                <span style="color: black; margin-right: 1.5%;">별점</span>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin: 3%;">
-                                    <div class="d-block" name="fileInput" style="width: 10%; padding-left: 2%;">
-                                        <label
-                                            style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
-                                    </div>
-                                    <div class="filebox" style="width: 60%; text-align: center;">
-                                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-                                        <label for="file" style="display: inline;">파일찾기</label>
-                                        <input type="file" id="file">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-11" style="margin-left: 3.5%; margin-bottom: 3%;">
-                                        <div style="border: 2px solid #24E082; border-radius: 1em;"
-                                            name="reviewContentBorder">
-                                            <textarea type="text" name="reviewContent"
-                                                style="border: none; margin: 1%; height: 200px; width: 97%; border: 1px solid black; resize: none;"></textarea>
-                                        </div>
-                                        <div>
-                                            <div name="writeReview" style="margin-left: 1.5%; margin-top: 2%;">
-                                                <button type="button"
-                                                    style="text-align: center; height: 50px; width: 10%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">수정하기</button>
-                                                &emsp;&emsp;&emsp;&emsp;
-                                                <button type="button"
-                                                    style="text-align: center; height: 50px; width: 10%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">삭제하기</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+	<!-- <div id="myUdpateModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div class="container">
+				<div class="row g-0 text-center">
+					<div class="col-lg-12 col-md-12">
+						<div class="product__details__pic">
+							<div style="border: 2px solid #24E082; border-radius: 5em;">
+								<div class="row" style="margin: 3%;">
+									<div class="d-inline margin-left: 5%;" name="reviewImg">
+										<img src="${ product.proImage }"
+											style="border: 1px solid #24E082; border-radius: 5%; margin: 3%">
+									</div>
+									<div class="d-inline">
+										<div class="d-inline ml-5" name="reviewName">
+											<label
+												style="font-size: 180%; font-weight: 800; padding-top: 10%;">${ product.proName }</label>
+											<br> <br> <br> <br> <br> <br> <br>
+											<div class="product__details__rating ml-5"
+												style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
+												<span style="color: black; margin-right: 1.5%;">별점</span> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star-half-o"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row" style="margin: 3%;">
+									<div class="d-block" name="fileInput"
+										style="width: 10%; padding-left: 2%;">
+										<label
+											style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
+									</div>
+									<div class="filebox" style="width: 60%; text-align: center;">
+										<input class="upload-name" value="첨부파일" placeholder="첨부파일"
+											readonly> <label for="file" style="display: inline;">파일찾기</label>
+										<input type="file" id="file">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-11"
+										style="margin-left: 3.5%; margin-bottom: 3%;">
+										<div style="border: 2px solid #24E082; border-radius: 1em;"
+											name="reviewContentBorder">
+											<textarea type="text" name="reviewContent"
+												style="border: none; margin: 1%; height: 200px; width: 97%; border: 1px solid black; resize: none;"></textarea>
+										</div>
+										<div>
+											<div name="writeReview"
+												style="margin-left: 1.5%; margin-top: 2%;">
+												<button type="button"
+													style="text-align: center; height: 50px; width: 10%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">수정하기</button>
+												&emsp;&emsp;&emsp;&emsp;
+												<button type="button"
+													style="text-align: center; height: 50px; width: 10%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">삭제하기</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
 
 
-    <script>
+	<script>
         // 모달 가져오기
         var modal = document.getElementById("myModal");
         var updateModal = document.getElementById("myUpdateModal");
-
-        // 리뷰쓰러가기 버튼
+        
+//         console.log($('#goReviewWrite').find('button').attr('id'));
+        
         var btn = document.getElementById("modalBtn");
         
         if(${ loginUser ne null}){
+	        // 리뷰쓰러가기 버튼
 	        btn.onclick = function () {
 	            modal.style.display = "block";
 	            // updateModal.style.display = "block";
 	        }
-        }
+         }
+        
 
         // 닫기 버튼
         var span = document.getElementsByClassName("close")[0];
@@ -628,26 +633,6 @@
 				 console.log(file);
 				 form.submit();
             });
-
-         	$.ajax({
-	        	url:'${ contextPath }/checkReview.su',
-	        	data: {proNum: ${product.proNum}, userNum:${loginUser.userNum}},
-	        	success:(data)=>{
-	        		console.log(data);
-	        		const div = document.getElementById('goReviewWrite');
-					
-					div.innerHTML = '<button type="button" style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;" id="modalUpBtn">리뷰 수정하기</button>';
-					
-					const upBtn = document.
-					const rvContent = document.getElementById('rvContent');
-					rvContent.innerText = r.rvContent;
-					
-					
-	        	},
-	        	error: (data)=>{
-	        		console.log(data);
-	        	}
-    	    });
          	
         }
         

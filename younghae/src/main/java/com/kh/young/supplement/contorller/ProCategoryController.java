@@ -221,7 +221,7 @@ public class ProCategoryController {
 		System.out.println("조회 정보 " + r);
 		Review review = pcService.checkReview(r);
 		
-		System.out.println("checkReview" + review);
+		System.out.println("checkReview : " + review);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		GsonBuilder gb = new GsonBuilder();
@@ -234,4 +234,6 @@ public class ProCategoryController {
 			e.printStackTrace();
 		}
 	}
+	
+	
 }
