@@ -225,13 +225,13 @@ a[target='_blank'] {
 								<div class="form-group py-2">
 									<div>고민부위</div>
 									<div>
-										<input type="checkbox" name="userHealth" value="눈">눈
-										<input type="checkbox" name="userHealth" value="피부">피부
-										<input type="checkbox" name="userHealth" value="피로">피로
-										<input type="checkbox" name="userHealth" value="장">장
-										<input type="checkbox" name="userHealth" value="간">간
-										<input type="checkbox" name="userHealth" value="관절">관절
-										<input type="checkbox" name="userHealth" value="임산부">임산부
+										<input type="checkbox" name="userHealth" value="눈">눈 <input
+											type="checkbox" name="userHealth" value="피부">피부 <input
+											type="checkbox" name="userHealth" value="피로">피로 <input
+											type="checkbox" name="userHealth" value="장">장 <input
+											type="checkbox" name="userHealth" value="간">간 <input
+											type="checkbox" name="userHealth" value="관절">관절 <input
+											type="checkbox" name="userHealth" value="임산부">임산부
 									</div>
 								</div>
 								<div class="form-group py-2">
@@ -287,12 +287,12 @@ a[target='_blank'] {
 							</div>
 						</form>
 					</div>
-					
-					
-					<%-- <!-- 전문가 회원가입시작 -->
-					  <div class="tab-pane" id="tabs-2" role="tabpanel">
+
+
+					<!-- 전문가 회원가입시작 -->
+					<div class="tab-pane" id="tabs-2" role="tabpanel">
 						<form action="${ contextPath }/insertMember.me" method="POST"
-							id='insertForm'>
+							id='insertFormExpert'>
 							<input type="hidden" name="category" value="export">
 							<div class="panel-body p-3">
 								<div class="form-group py-2">
@@ -313,8 +313,8 @@ a[target='_blank'] {
 							<div class="form-group py-2">
 								<div>비밀번호확인*</div>
 								<div class="input-field" id="myPwdChkExport2">
-									<input type="password" id="myPwdChkExport" placeholder="비밀번호를 확인해주세요"
-										required>
+									<input type="password" id="myPwdChkExport"
+										placeholder="비밀번호를 확인해주세요" required>
 								</div>
 							</div>
 							<div class="form-group py-2">
@@ -346,8 +346,8 @@ a[target='_blank'] {
 										style="float: right; border: 0;">인증번호전송</button>
 								</div>
 								<div class="input-field">
-									<input type="text" id="myEmailChkExport" placeholder="인증번호를 입력해주세요"
-										required>
+									<input type="text" id="myEmailChkExport"
+										placeholder="인증번호를 입력해주세요" required>
 									<button type="button" id="checkCodeBtnExport"
 										style="border: 0; width: 50px;">확인</button>
 								</div>
@@ -391,15 +391,15 @@ a[target='_blank'] {
 							<div class="form-group py-2">
 								<div>상세주소*</div>
 								<div class="input-field">
-									<input type="text" id="myAddressExport3" name="userAddressDetail"
-										placeholder="상세주소를 입력해주세요" required>
+									<input type="text" id="myAddressExport3"
+										name="userAddressDetail" placeholder="상세주소를 입력해주세요" required>
 								</div>
 							</div>
 							<div class="form-group py-2">
 								<div>추천인코드</div>
 								<div class="input-field">
-									<input type="text" id="otherRecommandExport" name="userRecommend"
-										placeholder="추천인코드를 입력해주세요">
+									<input type="text" id="otherRecommandExport"
+										name="userRecommend" placeholder="추천인코드를 입력해주세요">
 								</div>
 								<div class="form-group py-2">
 									<div>
@@ -409,284 +409,568 @@ a[target='_blank'] {
 									</div>
 								</div>
 								<button class="btn btn-primary btn-block mt-3 "
-									style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="enrollBtnExpert">회원가입</button>
+									style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);"
+									id="enrollBtnExport">회원가입</button>
 							</div>
 						</form>
-					</div>  --%>
-				</div> 
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script>
-	 window.onload =()=>{
-		 
-		 let isId, isPwd, isPwd2, isName, isNickName, isEmail, isEmailCheck = false;
+	window.onload = () => {
+
+		let isId, isPwd, isPwd2, isName, isNickName, isEmail, isEmailCheck = false;
+		let isIdExpert, isPwdExpert, isPwdExpert2, isNameExpert, isNickNameExpert, isEmailExpert, isEmailCheckExpert = false;
 		// 아이디 중복 확인
-         document.getElementById('myId').addEventListener('change',function(){
-            
-            const checkId = document.getElementById('myId')
-            const checkId2 = document.getElementById('myId2')
-            const regExp1 = /^[a-zA-Z][a-zA-Z0-9]{5,11}$/;
-               $.ajax({
-                  url: '${contextPath}/checkId.me',
-                  data: {id:this.value},
-                  success: (data)=>{
-                     if(data.trim() == 'yes' && regExp1.test(this.value)){
-                    	 checkId.style.backgroundColor = '#24E082';
-                    	 checkId2.style.backgroundColor = '#24E082';
-                        isId = true;
-                     } else if(data.trim() == 'yes' && !regExp1.test(this.value)) {
-                    	 checkId.style.backgroundColor = '#FFCECE';
-                    	 checkId2.style.backgroundColor = '#FFCECE';
-                        isId = false;
-                     } else if(data.trim() == 'no'){
-                    	 checkId.style.backgroundColor = '#FFCECE';
-                    	 checkId2.style.backgroundColor = '#FFCECE';
-                        isId = false;
-                      }
-                  },
-                  error: (data)=>{
-                     console.log(data);
-                  }
-               });
-            });
-			
-      // 비밀번호 정규표현식
-         const pwd1 = document.getElementById('myPwd');
-         const pwd2 = document.getElementById('myPwdChk');
-         const myPwd2 = document.getElementById('myPwd2');
-         const myPwdChk2 = document.getElementById('myPwdChk2');
-         const regExp2 =  /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
-         
-         const checkRegPwd = document.getElementById('checkRegPwd');
-         const checkPwd = document.getElementById('checkPwd');
-         
-         pwd1.addEventListener('change',function(){
-            if(regExp2.test(this.value)){
-               pwd1.style.backgroundColor = '#24E082';
-               myPwd2.style.backgroundColor = '#24E082';
-               isPwd = true;
-               if(pwd1.value != pwd2.value && pwd1.value!=""){
-            	   pwd2.style.backgroundColor = '#FFCECE';
-            	   myPwdChk2.style.backgroundColor = '#FFCECE';
-               }
-            } else {
-            	pwd1.style.backgroundColor = '#FFCECE';
-            	myPwd2.style.backgroundColor = '#FFCECE';
-               isPwd = false;
-               if(pwd1.value != pwd2.value && pwd1.value!=""){
-            	   pwd2.style.backgroundColor = '#FFCECE';
-            	   myPwdChk2.style.backgroundColor = '#FFCECE';
-               }
-            }
-         })
-         
-         
-         // 비밀번호 일치 확인
-         pwd2.addEventListener('change', function(){
-            if(pwd1.value == pwd2.value && pwd1.value!=""){
-               console.log('일치');
-               pwd2.style.backgroundColor = '#24E082';
-               myPwdChk2.style.backgroundColor = '#24E082';
-               isPwd2 = true;
-               
-            } else {
-               console.log('불일치');
-               pwd2.style.backgroundColor = '#FFCECE';
-               myPwdChk2.style.backgroundColor = '#FFCECE';
-               isPwd2 = false;
-            }
-         });
-         
-          //이름
-          document.getElementById('myName').addEventListener('change',function(){
-            
-            const regExp3 =/^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
-            const myName2 = document.getElementById('myName2'); 
-            
-               if(regExp3.test(this.value)){
-            	   myName.style.backgroundColor = '#24E082';
-            	   myName2.style.backgroundColor = '#24E082';
-                  isName = true;
-               } else {
-            	   myName.style.backgroundColor = '#FFCECE';
-            	   myName2.style.backgroundColor = '#FFCECE';
-                  isName = false;
-               }
-         });
-         
-         
-         // 닉네임 중복 확인
-         document.getElementById('myNickName').addEventListener('change',function(){
-            const checkNickName = document.getElementById('myNickName');
-            const checkNickName2 = document.getElementById('myNickName2');
-            const regExp4 = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{1,}$/;
-            
-            if(this.value.trim() == ''){
-               checkNickName.style.backgroundColor = '#FFCECE';
-               checkNickName.style.backgroundColor = '#FFCECE';
-            }else{
-               $.ajax({
-                  url: '${contextPath}/checkNickName.me',
-                  data: {nickName: this.value},
-                  success:(data)=>{
-                     console.log(data);
-                     if(data.trim() == 'yes' && regExp4.test(this.value)){
-                        checkNickName.style.backgroundColor = '#24E082';
-                        checkNickName2.style.backgroundColor = '#24E082';
-                        isNickName = true;
-                     } else if(data.trim() == 'yes' && !regExp4.test(this.value)){
-                        checkNickName.style.backgroundColor = '#FFCECE';
-                        checkNickName2.style.backgroundColor = '#FFCECE';
-                        isNickName = false;
-                     } else if(data.trim() == 'no'){
-                        checkNickName.style.backgroundColor = '#FFCECE';
-                        checkNickName2.style.backgroundColor = '#FFCECE';
-                        isNickName = false;
-                      }
-                  },
-                  error:(data)=>{
-                     console.log(data);
-                  }
-               });
-            }
-         });
-         
-         
-         // 이메일 중복확인
-         document.getElementById('myEmail').addEventListener('change',function(){
-            const email = document.getElementById('myEmail').value;
-            const searchEmail = document.getElementById('myEmail');
-            const searchEmail2 = document.getElementById('myEmail2');
-            console.log(email);
-            const checkEmailBtn = document.getElementById('mail-Check-Btn');
-            const regExp5 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-            
-            $.ajax({
-               type: 'get',
-               url: '${contextPath}/searchEmail.me',
-               data: {memberEmail:email},
-               success:(data)=>{
-                  console.log(data);
-                  if(data.trim() == 'yes' && regExp5.test(this.value)){
-                     checkEmailBtn.disabled = false;
-                     checkEmailBtn.style.cursor = 'pointer';
-                     checkEmailBtn.style.color = 'black';
-                     searchEmail.style.backgroundColor = '#24E082';
-                     searchEmail2.style.backgroundColor = '#24E082';
-                     isEmail = true;
-                  } else if(data.trim() == 'yes' && !regExp5.test(this.value)){
-                     checkEmailBtn.disabled = true;
-                     checkEmailBtn.style.color = 'lightgray';
-                     searchEmail.style.backgroundColor = '#FFCECE';
-                     searchEmail2.style.backgroundColor = '#FFCECE';
-                     isEmail = false;
-                  } else if(data.trim() == 'no'){
-                     checkEmailBtn.disabled = true;
-                     checkEmailBtn.style.color = 'lightgray';
-                     searchEmail.style.backgroundColor = '#FFCECE';
-                     searchEmail2.style.backgroundColor = '#FFCECE';
-                     isEmail = false;
-                  } else {
-                	checkEmailBtn.disabled = true;
-                    checkEmailBtn.style.color = 'lightgray';
-                    searchEmail.style.backgroundColor = '#FFCECE';
-                    searchEmail2.style.backgroundColor = '#FFCECE';
-                  }
-               },
-               error:(data)=>{
-                  console.log(data);
-               }
-               
-            })
-         });
-          
-          // 인증번호 보내기
-          document.getElementById('mail-Check-Btn').addEventListener('click',function(){
-            const email = document.getElementById('myEmail').value;
-            console.log(email);
-            const checkEmail = document.getElementById('myEmailChk');
-            
-            $.ajax({
-               type: 'get',
-               url: '${contextPath}/checkEmail.me',
-               data: {memberEmail:email},
-               success:(data)=>{
-                  console.log(data);
-                  checkEmail.disabled = false;
-                  code = data;
-                  alert('인증번호가 전송되었습니다.');
-                  document.getElementById('checkCodeBtn').style.color = 'black';
-                  document.getElementById('checkEmail').style.display='';
-                  document.getElementById('checkCodeBtn').style.display='';
-               },
-               error:(data)=>{
-                  console.log(data);
-               }
-               
-            })
-         });
-         
-          // 인증번호 확인
-         document.getElementById('checkCodeBtn').addEventListener('click',function(){
-            const inputEmail = document.getElementById("myEmailChk").value;
-            const resultEmail = document.getElementById("myEmailChk");
-            
-            if(inputEmail == code){
-               resultEmail.style.backgroundColor = '#24E082';
-               isEmailCheck = true;
-            } else{
-               resultEmail.style.backgroundColor = '#FFCECE';
-               isEmailCheck = false;
-            }
-         });
-		
-          // 주소검색
-         document.getElementById('searchAddress').addEventListener('click',function(){
-        	 new daum.Postcode({
-        	        oncomplete: function(data) {
-        	            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-        	            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-        	            
-        	            
-        	             var roadAddr = data.roadAddress; // 도로명 주소 변수
-        	                
-        	             document.getElementById('myAddress1').value = data.zonecode;
-        	             document.getElementById("myAddress2").value = roadAddr;
-        	                
-        	        }
-        	    }).open();
-        	 
-         });
-          
-         // 회원가입 버튼 활성화
-         document.getElementById('enrollBtn').addEventListener('click',function(){
-            const enrollBtn = document.getElementById('enrollBtn');
-            
-             if(isId && isPwd && isPwd2 && isName && isNickName && isEmail && isEmailCheck){
-                document.getElementById('insertForm').submit();
-             } else {
-               alert('회원가입 폼에 맞춰주세요.');
-               if(!isId){
-                  document.getElementById('myId').focus();
-               }else if(!isPwd){
-                  document.getElementById('myPwd').focus();
-               }else if(!isPwd2){
-                  document.getElementById('myPwdChk').focus();
-               }else if(!isName){
-                  document.getElementById('myName').focus();
-               }else if(!isNickName){
-                  document.getElementById('myNickName').focus();
-               }else if(!isEmail){
-                  document.getElementById('myEmail').focus();
-               }else if(!isEmailCheck){
-                  document.getElementById('myEmailChk').focus();
-               }
-             }
-         });
-         }
+		document.getElementById('myId').addEventListener('change', function() {
+
+		    const checkId = document.getElementById('myId')
+		    const checkId2 = document.getElementById('myId2')
+		    const regExp1 = /^[a-zA-Z][a-zA-Z0-9]{5,11}$/;
+		    $.ajax({
+		        url: '${contextPath}/checkId.me',
+		        data: {
+		            id: this.value
+		        },
+		        success: (data) => {
+		            if (data.trim() == 'yes' && regExp1.test(this.value)) {
+		                checkId.style.backgroundColor = '#24E082';
+		                checkId2.style.backgroundColor = '#24E082';
+		                isId = true;
+		            } else if (data.trim() == 'yes' && !regExp1.test(this.value)) {
+		                checkId.style.backgroundColor = '#FFCECE';
+		                checkId2.style.backgroundColor = '#FFCECE';
+		                isId = false;
+		            } else if (data.trim() == 'no') {
+		                checkId.style.backgroundColor = '#FFCECE';
+		                checkId2.style.backgroundColor = '#FFCECE';
+		                isId = false;
+		            }
+		        },
+		        error: (data) => {
+		            console.log(data);
+		        }
+		    });
+		});
+
+		// 비밀번호 정규표현식
+		const pwd1 = document.getElementById('myPwd');
+		const pwd2 = document.getElementById('myPwdChk');
+		const myPwd2 = document.getElementById('myPwd2');
+		const myPwdChk2 = document.getElementById('myPwdChk2');
+		const regExp2 = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+
+		const checkRegPwd = document.getElementById('checkRegPwd');
+		const checkPwd = document.getElementById('checkPwd');
+
+		pwd1.addEventListener('change', function() {
+		    if (regExp2.test(this.value)) {
+		        pwd1.style.backgroundColor = '#24E082';
+		        myPwd2.style.backgroundColor = '#24E082';
+		        isPwd = true;
+		        if (pwd1.value != pwd2.value && pwd1.value != "") {
+		            pwd2.style.backgroundColor = '#FFCECE';
+		            myPwdChk2.style.backgroundColor = '#FFCECE';
+		        }
+		    } else {
+		        pwd1.style.backgroundColor = '#FFCECE';
+		        myPwd2.style.backgroundColor = '#FFCECE';
+		        isPwd = false;
+		        if (pwd1.value != pwd2.value && pwd1.value != "") {
+		            pwd2.style.backgroundColor = '#FFCECE';
+		            myPwdChk2.style.backgroundColor = '#FFCECE';
+		        }
+		    }
+		})
+
+
+		// 비밀번호 일치 확인
+		pwd2.addEventListener('change', function() {
+		    if (pwd1.value == pwd2.value && pwd1.value != "") {
+		        console.log('일치');
+		        pwd2.style.backgroundColor = '#24E082';
+		        myPwdChk2.style.backgroundColor = '#24E082';
+		        isPwd2 = true;
+
+		    } else {
+		        console.log('불일치');
+		        pwd2.style.backgroundColor = '#FFCECE';
+		        myPwdChk2.style.backgroundColor = '#FFCECE';
+		        isPwd2 = false;
+		    }
+		});
+
+		//이름
+		document.getElementById('myName').addEventListener('change', function() {
+
+		    const regExp3 = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+		    const myName2 = document.getElementById('myName2');
+
+		    if (regExp3.test(this.value)) {
+		        myName.style.backgroundColor = '#24E082';
+		        myName2.style.backgroundColor = '#24E082';
+		        isName = true;
+		    } else {
+		        myName.style.backgroundColor = '#FFCECE';
+		        myName2.style.backgroundColor = '#FFCECE';
+		        isName = false;
+		    }
+		});
+
+
+		// 닉네임 중복 확인
+		document.getElementById('myNickName').addEventListener('change', function() {
+		    const checkNickName = document.getElementById('myNickName');
+		    const checkNickName2 = document.getElementById('myNickName2');
+		    const regExp4 = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{1,}$/;
+
+		    if (this.value.trim() == '') {
+		        checkNickName.style.backgroundColor = '#FFCECE';
+		        checkNickName.style.backgroundColor = '#FFCECE';
+		    } else {
+		        $.ajax({
+		            url: '${contextPath}/checkNickName.me',
+		            data: {
+		                nickName: this.value
+		            },
+		            success: (data) => {
+		                console.log(data);
+		                if (data.trim() == 'yes' && regExp4.test(this.value)) {
+		                    checkNickName.style.backgroundColor = '#24E082';
+		                    checkNickName2.style.backgroundColor = '#24E082';
+		                    isNickName = true;
+		                } else if (data.trim() == 'yes' && !regExp4.test(this.value)) {
+		                    checkNickName.style.backgroundColor = '#FFCECE';
+		                    checkNickName2.style.backgroundColor = '#FFCECE';
+		                    isNickName = false;
+		                } else if (data.trim() == 'no') {
+		                    checkNickName.style.backgroundColor = '#FFCECE';
+		                    checkNickName2.style.backgroundColor = '#FFCECE';
+		                    isNickName = false;
+		                }
+		            },
+		            error: (data) => {
+		                console.log(data);
+		            }
+		        });
+		    }
+		});
+
+
+		// 이메일 중복확인
+		document.getElementById('myEmail').addEventListener('change', function() {
+		    const email = document.getElementById('myEmail').value;
+		    const searchEmail = document.getElementById('myEmail');
+		    const searchEmail2 = document.getElementById('myEmail2');
+		    console.log(email);
+		    const checkEmailBtn = document.getElementById('mail-Check-Btn');
+		    const regExp5 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+
+		    $.ajax({
+		        type: 'get',
+		        url: '${contextPath}/searchEmail.me',
+		        data: {
+		            memberEmail: email
+		        },
+		        success: (data) => {
+		            console.log(data);
+		            if (data.trim() == 'yes' && regExp5.test(this.value)) {
+		                checkEmailBtn.disabled = false;
+		                checkEmailBtn.style.cursor = 'pointer';
+		                checkEmailBtn.style.color = 'black';
+		                searchEmail.style.backgroundColor = '#24E082';
+		                searchEmail2.style.backgroundColor = '#24E082';
+		                isEmail = true;
+		            } else if (data.trim() == 'yes' && !regExp5.test(this.value)) {
+		                checkEmailBtn.disabled = true;
+		                checkEmailBtn.style.color = 'lightgray';
+		                searchEmail.style.backgroundColor = '#FFCECE';
+		                searchEmail2.style.backgroundColor = '#FFCECE';
+		                isEmail = false;
+		            } else if (data.trim() == 'no') {
+		                checkEmailBtn.disabled = true;
+		                checkEmailBtn.style.color = 'lightgray';
+		                searchEmail.style.backgroundColor = '#FFCECE';
+		                searchEmail2.style.backgroundColor = '#FFCECE';
+		                isEmail = false;
+		            } else {
+		                checkEmailBtn.disabled = true;
+		                checkEmailBtn.style.color = 'lightgray';
+		                searchEmail.style.backgroundColor = '#FFCECE';
+		                searchEmail2.style.backgroundColor = '#FFCECE';
+		            }
+		        },
+		        error: (data) => {
+		            console.log(data);
+		        }
+
+		    })
+		});
+
+		// 인증번호 보내기
+		document.getElementById('mail-Check-Btn').addEventListener('click', function() {
+		    const email = document.getElementById('myEmail').value;
+		    console.log(email);
+		    const checkEmail = document.getElementById('myEmailChk');
+
+		    $.ajax({
+		        type: 'get',
+		        url: '${contextPath}/checkEmail.me',
+		        data: {
+		            memberEmail: email
+		        },
+		        success: (data) => {
+		            console.log(data);
+		            checkEmail.disabled = false;
+		            code = data;
+		            alert('인증번호가 전송되었습니다.');
+		            document.getElementById('checkCodeBtn').style.color = 'black';
+		            document.getElementById('checkEmail').style.display = '';
+		            document.getElementById('checkCodeBtn').style.display = '';
+		        },
+		        error: (data) => {
+		            console.log(data);
+		        }
+
+		    })
+		});
+
+		// 인증번호 확인
+		document.getElementById('checkCodeBtn').addEventListener('click', function() {
+		    const inputEmail = document.getElementById("myEmailChk").value;
+		    const resultEmail = document.getElementById("myEmailChk");
+
+		    if (inputEmail == code) {
+		        resultEmail.style.backgroundColor = '#24E082';
+		        isEmailCheck = true;
+		    } else {
+		        resultEmail.style.backgroundColor = '#FFCECE';
+		        isEmailCheck = false;
+		    }
+		});
+
+		// 주소검색
+		document.getElementById('searchAddress').addEventListener('click', function() {
+		    new daum.Postcode({
+		        oncomplete: function(data) {
+		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+
+
+		            var roadAddr = data.roadAddress; // 도로명 주소 변수
+
+		            document.getElementById('myAddress1').value = data.zonecode;
+		            document.getElementById("myAddress2").value = roadAddr;
+
+		        }
+		    }).open();
+
+		});
+
+		// 회원가입 버튼 활성화
+		document.getElementById('enrollBtn').addEventListener('click', function() {
+		    const enrollBtn = document.getElementById('enrollBtn');
+
+		    if (isId && isPwd && isPwd2 && isName && isNickName && isEmail && isEmailCheck) {
+		        document.getElementById('insertForm').submit();
+		    } else {
+		        alert('회원가입 폼에 맞춰주세요.');
+		        if (!isId) {
+		            document.getElementById('myId').focus();
+		        } else if (!isPwd) {
+		            document.getElementById('myPwd').focus();
+		        } else if (!isPwd2) {
+		            document.getElementById('myPwdChk').focus();
+		        } else if (!isName) {
+		            document.getElementById('myName').focus();
+		        } else if (!isNickName) {
+		            document.getElementById('myNickName').focus();
+		        } else if (!isEmail) {
+		            document.getElementById('myEmail').focus();
+		        } else if (!isEmailCheck) {
+		            document.getElementById('myEmailChk').focus();
+		        }
+		    }
+		});
+
+		//카카오 로그인
+
+		// 전문가 
+		// 아이디 중복 확인
+		document.getElementById('myIdExport').addEventListener('change', function() {
+
+		    const checkIdExport = document.getElementById('myIdExport')
+		    const checkIdExport2 = document.getElementById('myIdExport2')
+		    const regExpExport1 = /^[a-zA-Z][a-zA-Z0-9]{5,11}$/;
+		    $.ajax({
+		        url: '${contextPath}/checkId.me',
+		        data: {
+		            id: this.value
+		        },
+		        success: (data) => {
+		            if (data.trim() == 'yes' && regExpExport1.test(this.value)) {
+		                checkIdExport.style.backgroundColor = '#24E082';
+		                checkIdExport2.style.backgroundColor = '#24E082';
+		                isIdExport = true;
+		            } else if (data.trim() == 'yes' && !regExpExport1.test(this.value)) {
+		                checkIdExport.style.backgroundColor = '#FFCECE';
+		                checkIdExport2.style.backgroundColor = '#FFCECE';
+		                isIdExport = false;
+		            } else if (data.trim() == 'no') {
+		                checkIdExport.style.backgroundColor = '#FFCECE';
+		                checkIdExport2.style.backgroundColor = '#FFCECE';
+		                isIdExport = false;
+		            }
+		        },
+		        error: (data) => {
+		            console.log(data);
+		        }
+		    });
+		});
+
+		// 비밀번호 정규표현식
+		const pwdExport1 = document.getElementById('myPwdExport');
+		const pwdExport2 = document.getElementById('myPwdChkExport');
+		const myPwdExport2 = document.getElementById('myPwdExport2');
+		const myPwdChkExport2 = document.getElementById('myPwdChkExport2');
+		const regExpExport2 = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+
+		const checkRegPwdExport = document.getElementById('checkRegPwdExport');
+		const checkPwdExport = document.getElementById('checkPwdExport');
+
+		pwdExport1.addEventListener('change', function() {
+		    if (regExpExport2.test(this.value)) {
+		        pwdExport1.style.backgroundColor = '#24E082';
+		        myPwdExport2.style.backgroundColor = '#24E082';
+		        isPwdExport = true;
+		        if (pwdExport1.value != pwdExport2.value && pwdExport1.value != "") {
+		            pwdExport2.style.backgroundColor = '#FFCECE';
+		            myPwdChkExport2.style.backgroundColor = '#FFCECE';
+		        }
+		    } else {
+		        pwdExport1.style.backgroundColor = '#FFCECE';
+		        myPwdExport2.style.backgroundColor = '#FFCECE';
+		        isPwdExport = false;
+		        if (pwdExport1.value != pwdExport2.value && pwdExport1.value != "") {
+		            pwdExport2.style.backgroundColor = '#FFCECE';
+		            myPwdChkExport2.style.backgroundColor = '#FFCECE';
+		        }
+		    }
+		})
+
+
+		// 비밀번호 일치 확인
+		pwdExport2.addEventListener('change', function() {
+		    if (pwdExport1.value == pwdExport2.value && pwdExport1.value != "") {
+		        pwdExport2.style.backgroundColor = '#24E082';
+		        myPwdChkExport2.style.backgroundColor = '#24E082';
+		        isPwdExport2 = true;
+
+		    } else {
+		        pwdExport2.style.backgroundColor = '#FFCECE';
+		        myPwdChkExport2.style.backgroundColor = '#FFCECE';
+		        isPwdExport2 = false;
+		    }
+		});
+
+		//이름
+		document.getElementById('myNameExport').addEventListener('change', function() {
+
+		    const regExpExport3 = /^[가-힣]{2,4}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,10}$/;
+		    const myNameExport2 = document.getElementById('myNameExport2');
+
+		    if (regExpExport3.test(this.value)) {
+		        myNameExport.style.backgroundColor = '#24E082';
+		        myNameExport2.style.backgroundColor = '#24E082';
+		        isName = true;
+		    } else {
+		        myNameExport.style.backgroundColor = '#FFCECE';
+		        myNameExport2.style.backgroundColor = '#FFCECE';
+		        isNameExport = false;
+		    }
+		});
+
+
+		// 닉네임 중복 확인
+		document.getElementById('myNickNameExport').addEventListener('change', function() {
+		    const checkNickNameExport = document.getElementById('myNickNameExport');
+		    const checkNickNameExport2 = document.getElementById('myNickNameExport2');
+		    const regExpExport4 = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{1,}$/;
+
+		    if (this.value.trim() == '') {
+		        checkNickNameExport.style.backgroundColor = '#FFCECE';
+		        checkNickNameExport.style.backgroundColor = '#FFCECE';
+		    } else {
+		        $.ajax({
+		            url: '${contextPath}/checkNickName.me',
+		            data: {
+		                nickName: this.value
+		            },
+		            success: (data) => {
+		                console.log(data);
+		                if (data.trim() == 'yes' && regExpExport4.test(this.value)) {
+		                    checkNickNameExport.style.backgroundColor = '#24E082';
+		                    checkNickNameExport2.style.backgroundColor = '#24E082';
+		                    isNickName = true;
+		                } else if (data.trim() == 'yes' && !regExpExport4.test(this.value)) {
+		                    checkNickNameExport.style.backgroundColor = '#FFCECE';
+		                    checkNickNameExport2.style.backgroundColor = '#FFCECE';
+		                    isNickName = false;
+		                } else if (data.trim() == 'no') {
+		                    checkNickNameExport.style.backgroundColor = '#FFCECE';
+		                    checkNickNameExport2.style.backgroundColor = '#FFCECE';
+		                    isNickNameExport = false;
+		                }
+		            },
+		            error: (data) => {
+		                console.log(data);
+		            }
+		        });
+		    }
+		});
+
+
+		// 이메일 중복확인
+		document.getElementById('myEmailExport').addEventListener('change', function() {
+		    const emailExport = document.getElementById('myEmailExport').value;
+		    const searchEmailExport = document.getElementById('myEmailExport');
+		    const searchEmailExport2 = document.getElementById('myEmailExport2');
+		    const checkEmailBtnExport = document.getElementById('mail-Check-Btn-Export');
+		    const regExpExport5 = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+
+		    $.ajax({
+		        type: 'get',
+		        url: '${contextPath}/searchEmail.me',
+		        data: {
+		            memberEmail: emailExport
+		        },
+		        success: (data) => {
+		            console.log(data);
+		            if (data.trim() == 'yes' && regExpExport5.test(this.value)) {
+		                checkEmailBtnExport.disabled = false;
+		                checkEmailBtnExport.style.cursor = 'pointer';
+		                checkEmailBtnExport.style.color = 'black';
+		                searchEmailExport.style.backgroundColor = '#24E082';
+		                searchEmailExport2.style.backgroundColor = '#24E082';
+		                isEmailExport = true;
+		            } else if (data.trim() == 'yes' && !regExpExport5.test(this.value)) {
+		                checkEmailBtnExport.disabled = true;
+		                checkEmailBtnExport.style.color = 'lightgray';
+		                searchEmailExport.style.backgroundColor = '#FFCECE';
+		                searchEmailExport2.style.backgroundColor = '#FFCECE';
+		                isEmailExport = false;
+		            } else if (data.trim() == 'no') {
+		                checkEmailBtnExport.disabled = true;
+		                checkEmailBtnExport.style.color = 'lightgray';
+		                searchEmailExport.style.backgroundColor = '#FFCECE';
+		                searchEmailExport2.style.backgroundColor = '#FFCECE';
+		                isEmailExport = false;
+		            } else {
+		                checkEmailBtnExport.disabled = true;
+		                checkEmailBtnExport.style.color = 'lightgray';
+		                searchEmailExport.style.backgroundColor = '#FFCECE';
+		                searchEmailExport2.style.backgroundColor = '#FFCECE';
+		            }
+		        },
+		        error: (data) => {
+		            console.log(data);
+		        }
+
+		    })
+		});
+
+		// 인증번호 보내기
+		document.getElementById('mail-Check-Btn-Export').addEventListener('click', function() {
+		    const emailExport = document.getElementById('myEmailExport').value;
+		    const checkEmailExport = document.getElementById('myEmailChkExport');
+
+		    $.ajax({
+		        type: 'get',
+		        url: '${contextPath}/checkEmail.me',
+		        data: {
+		            memberEmail: emailExport
+		        },
+		        success: (data) => {
+		            console.log(data);
+		            checkEmailExport.disabled = false;
+		            code = data;
+		            alert('인증번호가 전송되었습니다.');
+		            document.getElementById('checkCodeBtnExport').style.color = 'black';
+		            document.getElementById('checkEmailExport').style.display = '';
+		            document.getElementById('checkCodeBtnExport').style.display = '';
+		        },
+		        error: (data) => {
+		            console.log(data);
+		        }
+
+		    })
+		});
+
+		// 인증번호 확인
+		document.getElementById('checkCodeBtnExport').addEventListener('click', function() {
+		    const inputEmailExport = document.getElementById("myEmailChkExport").value;
+		    const resultEmailExport = document.getElementById("myEmailChkExport");
+
+		    if (inputEmailExport == code) {
+		        resultEmailExport.style.backgroundColor = '#24E082';
+		        isEmailCheckExport = true;
+		    } else {
+		        resultEmailExport.style.backgroundColor = '#FFCECE';
+		        isEmailCheckExport = false;
+		    }
+		});
+
+		// 주소검색
+		document.getElementById('searchAddressExport').addEventListener('click', function() {
+		    new daum.Postcode({
+		        oncomplete: function(data) {
+		            // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		            // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+
+
+		            var roadAddr = data.roadAddress; // 도로명 주소 변수
+
+		            document.getElementById('myAddressExport1').value = data.zonecode;
+		            document.getElementById("myAddressExport2").value = roadAddr;
+
+		        }
+		    }).open();
+
+		});
+		//사진첨부
+
+
+
+		// 회원가입 버튼 활성화
+		document.getElementById('enrollBtnExport').addEventListener('click', function() {
+		    const enrollBtnExport = document.getElementById('enrollBtnExport');
+
+		    if (isIdExport && isPwdExport && isPwdExport2 && isNameExport && isNickNameExport && isEmailExport && isEmailCheckExport) {
+		        document.getElementById('insertFormExpert').submit();
+		    } else {
+		        alert('회원가입 폼에 맞춰주세요.');
+		        if (!isIdExport) {
+		            document.getElementById('myIdExport').focus();
+		        } else if (!isPwdExport) {
+		            document.getElementById('myPwdExport').focus();
+		        } else if (!isPwdExport2) {
+		            document.getElementById('myPwdChkExport').focus();
+		        } else if (!isNameExport) {
+		            document.getElementById('myNameExport').focus();
+		        } else if (!isNickNameExport) {
+		            document.getElementById('myNickNameExport').focus();
+		        } else if (!isEmailExport) {
+		            document.getElementById('myEmailExport').focus();
+		        } else if (!isEmailCheckExport) {
+		            document.getElementById('myEmailChkExport').focus();
+		        }
+		    }
+		});
+		}
 	</script>
 </body>
 </html>
