@@ -28,7 +28,7 @@ import com.kh.young.member.exception.MemberException;
 import com.kh.young.member.service.MemberService;
 import com.kh.young.model.vo.Member;
 
-@SessionAttributes("loginUser")
+@SessionAttributes({"loginUser", "access_Token"})
 @Controller
 public class MemberController {
 		
@@ -38,6 +38,7 @@ public class MemberController {
 	
 	@Autowired 
 	private BCryptPasswordEncoder bcrypt;
+	
 	
 	
 	
@@ -224,12 +225,10 @@ public class MemberController {
 			System.out.println("이메일인증 : " + email);
 			
 			return joinEmail(email);
-//			return "바보";
 		}
 		
 		public void makeRandomNumber() {
 			Random r = new Random();
-			// 난수 범위 111111 ~999999
 			int checkNum = r.nextInt(888888)+111111;
 			System.out.println("인증번호 : " + checkNum);
 			authNumber = checkNum;
@@ -263,5 +262,5 @@ public class MemberController {
 		}
 		
 //		--------------------------------- 이메일 인증 ---------------------------------------
-
+		
 }

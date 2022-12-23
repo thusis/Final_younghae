@@ -39,7 +39,7 @@
 	</if>
 	<if test="category == 'export'">			
 		insert into expert_user
-		values(#{userNum},#{userZipcode},#{userAddress},#{userAddressDetail},1,2,3,4,5)
+		values(#{userNum},#{userZipcode},#{userAddress},#{userAddressDetail},'N','N','N','N','N','N')
 	</if>	
 	</insert>
 	
