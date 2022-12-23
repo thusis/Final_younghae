@@ -180,6 +180,8 @@
             font-size: 12px;
             color: #24E082;    
         }
+        
+        
 
     </style>   
     <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">
@@ -201,8 +203,6 @@
                 </ul>
             </div>
 
-
-
             <div class="checkout__form mt-5">
                 <h3 class="mb-5">주문/결제</h3>
                 <form action="#">
@@ -213,7 +213,7 @@
                                     <p style="font-weight: bold; font-size: 1.5rem;">배송지</p>
                                 </div>
                                 <div class="col-lg-6">
-                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                    <button type="button" id="changeAddress"
                                     style="border:none; background-color:white; float:right; color: #24E082; font-weight: bold; font-size: 1.3rem;">변경</button>
                                 </div>
                             </div>
@@ -402,50 +402,89 @@
         </div>
     </section>
     <!-- Checkout Section End -->
-    
-    
-	<!-- change address Modal -->
-	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="width: 30%;">
-	    <div class="modal-content" style="height: 90%">
-	      <div class="modal-header" style="height: 10%; border-bottom-color:white; ">
-	        <div class="modal-title fs-5" id="exampleModalLabel" style="margin:auto; font-size: 1.5rem; font-weight:bold;">배송지 선택</div>
-	        <button type="button" class="hj_btn_closeAddressModal" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
-	      </div>
-	      <div class="modal-body">
-			<div style="width:100%; height:auto; background-color: white; border-radius: 0.5em; padding:1rem; border:2px solid #24E082; margin-bottom: 1rem;">
-				<div style="font-weight:bold; font-size:1.2rem; margin-bottom:0.2rem;">KH종로지원</div>
-				<div style="margin-bottom:0.2rem;">서울 중구 남대문로 120 (남대문로1가) 그레이츠 청계, 대일빌딩 2층, 3층</div>
-				<div style="margin-bottom:0.7rem; color: gray;"><span>영양단</span>&nbsp;&nbsp;&nbsp;010-1234-5678</div>
-				<button type="button" class="hj_btn_changeAddress">삭제</button>
-				<button type="button" class="hj_btn_changeAddress">수정</button>
-				<button class="hj_btn_selectAddress" style="float:right;">선택</button>
-			</div>
-	      </div>
-	      <div class="modal-footer" style="border-top-color: white;">
-	        <button type="button" class="hj_btn_addAddress" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="font-size: 20px;">배송지 추가</button>
-	      </div>
-	    </div>
+
+	
+	<!-- The Modal -->
+	<div id="myModal" class="hj_modal" >
+	  <!-- Modal content -->
+       <div class="modal-content" style="height: 90%; width: 28%">
+         <div class="modal-header" style="height: 10%; border-bottom-color:white; margin-top: -15px;">
+           <div class="modal-title fs-5" id="exampleModalLabel" style="margin-left:28%; font-size: 1.5rem; font-weight:bold;">배송지 선택</div>
+           <span class="close" style="align-content: right; font-size: 2rem;">&times;</span>
+         </div>
+         <div class="modal-body" style="overflow: auto;">
+	         <div style="width:100%; height:auto; background-color: white; border-radius: 0.5em; padding:1rem; border:2px solid #24E082; margin-bottom: 1rem;">
+	            <div style="font-weight:bold; font-size:1.2rem; margin-bottom:0.2rem;">KH종로지원</div>
+	            <div style="margin-bottom:0.2rem;">서울 중구 남대문로 120 (남대문로1가) 그레이츠 청계, 대일빌딩 2층, 3층</div>
+	            <div style="margin-bottom:0.7rem; color: gray;"><span>영양단</span>&nbsp;&nbsp;&nbsp;010-1234-5678</div>
+	            <button type="button" class="hj_btn_changeAddress">삭제</button>
+	            <button type="button" class="hj_btn_changeAddress">수정</button>
+	            <button class="hj_btn_selectAddress" style="float:right;">선택</button>
+	         </div>
+
+         </div>
+         <div class="modal-footer" style="border-top-color: white; margin-bottom: -10px;">
+           <button type="button" id="goModal2" class="hj_btn_addAddress" style="font-size: 20px;">배송지 추가</button>
+         </div>
 	  </div>
 	</div>
-	<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-	  <div class="modal-dialog modal-dialog-centered">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        Hide this modal and show the first with the button below.
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" id="goFirstModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Back to first</button>
-	        
-	      </div>
-	    </div>
+	
+<!-- 	<div id="Modal2" class="modal" > -->
+	
+	<div id="Modal2" class="hj_modal" >
+	  <!-- Modal content -->
+       <div class="modal-content" style="height: 90%; width: 28%">
+         <div class="modal-header" style="height: 10%; border-bottom-color:white; margin-top: -15px;">
+           <button id="goModal1" class="hj_btn_closeAddressModal" style="margin-top:5px; color: #828282;"><i class="fa-solid fa-arrow-left"></i></button>
+           <div class="modal-title fs-5" id="exampleModalLabel" style="margin-left:19%; font-size: 1.5rem; font-weight:bold;">배송지 추가</div>
+           <span class="close" style="align-content: right; font-size: 2rem;">&times;</span>
+         </div>
+         <form>
+	         <div class="modal-body">
+	         	<div style="margin-bottom: 0.5rem;">
+	         		<label for="addressName" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">배송지명</label>
+	         		<input type="text" name="addressName" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
+	         	</div>
+	         	<div style="margin-bottom: 0.5rem;">
+	         		<label for="" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">받는사람</label>
+	         		<input type="text" name="addressee" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
+	         	</div>
+	         	<div >
+	         		<label style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">연락처</label>
+	         		<input type="text" name="addressee" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
+	         	</div>
+	         	<div style="margin-bottom: 0.5rem;">
+	         		<label style="margin-right: 1rem; color: #5B555C; margin-top: 5px; margin-right: 3.4rem;">주소</label><br>
+	         		<button class="hj_btn_changeAddress" style="height: 2.1rem; width: 80px;">주소찾기</button>
+	         		<input type="text" name="addressee" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;">
+	         		<input type="text" name="addressee" style="width:100%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;">
+	         		<input type="text" name="addressee" style="width:100%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;">
+	         	</div>
+	         	<div style="margin-bottom: 2px;">
+	         		<input type="checkbox" id="chooseAddress" name="chooseAddress" style="accent-color: #24E082; color:white;width:15px; height:15px; margin-top:10px;">
+					<label for="chooseAddress" style="color: #5B555C;">&nbsp;&nbsp;기본 배송지로 저장</label>
+	         	</div>
+	         	<div style="background-color: #F5F5F5;">
+	         		<div style="color: #5B555C; font-size:13px;">개인정보 수집 및 이용 동의</div>
+	         		<div style="overflow: auto; height: 45px; color: #5B555C; font-size: 10px; ">
+		         		1. 개인정보 수집 목적 : 신규 배송지 추가, 배송정보 관리, 맞춤형 콘텐츠 및 서비스 등 제공 또는 추천<br>
+						2. 수집 항목 : 배송지정보(이름, 연락처, 주소)<br>
+						3. 보유기간 : 동의 철회시까지<br>
+						• 개인정보 수집에 동의를 거부할 수 있으나 거부 시 추가하는 배송지로의 상품 배송이 제한됩니다.<br>
+						• 위 개인정보 수집 동의 내용을 확인하고 저장합니다.
+	         		</div>
+	         	</div>
+	         </div>
+         </form>
+         <div class="modal-footer" style="border-top-color: white; margin-bottom: -10px;">
+         	<button type="button" id="goModal2" class="hj_btn_addAddress" style="font-size: 20px;">저장</button>
+         </div>
 	  </div>
-	</div>      
-    
+	</div>
+
+	
+	<!-- /The Modal -->
+
     
     <!-- Footer Section Begin -->
     <footer class="footer spad">
@@ -529,17 +568,68 @@
                 }).open();
             });
 
-            document.getElementById('goFirstModal').addEventListener('click', ()=>{
-// 				$('#exampleModalToggle2').modal("hide");
-// 				$('#exampleModal').modal('show');	
-		        $('#exampleModal').modal("toggle");
-			});
+            
+            
         }
         
-
      
     </script>
+    
+	<script>
+	// Get the modal
+	var modalOne = document.getElementById("myModal");
+	
+	// Get the button that opens the modal
+	var btn = document.getElementById("changeAddress");
+	
+	// Get the <span> element that closes the modal
+	var span = document.getElementsByClassName("close")[0];
+	
+	// When the user clicks the button, open the modal 
+	btn.onclick = function() {
+		modalOne.style.display = "block";
+	}
+	
+	// When the user clicks on <span> (x), close the modal
+	span.onclick = function() {
+		modalOne.style.display = "none";
+	}
+	
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+	  if (event.target == modalOne) {
+		  modalOne.style.display = "none";
+	  }
+	  
+	  if (event.target == Modal2) {
+		  Modal2.style.display = "none";
+	  }
+	}
+	
+// 모달2 ------------------------------------------------------------------------------
+	var goModal2 = document.getElementById("goModal2");
+	var goModal1 = document.getElementById("goModal1");
+	
+	var modal2 = document.getElementById("Modal2");
+	
+	var span2 = document.getElementsByClassName("close")[1];
+	
+	goModal2.onclick = function() {
+		modalOne.style.display = "none";
+		Modal2.style.display = "block";
+	}
+	
+	span2.onclick = function() {
+		Modal2.style.display = "none";
+	}
+	
+	goModal1.onclick = function() {
+		Modal2.style.display = "none";
+		modalOne.style.display = "block";
+	}
 
+	</script>
+	
 </body>
 
 </html>
