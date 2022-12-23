@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="memberMapper">
+
+	<select id="checkId" resultType="_int">
+		select count(*)
+		from member
+		where user_id = #{id}
+	</select>
+	
+	<select id="checkNickName" resultType="_int">
+		select count(*)
+		from member
+		where user_nickname=#{nickName}
+	</select>
+	
+	<select id="searchEmail" resultType="_int">
+		select count(*)
+		from member
+		where user_Email=#{memberEmail} and user_status='Y'
+	</select>
+	
+	<insert id="insertMember">
+		insert into member
+		values(seq_user.nextval, #{userId}, #{userPwd}, #{userName}, #{userNickname},
+			 #{email}, #{gender}, #{userBirth}, #{userPhone},#{userRecommend},SYSDATE,#{userCNumber},'Y',SYSDATE)
+	</insert>
+	
+	<select id="selectMember" resultType="_int">
+		select user_num
+		from member
+		where user_id = #{userId}
+	</select>
+	
+	<insert id="insertMemberAddress">
+	<if test="category == 'general'">
+		insert into general_user
+		values(#{userNum},#{userZipcode},#{userAddress},#{userAddressDetail},#{userHealth})
+	</if>
+	<if test="category == 'export'">			
+		insert into expert_user
+		values(#{userNum},#{userZipcode},#{userAddress},#{userAddressDetail},1,2,3,4,5)
+	</if>	
+	</insert>
+	
+	<select id="login" resultMap="loginResultMap">
+		select * 
+		from member 
+		where user_id=#{userId} and user_status='Y'
+	</select>
+	
+	<resultMap type="Member" id="loginResultMap">
+		<id column="USER_NUM" property="userNum"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_PWD" property="userPwd"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_NICKNAME" property="userNickname"/>
+		<result column="USER_EMAIL" property="email"/>
+		<result column="USER_GENDER" property="gender"/>
+		<result column="USER_BIRTH" property="userBirth"/>
+		<result column="USER_PHONE" property="userPhone"/>
+		<result column="USER_RECOMMEND" property="userRecommend"/>
+		<result column="USER_ENROLLDATE" property="userEnrollDate"/>
+		<result column="USER_CNUMBER" property="userCNumber"/>
+		<result column="USER_STATUS" property="userStatus"/>
+		<result column="USER_MODIFYDATE" property="userModifyDate"/>
+	</resultMap>
+</mapper>
