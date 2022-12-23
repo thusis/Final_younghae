@@ -54,5 +54,9 @@ public class ProCategoryDAO {
 	public Review checkReview(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.selectOne("supplementMapper.checkReview", r);
 	}
+
+	public ArrayList<Review> reviewList(SqlSessionTemplate sqlSession, int proNum) {
+		return (ArrayList)sqlSession.selectList("supplementMapper.reviewList", proNum);
+	}
 	
 }

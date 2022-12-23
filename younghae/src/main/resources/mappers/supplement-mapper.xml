@@ -60,6 +60,14 @@
 		where pro_num = #{proNum} and user_num = #{userNum}
 	</select>
 	
+	<!-- 리뷰 리스트 가져오기 -->
+	<select id="reviewList" resultMap="ReviewResultSet">
+		select * 
+		from review
+		join member using(user_num)
+		where pro_num = #{proNum}
+	</select>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>

@@ -244,122 +244,43 @@
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <div class="product__details__quantity"
-                                        style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle"
-                                                    style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">집가고싶당</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star"
-                                                    style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">4.8</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill"
-                                                    style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">10</p>
-                                            </div>
-                                            <div name="reviewImg"
-                                                style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid">
-                                            </div>
-                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
-                                                야채냠
-                                            </div>
-                                        </div>
-                                    </div>
+<!--                                     <div class="product__details__quantity" id="reviewDetail" -->
+<!--                                         style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;"> -->
+<!--                                             <div id="reviewImg" style="float: left; padding-right: -20%;"> -->
+<!--                                                 <i class="bi bi-person-circle" -->
+<!--                                                     style="font-size: 350%; color: #24E082;"></i> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewNickName" -->
+<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
+<!--                                                 <p style="font-weight: 600;">집가고싶당</p> -->
+<!--                                             </div> -->
+<!--                                             <div class="product__details__rating" -->
+<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 20%;"> -->
+<!--                                                 <i class="fa fa-star" -->
+<!--                                                     style="color: rgb(247, 247, 75); font-size: 130%;"></i> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewRank" -->
+<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
+<!--                                                 <p style="color: black; font-size: 130%;">4.8</p> -->
+<!--                                             </div> -->
+<!--                                             <div class="product__details__rating" -->
+<!--                                                 style="float: left; padding-top: 3.2%; padding-left: 5%;"> -->
+<!--                                                 <i class="bi bi-hand-thumbs-up-fill" -->
+<!--                                                     style="color: rgb(0, 0, 0); font-size: 130%;"></i> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewRank" -->
+<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
+<!--                                                 <p style="color: black; font-size: 130%;">10</p> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewImg" -->
+<!--                                                 style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;"> -->
+<!--                                                 <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid"> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewContent" class="text-left" style="padding-top: 9%;"> -->
+<!--                                                 야채냠 -->
+<!--                                         	</div> -->
+<!--                                     </div> -->
                                     <br><br>
-                                    <div class="product__details__quantity"
-                                        style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle"
-                                                    style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">좋아좋아</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star"
-                                                    style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">2.3</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill"
-                                                    style="color: #24E082; font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">50</p>
-                                            </div>
-                                            <div name="reviewImg"
-                                                style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid">
-                                            </div>
-                                            <div name="reviewContent" style="padding-top: 9%;">
-                                                오이 좋아
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br><br>
-                                    <div class="product__details__quantity"
-                                        style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle"
-                                                    style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">하하하하하하</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star"
-                                                    style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">2.3</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill"
-                                                    style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">22</p>
-                                            </div>
-                                            <div name="reviewImg"
-                                                style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid">
-                                            </div>
-                                            <div name="reviewContent" style="padding-top: 9%;">
-                                                나는 모든게 별로~ 내 맘의 별로~~
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -447,8 +368,8 @@
 
     <!-- 리뷰쓰기 Modal -->
     <div id="myModal" class="modal">
-        <div class="modal-content" style="width:70%;">
-            <span class="close" style="align-content: right;">&times;</span>
+        <div class="modal-content" style="width:65%;">
+            <span class="close" style="align-content: right; padding-left:95%;">&times;</span>
             <div class="container">
                 <div class="row g-0 text-center">
                     <div class="col-lg-12 col-md-12">
@@ -634,6 +555,41 @@
 				 form.submit();
             });
          	
+            $.ajax({
+	        	url:'${ contextPath }/reviewList.su',
+	        	data: {proNum: ${product.proNum}},
+	        	success:(data)=>{
+	        		console.log(data);
+	        		
+	        		const div = document.getElementById('tabs-2');
+	        		div.innerHTML =  '';
+	        		if(data != null){
+	        			
+	        			for(const r of data){
+		        			const form = document.createElement("div");
+	        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
+	        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
+                                			  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
+                                			  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
+                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
+                                			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
+                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
+                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
+                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
+                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
+                                			  '</div><div id="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
+                                			  '<img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid"></div>'+
+                                			  '<div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+                             div.append(form);
+	        			}
+	        		}else{
+	        			
+	        		}
+	        	},
+	        	error: (data)=>{
+	        		console.log(data);
+	        	}
+ 	    });
         }
         
         

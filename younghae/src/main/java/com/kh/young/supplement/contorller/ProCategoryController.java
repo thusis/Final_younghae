@@ -235,5 +235,29 @@ public class ProCategoryController {
 		}
 	}
 	
-	
+	@RequestMapping("reviewList.su")
+	public void reviewList(@RequestParam("proNum") int proNum, HttpServletResponse response) {
+		System.out.println("조회 정보 " + proNum);
+		ArrayList<Review> review = pcService.reviewList(proNum);
+		
+		for(int i =  0; i < review.size(); i++) {
+			Member m = pcService.selectMember(review.get(i).getUserNum());
+			
+			review.get(i).setUserNickname(m.getUserNickname());
+		}
+		
+		System.out.println("checkReview : " + review);
+		
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		// 시간 형식 지정해주기 
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(review, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

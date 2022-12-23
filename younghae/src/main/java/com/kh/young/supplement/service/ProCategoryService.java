@@ -29,4 +29,6 @@ public interface ProCategoryService {
 
 	Review checkReview(Review r);
 
+	ArrayList<Review> reviewList(int proNum);
+
 }

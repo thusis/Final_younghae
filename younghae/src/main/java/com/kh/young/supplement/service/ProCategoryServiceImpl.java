@@ -69,4 +69,9 @@ public class ProCategoryServiceImpl implements ProCategoryService {
 	public Review checkReview(Review r) {
 		return pcDAO.checkReview(sqlSession, r);
 	}
+
+	@Override
+	public ArrayList<Review> reviewList(int proNum) {
+		return pcDAO.reviewList(sqlSession, proNum);
+	}
 }
