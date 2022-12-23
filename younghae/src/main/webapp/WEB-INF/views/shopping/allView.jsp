@@ -164,7 +164,7 @@
             text-decoration: underline;
         }
 
-        .btn_cart{
+        .btn_viewCart{
             border-color: rgb(0, 123, 255);
             color: rgb(0, 123, 255);
             font-size: 10px;
@@ -202,7 +202,8 @@
 		      100% {margin-left:0;}
 		}
 
-    </style>   
+    </style>
+    <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">     
 </head>
 
 
@@ -288,7 +289,7 @@
 	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
 	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem;">${ i.proEffect }</h6>
 	                            <div>
-	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
+	                                <button class="btn btn_viewCart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
 	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
 	                            </div>
 	                            <input type="hidden" class="proNum" value="${ i.proNum }">

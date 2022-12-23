@@ -1,0 +1,109 @@
+
+/* 버튼 */
+
+/* ---------------- 상품 디테일  ------------------	 */
+	.btn_buy{
+	    background-color: #24E082; 
+	    border: none; 
+	    border-radius: 10px; 
+	    height: 60px;
+	    width: 48%;
+	    font-weight: 600; 
+	    font-size: 24px;
+	    color: white;            
+	}
+	
+	.btn_cart{ 
+		background-color: white;
+		border : 1px solid #24E082;
+		border-radius: 10px;  
+		height: 60px; 
+		width: 48%;  
+		font-weight: 600; 
+		font-size: 24px; 
+		color: #24E082; 
+	}
+/* ---------------- 상품 디테일 end ------------------	 */
+	
+/* ---------------- 배송지 변경 부분 ------------------	 */
+    .hj_btn_changeAddress{
+       border: 1px solid #24E082;
+       color: #24E082;
+       font-size: 12px;
+       width: 65px; 
+       height: 30px;
+       background-color: white;
+       border-radius: 0.4em;
+    }
+	
+    .hj_btn_selectAddress{
+       border: none;
+       color: white;
+       font-size: 12px;
+       font-weight: bold;
+       width: 65px; 
+       height: 30px;
+       background-color: #24E082;
+       border-radius: 0.4em;
+    }
+    
+    .hj_btn_closeAddressModal{
+    	border: none;
+    	background-color: white;
+    }
+    
+    .hj_btn_addAddress{
+    	width: 100%; 
+    	height:2.5rem; 
+    	background-color: #24E082; 
+	    border: none; 
+	    border-radius: 0.2em; 
+	    font-weight: 600; 
+	    font-size: 24px;
+	    color: white;
+    }
+    
+/* ---------------- 배송지 변경 부분 end ------------------	 */
+    
+	
+	
+/* 이미지 */
+	.imgDetails{
+		width: 500px; 
+		margin: auto; 
+		display: block; 
+		margin-bottom: 5%;
+	}
+	
+	
+	
+/* 폰트 */
+	.hj_amount{
+		display: inline-block; 
+		font-weight: bold; 
+		color: black; 
+		margin-top: 2%;
+	}
+
+
+	.ellipsis {
+	  overflow: hidden;
+	  text-overflow: ellipsis;
+	  display: -webkit-box;
+	  -webkit-line-clamp: 2;
+	  -webkit-box-orient: vertical;
+	}
+	
+	
+	
+/* 구역(div) */
+	.hj_div_adress{
+		width:100%; 
+		height:auto; 
+		background-color: white; 
+		border-radius: 0.5em; 
+		padding:1rem; 
+		border:2px solid #24E082; 
+		margin-bottom: 1rem;
+	}
+		

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -202,7 +203,8 @@
 		      100% {margin-left:0;}
 		}
 
-    </style>   
+    </style> 
+    <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">  
 </head>
 
 
@@ -282,7 +284,7 @@
 	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
 	                            <h5 style="height: 2rem;">${ i.proName }</h5>
 	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
-	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem;">${ i.proEffect }</h6>
+	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 6rem;">${ i.proEffect }</h6>
 	                            <div>
 	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
 	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>

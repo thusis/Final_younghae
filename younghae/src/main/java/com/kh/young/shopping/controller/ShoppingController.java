@@ -3,15 +3,21 @@ package com.kh.young.shopping.controller;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.kh.young.model.vo.GeneralUser;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.service.ShoppingService;
 
+@SessionAttributes("loginUser")
 @Controller
 public class ShoppingController {
 	
@@ -30,6 +36,9 @@ public class ShoppingController {
 			list.get(i).setFormatPrice(price);
 		}
 		model.addAttribute("supplementList", list);
+		
+		Member mem = shService.selectMember(1);
+		model.addAttribute("loginUser", mem);
 		
 		return "shoppingMain";
 	}
@@ -85,8 +94,9 @@ public class ShoppingController {
 		return "bestsellerView";
 	}
 	
+	
 	@RequestMapping("supplementDetail.sh")
-	public String supplementDetail(@RequestParam("proNum") int proNum, Model model) {
+	public String supplementDetail(@RequestParam("proNum") int proNum, Model model,HttpSession session) {
 		
 		Supplement supplementDetail = shService.selectDetail(proNum);
 		
@@ -96,8 +106,27 @@ public class ShoppingController {
 		supplementDetail.setFormatPrice(price);
 		
 		model.addAttribute("supplementDetail", supplementDetail);
-		
+		Member m = (Member)session.getAttribute("loginUser");
+		model.addAttribute("user", m);
 		return "shoppingDetails";
 	}
+	
+	// Go to payment view
+	@RequestMapping("payment.sh")
+	public String paymentView(@RequestParam("proNum") int proNum, @RequestParam("quantity") int quantity, Model model) {
+		System.out.println(proNum);
+		System.out.println(quantity);
+		
+		Supplement paySupplement = shService.selectDetail(proNum);
+		ArrayList<GeneralUser> gu = shService.selectGu(1);
+		System.out.println(gu);
+		
+		model.addAttribute("paySupplement", paySupplement);
+		model.addAttribute("quantity", quantity);
+		
+		
+		return "paymentView";
+	}
+	
 	
 }
