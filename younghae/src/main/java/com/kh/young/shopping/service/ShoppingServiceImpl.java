@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.GeneralUser;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dao.ShoppingDAO;
 
@@ -19,6 +21,17 @@ public class ShoppingServiceImpl implements ShoppingService{
 	private ShoppingDAO shDAO;
 	
 	@Override
+	public Member selectMember(int i) {
+		return shDAO.selectMember(sqlSession, i);
+	}
+	
+	@Override
+	public ArrayList<GeneralUser> selectGu(int i) {
+		return shDAO.selectGu(sqlSession, i);
+	}
+	
+	
+	@Override
 	public ArrayList<Supplement> selectSupplementList() {
 		return shDAO.selectSupplementList(sqlSession);
 	}
@@ -28,5 +41,14 @@ public class ShoppingServiceImpl implements ShoppingService{
 		return shDAO.selectTrendList(sqlSession);
 	}
 
+	@Override
+	public ArrayList<Supplement> selectBestsellerList() {
+		return shDAO.selectBestsellerList(sqlSession);
+	}
 	
+	
+	@Override
+	public Supplement selectDetail(int proNum) {
+		return shDAO.selectDetail(sqlSession, proNum);
+	}
 }

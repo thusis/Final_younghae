@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -202,7 +203,8 @@
 		      100% {margin-left:0;}
 		}
 
-    </style>   
+    </style> 
+    <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">  
 </head>
 
 
@@ -244,6 +246,95 @@
             </div>
             <br><br><br><br>
 
+<!-- 전체 상품 섹션-->
+            <div class="row">
+                <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">전체 상품</p><br><br><br>
+                <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/allView.sh'">더보기</button>
+                <br>
+                <div class="col-lg-12">
+                    <div class="featured__controls">
+                        <ul>
+                            <li data-filter="*"><a href="#"><img src="resources/img/categories/cate_all.png" class="cate_icon"><br>전체</a></li>
+                            <li data-filter=".oranges"><a href="#"><img src="resources/img/categories/cate_eye.png" class="cate_icon"><br>눈 건강</a></li>
+                            <li data-filter=".fresh-meat"><a href="#"><img src="resources/img/categories/cate_skin.png" class="cate_icon"><br>피부 건강</a></li>
+                            <li data-filter=".vegetables"><a href="#"><img src="resources/img/categories/cate_fatigue.png" class="cate_icon"><br>피로감</a></li>
+                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_intestine.png" class="cate_icon"><br>장 건강</a></li>
+                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_liver.png" class="cate_icon"><br>간 건강</a></li>
+                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_born.png" class="cate_icon"><br>관절 건강</a></li>
+                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_pregnent.png" class="cate_icon"><br>임산부 </a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+               	<c:forEach items="${ supplementList }" end="4" var="i">
+	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
+	                    <div class="product__item">
+	                        <div class="product__item__pic set-bg">
+	                            <img src=${ i.proImage } style="margin-top: 30px;">
+	                            <ul class="product__item__pic__hover">
+	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+	                            </ul>
+	                        </div>
+	                        <div class="product__item__text" style="text-align: left;">
+	                            <span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ i.proGrade }</span>
+	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
+	                            <h5 style="height: 2rem;">${ i.proName }</h5>
+	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
+	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 6rem;">${ i.proEffect }</h6>
+	                            <div>
+	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
+	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
+	                            </div>
+	                        </div>
+	                        
+	                    </div>
+	                </div>
+                </c:forEach>
+            </div><br><br>
+                
+            <!-- /전체 상품 섹션-->
+            
+            <!-- 스테디셀러 영양제 섹션 -->
+            <div class="row">
+                <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">베스트셀러</p>
+                <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/bestsellerView.sh'">더보기</button>
+            </div>
+
+            <div class="row">
+               	<c:forEach items="${ supplementList }" end="4" var="i">
+	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
+	                    <div class="product__item">
+	                        <div class="product__item__pic set-bg">
+	                            <img src=${ i.proImage } style="margin-top: 30px;">
+	                            <ul class="product__item__pic__hover">
+	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
+	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
+	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
+	                            </ul>
+	                        </div>
+	                        <div class="product__item__text" style="text-align: left;">
+	                            <span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ i.proGrade }</span>
+	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
+	                            <h5 style="height: 2rem;">${ i.proName }</h5>
+	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
+	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem;">${ i.proEffect }</h6>
+	                            <div>
+	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
+	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
+	                            </div>
+	                        </div>
+	                        
+	                    </div>
+	                </div>
+                </c:forEach>
+            </div><br><br>
+
+            <!-- /스테디셀러 영양제 섹션 --> 
+
             <!-- 실시간트렌드 섹션 -->
             <div class="row">
                 <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">실시간 트렌드</p>
@@ -279,97 +370,7 @@
                 </c:forEach>
             </div><br><br>
             <!-- /실시간트렌드 섹션 --> 
-
-
-            <!-- 스테디셀러 영양제 섹션 -->
-            <div class="row">
-                <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">스테디셀러 영양제</p>
-                <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;">더보기</button>
-            </div>
-
-            <div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
-	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
-	                    <div class="product__item">
-	                        <div class="product__item__pic set-bg">
-	                            <img src=${ i.proImage } style="margin-top: 30px;">
-	                            <ul class="product__item__pic__hover">
-	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                            </ul>
-	                        </div>
-	                        <div class="product__item__text" style="text-align: left;">
-	                            <span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ i.proGrade }</span>
-	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
-	                            <h5 style="height: 2rem;">${ i.proName }</h5>
-	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
-	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem;">${ i.proEffect }</h6>
-	                            <div>
-	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
-	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
-	                            </div>
-	                        </div>
-	                        
-	                    </div>
-	                </div>
-                </c:forEach>
-            </div><br><br>
-
-            <!-- /스테디셀러 영양제 섹션 --> 
-
-
-            <!-- 전체 상품 섹션-->
-            <div class="row">
-                <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">전체 상품</p><br><br><br>
-                <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/trendView.sh'">더보기</button>
-                <br>
-                <div class="col-lg-12">
-                    <div class="featured__controls">
-                        <ul>
-                            <li data-filter="*"><a href="#"><img src="resources/img/categories/cate_all.png" class="cate_icon"><br>전체</a></li>
-                            <li data-filter=".oranges"><a href="#"><img src="resources/img/categories/cate_eye.png" class="cate_icon"><br>눈 건강</a></li>
-                            <li data-filter=".fresh-meat"><a href="#"><img src="resources/img/categories/cate_skin.png" class="cate_icon"><br>피부 건강</a></li>
-                            <li data-filter=".vegetables"><a href="#"><img src="resources/img/categories/cate_fatigue.png" class="cate_icon"><br>피로감</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_intestine.png" class="cate_icon"><br>장 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_liver.png" class="cate_icon"><br>간 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_born.png" class="cate_icon"><br>관절 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_pregnent.png" class="cate_icon"><br>임산부 </a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
-	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
-	                    <div class="product__item">
-	                        <div class="product__item__pic set-bg">
-	                            <img src=${ i.proImage } style="margin-top: 30px;">
-	                            <ul class="product__item__pic__hover">
-	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                            </ul>
-	                        </div>
-	                        <div class="product__item__text" style="text-align: left;">
-	                            <span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ i.proGrade }</span>
-	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
-	                            <h5 style="height: 2rem;">${ i.proName }</h5>
-	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
-	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem;">${ i.proEffect }</h6>
-	                            <div>
-	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
-	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
-	                            </div>
-	                        </div>
-	                        
-	                    </div>
-	                </div>
-                </c:forEach>
-            </div><br><br>
-                
-            <!-- /전체 상품 섹션-->
+           
             
             <div class="product__pagination">
                 <a href="#">1</a>
