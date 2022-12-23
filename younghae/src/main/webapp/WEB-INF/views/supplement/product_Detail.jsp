@@ -204,7 +204,7 @@
                 
                 <!-- 로그인 한 상태로 리뷰를 쓴 내용이 있으면 수정하기로 변환 -->
                 <c:if test="${ loginUser ne null }">
-	                <div name="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
+	                <div id="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
 		                    <button type="button"
 		                        style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;"
 		                        id="modalBtn">리뷰 쓰기</button>
@@ -496,7 +496,7 @@
 											style="margin-left: 3.5%; margin-bottom: 3%;">
 											<div style="border: 2px solid #24E082; border-radius: 1em;"
 												name="rvContent">
-												<textarea type="text" name="rvContent"
+												<textarea name="rvContent" id="rvContent"
 													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;"></textarea>
 											</div>
 											<div>
@@ -634,11 +634,21 @@
 	        	data: {proNum: ${product.proNum}, userNum:${loginUser.userNum}},
 	        	success:(data)=>{
 	        		console.log(data);
-	        	}.
+	        		const div = document.getElementById('goReviewWrite');
+					
+					div.innerHTML = '<button type="button" style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;" id="modalUpBtn">리뷰 수정하기</button>';
+					
+					const upBtn = document.
+					const rvContent = document.getElementById('rvContent');
+					rvContent.innerText = r.rvContent;
+					
+					
+	        	},
 	        	error: (data)=>{
 	        		console.log(data);
 	        	}
     	    });
+         	
         }
         
         

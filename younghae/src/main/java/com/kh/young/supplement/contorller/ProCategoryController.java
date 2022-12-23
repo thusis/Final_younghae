@@ -1,11 +1,13 @@
 package com.kh.young.supplement.contorller;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,12 +20,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
-import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.supplement.exception.SupplementException;
@@ -213,10 +217,21 @@ public class ProCategoryController {
 	}
 	
 	@RequestMapping("checkReview.su")
-	public void checkReview(@ModelAttribute Review r) {
-		System.out.println(r);
+	public void checkReview(@ModelAttribute Review r, HttpServletResponse response) {
+		System.out.println("조회 정보 " + r);
 		Review review = pcService.checkReview(r);
 		
-		System.out.println(review);
+		System.out.println("checkReview" + review);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		// 시간 형식 지정해주기 
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(review, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
