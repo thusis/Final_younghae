@@ -8,11 +8,15 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.qna.dto.AnswerRespDto;
+import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
+import com.kh.young.qna.dto.QuestionRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
 
 @Repository("QaDAO")
@@ -37,14 +41,11 @@ public class QaDao {
 		
 		for(int i=0; i<boardList.size(); i++) {
 			int userNum = boardList.get(i).getUserNum();
-			Map result = sqlSession.selectOne("qnaMapper.selectWriterInfo",userNum);
-			writerInfo.add(result);
+			writerInfo.add(selectWriterInfo(sqlSession, userNum));
 
 			int boardNum = boardList.get(i).getBoardNum();
-//			int count = sqlSession.selectOne("qnaMapper.selectAnswerCount", boardNum);
-			answerCount.add(sqlSession.selectOne("qnaMapper.selectAnswerCount", boardNum));
-//			String solved = sqlSession.selectOne("qnaMapper.getIsSolved", boardNum);
-			isSolved.add(sqlSession.selectOne("qnaMapper.getIsSolved", boardNum));
+			answerCount.add(selectAnswerCount(sqlSession, boardNum));
+			isSolved.add(getIsSolved(sqlSession,boardNum));
 		}
 		
 		HashMap<String, ArrayList> respMap = new HashMap<>();
@@ -54,6 +55,18 @@ public class QaDao {
 		respMap.put("isSolved", isSolved);
 		
 		return respMap;
+	}
+	
+	public int selectAnswerCount(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("qnaMapper.selectAnswerCount", boardNum);
+	}
+	
+	public String getIsSolved(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("qnaMapper.getIsSolved", boardNum);
+	}
+
+	public Map selectWriterInfo(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("qnaMapper.selectWriterInfo",userNum);
 	}
 
 	public int getMyQuestionCount(SqlSessionTemplate sqlSession, int userNum) {
@@ -97,8 +110,8 @@ public class QaDao {
 		return respMap;
 	}
 
-	public Board selectQuestion(SqlSessionTemplate sqlSession, int boardNum) {
-		return sqlSession.selectOne("qnaMapper.selectQuestion", boardNum);
+	public QuestionRespDto selectQuestionResp(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("qnaMapper.selectQuestionResp", boardNum);
 	}
 
 	public void addViewCount(SqlSessionTemplate sqlSession, int boardNum) {
@@ -109,9 +122,40 @@ public class QaDao {
 		sqlSession.update("qnaMapper.updateIsRead", boardNum);
 	}
 
-	public SupplementRespDto selectSupplement(SqlSessionTemplate sqlSession, int boardNum) {
-		return sqlSession.selectOne("qnaMapper.selectSupplement", boardNum);
+	public SupplementRespDto selectSupplementResp(SqlSessionTemplate sqlSession, int proNum) {
+		return sqlSession.selectOne("qnaMapper.selectSupplementResp", proNum);
 	}
+
+	public Attachment selectBoardImage(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("qnaMapper.selectBoardImage", boardNum);
+	}
+	
+	public int selectReplyCount(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("qnaMapper.selectReplyCount", boardNum);
+	}
+
+	public int selectScrapCount(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("qnaMapper.selectScrapCount", boardNum);
+	}
+
+	public ArrayList<AnswerRespDto> selectAnswerResp(SqlSessionTemplate sqlSession, int boardNum) {
+		return (ArrayList)sqlSession.selectList("qnaMapper.selectAnswerResp", boardNum);
+	}
+
+	public ExpertRespDto selectExpertResp(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("qnaMapper.selectExpertResp", userNum);
+	}
+
+	public int getExpertAnswerCount(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("qnaMapper.selectExpertAnswerCount", userNum);
+	}
+
+	public Attachment selectExpertImage(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("qnaMapper.selectExpertImage", userNum);
+	}
+	
+	
+	
 
 
 

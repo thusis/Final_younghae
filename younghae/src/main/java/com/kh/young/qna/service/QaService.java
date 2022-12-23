@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Service;
 
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
+import com.kh.young.qna.dto.QuestionRespDto;
 
 @Service
 public interface QaService {
@@ -25,8 +27,10 @@ public interface QaService {
 
 	ArrayList<Supplement> searchSupplement(String keyword);
 
-	 HashMap<String, ArrayList> getTopTwo();
+	HashMap<String, ArrayList> getTopTwo();
 
-	void selectQuestion(int boardNum, HttpServletRequest request);
+	QuestionRespDto getQresp(int boardNum, HttpServletRequest request);
+
+	ArrayList<AnswerRespDto> getAnsRespList(int boardNum);
 
 }

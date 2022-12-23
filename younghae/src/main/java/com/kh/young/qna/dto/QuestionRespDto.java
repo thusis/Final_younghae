@@ -2,6 +2,9 @@ package com.kh.young.qna.dto;
 
 import java.sql.Date;
 
+import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Supplement;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +22,21 @@ public class QuestionRespDto {
 	private String boardContent;
 	private Date boardCreateDate;
 	private Date boardModifyDate;
-	private int boardView; //조회수
-	private int userNum; //작성자 아이디 => 작성자 
-	private int proNum; //제품번호
-	private String isSolved; //해결여부
+	private int boardView;
+	private String boardStatus;
+	private int userNum;
+	private int boardType;
 	
-	private int answerCount;
+	private int questionNum;
+	private int proNum;
+	private String isRead;
+	private String isSolved;
+	
+	private String writerInfo;
 	private int replyCount;
+	private int answerCount;
 	private int scrapCount;
+	
+	private SupplementRespDto sresp;
+	private Attachment qAttach;
 }

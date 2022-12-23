@@ -1,6 +1,6 @@
 package com.kh.young.qna.dto;
 
-import java.sql.Date;
+import com.kh.young.model.vo.Attachment;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -32,5 +32,5 @@ public class ExpertRespDto { //답변, 프로필
 	private String expertCareer;
 	
 	private int attachNum; //프로필사진
-
+	private Attachment expertAttach;
 }

@@ -15,8 +15,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.qna.common.Qexception;
+import com.kh.young.qna.dto.AnswerRespDto;
+import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
+import com.kh.young.qna.dto.QuestionRespDto;
+import com.kh.young.qna.dto.SupplementRespDto;
 import com.kh.young.qna.service.QaService;
 
 @Controller
@@ -101,11 +106,21 @@ public class QaController {
 	
 	/**게시글 조회**/
 	@GetMapping("question.qa")
-	public String selectQuestion(@RequestParam("boardNum") int boardNum, @RequestParam(value="page", required=false) int page, HttpServletRequest request) {
-		qService.selectQuestion(boardNum, request);
+	public String selectQuestion(
+			@RequestParam("boardNum") int boardNum, 
+			@RequestParam(value="page", required=false) int page, 
+			HttpServletRequest request, 
+			Model model) {
+		
+		QuestionRespDto qresp = qService.getQresp(boardNum, request);
+		ArrayList<AnswerRespDto> ansRespList = qService.getAnsRespList(boardNum);
+		
+		model.addAttribute("qresp", qresp);
+		model.addAttribute("ansRespList", ansRespList);
+		
 		return "selectquestion";
 	}
-	
+
 	@GetMapping("search.qa")
 	public String seachQuestion() {
 		return "searchresult";

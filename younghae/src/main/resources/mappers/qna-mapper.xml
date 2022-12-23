@@ -29,6 +29,21 @@
   		<result column="USER_NUM" property="userNum"/>
   		<result column="BOARD_TYPE" property="boardType"/>
   	</resultMap>
+  	
+  	<resultMap type="QuestionRespDto" id="questionResp">
+	  	<id column="BOARD_NUM" property="boardNum"/>
+  		<result column="BOARD_TITLE" property="boardTitle"/>
+  		<result column="BOARD_CONTENT" property="boardContent"/>
+  		<result column="BOARD_CREATEDATE" property="boardCreateDate"/>
+	  	<result column="BOARD_MODIFYDATE" property="boardModifyDate"/>
+  		<result column="BOARD_VIEW" property="boardView"/>
+  		<result column="BOARD_STATUS" property="boardStatus"/>
+  		<result column="USER_NUM" property="userNum"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="PRO_NUM" property="proNum"/>
+  		<result column="IS_READ" property="isRead"/>
+  		<result column="IS_SOLVED" property="isSolved"/>
+  	</resultMap>
 
 	<resultMap type="SupplementRespDto" id="supplementResp">
   		<id column="PRO_NUM" property="proNum"/>
@@ -37,6 +52,33 @@
   		<result column="PRO_COMPANY" property="proCompany"/>
   		<result column="PRO_EFFECT" property="proEffect"/>
   		<result column="CATE_NAME" property="cateName"/>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attachment">
+		<id column="ATTACH_NUM" property="attachNum"/>
+  		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
+  		<result column="ATTACH_NAME" property="attachName"/>
+  		<result column="ATTACH_RENAME" property="attachRename"/>
+  		<result column="ATTACH_PATH" property="attachPath"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="SERIALNUMBER" property="serialNumber"/>
+  		<result column="ATTACH_STATUS" property="attachStatus"/>
+	</resultMap>
+
+	<resultMap type="expertResp" id="expertResp">
+		<id column="USER_NUM" property="userNum"/>
+  		<result column="USER_ID" property="userId"/>
+  		<result column="USER_NAME" property="userName"/>
+  		<result column="USER_NICKNAME" property="userNickname"/>
+  		<result column="EXPERT_POSTADD" property="expertPostAdd"/>
+  		<result column="EXPERT_ADDRESS" property="expertAddress"/>
+  		<result column="EXPERT_ADD_DETAIL" property="expertAddDetail"/>
+  		<result column="EXPERT_SORT" property="expertSort"/>
+  		<result column="EXPERT_MEDI" property="expertMedi"/>
+  		<result column="EXPERT_DEPT" property="expertDept"/>
+  		<result column="EXPERT_PROFILE" property="expertProfile"/>
+  		<result column="EXPERT_HOMEPAGE" property="expertHomepage"/>
+  		<result column="EXPERT_CAREER" property="expertCareer"/>
 	</resultMap>
 	
 	<select id="login" resultMap="member">
@@ -124,10 +166,43 @@
 	<update id="addViewCount">UPDATE BOARD SET BOARD_VIEW = BOARD_VIEW + 1 WHERE BOARD_NUM = #{boardNum} </update>
 	<update id="updateIsRead">UPDATE QUESTION SET IS_READ = 'Y' WHERE QUESTION_NUM = #{boardNum} </update>
 	
-	<select id="selectSupplement" resultMap="supplementResp">
-		SELECT * 
-		FROM PRODUCT 
-		WHERE PRO_NUM = (SELECT PRO_NUM FROM QUESTION WHERE QUESTION_NUM = #{boardNum})
+	<select id="selectSupplementResp" resultMap="supplementResp">
+		SELECT * FROM PRODUCT 
+		WHERE PRO_NUM = #{proNum}
 	</select>
+	
+	<select id="selectQuestionResp" resultMap="questionResp">
+		SELECT * 
+		FROM BOARD
+		JOIN QUESTION ON (BOARD_NUM = QUESTION_NUM)
+		WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+	<select id="selectBoardImage" resultMap="attachment">
+		SELECT *
+		FROM ATTACHMENT
+		WHERE BOARD_TYPE='5' AND SERIALNUMBER = #{boardNum}
+	</select>
+	
+	<select id="selectReplyCount" resultType="_int">
+		SELECT COUNT(*) FROM REPLY WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+	<select id="selectScrapCount" resultType="_int">
+		SELECT COUNT(*) FROM SCRAP WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+	<select id="selectExpertResp" resultMap="expertResp">
+		SELECT * FROM MEMBER JOIN EXPERT_USER USING (USER_NUM) WHERE USER_NUM = #{userNum}
+	</select>
+	
+	<select id="selectExpertAnswerCount" resultType="_int">
+		SELECT COUNT(*) FROM BOARD WHERE BOARD_STATUS = 'Y' AND USER_NUM = #{userNum} AND BOARD_TYPE = '8'
+	</select>
+	
+	<select id="selectExpertImage" resultMap="attachment">
+		SELECT * FROM ATTACHMENT WHERE BOARD_TYPE = '6' AND SERIALNUMBER = #{userNum}
+	</select>
+	
 	
 </mapper>

@@ -22,7 +22,10 @@ import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.qna.dao.QaDao;
+import com.kh.young.qna.dto.AnswerRespDto;
+import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
+import com.kh.young.qna.dto.QuestionRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
 
 @Service("QaService")
@@ -60,31 +63,43 @@ public class QaServiceImpl implements QaService {
 		
 		ArrayList<Map> writerInfo = respMap.get("writerInfo");
 //		writerInfo = setWriterInfo(writerInfo);
-		respMap.put("writerInfo", setWriterInfo(writerInfo));
+		respMap.put("writerInfo", setWriterInfoList(writerInfo));
 //		System.out.println(respMap);
 		return respMap;
 	}
 
-	private ArrayList<Map> setWriterInfo(ArrayList<Map> writerInfo) {
+	private Map getWriterInfo(int userNum) {
+		return qdao.selectWriterInfo(sqlSession, userNum);
+	}
+	
+	private ArrayList<Map> setWriterInfoList(ArrayList<Map> writerInfo) {
+		
+		for(int i=0 ; i<writerInfo.size(); i++) {
+			writerInfo.get(i).put("info", setWriterInfo(writerInfo.get(i)));
+		}
+		return writerInfo;
+	}
+
+	private String setWriterInfo(Map paramap) {
+		
+		String info = "";
+		
 		Date thisyear = new Date(System.currentTimeMillis());
 		SimpleDateFormat yyyy = new SimpleDateFormat("yyyy");
 		
 		int currentYear = Integer.parseInt(yyyy.format(thisyear));
 		
-		String info = "";
-		for(int i=0 ; i<writerInfo.size(); i++) {
-			int birthYear = Integer.parseInt(writerInfo.get(i).get("USER_BIRTH").toString().split("-")[0]);
-			int age = currentYear - birthYear + 1;
-			info = (age/10) + "0 대";
-			
-			if(writerInfo.get(i).get("USER_GENDER").equals("F")) {
-				info += " / 남";
-			}else if(writerInfo.get(i).get("USER_GENDER").equals("M")) {
-				info += " / 여";
-			}
-			writerInfo.get(i).put("info", info);
+		int birthYear = Integer.parseInt(paramap.get("USER_BIRTH").toString().split("-")[0]);
+		int age = currentYear - birthYear + 1;
+		info = (age/10) + "0 대";
+		
+		if(paramap.get("USER_GENDER").equals("F")) {
+			info += " / 남";
+		}else if(paramap.get("USER_GENDER").equals("M")) {
+			info += " / 여";
 		}
-		return writerInfo;
+		
+		return info;
 	}
 
 	@Override
@@ -156,32 +171,77 @@ public class QaServiceImpl implements QaService {
 		HashMap<String, ArrayList> topTwo = qdao.getTop(sqlSession);
 		
 		ArrayList<Map> writerInfo = topTwo.get("writerInfo");
-		topTwo.put("writerInfo", setWriterInfo(writerInfo));
+		topTwo.put("writerInfo", setWriterInfoList(writerInfo));
 		System.out.println(topTwo);
 		
 		return topTwo;
 	}
 
 	@Override
-	public void selectQuestion(int boardNum, HttpServletRequest request) {
-		HashMap<String, Object> respQuestion = new HashMap();
-		Board board = qdao.selectQuestion(sqlSession, boardNum);
-		respQuestion.put("board", board);
+	public QuestionRespDto getQresp(int boardNum, HttpServletRequest request) {
+
+		QuestionRespDto qresp = qdao.selectQuestionResp(sqlSession, boardNum);
 		
-		int boardUserNum = board.getUserNum();
+		qresp.setWriterInfo(setWriterInfo(getWriterInfo(qresp.getUserNum())));
+		qresp.setReplyCount(qdao.selectReplyCount(sqlSession, boardNum));
+		qresp.setAnswerCount(qdao.selectAnswerCount(sqlSession, boardNum));
+		qresp.setScrapCount(qdao.selectScrapCount(sqlSession, boardNum));
+		
+		qresp.setSresp(selectSupplementRespDto(qresp.getProNum()));
+		qresp.setQAttach(selectBoardImage(boardNum));
+		
 		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
 		
-		if(boardUserNum != userNum) {
+		if(qresp.getUserNum() != userNum) {
 			qdao.addViewCount(sqlSession, boardNum);
 		} else {
 			qdao.updateIsRead(sqlSession, boardNum);
 		}
 		
-		SupplementRespDto supplement = qdao.selectSupplement(sqlSession, boardNum);
-		
-		respQuestion.put("supplement", supplement);
-		respQuestion.put("board", board);
-		respQuestion.put("board", board);
+		return qresp;
 	}
-	
+
+	@Override
+	public ArrayList<AnswerRespDto> getAnsRespList(int boardNum) {
+		ArrayList<AnswerRespDto> ansRespList = selectAnswerResp(boardNum);
+		
+		for(int i=0; i<ansRespList.size(); i++) {
+			AnswerRespDto ansResp = ansRespList.get(i);
+
+			ansResp.setExpertResp(selectExpertResp(ansResp.getUserNum()));
+			ansResp.setAnsSresp(selectSupplementRespDto(ansResp.getProNum()));
+			ansResp.setAnsAttach(selectBoardImage(ansResp.getBoardNum()));
+		}
+		return ansRespList;
+	}
+
+	private Attachment selectBoardImage(int boardNum) {
+		return qdao.selectBoardImage(sqlSession, boardNum);
+	}
+
+	private SupplementRespDto selectSupplementRespDto(int proNum) {
+		return  qdao.selectSupplementResp(sqlSession, proNum);
+	}
+
+	private ExpertRespDto selectExpertResp(int userNum) {
+		ExpertRespDto expertResp = qdao.selectExpertResp(sqlSession, userNum);
+		expertResp.setAnswerCount(getExpertAnswerCount(userNum));
+		expertResp.setExpertAttach(selectExpertImage(userNum));
+		
+		return null;
+	}
+
+	private Attachment selectExpertImage(int userNum) {
+		return qdao.selectExpertImage(sqlSession, userNum);
+	}
+
+	private int getExpertAnswerCount(int userNum) {
+		return qdao.getExpertAnswerCount(sqlSession, userNum);
+	}
+
+	private ArrayList<AnswerRespDto> selectAnswerResp(int boardNum) {
+		return qdao.selectAnswerResp(sqlSession, boardNum);
+	}
+
+
 }
