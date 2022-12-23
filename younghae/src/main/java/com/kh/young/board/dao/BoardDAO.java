@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 
 @Repository
@@ -41,6 +42,10 @@ public class BoardDAO {
 
 	public int deletePhoto(SqlSessionTemplate sqlSession, int boardNo) {
 		return sqlSession.update("boardMapper.deletePhoto", boardNo);
+	}
+
+	public Member setLoginUser(SqlSessionTemplate sqlSession, Integer userNum) {
+		return sqlSession.selectOne("boardMapper.login", userNum);
 	}
 	
 }

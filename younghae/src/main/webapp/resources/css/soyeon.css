@@ -4,7 +4,7 @@
     color: crimson;
 }
 .fa-magnifying-glass {
-    margin-top: 10px;
+/*     margin-top: 5px; */
     color: #24E082;
 }
 .fa-comment-o {
@@ -83,7 +83,7 @@
 }
 
 
-/*�빐�떆*/  
+/*boardWrite*/  
 #tag-list{
     padding: 16px 0;
   }
@@ -125,7 +125,7 @@
   }
   
 
-/*�씠踰ㅽ듃*/
+/*Event*/
   
 .eventDiv{
     width: 100%;
@@ -154,11 +154,7 @@
 #eventTitle{
     text-align: center;
 }
-/*異쒖꽍�씠踰ㅽ듃*/
-
-.attendance{
-    text-align: center;
-}
+/*eventAttendance*/
 
 #eventAttendanceBtn{
     text-align: center;
@@ -177,9 +173,22 @@
           0 0 0 2px rgba(255,255,255,0.15) inset,
           0 0 0 1px rgba(0,0,0,0.4);
   }
-  
+ 
+ /*출석횟수 위치*/
 
-/*�뙎湲��씠踰ㅽ듃*/
+.attendance{
+    text-align: center;
+    width:100%;
+    margin:10px auto;
+}
+
+.attendanceCount{
+	position:absolute;
+	top:40%;
+	left:20%;
+}
+
+/*eventReply*/
 
 #eventReplyBtn{
     text-align: center;
@@ -214,7 +223,7 @@
           0 0 0 1px rgba(0,0,0,0.4);
   }
 
-/*由щ럭�씠踰ㅽ듃*/
+/*eventReview*/
 
 #eventReviewBtn{
     text-align: center;
@@ -235,7 +244,7 @@
           0 0 0 1px rgba(0,0,0,0.4);
   }
   
-  /*�깮�씪�씠踰ㅽ듃*/
+  /*eventBirth*/
 #eventBirthdayBtn{
     text-align: center;
 }
@@ -244,9 +253,26 @@
         .btn-success{
             background-color: #24E082;
             border: 1px solid #0aff5c;
+            float: right;
         }
         .btn-success:hover{
             background-color: white;
             border: 1px solid #0aff5c;
             color: #24E082;
         }
+/*SELECT*/
+.boardselect{
+	border : 1px solid lightgray;
+	border-radius: 5px;
+	background:#c9ffe4;
+	margin-bottom : 10px;
+}
+
+/*boardWrite*/
+#category {
+	color: #24E082;  
+	width:100px;
+	border-radius: 5px;
+	border : 1px solid #23E082;
+	cursor: pointer;
+}

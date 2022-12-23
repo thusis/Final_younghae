@@ -14,6 +14,7 @@
 <!--Soyeon-->
 <link rel="stylesheet" href="resources/css/soyeon.css" type="text/css">
 
+
 </head>
 <body>
 	<nav>
@@ -43,7 +44,7 @@
 										- 2023.02.14)
 									</p>
 									<div class="d-grid bottom-0">
-										<a class="btn btn-lg btn-primary mt-xl-6" href="#!">Event
+										<a class="btn btn-lg btn-primary mt-xl-6" href="#" onclick="location.href='${contextPath}/reviewEvent.ev'">Event
 											View details<i class="fas fa-chevron-right ms-2"></i>
 										</a>
 									</div>
@@ -79,14 +80,14 @@
 								</div>
 								<div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
 									<h1 class="card-title mt-xl-5 mb-4">
-										Attendance <span class="text-primary">Event</span>
+										Attendance <span class="text-primary" >Event</span>
 									</h1>
 									<p class="fs-1">
 										영해 10주년 기념 출석체크 이벤트<br> 누적일에 따른 알약 포인트 증정!<br>
 										(2023.01.01 - 2023.01.31)
 									</p>
 									<div class="d-grid bottom-0">
-										<a class="btn btn-lg btn-primary mt-xl-6" href="#!">Event
+										<a class="btn btn-lg btn-primary mt-xl-6" href="#"  onclick="location.href='${contextPath}/attendanceEvent.ev'">Event
 											View details<i class="fas fa-chevron-right ms-2"></i>
 										</a>
 									</div>
@@ -103,11 +104,47 @@
 	<!-- <section> close ============================-->
 	<!-- ============================================-->
 
-	<br>
-	<br>
+	<br><br><br><br>
 	<!-- ============================================-->
 	<!-- <section> begin ============================-->
-	<section class="pb-5 pt-8">
+		<section class="pb-5 pt-8">
+
+		<div class="eventDiv" >
+			<div class="row">
+				<div class="col-12">
+					<div class="card card-span mb-3 shadow-lg">
+						<div class="card-body py-0">
+							<div class="row justify-content-center">
+								<div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
+									<img
+										class="img-fluid w-100 fit-cover h-100 rounded-top rounded-md-end rounded-md-top-0"
+										src="resources/img/event/birth0.PNG"  style="height: 420px;" alt="..." />
+								</div>
+								<div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
+									<h1 class="card-title mt-xl-5 mb-4">
+										Birthday<span class="text-primary"> Event</span>
+									</h1>
+									<p class="fs-1">
+										이번달 생일인 영양단을 위한 이벤트!<br> 생일자라면 선물 받아가세요 :)<br>
+										(2023.01.01 - 2023.01.31)
+									</p>
+									<div class="d-grid bottom-05">
+										<a class="btn btn-lg btn-primary mt-xl-6" href="#"  onclick="location.href='${contextPath}/birthEvent.ev'">Event
+											View details<i class="fas fa-chevron-right ms-2"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end of .container-->
+
+	</section>
+	
+<%-- 	<section class="pb-5 pt-8">
 
 		<div class="eventDiv">
 			<div class="row">
@@ -115,6 +152,11 @@
 					<div class="card card-span mb-3 shadow-lg">
 						<div class="card-body py-0">
 							<div class="row justify-content-center">
+								<div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-md-0">
+									<img
+										class="img-fluid w-100 fit-cover h-100 rounded-top rounded-md-start rounded-md-top-0"
+										src="resources/img/event/birth0.PNG" alt="..." />
+								</div>
 								<div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
 									<h1 class="card-title mt-xl-5 mb-4">
 										Birthday<span class="text-primary"> Event</span>
@@ -124,7 +166,53 @@
 										(2023.01.01 - 2023.01.31)
 									</p>
 									<div class="d-grid bottom-0">
-										<a class="btn btn-lg btn-primary mt-xl-6" href="#!">Event
+										<a class="btn btn-lg btn-primary mt-xl-6" href="#"  onclick="location.href='${contextPath}/birthEvent.ev'">Event
+											View details<i class="fas fa-chevron-right ms-2"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- end of .container-->
+
+	</section> --%>
+	<!-- <section> close ============================-->
+	<!-- ============================================-->
+
+
+	<!-- ============================================-->
+	<!-- <section> begin ============================-->
+	<br>
+	<br>
+	<br>
+	
+	
+		<section class="py-0">
+
+		<div class="eventDiv" id="eventLast">
+			<div class="row">
+				<div class="col-12">
+					<div class="card card-span mb-3 shadow-lg">
+						<div class="card-body py-0">
+							<div class="row justify-content-center">
+								<div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-md-0">
+									<img
+										class="img-fluid w-100 fit-cover h-100 rounded-top rounded-md-start rounded-md-top-0"
+										src="resources/img/event/replyMain.png" style="height: 420px;" alt="..." />
+								</div>
+								<div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
+									<h1 class="card-title mt-xl-5 mb-4">
+										Reply <span class="text-primary">Event</span>
+									</h1>
+									<p class="fs-1">
+										컬럼에 댓글 달면 혜택이 팡 ! 팡 !<br> (2023.01.01 - 2023.01.31)
+									</p>
+									<div class="d-grid bottom-0">
+										<a class="btn btn-lg btn-primary mt-xl-6" href="#"  onclick="location.href='${contextPath}/replyEvent.ev'">Event
 											View details<i class="fas fa-chevron-right ms-2"></i>
 										</a>
 									</div>
@@ -138,16 +226,9 @@
 		<!-- end of .container-->
 
 	</section>
-	<!-- <section> close ============================-->
-	<!-- ============================================-->
-
-
-	<!-- ============================================-->
-	<!-- <section> begin ============================-->
-	<br>
-	<br>
-	<br>
-	<section class="py-0">
+	
+	
+<%-- 	<section class="py-0">
 
 		<div class="eventDiv" id="eventLast">
 			<div class="row">
@@ -168,7 +249,7 @@
 										컬럼에 댓글 달면 혜택이 팡 ! 팡 !<br> (2023.01.01 - 2023.01.31)
 									</p>
 									<div class="d-grid bottom-0">
-										<a class="btn btn-lg btn-primary mt-xl-6" href="#!">Event
+										<a class="btn btn-lg btn-primary mt-xl-6" href="#"  onclick="location.href='${contextPath}/replyEvent.ev'">Event
 											View details<i class="fas fa-chevron-right ms-2"></i>
 										</a>
 									</div>
@@ -181,7 +262,7 @@
 		</div>
 		<!-- end of .container-->
 
-	</section>
+	</section> --%>
 	<!-- <section> close ============================-->
 	<!-- ============================================-->
 	<br>
@@ -269,9 +350,9 @@
 	</footer>
 	<!-- Footer Section End -->
 
-	<link
+<!-- 	<link
 		href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&amp;display=swap"
-		rel="stylesheet">
+		rel="stylesheet"> -->
 
 
 </body>

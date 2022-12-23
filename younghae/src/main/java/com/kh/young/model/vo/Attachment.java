@@ -15,7 +15,6 @@ import lombok.ToString;
 @ToString
 public class Attachment {
 	private int attachNum;
-	private String attachType;
 	private Date attachUploadDate;
 	private String attachName;
 	private String attachRename;
