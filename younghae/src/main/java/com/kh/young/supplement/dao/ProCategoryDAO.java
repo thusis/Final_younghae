@@ -58,5 +58,9 @@ public class ProCategoryDAO {
 	public ArrayList<Review> reviewList(SqlSessionTemplate sqlSession, int proNum) {
 		return (ArrayList)sqlSession.selectList("supplementMapper.reviewList", proNum);
 	}
+
+	public Attachment imageSelect(SqlSessionTemplate sqlSession, int rvNum) {
+		return sqlSession.selectOne("supplementMapper.imageSelect", rvNum);
+	}
 	
 }

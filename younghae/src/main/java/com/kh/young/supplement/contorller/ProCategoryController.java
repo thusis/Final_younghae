@@ -242,11 +242,18 @@ public class ProCategoryController {
 		
 		for(int i =  0; i < review.size(); i++) {
 			Member m = pcService.selectMember(review.get(i).getUserNum());
-			
+			Attachment image= pcService.imageSelect(review.get(i).getRvNum());
+
+			if(image == null) {
+				review.get(i).setImage("없음");
+			}else {
+				review.get(i).setImage(image.getAttachRename());
+			}
 			review.get(i).setUserNickname(m.getUserNickname());
 		}
 		
 		System.out.println("checkReview : " + review);
+		
 		
 		
 		response.setContentType("application/json; charset=UTF-8");

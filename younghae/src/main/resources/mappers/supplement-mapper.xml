@@ -68,6 +68,13 @@
 		where pro_num = #{proNum}
 	</select>
 	
+	<!-- 리뷰 사진 불러오기 -->
+	<select id="imageSelect" resultMap="AttmResultSet">
+		select ATTACH_RENAME
+		from attachment
+		where BOARD_TYPE= 7 and SERIALNUMBER = #{rvNum}
+	</select>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>

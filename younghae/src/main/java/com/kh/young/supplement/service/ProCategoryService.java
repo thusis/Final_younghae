@@ -31,4 +31,6 @@ public interface ProCategoryService {
 
 	ArrayList<Review> reviewList(int proNum);
 
+	Attachment imageSelect(int rvNum);
+
 }

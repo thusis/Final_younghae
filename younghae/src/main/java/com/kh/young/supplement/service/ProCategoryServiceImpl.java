@@ -74,4 +74,9 @@ public class ProCategoryServiceImpl implements ProCategoryService {
 	public ArrayList<Review> reviewList(int proNum) {
 		return pcDAO.reviewList(sqlSession, proNum);
 	}
+
+	@Override
+	public Attachment imageSelect(int rvNum) {
+		return pcDAO.imageSelect(sqlSession, rvNum);
+	}
 }

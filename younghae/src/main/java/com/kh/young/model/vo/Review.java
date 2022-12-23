@@ -24,4 +24,5 @@ public class Review {
 	private double rvStar;
 	private String rvBuy;
 	private String userNickname;
+	private String image;
 }

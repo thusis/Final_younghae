@@ -567,19 +567,35 @@
 	        			
 	        			for(const r of data){
 		        			const form = document.createElement("div");
-	        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
-	        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
-                                			  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
-                                			  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
-                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
-                                			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
-                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
-                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
-                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
-                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
-                                			  '</div><div id="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
-                                			  '<img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid"></div>'+
-                                			  '<div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+		        			
+		        			if(r.image == "없음"){
+		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
+								  				  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
+                  			  					  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
+                  			  					  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
+                  			  					  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
+					                  			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
+					                  			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
+					                  			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
+					                  			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
+					                  			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
+					                  			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+		        			}else{
+		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
+		        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
+	                                			  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
+	                                			  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
+	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
+	                                			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
+	                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
+	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
+	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
+	                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
+	                                			  '</div><div id="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
+	                                			  '<img src="resources/uploadFiles/'+r.image+'" class=".img-fluid"></div>'+
+	                                			  '<div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+		        				
+		        			}
                              div.append(form);
 	        			}
 	        		}else{
