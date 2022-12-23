@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,12 +26,14 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
 import com.kh.young.member.exception.MemberException;
+import com.kh.young.member.service.KakaoService;
 import com.kh.young.member.service.MemberService;
 import com.kh.young.model.vo.Member;
 
 @SessionAttributes({"loginUser", "access_Token"})
 @Controller
 public class MemberController {
+	
 		
 	@Autowired
 	private MemberService mService;
@@ -39,7 +42,63 @@ public class MemberController {
 	@Autowired 
 	private BCryptPasswordEncoder bcrypt;
 	
+	@Autowired
+	private KakaoService kService;
 	
+	 @RequestMapping(value = "kakaoLogin.me", method = RequestMethod.GET)
+	//  카카오 developer에서 보내준 code를 받아올 수 있는 redirect 주소를 받아줌.  
+	    public String kakaoLogin(@RequestParam("code") String code, /*HttpSession session,*/ Model model){
+//	     코드를 잘 받아왔는지 확인
+	     String access_Token = kService.getAcessToken(code); // 코드보내고 토큰값 얻어오기
+	     HashMap<String,Object> userInfo = kService.getUserInfo(access_Token);
+	     String generatedString = RandomStringUtils.randomAlphanumeric(6);
+	     String generatedString2 = RandomStringUtils.randomAlphanumeric(3);
+
+	    Member mem = new Member();
+
+
+	      mem.setUserId((String)userInfo.get("kakao_id"));
+	      mem.setUserName((String)userInfo.get("nickname"));
+	      mem.setUserNickname((String)userInfo.get("nickname")+"#"+generatedString2);
+	      mem.setEmail((String)userInfo.get("email"));
+	      if((String)userInfo.get("gender")=="false") {
+	    	  mem.setGender("N");
+	      }else if((String)userInfo.get("gender")=="male") {
+	    	  mem.setGender("M");
+	      }else {
+	    	  mem.setGender("F");
+	      }
+	      
+	      String  day = "9999-99-99"; // 형식을 지켜야 함
+	      java.sql.Date d = java.sql.Date.valueOf(day);
+	      mem.setUserBirth(d);
+	      mem.setUserPhone("임시");
+	      mem.setUserRecommend(generatedString);
+	      mem.setUserCNumber(1);
+	    
+	      if(mService.checkId((String)userInfo.get("kakao_id"))>0){
+	         mem.setUserPwd((String)userInfo.get("kakao_id"));
+	      }else {
+	         mem.setUserPwd(bcrypt.encode((String)userInfo.get("kakao_id")));
+	         mService.insertMember(mem);
+	         mem.setUserPwd((String)userInfo.get("kakao_id"));
+	      }
+	      
+	   Member loginUser = mService.login(mem);
+	   
+	   System.out.println("로그인카카오 : "+loginUser);
+	   if(loginUser != null) {
+	      if(bcrypt.matches(mem.getUserPwd(), loginUser.getUserPwd())) {
+	         model.addAttribute("loginUser", loginUser);
+	         return "redirect:home.do";
+	      } else {
+	         throw new MemberException("로그인에 실패하였습니다.");
+	      }
+	   } else {
+	      throw new MemberException("일치하는 회원정보가 없습니다.");
+	   }  
+	      
+	  }
 	
 	
 	//로그인

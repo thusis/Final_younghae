@@ -281,7 +281,7 @@ a[target='_blank'] {
 							</div>
 							<div class="mx-3 my-2 py-2 bordert">
 								<div class="text-center py-3">
-									<a href="#"><img
+									<a href="https://kauth.kakao.com/oauth/authorize?client_id=6ca1f8428b3e4b30036e0a07884586be&redirect_uri=http://localhost:8081/young/kakaoLogin.me&response_type=code"><img
 										src="resources/img/kakao_login_medium_narrow.png"></a>
 								</div>
 							</div>

@@ -23,7 +23,7 @@
 	<insert id="insertMember">
 		insert into member
 		values(seq_user.nextval, #{userId}, #{userPwd}, #{userName}, #{userNickname},
-			 #{email}, #{gender}, #{userBirth}, #{userPhone},#{userRecommend},SYSDATE,#{userCNumber},'Y',SYSDATE)
+			 #{email}, #{gender}, #{userBirth}, #{userPhone},#{userRecommend},SYSDATE,#{userCNumber},DEFAULT,SYSDATE)
 	</insert>
 	
 	<select id="selectMember" resultType="_int">
