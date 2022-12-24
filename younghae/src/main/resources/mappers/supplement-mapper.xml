@@ -45,8 +45,22 @@
 	<!-- 리뷰 작성하기 -->
 	<insert id="insertReview">
 		INSERT INTO REVIEW 
-		VALUES(SEQ_RV.NEXTVAL, #{proNum}, #{userNum}, #{rvContent}, SYSDATE, SYSDATE, 'N',  #{rvStar}, 'Y')
+		VALUES(SEQ_RV.NEXTVAL, #{proNum}, #{userNum}, #{rvContent}, SYSDATE, SYSDATE, 'Y',  #{rvStar}, 'Y')
 	</insert>
+	
+	<!-- 리뷰 수정하기 -->
+	<update id="updateReview">
+		update review
+		set rv_Content = #{rvContent}, rv_star = #{rvStar}
+		where pro_num = #{proNum} and user_num = #{userNum}
+	</update>
+	
+	<!-- 리뷰 삭제하기 -->
+	<update id="deleteReview">
+		update review
+		set rv_status = #{rvStatus}
+		where pro_num = #{proNum} and user_num = #{userNum}
+	</update>
 	
 	<!-- 리뷰 사진 넣기 -->
 	<insert id="insertReviewAttm">
