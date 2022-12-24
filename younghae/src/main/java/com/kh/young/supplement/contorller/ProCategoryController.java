@@ -47,7 +47,9 @@ public class ProCategoryController {
 		if(page != null) {
 			currentPage = page;
 		}
-		Member mem = pcService.selectMember(8);
+		Member mem = pcService.selectMember(26);
+		// 집에서는 26
+		// 학원에서는 8
 	      
 		int listCount = pcService.getListCount();
 		
