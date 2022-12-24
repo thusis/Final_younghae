@@ -13,6 +13,37 @@
     <title>제품 디테일</title>
 
     <style>
+/*    		첨부파일 */
+        .filebox .upload-name {
+            display: inline-block;
+            height: 40px;
+            padding: 0 10px;
+            vertical-align: middle;
+            border: 1px solid transparent;
+            width: 78%;
+            color: #999999;
+        }
+
+        .filebox label {
+            display: inline-block;
+            padding: 10px 20px;
+            color: #fff;
+            vertical-align: middle;
+            background-color: #24E082;
+            cursor: pointer;
+            /* height: 78%; */
+            margin-left: 10px;
+        }
+
+        .filebox input[type="file"] {
+            position: absolute;
+            width: 0;
+            height: 0;
+            padding: 0;
+            overflow: hidden;
+            border: 0;
+        }
+        
         /* The Close Button */
         .close {
             color: #aaaaaa;
@@ -150,7 +181,7 @@
                             	<c:set var="effect" value="${ fn:split(product.proEffect, ',')}"/>
 		                            <c:forEach items="${ effect }"  var="e">
 		                                <button type="button" class="btn btn-secondary trend"
-		                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">${ e }</button>
+		                                    style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px; margin-top: 10px;">${ e }</button>
 		                                &nbsp;&nbsp;&nbsp;
 		                            </c:forEach>
                             </div>
@@ -161,18 +192,25 @@
 
                 <!-- 구매하러가기  버튼 -->
                 <c:if test="${ product.proSaleStatus eq 'Y' }">
-	                <div name="goShop" style="margin-left: 25%; margin-top: 2%;">
+	                <div name="goShop" style="margin-left: 
+	                <c:if test='${ loginUser ne null }'>25%</c:if>
+	                <c:if test='${ loginUser eq null }'>45%</c:if>
+	                ; margin-top: 2%;">
 	                    <button type="button"
-	                        style="display: inline; margin-left: -25%; height: 170%; width: 200%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">구매하러
-	                        가기</button>
+	                        style="display: inline; margin-left: -25%; height: 170%; width: 200%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">
+	                        구매하러 가기</button>
 	                </div>
                 </c:if>
-                <div name="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
-                    <button type="button"
-                        style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;"
-                        id="modalBtn">리뷰
-                        쓰기</button>
-                </div>
+                
+                <!-- 로그인 한 상태로 리뷰를 쓴 내용이 있으면 수정하기로 변환 -->
+                <c:if test="${ loginUser ne null }">
+	                <div id="goReviewWrite" style="margin-left: 25%; margin-top: 2%;">
+		                    <button type="button" name="reviewWriteBtn"
+		                        style="margin-left: -25%; height: 170%; width: 250%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;"
+		                        id="modalBtn">리뷰 쓰기</button>
+	                </div>
+                </c:if>
+                
                 <!-- 리뷰 -->
                 <div class="col-lg-12">
                     <div class="product__details__tab">
@@ -206,122 +244,43 @@
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="product__details__tab__desc">
-                                    <div class="product__details__quantity"
-                                        style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle"
-                                                    style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">집가고싶당</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star"
-                                                    style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">4.8</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill"
-                                                    style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">10</p>
-                                            </div>
-                                            <div name="reviewImg"
-                                                style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid">
-                                            </div>
-                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
-                                                야채냠
-                                            </div>
-                                        </div>
-                                    </div>
+<!--                                     <div class="product__details__quantity" id="reviewDetail" -->
+<!--                                         style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;"> -->
+<!--                                             <div id="reviewImg" style="float: left; padding-right: -20%;"> -->
+<!--                                                 <i class="bi bi-person-circle" -->
+<!--                                                     style="font-size: 350%; color: #24E082;"></i> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewNickName" -->
+<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
+<!--                                                 <p style="font-weight: 600;">집가고싶당</p> -->
+<!--                                             </div> -->
+<!--                                             <div class="product__details__rating" -->
+<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 20%;"> -->
+<!--                                                 <i class="fa fa-star" -->
+<!--                                                     style="color: rgb(247, 247, 75); font-size: 130%;"></i> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewRank" -->
+<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
+<!--                                                 <p style="color: black; font-size: 130%;">4.8</p> -->
+<!--                                             </div> -->
+<!--                                             <div class="product__details__rating" -->
+<!--                                                 style="float: left; padding-top: 3.2%; padding-left: 5%;"> -->
+<!--                                                 <i class="bi bi-hand-thumbs-up-fill" -->
+<!--                                                     style="color: rgb(0, 0, 0); font-size: 130%;"></i> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewRank" -->
+<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
+<!--                                                 <p style="color: black; font-size: 130%;">10</p> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewImg" -->
+<!--                                                 style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;"> -->
+<!--                                                 <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid"> -->
+<!--                                             </div> -->
+<!--                                             <div id="reviewContent" class="text-left" style="padding-top: 9%;"> -->
+<!--                                                 야채냠 -->
+<!--                                         	</div> -->
+<!--                                     </div> -->
                                     <br><br>
-                                    <div class="product__details__quantity"
-                                        style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle"
-                                                    style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">좋아좋아</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star"
-                                                    style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">2.3</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill"
-                                                    style="color: #24E082; font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">50</p>
-                                            </div>
-                                            <div name="reviewImg"
-                                                style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid">
-                                            </div>
-                                            <div name="reviewContent" style="padding-top: 9%;">
-                                                오이 좋아
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br><br>
-                                    <div class="product__details__quantity"
-                                        style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle"
-                                                    style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">하하하하하하</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star"
-                                                    style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">2.3</p>
-                                            </div>
-                                            <div class="product__details__rating"
-                                                style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill"
-                                                    style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank"
-                                                style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">22</p>
-                                            </div>
-                                            <div name="reviewImg"
-                                                style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid">
-                                            </div>
-                                            <div name="reviewContent" style="padding-top: 9%;">
-                                                나는 모든게 별로~ 내 맘의 별로~~
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -409,64 +368,70 @@
 
     <!-- 리뷰쓰기 Modal -->
     <div id="myModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
+        <div class="modal-content" style="width:65%;">
+            <span class="close" style="align-content: right; padding-left:95%;">&times;</span>
             <div class="container">
                 <div class="row g-0 text-center">
                     <div class="col-lg-12 col-md-12">
                         <div class="product__details__pic">
                             <div style="border: 2px solid #24E082; border-radius: 5em;">
-                                <div class="row" style="margin: 3%;">
-                                    <div class="d-inline margin-left: 5%;" name="reviewImg">
-                                        <img src="/img/product/product-12.jpg"
-                                            style="border: 1px solid #24E082; border-radius: 5%; margin: 3%">
-                                    </div>
-                                    <div class="d-inline">
-                                        <div class="d-inline ml-5" name="reviewName">
-                                            <label style="font-size: 180%;  font-weight: 800;  padding-top: 10%;">닥터린
-                                                초임계
-                                                알티지 오메가3</label>
-                                            <br><br><br><br><br><br><br>
-                                            <div class="product__details__rating ml-5"
-                                                style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
-                                                <span style="color: black; margin-right: 1.5%;">별점</span>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin: 3%;">
-                                    <div class="d-block" name="fileInput" style="width: 10%; padding-left: 2%;">
-                                        <label
-                                            style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
-                                    </div>
-                                    <div class="filebox" style="width: 60%; text-align: center;">
-                                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-                                        <label for="file" style="display: inline;">파일찾기</label>
-                                        <input type="file" id="file">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-11" style="margin-left: 3.5%; margin-bottom: 3%;">
-                                        <div style="border: 2px solid #24E082; border-radius: 1em;"
-                                            name="reviewContentBorder">
-                                            <textarea type="text" name="reviewContent"
-                                                style="border: none; margin: 1%; height: 200px; width: 97%; border: 1px solid black; resize: none;"></textarea>
-                                        </div>
-                                        <div>
-                                            <div name="writeReview" style="margin-left: 1.5%; margin-top: 2%;">
-                                                <button type="button"
-                                                    style="text-align: center; height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">리뷰
-                                                    작성</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+								<form action="${ contextPath }/insertReview.su" method="post" id="reviewFrom" enctype="multipart/form-data">
+									<div class="row" style="margin-left: 5%; margin-top:3%; padding-right: 0px;  margin-bottom: -5%;">
+										<div class="d-inline" name="reviewImg" style="margin-right: -20%;">
+											<img src="${ product.proImage }"
+												style="border: 1px solid #24E082; border-radius: 5%; margin: 1%; height: 80%; width: 55%; float: left; ">
+												<input type="hidden" name="proNum" value="${ product.proNum }">
+												<input type="hidden" name="userNum" value="${ loginUser.userNum }">
+<%-- 												<input type="hidden" id="productNum" value="${ 유저번호 }"> --%>
+										</div>
+										<div class="d-inline">
+											<div class="d-inline" name="reviewName" >
+												<label
+													style="font-size: 130%; font-weight: 800; padding-top: 10%; margin-left: 5%; float:left; width: 100%">${ product.proName }</label>
+												<br><br><br><br><br><br><br>
+												<div class="product__details__rating ml-3"
+													style="font-size: 130%; display: inline; margin: 5%; color: rgb(236, 236, 55); text-align: left;">
+													<span style="color: black; margin-right: 1.5%;">별점</span> <i
+														class="fa fa-star"></i> <i class="fa fa-star"></i> 
+														<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
+														<i class="fa fa-star-half-o"></i>
+<!-- 														별점 넣는거 필요 -->
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin: 3%;">
+										<div class="d-block" name="fileInput"
+											style="width: 10%; padding-left: 2%;">
+											<label
+												style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
+										</div>
+										<div class="filebox" style="width: 65%; text-align: center;">
+											<input class="upload-name" value="첨부파일" placeholder="첨부파일"
+												readonly> <label for="file" style="display: inline;">파일찾기</label>
+											<input type="file" id="file" name="file">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-11"
+											style="margin-left: 3.5%; margin-bottom: 3%;">
+											<div style="border: 2px solid #24E082; border-radius: 1em;"
+												name="rvContent">
+												<textarea name="rvContent" id="urvContent"
+													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;"></textarea>
+											</div>
+											<div>
+												<div name="writeReview"
+													style="margin-left: 1.5%; margin-top: 2%;">
+													<button type="button"  id="writeBtn"
+														style="text-align: center; height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">리뷰
+														작성</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
                         </div>
                     </div>
                 </div>
@@ -475,88 +440,92 @@
     </div>
 
     <!-- 리뷰수정폼 Modal -->
-    <!-- <div id="myUdpateModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <div class="container">
-                <div class="row g-0 text-center">
-                    <div class="col-lg-12 col-md-12">
-                        <div class="product__details__pic">
-                            <div style="border: 2px solid #24E082; border-radius: 5em;">
-                                <div class="row" style="margin: 3%;">
-                                    <div class="d-inline margin-left: 5%;" name="reviewImg">
-                                        <img src="/img/product/product-12.jpg"
-                                            style="border: 1px solid #24E082; border-radius: 5%; margin: 3%">
-                                    </div>
-                                    <div class="d-inline">
-                                        <div class="d-inline ml-5" name="reviewName">
-                                            <label style="font-size: 180%;  font-weight: 800;  padding-top: 10%;">닥터린
-                                                초임계
-                                                알티지 오메가3</label>
-                                            <br><br><br><br><br><br><br>
-                                            <div class="product__details__rating ml-5"
-                                                style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
-                                                <span style="color: black; margin-right: 1.5%;">별점</span>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star-half-o"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row" style="margin: 3%;">
-                                    <div class="d-block" name="fileInput" style="width: 10%; padding-left: 2%;">
-                                        <label
-                                            style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
-                                    </div>
-                                    <div class="filebox" style="width: 60%; text-align: center;">
-                                        <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-                                        <label for="file" style="display: inline;">파일찾기</label>
-                                        <input type="file" id="file">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-11" style="margin-left: 3.5%; margin-bottom: 3%;">
-                                        <div style="border: 2px solid #24E082; border-radius: 1em;"
-                                            name="reviewContentBorder">
-                                            <textarea type="text" name="reviewContent"
-                                                style="border: none; margin: 1%; height: 200px; width: 97%; border: 1px solid black; resize: none;"></textarea>
-                                        </div>
-                                        <div>
-                                            <div name="writeReview" style="margin-left: 1.5%; margin-top: 2%;">
-                                                <button type="button"
-                                                    style="text-align: center; height: 50px; width: 10%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">수정하기</button>
-                                                &emsp;&emsp;&emsp;&emsp;
-                                                <button type="button"
-                                                    style="text-align: center; height: 50px; width: 10%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">삭제하기</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> -->
+	<!-- <div id="myUdpateModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<div class="container">
+				<div class="row g-0 text-center">
+					<div class="col-lg-12 col-md-12">
+						<div class="product__details__pic">
+							<div style="border: 2px solid #24E082; border-radius: 5em;">
+								<div class="row" style="margin: 3%;">
+									<div class="d-inline margin-left: 5%;" name="reviewImg">
+										<img src="${ product.proImage }"
+											style="border: 1px solid #24E082; border-radius: 5%; margin: 3%">
+									</div>
+									<div class="d-inline">
+										<div class="d-inline ml-5" name="reviewName">
+											<label
+												style="font-size: 180%; font-weight: 800; padding-top: 10%;">${ product.proName }</label>
+											<br> <br> <br> <br> <br> <br> <br>
+											<div class="product__details__rating ml-5"
+												style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
+												<span style="color: black; margin-right: 1.5%;">별점</span> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
+													class="fa fa-star-half-o"></i>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row" style="margin: 3%;">
+									<div class="d-block" name="fileInput"
+										style="width: 10%; padding-left: 2%;">
+										<label
+											style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
+									</div>
+									<div class="filebox" style="width: 60%; text-align: center;">
+										<input class="upload-name" value="첨부파일" placeholder="첨부파일"
+											readonly> <label for="file" style="display: inline;">파일찾기</label>
+										<input type="file" id="file">
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-11"
+										style="margin-left: 3.5%; margin-bottom: 3%;">
+										<div style="border: 2px solid #24E082; border-radius: 1em;"
+											name="reviewContentBorder">
+											<textarea type="text" name="reviewContent"
+												style="border: none; margin: 1%; height: 200px; width: 97%; border: 1px solid black; resize: none;"></textarea>
+										</div>
+										<div>
+											<div name="writeReview"
+												style="margin-left: 1.5%; margin-top: 2%;">
+												<button type="button"
+													style="text-align: center; height: 50px; width: 10%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">수정하기</button>
+												&emsp;&emsp;&emsp;&emsp;
+												<button type="button"
+													style="text-align: center; height: 50px; width: 10%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">삭제하기</button>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div> -->
 
 
-    <script>
+	<script>
         // 모달 가져오기
         var modal = document.getElementById("myModal");
         var updateModal = document.getElementById("myUpdateModal");
-
-        // 리뷰쓰러가기 버튼
+        
+//         console.log($('#goReviewWrite').find('button').attr('id'));
+        
         var btn = document.getElementById("modalBtn");
         
-        btn.onclick = function () {
-            modal.style.display = "block";
-            // updateModal.style.display = "block";
-        }
-
+        if(${ loginUser ne null}){
+	        // 리뷰쓰러가기 버튼
+	        btn.onclick = function () {
+	            modal.style.display = "block";
+	            // updateModal.style.display = "block";
+	        }
+         }
+        
 
         // 닫기 버튼
         var span = document.getElementsByClassName("close")[0];
@@ -578,7 +547,68 @@
                 var fileName = $("#file").val();
                 $(".upload-name").val(fileName);
             });
+            
+            const form = document.getElementById('reviewFrom');
+            document.getElementById('writeBtn').addEventListener('click', ()=>{
+				 const file = document.getElementById('file'); 
+				 console.log(file);
+				 form.submit();
+            });
+         	
+            $.ajax({
+	        	url:'${ contextPath }/reviewList.su',
+	        	data: {proNum: ${product.proNum}},
+	        	success:(data)=>{
+	        		console.log(data);
+	        		
+	        		const div = document.getElementById('tabs-2');
+	        		div.innerHTML =  '';
+	        		if(data != null){
+	        			
+	        			for(const r of data){
+		        			const form = document.createElement("div");
+		        			
+		        			if(r.image == "없음"){
+		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
+								  				  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
+                  			  					  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
+                  			  					  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
+                  			  					  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
+					                  			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
+					                  			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
+					                  			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
+					                  			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
+					                  			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
+					                  			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+		        			}else{
+		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
+		        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
+	                                			  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
+	                                			  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
+	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
+	                                			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
+	                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
+	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
+	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
+	                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
+	                                			  '</div><div id="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
+	                                			  '<img src="resources/uploadFiles/'+r.image+'" class=".img-fluid"></div>'+
+	                                			  '<div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+		        				
+		        			}
+                             div.append(form);
+	        			}
+	        		}else{
+	        			
+	        		}
+	        	},
+	        	error: (data)=>{
+	        		console.log(data);
+	        	}
+ 	    });
         }
+        
+        
     </script>
 
 </body>

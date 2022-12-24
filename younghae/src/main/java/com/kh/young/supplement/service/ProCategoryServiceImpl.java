@@ -6,20 +6,23 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.supplement.dao.ProCategoryDAO;
 
 @Service("pcService")
-public class ProCategoryServiceImpl implements ProCategoryService{
+public class ProCategoryServiceImpl implements ProCategoryService {
 
 	@Autowired
 	private SqlSessionTemplate sqlSession;
-	
+
 	@Autowired
 	private ProCategoryDAO pcDAO;
-		
+
 	@Override
 	public int getListCount() {
 		int result = pcDAO.getListCount(sqlSession);
@@ -46,5 +49,34 @@ public class ProCategoryServiceImpl implements ProCategoryService{
 	public Supplement selectPro(int proNum) {
 		return pcDAO.selectPro(sqlSession, proNum);
 	}
-	
+
+	@Override
+	public int insertReview(Review r) {
+		return pcDAO.insertReview(sqlSession, r);
+	}
+
+	@Override
+	public int insertReviewAttm(Attachment attm) {
+		return pcDAO.insertReviewAttm(sqlSession, attm);
+	}
+
+	@Override
+	public Member selectMember(int i) {
+		return pcDAO.selectMember(sqlSession, i);
+	}
+
+	@Override
+	public Review checkReview(Review r) {
+		return pcDAO.checkReview(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<Review> reviewList(int proNum) {
+		return pcDAO.reviewList(sqlSession, proNum);
+	}
+
+	@Override
+	public Attachment imageSelect(int rvNum) {
+		return pcDAO.imageSelect(sqlSession, rvNum);
+	}
 }

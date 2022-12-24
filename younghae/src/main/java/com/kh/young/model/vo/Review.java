@@ -21,6 +21,8 @@ public class Review {
 	private Date rvCreateDate;
 	private Date rvMOdifyDate;
 	private String rvStatus;
-	private int rvStar;
+	private double rvStar;
 	private String rvBuy;
+	private String userNickname;
+	private String image;
 }
