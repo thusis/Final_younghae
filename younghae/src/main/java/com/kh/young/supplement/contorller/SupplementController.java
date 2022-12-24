@@ -142,6 +142,9 @@ public class SupplementController {
 		
 		System.out.println(file);
 		Attachment attm = new Attachment();
+		
+		int result = 0;
+		int attmResult = 0;
 
 		if (file != null) {
 			System.out.println(file.getOriginalFilename());
@@ -153,15 +156,17 @@ public class SupplementController {
 				attm.setAttachPath(returnArr[0]);
 				System.out.println(returnArr[1]);
 				System.out.println(returnArr[0]);
-			}
-		}
-		int result = sService.insertReview(r);
 				
-		int attmResult = sService.insertReviewAttm(attm);
-
+				attmResult = sService.insertReviewAttm(attm);
+			}
+		}else {
+			r.setImage("없음");
+		}
+		result = sService.insertReview(r);
+				
 		Supplement product = sService.selectPro(r.getProNum());
 
-		if (result + attmResult > 1) {
+		if (result + attmResult > 0) {
 			model.addAttribute("product", product);
 			model.addAttribute("loginUser", m);
 			return "product_Detail";
@@ -268,6 +273,11 @@ public class SupplementController {
 		} catch (JsonIOException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("rateUpdate.su")
+	public void rateUpdate(@RequestParam("average") double average, HttpServletResponse response) {
+		System.out.println(average);
 	}
 	
 }

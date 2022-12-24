@@ -173,7 +173,7 @@
                         </div>
                         <div class="product__details__rating">
                             <i class="fa fa-star"></i>
-                            <span>별 점</span>
+                            &nbsp;<span id="starIn">0</span>점
                         </div>
                         <br><br>
                         <div name="productInfo" class="mt-3">
@@ -571,13 +571,22 @@
 	        		div.innerHTML =  '';
 	        		
 	        		const count = document.getElementById('rcount');
+        			const starIn = document.getElementById('starIn');
 	        		if(data != null){
+	        			var sum = 0;
+	        			var a = 0;
 	        			
 	        			count.innerText = '(' + data.length + ')'; 
 	        		
 	        			for(const r of data){
 		        			const form = document.createElement("div");
 		        			
+		        			
+		        			sum += r.rvStar;
+		        			a = sum/data.length;
+		 					
+		        			starIn.innerText = Math.floor(a*10)/10;
+									        			
 		        			if(r.image == "없음"){
 		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
 								  				  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
@@ -601,7 +610,7 @@
 	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
 	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
 	                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
-	                                			  '</div><div id="reviewImg" style="height: 90px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
+	                                			  '</div><div id="reviewImg" style="height: 85px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
 	                                			  '<img src="resources/uploadFiles/'+r.image+'" class=".img-fluid"></div>'+
 	                                			  '<div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
 		        				
@@ -616,6 +625,23 @@
 	        		console.log(data);
 	        	}
  	    	});
+            
+            const star = document.getElementById('starIn');
+            
+            star.addEventListener('change', ()=>{
+// 	            $.ajax({
+// 	            	url:'${ contextPath }/rateUpdate.su',
+// 		        	data: {average: document.getElementById('starIn').innerText},
+// 		        	success:(data)=>{
+// 		        		console.log(data);
+// 		        	},
+// 		        	error:(data)=>{
+// 		        		console.log(data);
+// 		        	}
+// 	            });
+				console.log("에이작스실행");
+            });
+            
         }
         
         
