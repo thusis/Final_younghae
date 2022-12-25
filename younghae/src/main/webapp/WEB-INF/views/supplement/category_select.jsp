@@ -246,7 +246,7 @@
 								<div class="row">
 									<c:forEach var="item" items="${ product }" begin="0" end="2"
 										step="1" varStatus="status">
-										<div class="product__details__quantity"
+										<div class="product__details__quantity_1"
 											style="border: 2px solid #24E082; border-radius: 10px; width: 30%; height: 380px; margin-right: 3.25%;">
 											<input type="hidden" value="${ item.proNum }">
 											<div style="text-align: center; padding-top: 5%;">
@@ -439,7 +439,7 @@
                 location.href = '${contextPath}/productMore.su?cateNum=' + cateNum + '&cateName=' + cateName;
 			});
 			
-			const product = document.getElementsByClassName('product__details__quantity');
+			const product = document.getElementsByClassName('product__details__quantity_1');
 			for(const pro of product){
 				pro.addEventListener('click', function(){
 					const productSelect = this.children[0].value;
@@ -449,6 +449,8 @@
 				});
 				
 			}
+			
+			
 		}
 	</script>
 </html>

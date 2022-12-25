@@ -107,6 +107,32 @@
             font-weight: 800;
             color : #FD9F28;
         }
+        
+       
+       
+  	  .star {
+	    position: relative;
+	    font-size: 2rem;
+	    color: #ddd;
+	  }
+	  
+	  .star input {
+	    width: 100%;
+	    height: 100%;
+	    position: absolute;
+	    left: 0;
+	    opacity: 0;
+	    cursor: pointer;
+	  }
+	  
+	  .star span {
+	    width: 0;
+	    position: absolute; 
+	    left: 0;
+	    color: yellow;
+	    overflow: hidden;
+	    pointer-events: none;
+	  }
     </style>
 </head>
 
@@ -145,15 +171,10 @@
                         <div class="float-right" style="font-size: 150%; color: #24E082;">
                             <i class="bi bi-bookmark-plus-fill"></i>
                         </div>
-                        <!-- <div class="product__details__rating">
+                        <div class="product__details__rating">
                             <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star"></i>
-                            <i class="fa fa-star-half-o"></i>
-                            <span>(18 reviews)</span>
-                        </div> -->
-                        <!-- 넣을까 말까 고민중 -->
+                            &nbsp;<span id="starIn">0</span>점
+                        </div>
                         <br><br>
                         <div name="productInfo" class="mt-3">
                             <div name="ingredient">
@@ -221,7 +242,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab" aria-selected="false">리뷰
-                                    <span>(3)</span></a>
+                                    <span id="rcount">(0)</span></a>
                             </li>
                         </ul>
                         <div class="tab-content">
@@ -236,7 +257,7 @@
                                         </div>
                                         <div class="text-left pl-5">
                                             <div class="d-inline" name="ingredientImg">
-                                                <img src="resources/img/product_details/${ product.proNum }_1.png" style="height: 300px;">
+                                                <img src="resources/img/product_details/${ product.proNum }_1.png" style="padding-left: 150px; height: 1250px; width: 80%;">
                                             </div>
                                         </div>
                                     </div>
@@ -244,43 +265,7 @@
                             </div>
                             <div class="tab-pane" id="tabs-2" role="tabpanel">
                                 <div class="product__details__tab__desc">
-<!--                                     <div class="product__details__quantity" id="reviewDetail" -->
-<!--                                         style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;"> -->
-<!--                                             <div id="reviewImg" style="float: left; padding-right: -20%;"> -->
-<!--                                                 <i class="bi bi-person-circle" -->
-<!--                                                     style="font-size: 350%; color: #24E082;"></i> -->
-<!--                                             </div> -->
-<!--                                             <div id="reviewNickName" -->
-<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
-<!--                                                 <p style="font-weight: 600;">집가고싶당</p> -->
-<!--                                             </div> -->
-<!--                                             <div class="product__details__rating" -->
-<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 20%;"> -->
-<!--                                                 <i class="fa fa-star" -->
-<!--                                                     style="color: rgb(247, 247, 75); font-size: 130%;"></i> -->
-<!--                                             </div> -->
-<!--                                             <div id="reviewRank" -->
-<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
-<!--                                                 <p style="color: black; font-size: 130%;">4.8</p> -->
-<!--                                             </div> -->
-<!--                                             <div class="product__details__rating" -->
-<!--                                                 style="float: left; padding-top: 3.2%; padding-left: 5%;"> -->
-<!--                                                 <i class="bi bi-hand-thumbs-up-fill" -->
-<!--                                                     style="color: rgb(0, 0, 0); font-size: 130%;"></i> -->
-<!--                                             </div> -->
-<!--                                             <div id="reviewRank" -->
-<!--                                                 style="float: left; padding-top: 3.5%; padding-left: 1%;"> -->
-<!--                                                 <p style="color: black; font-size: 130%;">10</p> -->
-<!--                                             </div> -->
-<!--                                             <div id="reviewImg" -->
-<!--                                                 style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;"> -->
-<!--                                                 <img src="resources/img/product/details/product-details-1.jpg" class=".img-fluid"> -->
-<!--                                             </div> -->
-<!--                                             <div id="reviewContent" class="text-left" style="padding-top: 9%;"> -->
-<!--                                                 야채냠 -->
-<!--                                         	</div> -->
-<!--                                     </div> -->
-                                    <br><br>
+<!--                                 리뷰 공간 -->
                                 </div>
                             </div>
                         </div>
@@ -391,11 +376,16 @@
 												<br><br><br><br><br><br><br>
 												<div class="product__details__rating ml-3"
 													style="font-size: 130%; display: inline; margin: 5%; color: rgb(236, 236, 55); text-align: left;">
-													<span style="color: black; margin-right: 1.5%;">별점</span> <i
-														class="fa fa-star"></i> <i class="fa fa-star"></i> 
-														<i class="fa fa-star"></i> <i class="fa fa-star"></i> 
-														<i class="fa fa-star-half-o"></i>
-<!-- 														별점 넣는거 필요 -->
+													<span style="color: black; margin-right: 1.5%;">별점</span> 
+												    <span class="star" style="display: inline-block;">
+												        ★★★★★
+												        <span>★★★★★</span>
+												        <input type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+												    </span>
+													<output for="star-input" style="display: inline-block;">
+														<b id="rating" name="rating">0</b>점
+														<input id="rateIn" type="hidden" name="rvStar" value="0">
+													</output>
 												</div>
 											</div>
 										</div>
@@ -540,8 +530,24 @@
                 modal.style.display = "none";
             }
         }
-
+		
+        
+        const drawStar = (target) => {
+   		    document.querySelector('.star span').style.width = target.value * 10 + '%';
+	        const rate = document.getElementById('rating');
+	        rate.innerText = target.value/2;
+	        
+	        const rateIn = document.getElementById('rateIn');
+	        rateIn.value = target.value/2;
+	        
+	        console.log(rateIn.value);
+  		}
+        
+        
+        
         window.onload=()=>{
+        	
+        	
             // 파일 이름 등록
             $('#file').on('change', function(){
                 var fileName = $("#file").val();
@@ -563,11 +569,24 @@
 	        		
 	        		const div = document.getElementById('tabs-2');
 	        		div.innerHTML =  '';
+	        		
+	        		const count = document.getElementById('rcount');
+        			const starIn = document.getElementById('starIn');
 	        		if(data != null){
+	        			var sum = 0;
+	        			var a = 0;
 	        			
+	        			count.innerText = '(' + data.length + ')'; 
+	        		
 	        			for(const r of data){
 		        			const form = document.createElement("div");
 		        			
+		        			
+		        			sum += r.rvStar;
+		        			a = sum/data.length;
+		 					
+		        			starIn.innerText = Math.floor(a*10)/10;
+									        			
 		        			if(r.image == "없음"){
 		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
 								  				  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
@@ -591,7 +610,7 @@
 	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
 	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
 	                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
-	                                			  '</div><div id="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
+	                                			  '</div><div id="reviewImg" style="height: 85px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
 	                                			  '<img src="resources/uploadFiles/'+r.image+'" class=".img-fluid"></div>'+
 	                                			  '<div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
 		        				
@@ -605,7 +624,24 @@
 	        	error: (data)=>{
 	        		console.log(data);
 	        	}
- 	    });
+ 	    	});
+            
+            const star = document.getElementById('starIn');
+            
+            star.addEventListener('change', ()=>{
+// 	            $.ajax({
+// 	            	url:'${ contextPath }/rateUpdate.su',
+// 		        	data: {average: document.getElementById('starIn').innerText},
+// 		        	success:(data)=>{
+// 		        		console.log(data);
+// 		        	},
+// 		        	error:(data)=>{
+// 		        		console.log(data);
+// 		        	}
+// 	            });
+				console.log("에이작스실행");
+            });
+            
         }
         
         
