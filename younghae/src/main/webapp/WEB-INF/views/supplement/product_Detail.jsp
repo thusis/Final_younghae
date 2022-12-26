@@ -367,7 +367,6 @@
 												style="border: 1px solid #24E082; border-radius: 5%; margin: 1%; height: 80%; width: 55%; float: left; ">
 												<input type="hidden" name="proNum" value="${ product.proNum }">
 												<input type="hidden" name="userNum" value="${ loginUser.userNum }">
-<%-- 												<input type="hidden" id="productNum" value="${ 유저번호 }"> --%>
 										</div>
 										<div class="d-inline">
 											<div class="d-inline" name="reviewName" >
@@ -572,6 +571,8 @@
 	        		
 	        		const count = document.getElementById('rcount');
         			const starIn = document.getElementById('starIn');
+        			const rateIn = document.getElementById('rateIn');
+        			
 	        		if(data != null){
 	        			var sum = 0;
 	        			var a = 0;
@@ -586,6 +587,7 @@
 		        			a = sum/data.length;
 		 					
 		        			starIn.innerText = Math.floor(a*10)/10;
+		        			rateIn.value = Math.floor(a*10)/10;
 									        			
 		        			if(r.image == "없음"){
 		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
@@ -616,6 +618,17 @@
 		        				
 		        			}
                              div.append(form);
+                             
+                             $.ajax({
+             	            	url:'${ contextPath }/rateUpdate.su',
+             		        	data: {proGrade: document.getElementById('starIn').innerText, proNum: ${ product.proNum }},
+             		        	success:(data)=>{
+             		        		console.log(data);
+             		        	},
+             		        	error:(data)=>{
+             		        		console.log(data);
+             		        	}
+             	            });
 	        			}
 	        		}else{
 	        			
@@ -625,22 +638,6 @@
 	        		console.log(data);
 	        	}
  	    	});
-            
-            const star = document.getElementById('starIn');
-            
-            star.addEventListener('change', ()=>{
-// 	            $.ajax({
-// 	            	url:'${ contextPath }/rateUpdate.su',
-// 		        	data: {average: document.getElementById('starIn').innerText},
-// 		        	success:(data)=>{
-// 		        		console.log(data);
-// 		        	},
-// 		        	error:(data)=>{
-// 		        		console.log(data);
-// 		        	}
-// 	            });
-				console.log("에이작스실행");
-            });
             
         }
         

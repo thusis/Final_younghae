@@ -62,4 +62,8 @@ public class SupplementDAO {
 	public Attachment imageSelect(SqlSessionTemplate sqlSession, int rvNum) {
 		return sqlSession.selectOne("supplementMapper.imageSelect", rvNum);
 	}
+
+	public int rateUpdate(SqlSessionTemplate sqlSession, Supplement product) {
+		return sqlSession.update("supplementMapper.rateUpdate", product);
+	}
 }

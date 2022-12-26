@@ -32,4 +32,6 @@ public interface SupplementService {
 	ArrayList<Review> reviewList(int proNum);
 
 	Attachment imageSelect(int rvNum);
+
+	int rateUpdate(Supplement product);
 }

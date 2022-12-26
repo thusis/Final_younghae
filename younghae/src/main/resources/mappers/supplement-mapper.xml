@@ -89,6 +89,11 @@
 		where BOARD_TYPE= 7 and SERIALNUMBER = #{rvNum}
 	</select>
 	
+	<!-- 평점 저장하기 -->
+	<update id="rateUpdate">
+		 update product set PRO_GRADE = #{proGrade} where pro_num = #{proNum}
+	</update>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>

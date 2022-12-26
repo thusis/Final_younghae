@@ -47,7 +47,7 @@ public class SupplementController {
 		if(page != null) {
 			currentPage = page;
 		}
-		Member mem = sService.selectMember(26);
+		Member mem = sService.selectMember(9);
 		// 집에서는 26
 		// 학원에서는 8
 	      
@@ -276,8 +276,11 @@ public class SupplementController {
 	}
 	
 	@RequestMapping("rateUpdate.su")
-	public void rateUpdate(@RequestParam("average") double average, HttpServletResponse response) {
-		System.out.println(average);
+	public void rateUpdate(@ModelAttribute Supplement product, HttpServletResponse response) {
+		System.out.println(product);
+		System.out.println(product.getProGrade());
+		
+		int result = sService.rateUpdate(product);
 	}
 	
 }

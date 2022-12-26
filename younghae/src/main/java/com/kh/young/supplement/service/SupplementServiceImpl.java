@@ -79,4 +79,9 @@ public class SupplementServiceImpl implements SupplementService {
 	public Attachment imageSelect(int rvNum) {
 		return pcDAO.imageSelect(sqlSession, rvNum);
 	}
+
+	@Override
+	public int rateUpdate(Supplement product) {
+		return pcDAO.rateUpdate(sqlSession, product);
+	}
 }
