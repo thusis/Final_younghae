@@ -94,6 +94,14 @@
 		 update product set PRO_GRADE = #{proGrade} where pro_num = #{proNum}
 	</update>
 	
+	<!-- 카테고리 상세보기 리뷰 리스트 불러오기 -->
+	<select id="selectReviewList" resultMap="ReviewResultSet">
+		select *
+		from review
+		join product using (pro_num)
+		where cate_num = #{cateNum}
+	</select>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>

@@ -84,4 +84,9 @@ public class SupplementServiceImpl implements SupplementService {
 	public int rateUpdate(Supplement product) {
 		return pcDAO.rateUpdate(sqlSession, product);
 	}
+
+	@Override
+	public ArrayList<Review> selectReview(int cateNum) {
+		return pcDAO.selectReview(sqlSession, cateNum);
+	}
 }

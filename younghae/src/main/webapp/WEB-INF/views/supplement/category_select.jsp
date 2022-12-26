@@ -300,8 +300,13 @@
 						<div class="tab-content">
 							<div class="tab-pane active" id="tabs-1" role="tabpanel">
 								<div class="product__details__tab__desc">
-									<h6>리뷰</h6>
-									<c:forEach items="${ review }" var="re">
+									<div class="mb-3" name="pillItem">
+										<b style="display: inline; font-weight: 900; color: #24E082; margin-left: 10px;">리뷰</b>
+										<button type="button"
+											style="margin-left: 85%; color: #24E082; font-weight: 700;  background-color: white; border: none;"
+											id="reviewMore">더보기 &gt; &gt;</button>
+									</div>
+									<c:forEach items="${ review }" var="re" end="2">
 										<div class="product__details__quantity"
 											style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 3%; padding-bottom: 5%;">
 											<div name="reviewDetail">
@@ -312,7 +317,7 @@
 												</div>
 												<div name="reviewNickName"
 													style="float: left; padding-top: 3.5%; padding-left: 1%;">
-													<p style="font-weight: 600;">집가고싶당</p>
+													<p style="font-weight: 600;">유저 이름</p>
 												</div>
 												<div class="product__details__rating"
 													style="float: left; padding-top: 3.5%; padding-left: 20%;">
@@ -321,15 +326,15 @@
 												</div>
 												<div name="reviewRank"
 													style="float: left; padding-top: 3.5%; padding-left: 1%;">
-													<p style="color: black; font-size: 130%;">4.8</p>
+													<p style="color: black; font-size: 130%;">${ re.rvStar }</p>
 												</div>
 												<div name="reviewImg"
 													style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 4%;">
-													<img src="resources/img/product/details/product-details-1.jpg"
+													<img src="${ re.image }"
 														class=".img-fluid">
 												</div>
 												<div name="reviewContent" class="text-left"
-													style="padding-top: 9%;">야채냠</div>
+													style="padding-top: 9%;">${ re.rvContent }</div>
 											</div>
 										</div>
 									<br>

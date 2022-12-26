@@ -66,4 +66,8 @@ public class SupplementDAO {
 	public int rateUpdate(SqlSessionTemplate sqlSession, Supplement product) {
 		return sqlSession.update("supplementMapper.rateUpdate", product);
 	}
+
+	public ArrayList<Review> selectReview(SqlSessionTemplate sqlSession, int cateNum) {
+		return (ArrayList)sqlSession.selectList("supplementMapper.selectReviewList", cateNum);
+	}
 }

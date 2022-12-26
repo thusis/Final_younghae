@@ -77,7 +77,7 @@ public class SupplementController {
 		Member m = (Member)session.getAttribute("loginUser");
 		ArrayList<Supplement> product = sService.selectCateProduct(cateNum);
 		
-//		ArrayList<Review> reviewList = sService.selectReview(cateNum);
+		ArrayList<Review> reviewList = sService.selectReview(cateNum);
 		
 		if(selectCate.getCateIcon() != null) {
 			System.out.println("if문 들어옴");
@@ -90,6 +90,7 @@ public class SupplementController {
 		}
 		mv.addObject("c", selectCate);
 		mv.addObject("product", product);
+		mv.addObject("review", reviewList);
 		mv.addObject("loginUser", m);
 		mv.setViewName("category_select");
 		return mv;
@@ -277,10 +278,12 @@ public class SupplementController {
 	
 	@RequestMapping("rateUpdate.su")
 	public void rateUpdate(@ModelAttribute Supplement product, HttpServletResponse response) {
-		System.out.println(product);
-		System.out.println(product.getProGrade());
+//		System.out.println(product);
+//		System.out.println(product.getProGrade());
 		
 		int result = sService.rateUpdate(product);
+		
+		System.out.println("별점 수정 완료 "+result);
 	}
 	
 }
