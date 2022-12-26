@@ -545,8 +545,6 @@
         
         
         window.onload=()=>{
-        	
-        	
             // 파일 이름 등록
             $('#file').on('change', function(){
                 var fileName = $("#file").val();
@@ -564,7 +562,7 @@
 	        	url:'${ contextPath }/reviewList.su',
 	        	data: {proNum: ${product.proNum}},
 	        	success:(data)=>{
-	        		console.log(data);
+// 	        		console.log(data);
 	        		
 	        		const div = document.getElementById('tabs-2');
 	        		div.innerHTML =  '';
@@ -590,7 +588,7 @@
 		        			rateIn.value = Math.floor(a*10)/10;
 									        			
 		        			if(r.image == "없음"){
-		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
+		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
 								  				  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
                   			  					  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
                   			  					  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
@@ -602,7 +600,7 @@
 					                  			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
 					                  			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
 		        			}else{
-		        				form.innerHTML  = '<br><div class="product__details__quantity" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
+		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
 		        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
 	                                			  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
 	                                			  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
@@ -623,7 +621,7 @@
              	            	url:'${ contextPath }/rateUpdate.su',
              		        	data: {proGrade: document.getElementById('starIn').innerText, proNum: ${ product.proNum }},
              		        	success:(data)=>{
-             		        		console.log(data);
+//              		        		console.log(data);
              		        	},
              		        	error:(data)=>{
              		        		console.log(data);
@@ -638,6 +636,21 @@
 	        		console.log(data);
 	        	}
  	    	});
+            
+            const update  = document.getElementsByClassName('product__details__quantity_1');
+            console.log(update);
+            console.log(update[1]);
+            
+            for(var up of update){
+            	up.addEventListener('load' ,function(){
+            		console.log(this);
+            	});
+				console.log(up.item());
+            }
+            
+//             for(var i = 0; i< update.length; i++){
+//             	console.log(up.item(i));
+//             }
             
         }
         
