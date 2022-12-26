@@ -35,5 +35,7 @@ public interface SupplementService {
 
 	int rateUpdate(Supplement product);
 
-	ArrayList<Review> selectReview(int cateNum);
+	ArrayList<Review> selectReview(int cateNum, PageInfo pi);
+
+	int getReviewListCount(int cateNum);
 }

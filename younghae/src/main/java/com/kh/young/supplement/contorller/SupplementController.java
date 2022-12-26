@@ -69,15 +69,38 @@ public class SupplementController {
 	
 	@RequestMapping("selectCategory.su")
 	public ModelAndView selectCategory(@RequestParam("cateName") String category, @RequestParam("cateNum") int cateNum,
-								@RequestParam("page") int page, ModelAndView mv, HttpSession session) {
-		System.out.println("controller들어옴");
-		ProCategory selectCate = sService.selectCategory(cateNum);
-		System.out.println(selectCate);
+								@RequestParam("page") Integer page, ModelAndView mv, HttpSession session) {
+		int currentPage = 1;
+		
+		if (page != null) {
+			currentPage = page;
+		}
 		
 		Member m = (Member)session.getAttribute("loginUser");
+		
+		System.out.println("controller들어옴");
+		ProCategory selectCate = sService.selectCategory(cateNum);
+		
 		ArrayList<Supplement> product = sService.selectCateProduct(cateNum);
 		
-		ArrayList<Review> reviewList = sService.selectReview(cateNum);
+
+		int listCount = sService.getReviewListCount(cateNum);
+		
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		
+		ArrayList<Review> reviewList = sService.selectReview(cateNum, pi);
+		
+		for(int i =  0; i < reviewList.size(); i++) {
+			Member mber = sService.selectMember(reviewList.get(i).getUserNum());
+			Attachment image= sService.imageSelect(reviewList.get(i).getRvNum());
+
+			if(image == null) {
+				reviewList.get(i).setImage("없음");
+			}else {
+				reviewList.get(i).setImage(image.getAttachRename());
+			}
+			reviewList.get(i).setUserNickname(mber.getUserNickname());
+		}
 		
 		if(selectCate.getCateIcon() != null) {
 			System.out.println("if문 들어옴");
@@ -88,6 +111,12 @@ public class SupplementController {
 				System.out.println(selectCate.getIcon()[i]);
 			}
 		}
+		
+		for(int i = 0; i< reviewList.size();  i++) {
+			System.out.println(reviewList.get(i).getImage());
+		}
+		
+		mv.addObject("reviewCount", listCount);
 		mv.addObject("c", selectCate);
 		mv.addObject("product", product);
 		mv.addObject("review", reviewList);
@@ -146,6 +175,8 @@ public class SupplementController {
 		
 		int result = 0;
 		int attmResult = 0;
+		
+		result = sService.insertReview(r);
 
 		if (file != null) {
 			System.out.println(file.getOriginalFilename());
@@ -163,7 +194,6 @@ public class SupplementController {
 		}else {
 			r.setImage("없음");
 		}
-		result = sService.insertReview(r);
 				
 		Supplement product = sService.selectPro(r.getProNum());
 
@@ -284,6 +314,43 @@ public class SupplementController {
 		int result = sService.rateUpdate(product);
 		
 		System.out.println("별점 수정 완료 "+result);
+	}
+	
+	@RequestMapping("reviewMore.su")
+	public String reviewMore(@RequestParam(value = "page", required = false) Integer page,
+			@RequestParam(value="cateNum", required=false) int cateNum, @RequestParam(value="cateName", required=false) String cateName, Model model) {
+		int currentPage = 1;
+
+		if (page != null) {
+			currentPage = page;
+		}
+
+
+		int listCount = sService.getReviewListCount(cateNum);
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 5);
+		
+		ArrayList<Review> reviewList = sService.selectReview(cateNum, pi);
+		
+		for(int i =  0; i < reviewList.size(); i++) {
+			Member m = sService.selectMember(reviewList.get(i).getUserNum());
+			Attachment image= sService.imageSelect(reviewList.get(i).getRvNum());
+
+			if(image == null) {
+				reviewList.get(i).setImage("없음");
+			}else {
+				reviewList.get(i).setImage(image.getAttachRename());
+			}
+			reviewList.get(i).setUserNickname(m.getUserNickname());
+		}
+
+		if (reviewList != null) {
+			model.addAttribute("pi", pi);
+			model.addAttribute("cateNum", cateNum);
+			model.addAttribute("cateName", cateName);
+			model.addAttribute("review", reviewList);
+		}
+		return "review_More";
 	}
 	
 }

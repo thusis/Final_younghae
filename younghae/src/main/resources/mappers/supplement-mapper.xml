@@ -80,6 +80,7 @@
 		from review
 		join member using(user_num)
 		where pro_num = #{proNum}
+		order by rv_num desc
 	</select>
 	
 	<!-- 리뷰 사진 불러오기 -->
@@ -99,6 +100,15 @@
 		select *
 		from review
 		join product using (pro_num)
+		where cate_num = #{cateNum}
+		order by rv_num desc
+	</select>
+	
+	<!-- 리뷰 수 불러오기 -->
+	<select id="getReviewListCount" resultType="_int">
+		select count(*)
+		from review
+		join product using(pro_num)
 		where cate_num = #{cateNum}
 	</select>
 	

@@ -86,7 +86,12 @@ public class SupplementServiceImpl implements SupplementService {
 	}
 
 	@Override
-	public ArrayList<Review> selectReview(int cateNum) {
-		return pcDAO.selectReview(sqlSession, cateNum);
+	public ArrayList<Review> selectReview(int cateNum, PageInfo pi) {
+		return pcDAO.selectReview(sqlSession, cateNum, pi);
+	}
+
+	@Override
+	public int getReviewListCount(int cateNum) {
+		return pcDAO.getReviewListCount(sqlSession, cateNum);
 	}
 }
