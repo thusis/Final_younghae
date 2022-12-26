@@ -56,7 +56,7 @@
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
-                <li>성분 성분 조회</li>
+                <li>성분 조회</li>
             </ul>
         </div>
     </div>

@@ -62,4 +62,19 @@ public class SupplementDAO {
 	public Attachment imageSelect(SqlSessionTemplate sqlSession, int rvNum) {
 		return sqlSession.selectOne("supplementMapper.imageSelect", rvNum);
 	}
+
+	public int rateUpdate(SqlSessionTemplate sqlSession, Supplement product) {
+		return sqlSession.update("supplementMapper.rateUpdate", product);
+	}
+
+	public ArrayList<Review> selectReview(SqlSessionTemplate sqlSession, int cateNum, PageInfo pi) {
+		//로우 바운드 사용 ( 오프셋, 보드리밋 )
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("supplementMapper.selectReviewList", cateNum ,rowBounds);
+	}
+
+	public int getReviewListCount(SqlSessionTemplate sqlSession,  int cateNum) {
+		return sqlSession.selectOne("supplementMapper.getReviewListCount", cateNum);
+	}
 }

@@ -79,4 +79,19 @@ public class SupplementServiceImpl implements SupplementService {
 	public Attachment imageSelect(int rvNum) {
 		return pcDAO.imageSelect(sqlSession, rvNum);
 	}
+
+	@Override
+	public int rateUpdate(Supplement product) {
+		return pcDAO.rateUpdate(sqlSession, product);
+	}
+
+	@Override
+	public ArrayList<Review> selectReview(int cateNum, PageInfo pi) {
+		return pcDAO.selectReview(sqlSession, cateNum, pi);
+	}
+
+	@Override
+	public int getReviewListCount(int cateNum) {
+		return pcDAO.getReviewListCount(sqlSession, cateNum);
+	}
 }
