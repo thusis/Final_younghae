@@ -43,4 +43,29 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.login", m);
 	}
 
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateMember", m);
+	}
+
+	public int updateMemberAddress(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updateMemberAddress", map);
+	}
+
+	public Member searchId(SqlSessionTemplate sqlSession, Member m) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.searchId", m);
+	}
+
+	public Member checkIdEmail(SqlSessionTemplate sqlSession, String userId) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("memberMapper.checkIdEmail", userId);
+	}
+
+	public int updatePwd(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("memberMapper.updatePwd", map);
+	}
+
 }
