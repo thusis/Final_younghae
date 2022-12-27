@@ -261,11 +261,13 @@ public class SupplementController {
 		
 		System.out.println("checkReview : " + review);
 		
+		
 		response.setContentType("application/json; charset=UTF-8");
 		GsonBuilder gb = new GsonBuilder();
 		// 시간 형식 지정해주기 
 		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
 		Gson gson = gb2.create();
+		
 		try {
 			gson.toJson(review, response.getWriter());
 		} catch (JsonIOException | IOException e) {

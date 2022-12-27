@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="storyMapper">
+	<!-- Board 폼 -->
+	<resultMap type="Board" id="BoardResultSet">
+		<id column="" property="boardNum"/>
+		<result column="" property="boardTitle"/>
+		<result column="" property="boardContent"/>
+		<result column="" property="boardCreateDate"/>
+		<result column="" property="boardModifyDate"/>
+		<result column="" property="boardView"/>
+		<result column="" property="boardStatus"/>
+		<result column="" property="userNum"/>
+		<result column="" property="boardType"/>
+	</resultMap>
+</mapper>

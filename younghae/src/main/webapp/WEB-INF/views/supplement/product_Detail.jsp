@@ -429,110 +429,87 @@
     </div>
 
     <!-- 리뷰수정폼 Modal -->
-	<!-- <div id="myUdpateModal" class="modal">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-			<div class="container">
-				<div class="row g-0 text-center">
-					<div class="col-lg-12 col-md-12">
-						<div class="product__details__pic">
-							<div style="border: 2px solid #24E082; border-radius: 5em;">
-								<div class="row" style="margin: 3%;">
-									<div class="d-inline margin-left: 5%;" name="reviewImg">
-										<img src="${ product.proImage }"
-											style="border: 1px solid #24E082; border-radius: 5%; margin: 3%">
+	<div id="myUpdateModal" class="modal">
+		<div class="modal-content" style="width:65%;">
+            <span class="close" style="align-content: right; padding-left:95%;">&times;</span>
+            <div class="container">
+                <div class="row g-0 text-center">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="product__details__pic">
+                            <div style="border: 2px solid #24E082; border-radius: 5em;">
+								<form action="${ contextPath }/updateReview.su" method="post" id="reviewFrom" enctype="multipart/form-data">
+									<div class="row" style="margin-left: 5%; margin-top:3%; padding-right: 0px;  margin-bottom: -5%;">
+										<div class="d-inline" name="reviewImg" style="margin-right: -20%;">
+											<img src="${ product.proImage }"
+												style="border: 1px solid #24E082; border-radius: 5%; margin: 1%; height: 80%; width: 55%; float: left; ">
+												<input type="hidden" name="proNum" value="${ product.proNum }">
+												<input type="hidden" name="userNum" value="${ loginUser.userNum }">
+										</div>
+										<div class="d-inline">
+											<div class="d-inline" name="reviewName" >
+												<label
+													style="font-size: 130%; font-weight: 800; padding-top: 10%; margin-left: 5%; float:left; width: 100%">${ product.proName }</label>
+												<br><br><br><br><br><br><br>
+												<div class="product__details__rating ml-3"
+													style="font-size: 130%; display: inline; margin: 5%; color: rgb(236, 236, 55); text-align: left;">
+													<span style="color: black; margin-right: 1.5%;">별점</span> 
+												    <span class="star update" style="display: inline-block;">
+												        ★★★★★
+												        <span>★★★★★</span>
+												        <input type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+												    </span>
+													<output for="star-input" style="display: inline-block;">
+														<b id="updaterating" name="rating">0</b>점
+														<input id="rateIn" type="hidden" name="rvStar" value="0">
+													</output>
+												</div>
+											</div>
+										</div>
 									</div>
-									<div class="d-inline">
-										<div class="d-inline ml-5" name="reviewName">
+									<div class="row" style="margin: 3%;">
+										<div class="d-block" name="fileInput"
+											style="width: 10%; padding-left: 2%;">
 											<label
-												style="font-size: 180%; font-weight: 800; padding-top: 10%;">${ product.proName }</label>
-											<br> <br> <br> <br> <br> <br> <br>
-											<div class="product__details__rating ml-5"
-												style="font-size: 130%; display: inline; margin: 20%; color: rgb(236, 236, 55);">
-												<span style="color: black; margin-right: 1.5%;">별점</span> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star"></i> <i class="fa fa-star"></i> <i
-													class="fa fa-star-half-o"></i>
+												style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
+										</div>
+										<div class="filebox" style="width: 65%; text-align: center;">
+											<input class="upload-name" value="첨부파일" placeholder="첨부파일"
+												readonly> <label for="file" style="display: inline;">파일찾기</label>
+											<input type="file" id="file" name="file">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-11"
+											style="margin-left: 3.5%; margin-bottom: 3%;">
+											<div style="border: 2px solid #24E082; border-radius: 1em;"
+												name="rvContent">
+												<textarea name="rvContent" id="urvContent"
+													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;"></textarea>
+											</div>
+											<div>
+												<div name="writeReview"
+													style="margin-left: 1.5%; margin-top: 2%;">
+													<button type="button"  id="writeBtn"
+														style="text-align: center; height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">리뷰
+														작성</button>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<div class="row" style="margin: 3%;">
-									<div class="d-block" name="fileInput"
-										style="width: 10%; padding-left: 2%;">
-										<label
-											style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
-									</div>
-									<div class="filebox" style="width: 60%; text-align: center;">
-										<input class="upload-name" value="첨부파일" placeholder="첨부파일"
-											readonly> <label for="file" style="display: inline;">파일찾기</label>
-										<input type="file" id="file">
-									</div>
-								</div>
-								<div class="row">
-									<div class="col-11"
-										style="margin-left: 3.5%; margin-bottom: 3%;">
-										<div style="border: 2px solid #24E082; border-radius: 1em;"
-											name="reviewContentBorder">
-											<textarea type="text" name="reviewContent"
-												style="border: none; margin: 1%; height: 200px; width: 97%; border: 1px solid black; resize: none;"></textarea>
-										</div>
-										<div>
-											<div name="writeReview"
-												style="margin-left: 1.5%; margin-top: 2%;">
-												<button type="button"
-													style="text-align: center; height: 50px; width: 10%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">수정하기</button>
-												&emsp;&emsp;&emsp;&emsp;
-												<button type="button"
-													style="text-align: center; height: 50px; width: 10%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">삭제하기</button>
-											</div>
-										</div>
-									</div>
-								</div>
+								</form>
 							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+	</div>
 
 
 	<script>
-        // 모달 가져오기
-        var modal = document.getElementById("myModal");
-        var updateModal = document.getElementById("myUpdateModal");
-        
-//         console.log($('#goReviewWrite').find('button').attr('id'));
-        
-        var btn = document.getElementById("modalBtn");
-        
-        if(${ loginUser ne null}){
-	        // 리뷰쓰러가기 버튼
-	        btn.onclick = function () {
-	            modal.style.display = "block";
-	            // updateModal.style.display = "block";
-	        }
-         }
-        
-
-        // 닫기 버튼
-        var span = document.getElementsByClassName("close")[0];
-        
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // modal 밖에 클릭했을 때 모달창 꺼지는 스크립트
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-		
-        
-        const drawStar = (target) => {
-   		    document.querySelector('.star span').style.width = target.value * 10 + '%';
+		 // 별점
+	    const drawStar = (target) => {
+		    document.querySelector('.star span').style.width = target.value * 10 + '%';
 	        const rate = document.getElementById('rating');
 	        rate.innerText = target.value/2;
 	        
@@ -540,17 +517,50 @@
 	        rateIn.value = target.value/2;
 	        
 	        console.log(rateIn.value);
-  		}
-        
-        
-        
+		}
+	    
         window.onload=()=>{
+	        // 모달 가져오기
+	        var modal = document.getElementById("myModal");
+	        var updateModal = document.getElementById("myUpdateModal");
+	        
+	//         console.log($('#goReviewWrite').find('button').attr('id'));
+	        
+	        var btn = document.getElementById("modalBtn");
+	        
+	        if(${ loginUser ne null}){
+		        // 리뷰쓰러가기 버튼
+		        btn.onclick = function () {
+		        	console.log("리뷰쓰러가기 버튼");
+		            modal.style.display = "block";
+		        }
+	         }
+	        
+	
+	        // 닫기 버튼
+	        var span = document.getElementsByClassName("close")[0];
+	        
+	        span.onclick = function () {
+	            modal.style.display = "none";
+	        }
+	
+	        // modal 밖에 클릭했을 때 모달창 꺼지는 스크립트
+	        window.onclick = function (event) {
+	            if (event.target == modal) {
+	                modal.style.display = "none";
+	                updateModal.style.display = "none";
+	            }
+	        }
+			
+	       
+	        
             // 파일 이름 등록
             $('#file').on('change', function(){
                 var fileName = $("#file").val();
                 $(".upload-name").val(fileName);
             });
             
+            // 리뷰 작성 폼
             const form = document.getElementById('reviewFrom');
             document.getElementById('writeBtn').addEventListener('click', ()=>{
 				 const file = document.getElementById('file'); 
@@ -558,6 +568,7 @@
 				 form.submit();
             });
          	
+            // 댓글 리스트 가져오기
             $.ajax({
 	        	url:'${ contextPath }/reviewList.su',
 	        	data: {proNum: ${product.proNum}},
@@ -617,7 +628,30 @@
 		        			}
                              div.append(form);
                              
-                             $.ajax({
+				            const update  = document.getElementsByClassName('product__details__quantity_1');
+				            
+				            for(var up of update){
+				            	up.addEventListener('click' ,function(){
+				            		if(${ loginUser.userNum } ==  r.userNum ){
+				            			
+			            				updateModal.style.display = "block";
+				            			
+				            			// 닫기 버튼
+				            	        var upspan = document.getElementsByClassName("close")[1];
+				            	        
+				            	        upspan.onclick = function () {
+				            	        	updateModal.style.display = "none";
+				            	        }
+				            	        
+				            	        const rating = document.getElementById("updaterating");
+				            	        rating.innerText = r.rvStar;
+				            	        
+				            		}
+				            		
+				            	});
+				            }
+				            
+                            $.ajax({
              	            	url:'${ contextPath }/rateUpdate.su',
              		        	data: {proGrade: document.getElementById('starIn').innerText, proNum: ${ product.proNum }},
              		        	success:(data)=>{
@@ -628,8 +662,6 @@
              		        	}
              	            });
 	        			}
-	        		}else{
-	        			
 	        		}
 	        	},
 	        	error: (data)=>{
@@ -637,20 +669,7 @@
 	        	}
  	    	});
             
-            const update  = document.getElementsByClassName('product__details__quantity_1');
-            console.log(update);
-            console.log(update[1]);
             
-            for(var up of update){
-            	up.addEventListener('load' ,function(){
-            		console.log(this);
-            	});
-				console.log(up.item());
-            }
-            
-//             for(var i = 0; i< update.length; i++){
-//             	console.log(up.item(i));
-//             }
             
         }
         
