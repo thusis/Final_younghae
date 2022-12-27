@@ -85,4 +85,54 @@
 		<result column="USER_HEALTH" property="userHealth"/>
 	</resultMap>
 	
+	<insert id="insertAddress">
+		insert into address
+		values (seq_address.nextval,#{addressName}, #{addressAddressee}, #{addressPhone},
+				 #{addressZipcode}, #{addressBuilding}, #{addressDetail}, #{addressBasic},#{userNum}), default
+	</insert>
+	
+	<select id="selectAddressList" resultMap="addressListResultMap">
+		select *
+		from address
+		where user_num = #{userNum} and address_status='Y'
+	</select>
+	
+	<resultMap type="Address" id="addressListResultMap">
+		<id column="ADDRESS_NUM" property="addressNum"/>
+		<result column="ADDRESS_NAME" property="addressName"/>
+		<result column="ADDRESS_ADDRESSEE" property="addressAddressee"/>
+		<result column="ADDRESS_PHONE" property="addressPhone"/>
+		<result column="ADDRESS_ZIPCODE" property="addressZipcode"/>
+		<result column="ADDRESS_BUILDING" property="addressBuilding"/>
+		<result column="ADDRESS_DETAIL" property="addressDetail"/>
+		<result column="ADDRESS_BASIC" property="addressBasic"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="ADDRESS_STATUS" property="addressStatus"/>
+	</resultMap>
+	
+	<update id="updateAddress">
+		update address
+		set address_name = #{addressName},
+			address_addressee = #{addressAddressee},
+			address_phone = #{addressPhone},
+			address_zipcode = #{addressZipcode},
+			address_building = #{addressBuilding},
+			address_detail =#{addressDetail},
+			address_basic = #{addressBasic}
+		where address_num = #{addressNum} and address_status='Y'
+	</update>
+	
+	<update id="updateBasicAll">
+		update address
+		set address_basic = 'N'
+		where user_num = #{userNum}
+	</update>
+	
+	<update id="deleteAddress">
+		update address
+		set address_status = 'N'
+		where address_num = #{addressNum}
+	</update>
+	
+	
 </mapper>

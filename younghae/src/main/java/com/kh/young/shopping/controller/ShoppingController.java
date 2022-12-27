@@ -1,19 +1,28 @@
 package com.kh.young.shopping.controller;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.kh.young.model.vo.Address;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.service.ShoppingService;
 
@@ -113,7 +122,7 @@ public class ShoppingController {
 	
 	// Go to payment view
 	@RequestMapping("payment.sh")
-	public String paymentView(@RequestParam("proNum") int proNum, @RequestParam("quantity") int quantity, Model model) {
+	public String paymentView(@RequestParam("proNum") int proNum, @RequestParam("quantity") int quantity, Model model, HttpSession session) {
 		System.out.println(proNum);
 		System.out.println(quantity);
 		
@@ -123,10 +132,90 @@ public class ShoppingController {
 		
 		model.addAttribute("paySupplement", paySupplement);
 		model.addAttribute("quantity", quantity);
-		
+
+		// 주소 목록
 		
 		return "paymentView";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="selectAddressList.sh", produces="text/plain;charset=UTF-8")
+	public String selectAddressList(HttpSession session, HttpServletResponse response){
+		Member m = (Member)session.getAttribute("loginUser");
+		ArrayList<Address> addressList = shService.selectAddressList(m.getUserNum());
+		
+//		response.setContentType("application/json; charset=UTF-8");
+		
+		GsonBuilder gb = new GsonBuilder();
+		Gson gson = gb.create();
+		
+		String addressListJson = gson.toJson(addressList);
+		
+		return addressListJson;
+	}
+	
+	// insert Address
+	@ResponseBody
+	@RequestMapping("insertAddress.sh")
+	public String insertAddress(@ModelAttribute Address a, HttpSession session) {
+		System.out.println(a);
+		Member m = (Member)session.getAttribute("loginUser");
+		a.setUserNum(m.getUserNum());
+		
+		if(a.getAddressBasic().equals("Y")) {
+			shService.updateBasicAll(m.getUserNum());
+		}
+		
+		int insertYn = shService.insertAddress(a);
+		
+		String result = null;
+		if(insertYn > 0) {
+			result = "YES";
+		}else {
+			result = "NO";
+		}
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("updateAddress.sh")
+	public String updateAddress(@ModelAttribute Address a, HttpSession session) {
+		
+		System.out.println("수정 주소 : " + a);
+		Member m = (Member)session.getAttribute("loginUser");
+		a.setUserNum(m.getUserNum());
+		
+		if(a.getAddressBasic().equals("Y")) {
+			shService.updateBasicAll(m.getUserNum());
+		}
+
+		int updateYn = shService.updateAddress(a);
+		
+		String result = null;
+		if(updateYn > 0) {
+			result = "YES";
+		}else {
+			result = "NO";
+		}
+		
+		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteAddress.sh")
+	public String deleteAddress(@RequestParam("addressNum") int addressNum) {
+		
+		int deleteYn = shService.deleteAddress(addressNum);
+		
+		String result = null;
+		if(deleteYn > 0) {
+			result = "YES";
+		}else {
+			result = "NO";
+		}
+		
+		return result;
+	}
 	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -182,7 +183,25 @@
         }
         
         
-
+	    .hj_btn_deleteAddress{
+	       border: 1px solid #24E082;
+	       color: #24E082;
+	       font-size: 12px;
+	       width: 65px; 
+	       height: 30px;
+	       background-color: white;
+	       border-radius: 0.4em;
+	    }
+	    
+	    .hj_btn_findAddress{
+    	border: 1px solid #24E082;
+       color: #24E082;
+       font-size: 12px;
+       width: 65px; 
+       height: 30px;
+       background-color: white;
+       border-radius: 0.4em;
+	    }
     </style>   
     <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">
 </head>
@@ -219,10 +238,9 @@
                             </div>
                             <hr>
                             <div class="checkout__input" style="margin-bottom: 9rem;">
-                                <div><b>KH종로지원</b></div>
-                                <div id="order_address">서울 중구 남대문로 120, 그레이츠 청계</div>
-                                <div>상세주소</div>
-                                <div>영양단<span>010-2775-1170</span></div>
+                                <div id="order_addressName" name="userZipcode" style="font-weight: bold;"><b>KH종로지원</b></div>
+                                <div id="order_address" name="userAddress">서울 중구 남대문로 120, 그레이츠 청계</div>
+                                <div id="order_addressee" style="color:#828282;">영양단 <div id="order_addressPhone" style="display:inline;">010-2775-1170</div></div>
                                 <!-- <input type="text" placeholder="Street Address" class="checkout__input__add" id="order_address" readonly> -->
                                 <!-- <input type="text" placeholder="상세주소"> -->
 
@@ -243,7 +261,6 @@
                                 </div>
                             </div>
                   -          <hr>
-
                             <div class="mb-3" >
                                 <label for="orderName" style="margin-right: 3rem">이름</label>
                                 <input class="inputBox" name="orderName"
@@ -408,20 +425,22 @@
 	<div id="myModal" class="hj_modal" >
 	  <!-- Modal content -->
        <div class="modal-content" style="height: 90%; width: 28%">
-         <div class="modal-header" style="height: 10%; border-bottom-color:white; margin-top: -15px;">
+         <div class="modal-header" style="height: 10%; border-bottom-color:white; margin-top: -15px; text-align: center">
            <div class="modal-title fs-5" id="exampleModalLabel" style="margin-left:28%; font-size: 1.5rem; font-weight:bold;">배송지 선택</div>
            <span class="close" style="align-content: right; font-size: 2rem;">&times;</span>
          </div>
-         <div class="modal-body" style="overflow: auto;">
-	         <div style="width:100%; height:auto; background-color: white; border-radius: 0.5em; padding:1rem; border:2px solid #24E082; margin-bottom: 1rem;">
-	            <div style="font-weight:bold; font-size:1.2rem; margin-bottom:0.2rem;">KH종로지원</div>
-	            <div style="margin-bottom:0.2rem;">서울 중구 남대문로 120 (남대문로1가) 그레이츠 청계, 대일빌딩 2층, 3층</div>
-	            <div style="margin-bottom:0.7rem; color: gray;"><span>영양단</span>&nbsp;&nbsp;&nbsp;010-1234-5678</div>
-	            <button type="button" class="hj_btn_changeAddress">삭제</button>
-	            <button type="button" class="hj_btn_changeAddress">수정</button>
-	            <button class="hj_btn_selectAddress" style="float:right;">선택</button>
-	         </div>
-
+         <div id="addressListDiv" class="modal-body" style="overflow: auto;">
+<!-- 	         <div style="width:100%; height:auto; background-color: white; border-radius: 0.5em; padding:1rem; border:2px solid #24E082; margin-bottom: 1rem;"> -->
+<!-- 	            <div id="ListAddressName" style="font-weight:bold; font-size:1.2rem; margin-bottom:0.2rem;">배송지명</div> -->
+<!-- 	            <div style="margin-bottom:0.2rem;"><span id="ListAddressBuilding">배송지주소1</span><span id="ListAddressDetail">&nbsp;상세주소</span></div> -->
+<!-- 	            <div style="margin-bottom:0.7rem; color: gray;"><span id="ListAddressAddressee">수령인</span>&nbsp;&nbsp;<span id="ListAddressPhone">전화번호</span></div> -->
+<!-- 	            <input type="hidden" id="ListAddressZipcode" value="우편번호"> -->
+<!-- 	            <input type="hidden" id="ListAddressBasic" value="기본저장"> -->
+<!-- 	            <input type="hidden" id="ListAddressNum" value="주소번호"> -->
+<!-- 	            <button type="button" class="hj_btn_deleteAddress">삭제</button> -->
+<!-- 	            <button type="button" class="hj_btn_changeAddress">수정</button> -->
+<!-- 	            <button class="hj_btn_selectAddress" style="float:right;">선택</button> -->
+<!-- 	         </div> -->
          </div>
          <div class="modal-footer" style="border-top-color: white; margin-bottom: -10px;">
            <button type="button" id="goModal2" class="hj_btn_addAddress" style="font-size: 20px;">배송지 추가</button>
@@ -435,34 +454,34 @@
 	  <!-- Modal content -->
        <div class="modal-content" style="height: 90%; width: 28%">
          <div class="modal-header" style="height: 10%; border-bottom-color:white; margin-top: -15px;">
-           <button id="goModal1" class="hj_btn_closeAddressModal" style="margin-top:5px; color: #828282;"><i class="fa-solid fa-arrow-left"></i></button>
-           <div class="modal-title fs-5" id="exampleModalLabel" style="margin-left:19%; font-size: 1.5rem; font-weight:bold;">배송지 추가</div>
+           <button id="goModal1" class="hj_btn_closeAddressModal" style="margin-top:5px; color: #828282; "><i class="bi bi-arrow-left" style="width: 20px;height: 20px;"></i></button>
+           <div class="modal-title fs-5" id="exampleModalLabel" style="margin-left:21%; font-size: 1.5rem; font-weight:bold;">배송지 추가</div>
            <span class="close" style="align-content: right; font-size: 2rem;">&times;</span>
          </div>
-         <form>
-	         <div class="modal-body">
+         <form action="${ contextPath }/insertAddress/sh" id="addressForm" method="post">
+	         <div class="modal-body" >
 	         	<div style="margin-bottom: 0.5rem;">
 	         		<label for="addressName" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">배송지명</label>
-	         		<input type="text" name="addressName" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
+	         		<input type="text" name="addressName" id="addressName" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
 	         	</div>
 	         	<div style="margin-bottom: 0.5rem;">
-	         		<label for="" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">받는사람</label>
-	         		<input type="text" name="addressee" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
+	         		<label for="addressAddressee" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">받는사람</label>
+	         		<input type="text" name="addressAddressee" id="addressAddressee" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
 	         	</div>
 	         	<div >
-	         		<label style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">연락처</label>
-	         		<input type="text" name="addressee" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
+	         		<label for="addressPhone" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">연락처</label>
+	         		<input type="text" name="addressPhone" id="addressPhone" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;" placeholder="010-1234-5678">
 	         	</div>
 	         	<div style="margin-bottom: 0.5rem;">
-	         		<label style="margin-right: 1rem; color: #5B555C; margin-top: 5px; margin-right: 3.4rem;">주소</label><br>
-	         		<button class="hj_btn_changeAddress" style="height: 2.1rem; width: 80px;">주소찾기</button>
-	         		<input type="text" name="addressee" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;">
-	         		<input type="text" name="addressee" style="width:100%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;">
-	         		<input type="text" name="addressee" style="width:100%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;">
+	         		<label for="addressZipcode" style="margin-right: 1rem; color: #5B555C; margin-top: 5px; margin-right: 3.4rem;">주소</label><br>
+	         		<button type="button" id="findAddress" class="hj_btn_findAddress" style="height: 2.1rem; width: 28%; font-weight: bold">주소찾기</button>
+	         		<input type="text" name="addressZipcode" id="addressZipcode" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;" readonly>
+	         		<input type="text" name="addressBuilding" id="addressBuilding" style="width:100%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;" readonly>
+	         		<input type="text" name="addressDetail" id="addressDetail" style="width:100%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;">
 	         	</div>
 	         	<div style="margin-bottom: 2px;">
-	         		<input type="checkbox" id="chooseAddress" name="chooseAddress" style="accent-color: #24E082; color:white;width:15px; height:15px; margin-top:10px;">
-					<label for="chooseAddress" style="color: #5B555C;">&nbsp;&nbsp;기본 배송지로 저장</label>
+	         		<input type="checkbox" id="addressBasic" name="addressBasic" style="accent-color: #24E082; color:white;width:15px; height:15px; margin-top:10px;">
+					<label for="addressBasic" style="color: #5B555C;">&nbsp;&nbsp;기본 배송지로 저장</label>
 	         	</div>
 	         	<div style="background-color: #F5F5F5;">
 	         		<div style="color: #5B555C; font-size:13px;">개인정보 수집 및 이용 동의</div>
@@ -476,12 +495,55 @@
 	         	</div>
 	         </div>
          </form>
-         <div class="modal-footer" style="border-top-color: white; margin-bottom: -10px;">
-         	<button type="button" id="goModal2" class="hj_btn_addAddress" style="font-size: 20px;">저장</button>
+         <div class="modal-footer" style="border-top-color: white; margin-bottom: -10px; height: 20%">
+         	<button type="button" id="saveAddress" class="hj_btn_addAddress" style="font-size: 20px;">저장</button>
          </div>
 	  </div>
 	</div>
 
+
+<!-- 	<div id="Modal3" class="modal" > -->
+	
+	<div id="Modal3" class="hj_modal" >
+	  <!-- Modal content -->
+       <div class="modal-content" style="height: 90%; width: 28%">
+         <div class="modal-header" style="height: 10%; border-bottom-color:white; margin-top: -15px;">
+           <button id="goModalBefore" class="hj_btn_closeAddressModal" style="margin-top:5px; color: #828282; "><i class="bi bi-arrow-left" style="width: 20px;height: 20px;"></i></button>
+           <div class="modal-title fs-5" id="exampleModalLabel" style="margin-left:21%; font-size: 1.5rem; font-weight:bold;">배송지 수정</div>
+           <span class="close" style="align-content: right; font-size: 2rem;">&times;</span>
+         </div>
+         <form id="updateAddressForm" method="post">
+	         <div class="modal-body">
+	         	<div style="margin-bottom: 0.5rem;">
+	         		<label for="changeAddressName" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">배송지명</label>
+	         		<input type="text" name="addressName" id="changeAddressName" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
+	         	</div>
+	         	<div style="margin-bottom: 0.5rem;">
+	         		<label for="changeAddressAddressee" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">받는사람</label>
+	         		<input type="text" name="addressAddressee" id="changeAddressAddressee" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;">
+	         	</div>
+	         	<div >
+	         		<label for="changeAddressPhone" style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">연락처</label>
+	         		<input type="text" name="addressPhone" id="changeAddressPhone" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;" placeholder="010-1234-5678">
+	         	</div>
+	         	<div style="margin-bottom: 0.5rem;">
+	         		<label for="changeAddressZipcode" style="margin-right: 1rem; color: #5B555C; margin-top: 5px; margin-right: 3.4rem;">주소</label><br>
+	         		<button type="button" id="changeFindAddress" class="hj_btn_findAddress"  style="height: 2.1rem; width: 28%; font-weight: bold">주소찾기</button>
+	         		<input type="text" name="addressZipcode" id="changeAddressZipcode" style="width:70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;" readonly>
+	         		<input type="text" name="addressBuilding" id="changeAddressBuilding" style="width:100%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;" readonly>
+	         		<input type="text" name="addressDetail" id="changeAddressDetail" style="width:100%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right; margin-bottom: 0.5rem;">
+	         	</div>
+	         	<div style="margin-bottom: 2px;">
+	         		<input type="checkbox" id="changeAddressBasic" name="addressBasic" style="accent-color: #24E082; color:white;width:15px; height:15px; margin-top:10px;">
+					<label for="changeAddressBasic" style="color: #5B555C;">&nbsp;&nbsp;기본 배송지로 저장</label>
+	         	</div>
+	         </div>
+         </form>
+         <div class="modal-footer" style="border-top-color: white; margin-bottom: -10px;">
+         	<button type="button" id="updateAddressBtn" class="hj_btn_addAddress" style="font-size: 20px;">저장</button>
+         </div>
+	  </div>
+	</div>
 	
 	<!-- /The Modal -->
 
@@ -555,26 +617,7 @@
     <!-- Footer Section End -->
 
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script>
 
-        window.onload =()=>{
-            document.getElementById("order_address").addEventListener("click",function(){
-                new daum.Postcode({
-                    oncomplete: function(data) {
-                        document.getElementById("order_address").innerHTML = data.address + ", " + data.buildingName;
-                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
-                        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
-                    }
-                }).open();
-            });
-
-            
-            
-        }
-        
-     
-    </script>
-    
 	<script>
 	// Get the modal
 	var modalOne = document.getElementById("myModal");
@@ -587,8 +630,95 @@
 	
 	// When the user clicks the button, open the modal 
 	btn.onclick = function() {
+		$.ajax({
+			url:'${contextPath}/selectAddressList.sh',
+			data:{userNumber: 1 
+			},
+			success:(data)=>{
+				console.log(data);
+				var obj = JSON.parse(data);
+				console.log(obj);
+				
+				const addressListDivs = document.getElementById("addressListDiv");
+				for(const a of obj){
+					const addressDiv= document.createElement("div");
+					addressDiv.innerHTML = '<div style="width:100%; height:auto; background-color: white; border-radius: 0.5em; padding:1rem; border:2px solid #24E082; margin-bottom: 1rem;">'+
+						'<div name="ListAddressName" style="font-weight:bold; font-size:1.2rem; margin-bottom:0.2rem;">'+a.addressName+'</div>'+
+						'<div style="margin-bottom:0.2rem;"><span name="ListAddressBuilding">'+a.addressBuilding+'</span><span name="ListAddressDetail">&nbsp;'+a.addressDetail+'</span></div>'+
+						'<div style="margin-bottom:0.7rem; color: gray;"><span name="ListAddressAddressee">'+a.addressAddressee+'</span>&nbsp;&nbsp;<span name="ListAddressPhone">'+a.addressPhone+'</span></div>'+
+						'<input type="hidden" name="ListAddressZipcode" value="'+a.addressZipcode+'">'+
+						'<input type="hidden" name="ListAddressBasic" value="'+a.addressBasic+'">'+
+						'<input type="hidden" name="ListAddressNum" value="'+ a.addressNum +'">'+
+						'<button type="button" class="hj_btn_deleteAddress">삭제</button>'+
+						' <button type="button" class="hj_btn_changeAddress">수정</button><button type="button" class="hj_btn_selectAddress" style="float:right;">선택</button></div>'
+						
+						addressListDivs.append(addressDiv);
+// 					console.log(a.addressName);
+// 					document.getElementById("ListAddressName").innerHTML = a.addressName;
+// 					document.getElementById("ListAddressBuilding").innerText = a.addressBuilding;
+// 					document.getElementById("ListAddressDetail").innerText = a.addressDetail;
+// 					document.getElementById("ListAddressAddressee").innerText = a.addressAddressee;
+// 					document.getElementById("ListAddressPhone").innerText = a.addressPhone;
+// 					document.getElementById("ListAddressZipcode").value = a.addressZipcode;
+// 					document.getElementById("ListAddressBasic").value = a.addressBasic;
+// 					document.getElementById("ListAddressNum").value = a.userNum;
+				}
+			}
+		});	
 		modalOne.style.display = "block";
+		
+		const selectAddressBtn = document.getElementsByClassName("hj_btn_selectAddress");
+// 		console.log(selectAddressBtn[1]);
+		console.log(selectAddressBtn);
+		
+		for(let el of selectAddressBtn ){
+			  console.log(el);
+			}
+		
+// 		const arr = [...selectAddressBtn];
+// 		for (let i = 0; i < selectAddressBtn.length; i++) {
+// 			  console.log(selectAddressBtn[i]);
+// 		}
+		
+// 		Array.prototype.forEach.call(selectAddressBtn,(element) => {
+// 		    console.log(element);
+// 		})
+// 		for(let i=0; i<selectAddressBtn.length; i++){
+// 		    console.log(selectAddressBtn[i]);
+// 		}
+// 	  	for(selectAddress of selectAddressBtn){
+//   			console.log(selectAddress);
+// 	  	}
+
+// 		Array.from(selectAddressBtn).forEach((selectAddress) => {
+// // 		    Do stuff here
+// 		    console.log(selectAddress);
+// 		});
+// 		selectAddressBtn.forEach(selectAddress =>
+// 			console.log(selectAddress)
+// 		);
+
 	}
+	
+//  배송지 목록 중 배송지 선택 => 주문 페이지
+//   		selectAddress.addEventListener('click',function(){
+//   			modalOne.style.display = "none";
+//				const selectedAddressName = $(this).siblings()[0].innerText;
+//				const selectedAddressBuilding = $(this).siblings()[1].innerText;
+//				const selectedAddressAddressee = $(this).siblings()[2].innerText;
+//				document.getElementById("order_addressName").innerHTML = selectedAddressName;
+//				document.getElementById("order_address").innerHTML = selectedAddressBuilding;
+//				document.getElementById("order_addressee").innerHTML = selectedAddressAddressee;
+//   		});
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	// When the user clicks on <span> (x), close the modal
 	span.onclick = function() {
@@ -603,6 +733,10 @@
 	  
 	  if (event.target == Modal2) {
 		  Modal2.style.display = "none";
+	  }
+	  
+	  if (event.target == modal3) {
+		  Modal3.style.display = "none";
 	  }
 	}
 	
@@ -627,8 +761,181 @@
 		Modal2.style.display = "none";
 		modalOne.style.display = "block";
 	}
+	
+	
+// 모달3 ------------------------------------------------------------------------------
+// 	var goModal2 = document.getElementById("goModal2");
+	var goModalBefore= document.getElementById("goModalBefore");
+	
+	var modal3 = document.getElementById("Modal3");
+	
+	var span3 = document.getElementsByClassName("close")[2];
+	
+	goModalBefore.onclick = function() {
+		modalOne.style.display = "block";
+		modal3.style.display = "none";
+	}
+	
+	span3.onclick = function() {
+		modal3.style.display = "none";
+	}
+	
+// 	goModal1.onclick = function() {
+// 		Modal2.style.display = "none";
+// 		modalOne.style.display = "block";
+// 	}
 
 	</script>
+
+    <script>
+
+        window.onload =()=>{
+// 			배송지 추가
+			document.getElementById("saveAddress").addEventListener("click",function(){
+				console.log("저장 클릭");
+// 				document.getElementById("addressForm").submit;
+				let addressName = document.getElementById("addressName");
+				let addressAddressee = document.getElementById("addressAddressee");
+				let addressPhone = document.getElementById("addressPhone");
+				let addressZipcode = (Number)(document.getElementById("addressZipcode").value);
+				let addressBuilding = document.getElementById("addressBuilding");
+				let addressDetail = document.getElementById("addressDetail");
+				let addressCheckbox = document.getElementById("addressBasic");
+				let addressBasic = null;
+				
+				if(addressCheckbox.checked){
+					addressBasic = 'Y';
+				}else{
+					addressBasic = 'N';
+				}
+				
+				$.ajax({
+					type: 'post',
+					url:'${contextPath}/insertAddress.sh',
+					data: {addressName: addressName.value,
+						addressAddressee:addressAddressee.value,
+						addressPhone: addressPhone.value,
+						addressZipcode: addressZipcode,
+						addressBuilding: addressBuilding.value,
+						addressDetail: addressDetail.value,
+						addressBasic:addressBasic
+					},
+					success: (data)=>{
+						console.log(data);
+						Modal2.style.display = "none";
+						document.getElementById("order_addressName").innerHTML = addressName.value;
+						document.getElementById("order_address").innerHTML = addressBuilding.value + ", " + addressDetail.value;
+						document.getElementById("order_addressee").innerHTML = addressAddressee.value + " "+ addressPhone.value;
+						addressName.value = '';
+						addressAddressee.value = '';
+						addressPhone.value = '';
+						document.getElementById("addressZipcode").value = '';
+						addressBuilding.value = '';
+						addressDetail.value = '';
+						addressCheckbox.checked = false;
+					},
+					error:(data)=>{
+						console.log(data);
+					}
+				});
+			});
+                   
+                   
+//         	주소찾기API
+            document.getElementById("findAddress").addEventListener("click",function(){
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                    	document.getElementById("addressZipcode").value = data.zonecode;
+                    	addressBuilding.value = data.address + " "+ data.buildingName;
+
+                    }
+                }).open();
+            });
+
+            
+            
+
+
+          	// 배송지 수정 페이지
+			const changeAddressBtn = document.getElementsByClassName("hj_btn_changeAddress");
+          	for(const changeAddress of changeAddressBtn){
+          		changeAddress.addEventListener('click',function(){
+          			modalOne.style.display = "none";
+          			modal3.style.display = "block";
+					console.log($(this).siblings()[4].value);
+          			
+					document.getElementById("changeAddressName").value = $(this).siblings()[0].innerHTML;
+					document.getElementById("changeAddressAddressee").value= $(this).siblings()[2].children[0].innerText;
+					document.getElementById("changeAddressPhone").value= $(this).siblings()[2].children[1].innerText;
+					document.getElementById("changeAddressBuilding").value = $(this).siblings()[1].children[0].innerText;
+					document.getElementById("changeAddressDetail").value = $(this).siblings()[1].children[1].innerText;
+					document.getElementById("changeAddressZipcode").value = $(this).siblings()[3].value;
+					if($(this).siblings()[4].value == 'Y'){
+						document.getElementById("changeAddressBasic").checked = true;
+					}
+          		});
+        	 }
+          	
+          	document.getElementById("updateAddressBtn").addEventListener("click",function(){
+// 				document.getElementById("addressForm").submit;
+				let changeAddressNum = document.getElementById("addressNum");
+				let changeAddressName = document.getElementById("changeAddressName");
+				let changeAddressAddressee = document.getElementById("changeAddressAddressee");
+				let changeAddressPhone = document.getElementById("changeAddressPhone");
+				let changeAddressZipcode = (Number)(document.getElementById("changeAddressZipcode").value);
+				let changeAddressBuilding = document.getElementById("changeAddressBuilding");
+				let changeAddressDetail = document.getElementById("changeAddressDetail");
+				let changeAddressCheckbox = document.getElementById("changeAddressBasic");
+				let changeAddressBasic = null;
+				
+				if(changeAddressCheckbox.checked){
+					changeAddressBasic = 'Y';
+				}else{
+					changeAddressBasic = 'N';
+				}
+				
+				$.ajax({
+					type: 'post',
+					url:'${contextPath}/updateAddress.sh',
+					data: {addressNum: changeAddressNum.value,
+						addressName: changeAddressName.value,
+						addressAddressee:changeAddressAddressee.value,
+						addressPhone: changeAddressPhone.value,
+						addressZipcode: changeAddressZipcode,
+						addressBuilding: changeAddressBuilding.value,
+						addressDetail: changeAddressDetail.value,
+						addressBasic:changeAddressBasic
+					},
+					success: (data)=>{
+						console.log(data);
+						modal3.style.display = "none";
+					},
+					error:(data)=>{
+						console.log(data);
+					}
+				});
+			});
+          	
+//          주소찾기2
+            document.getElementById("changeFindAddress").addEventListener("click",function(){
+                new daum.Postcode({
+                    oncomplete: function(data) {
+                    	document.getElementById("changeAddressZipcode").value = data.zonecode;
+                    	changeAddressBuilding.value = data.address + " "+ data.buildingName;
+//                         document.getElementById("order_address").innerHTML = data.address + ", " + data.buildingName;
+                        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+                        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+                    }
+                }).open();
+            });
+          	
+        }
+        
+        
+        
+     
+    </script>
+    
 	
 </body>
 

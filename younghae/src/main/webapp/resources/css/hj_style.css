@@ -59,6 +59,16 @@
        background-color: white;
        border-radius: 0.4em;
     }
+    
+/*     .hj_btn_deleteAddress{ */
+/*        border: 1px solid #24E082; */
+/*        color: #24E082; */
+/*        font-size: 12px; */
+/*        width: 65px;  */
+/*        height: 30px; */
+/*        background-color: white; */
+/*        border-radius: 0.4em; */
+/*     } */
 	
     .hj_btn_selectAddress{
        border: none;
@@ -86,6 +96,8 @@
 	    font-size: 24px;
 	    color: white;
     }
+    
+
     
 /* ---------------- 배송지 변경 부분 end ------------------	 */
     

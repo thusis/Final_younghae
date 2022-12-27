@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.Address;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
@@ -51,4 +52,30 @@ public class ShoppingServiceImpl implements ShoppingService{
 	public Supplement selectDetail(int proNum) {
 		return shDAO.selectDetail(sqlSession, proNum);
 	}
+	
+	@Override
+	public int insertAddress(Address a) {
+		return shDAO.insertAddress(sqlSession, a);
+	}
+	
+	@Override
+	public ArrayList<Address> selectAddressList(int userNum) {
+		return shDAO.selectAddressList(sqlSession, userNum);
+	}
+	
+	@Override
+	public int updateAddress(Address a) {
+		return shDAO.updateAddress(sqlSession, a);
+	}
+	
+	@Override
+	public void updateBasicAll(int userNum) {
+		shDAO.updateBasicAll(sqlSession, userNum);
+	}
+	
+	@Override
+	public int deleteAddress(int addressNum) {
+		return shDAO.deleteAddress(sqlSession, addressNum);
+	}
+	
 }
