@@ -456,11 +456,11 @@
 												    <span class="star update" style="display: inline-block;">
 												        ★★★★★
 												        <span>★★★★★</span>
-												        <input type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+												        <input type="range" oninput="drawStar1(this)" value="1" step="1" min="0" max="10">
 												    </span>
 													<output for="star-input" style="display: inline-block;">
 														<b id="updaterating" name="rating">0</b>점
-														<input id="rateIn" type="hidden" name="rvStar" value="0">
+														<input id="updaterateIn" type="hidden" name="rvStar" value="0">
 													</output>
 												</div>
 											</div>
@@ -505,7 +505,7 @@
         </div>
 	</div>
 
-
+	<input type="hidden" name="userNum" value="userNum">
 	<script>
 		 // 별점
 	    const drawStar = (target) => {
@@ -516,7 +516,18 @@
 	        const rateIn = document.getElementById('rateIn');
 	        rateIn.value = target.value/2;
 	        
-	        console.log(rateIn.value);
+// 	        console.log(rateIn.value);
+		}
+	    
+	    const drawStar1 = (target) => {
+		    document.querySelector('.star.update span').style.width = target.value * 10 + '%';
+	        const rate = document.getElementById('updaterating');
+	        rate.innerText = target.value/2;
+	        
+	        const rateIn = document.getElementById('updaterateIn');
+	        rateIn.value = target.value/2;
+	        
+// 	        console.log(rateIn.value);
 		}
 	    
         window.onload=()=>{
@@ -548,7 +559,6 @@
 	        window.onclick = function (event) {
 	            if (event.target == modal) {
 	                modal.style.display = "none";
-	                updateModal.style.display = "none";
 	            }
 	        }
 			
@@ -600,24 +610,24 @@
 									        			
 		        			if(r.image == "없음"){
 		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
-								  				  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
+								  				  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
                   			  					  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
                   			  					  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
                   			  					  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
 					                  			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
-					                  			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
+					                  			  '<div id="reviewRank star" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
 					                  			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
 					                  			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
 					                  			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
 					                  			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
 		        			}else{
 		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
-		        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+
+		        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
 	                                			  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
 	                                			  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
 	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
 	                                			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
-	                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
+	                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p id="rvstar" style="color: black; font-size: 130%;">'+ r.rvStar +
 	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
 	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
 	                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
@@ -628,29 +638,6 @@
 		        			}
                              div.append(form);
                              
-				            const update  = document.getElementsByClassName('product__details__quantity_1');
-				            
-				            for(var up of update){
-				            	up.addEventListener('click' ,function(){
-				            		if(${ loginUser.userNum } ==  r.userNum ){
-				            			
-			            				updateModal.style.display = "block";
-				            			
-				            			// 닫기 버튼
-				            	        var upspan = document.getElementsByClassName("close")[1];
-				            	        
-				            	        upspan.onclick = function () {
-				            	        	updateModal.style.display = "none";
-				            	        }
-				            	        
-				            	        const rating = document.getElementById("updaterating");
-				            	        rating.innerText = r.rvStar;
-				            	        
-				            		}
-				            		
-				            	});
-				            }
-				            
                             $.ajax({
              	            	url:'${ contextPath }/rateUpdate.su',
              		        	data: {proGrade: document.getElementById('starIn').innerText, proNum: ${ product.proNum }},
@@ -661,6 +648,40 @@
              		        		console.log(data);
              		        	}
              	            });
+                            
+				            const update  = document.getElementsByClassName('product__details__quantity_1');
+				            
+				            for(var up of update){
+				            	up.addEventListener('click' ,function(){
+				            		if( ${ loginUser.userNum } ==  r.userNum  ){
+				            			console.log(r.userNum);
+										console.log(r.rvStar);
+			            				updateModal.style.display = "block";
+				            			
+// 				            			닫기 버튼
+				            	        var upspan = document.getElementsByClassName("close")[1];
+				            	        
+				            	        upspan.onclick = function () {
+				            	        	updateModal.style.display = "none";
+				            	        }
+				            	        
+				            	    	// modal 밖에 클릭했을 때 모달창 꺼지는 스크립트
+				            	        window.onclick = function (event) {
+				            	            if (event.target == modal) {
+				            	                updateModal.style.display = "none";
+				            	            }
+				            	        }
+				            	        
+// 				            	        const rating = document.getElementById("updaterating");
+// 				            	        rating.innerText = $(this).find('#reviewRank').find('p').text();
+// 				            	        rating.innerText = r.rvStar;
+				            	        
+// 				            	        document.querySelector('.star.update span').style.width = r.rvStar * 20 + '%';
+				            		}
+				            		
+				            	});
+				            }
+				            
 	        			}
 	        		}
 	        	},

@@ -47,7 +47,7 @@ public class SupplementController {
 		if(page != null) {
 			currentPage = page;
 		}
-		Member mem = sService.selectMember(9);
+		Member mem = sService.selectMember(7);
 		// 집에서는 26
 		// 학원에서는 8
 	      

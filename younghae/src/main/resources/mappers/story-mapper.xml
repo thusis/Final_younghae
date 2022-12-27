@@ -13,4 +13,9 @@
 		<result column="" property="userNum"/>
 		<result column="" property="boardType"/>
 	</resultMap>
+	
+	<!-- 컬럼 작성 -->
+	<insert id="insertStory">
+		insert 
+	</insert>
 </mapper>

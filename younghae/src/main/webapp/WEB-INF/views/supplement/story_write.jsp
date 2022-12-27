@@ -10,13 +10,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>컬럼 쓰기</title>
 
-	<!-- 써머노트때문에 위로 올라감 -->
-	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 	crossorigin="anonymous"></script>
+	
+	<!-- 써머노트때문에 위로 올라감 -->
+	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
@@ -24,118 +24,6 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 <style>
-	.bn_nav1 {
-		background-color: #24E082;
-	}
-	
-	.yh_header__menu {
-		padding: 12px 0;
-	}
-	
-	.yh_header__menu ul li {
-		color: white;
-		list-style: none;
-		display: inline-block;
-		margin-right: 50px;
-		position: relative;
-	}
-	
-	.yh_header__menu ul li .yh_header__menu__dropdown {
-		position: absolute;
-		left: 0;
-		/* top: 50px; */
-		background: #222222;
-		width: max-content;
-		/* z-index: 9; */
-		padding: 5px 0;
-		-webkit-transition: all, 0.3s;
-		-moz-transition: all, 0.3s;
-		-ms-transition: all, 0.3s;
-		-o-transition: all, 0.3s;
-		transition: all, 0.3s;
-		opacity: 0;
-		visibility: hidden;
-	}
-	
-	.yh_header__menu ul li .yh_header__menu__dropdown li {
-		margin-right: 0;
-		display: block;
-	}
-	
-	.yh_header__menu ul li .yh_header__menu__dropdown li:hover>a {
-		color: #24E082;
-	}
-	
-	.yh_header__menu ul li .yh_header__menu__dropdown li a {
-		text-transform: capitalize;
-		color: #ffffff;
-		font-weight: 400;
-		padding: 5px 15px;
-	}
-	
-	.yh_header__menu ul li.active a {
-		color: #24E082;
-	}
-	
-	.yh_header__menu ul li:hover .yh_header__menu__dropdown {
-		top: 30px;
-		opacity: 1;
-		visibility: visible;
-	}
-	
-	.yh_header__menu ul li:hover>a {
-		color: #FD9F28;
-	}
-	
-	.yh_header__menu ul li:last-child {
-		margin-right: 0;
-	}
-	
-	.yh_header__menu ul li a {
-		font-size: 14px;
-		color: #252525;
-		text-transform: uppercase;
-		font-weight: 700;
-		letter-spacing: 2px;
-		-webkit-transition: all, 0.3s;
-		-moz-transition: all, 0.3s;
-		-ms-transition: all, 0.3s;
-		-o-transition: all, 0.3s;
-		transition: all, 0.3s;
-		padding: 5px 0;
-		display: block;
-	}
-	
-	/* 검색창 */
-	#bn_navbar-search-input {
-		border: 0;
-		background-color: rgb(242, 242, 242);
-		border-radius: 0px 20px 20px 0px;
-	}
-	
-	.bn_navbar-select-input {
-		border: 0;
-		background-color: rgb(242, 242, 242);
-		cursor: pointer;
-		border-radius: 20px 0px 0px 20px;
-		padding-left: 10px;
-	}
-	
-	.bn_navbar-select-input option:checked, .bn_navbar-select-input option:hover
-		{
-		color: FD9F28;
-	}
-	
-	.bn_btn_search {
-		background-color: transparent;
-		border: none;
-		cursor: pointer;
-		position: absolute;
-		right: 5px;
-		top: 50%;
-		transform: translatey(-50%);
-	}
-	
 	/* 첨부파일 관련 CSS*/
 	.filebox .upload-name {
 		display: inline-block;
@@ -189,6 +77,8 @@
 		font-weight: 800;
 		color: #FD9F28;
 	}
+	
+	
 </style>
 </head>
 <body>
@@ -352,7 +242,6 @@
                 </div>
             </div>
         </div>
-        </div>
         
     </footer>
     <!-- Footer Section End -->
@@ -361,7 +250,8 @@
       $('#summernote').summernote({
         placeholder: 'Hello stand alone ui',
         tabsize: 2,
-        height: 120,
+        height: 500,
+        disableResizeEditor: true,
         toolbar: [
 			    // [groupName, [list of button]]
 			    ['fontname', ['fontname']],
@@ -371,12 +261,37 @@
 			    ['table', ['table']],
 			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['height', ['height']],
-			    ['insert',['picture','link','video']],
+			    ['insert',['picture']],
 			    ['view', ['fullscreen', 'help']]
 			  ],
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
+			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+			
+			callbacks: {
+				onImageUpload: function(files, editor, welEditable) {
+		            for (var i = files.length - 1; i >= 0; i--) {
+		            	sendFile(files[i], this);
+		            }
+		        }
+			}
       });
+      
+      function sendFile(file, el) {
+  		var form_data = new FormData();
+        	form_data.append('file', file);
+        	$.ajax({
+	          	data: form_data,
+	          	type: "POST",
+	          	url: '${ contextPath }/summernoteImage.st',
+	          	cache: false,
+	          	contentType: false,
+	          	enctype: 'multipart/form-data',
+	          	processData: false,
+	          	success: function(img_name) {
+	            		$(el).summernote('editor.insertImage', img_name);
+	          	}
+       		});
+      }
     </script>
     
 </body>

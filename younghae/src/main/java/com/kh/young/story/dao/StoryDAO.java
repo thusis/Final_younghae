@@ -23,4 +23,8 @@ public class StoryDAO {
 		return (ArrayList)sqlSession.selectList("storyMapper.allStory",  3 ,rowBounds );
 	}
 
+	public int insertStory(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("storyMapper.insertStory", b);
+	}
+
 }
