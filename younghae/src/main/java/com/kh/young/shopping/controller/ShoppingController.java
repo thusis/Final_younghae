@@ -138,20 +138,22 @@ public class ShoppingController {
 		return "paymentView";
 	}
 	
-	@ResponseBody
 	@RequestMapping(value="selectAddressList.sh", produces="text/plain;charset=UTF-8")
-	public String selectAddressList(HttpSession session, HttpServletResponse response){
+	public void selectAddressList(HttpSession session, HttpServletResponse response){
 		Member m = (Member)session.getAttribute("loginUser");
 		ArrayList<Address> addressList = shService.selectAddressList(m.getUserNum());
 		
-//		response.setContentType("application/json; charset=UTF-8");
+		response.setContentType("application/json; charset=UTF-8");
 		
 		GsonBuilder gb = new GsonBuilder();
 		Gson gson = gb.create();
 		
-		String addressListJson = gson.toJson(addressList);
+		try {
+			gson.toJson(addressList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
 		
-		return addressListJson;
 	}
 	
 	// insert Address
