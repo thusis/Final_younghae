@@ -189,7 +189,16 @@
         </div>
     </section>
     
-
+    <img src="${contextPath}/summerNote/2022122718131518621619.png" alt="0" />
+    
+    <img src="summerNote/2022122718131518621619.png" alt="1">
+    <img src="/summerNote/2022122718131518621619.png" alt="1">
+    <img src="../summerNote/2022122718131518621619.png" alt="2">
+    <img src="../../summerNote/2022122718131518621619.png" alt="3">
+    <img src="../../summerNote/2022122718131518621619.png" alt="3">
+    <img src="../../webapp/summerNote/2022122718131518621619.png" alt="3">
+    <img src="/younghae/src/main/webapp/summerNote/2022122718131518621619.png" alt="4">
+    <img src="resources/uploadFiles/" alt="5">
 
     <!-- Footer Section Begin -->
     <footer class="footer spad">
@@ -288,7 +297,16 @@
 	          	enctype: 'multipart/form-data',
 	          	processData: false,
 	          	success: function(img_name) {
+	          			console.log("1"+ img_name);
+	          			console.log("2"+ img_name);
+						$(".spinner-border").css("display","none");
+// 						const root = "F:\younghae_final\younghae\src\main\webapp\sbap
+						img_name = img_name.split("webapp\\")[1];
+// 	            		$(el).summernote('editor.insertImage', "resources/img/logo.svg");
+
 	            		$(el).summernote('editor.insertImage', img_name);
+	            		
+	          			console.log("3"+ img_name);
 	          	}
        		});
       }
