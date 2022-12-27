@@ -52,4 +52,30 @@ public class MemberServiceImpl implements MemberService {
 	public Member login(Member m) {
 		return mDAO.login(sqlSession, m);
 	}
+	
+	@Override
+	public int updateMember(Member m) {
+		return mDAO.updateMember(sqlSession, m);
+	}
+	
+	@Override
+	public int updateMemberAddress(HashMap<String, Object> map) {
+		return mDAO.updateMemberAddress(sqlSession, map);
+	}
+	
+	@Override
+	public Member searchId(Member m) {
+		return mDAO.searchId(sqlSession, m);
+	}
+	
+	@Override
+	public Member checkIdEmail(String userId) {
+		return mDAO.checkIdEmail(sqlSession, userId);
+	}
+	
+	@Override
+	public int updatePwd(HashMap<String, String> map) {
+		return mDAO.updatePwd(sqlSession, map);
+	}
+	
 }

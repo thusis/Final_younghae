@@ -20,4 +20,16 @@ public interface MemberService {
 
 	Member login(Member m);
 
+	int updateMember(Member m);
+
+	int updateMemberAddress(HashMap<String, Object> map);
+
+	Member searchId(Member m);
+
+	Member checkIdEmail(String userId);
+
+	int updatePwd(HashMap<String, String> map);
+
+
+
 }
