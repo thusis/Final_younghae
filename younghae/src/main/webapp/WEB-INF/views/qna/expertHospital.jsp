@@ -27,11 +27,11 @@
                 <li><a href="#">병원정보보기</a></li>
             </ul>
         </div>
-        
+        ${expert }
         <!-- Contact Section Begin -->
         <section class="contact spad">
             <div class="section-title" style="padding: 30px 0 10px 0;">
-                <h2>서울시 중구 종로약국 </h2>
+                <h2>${expert.expertDept} </h2>
                 <hr style="width:50vw; border:2px solid #24E082; background-color: #24E082;">
             </div>
             <div class="row">

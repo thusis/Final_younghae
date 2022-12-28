@@ -12,34 +12,11 @@
     <!--내가만든 css-->
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 	
+	<style>
+		a{text-decoration:none;}
+	</style>
 </head>
 <body>
-
-	<!-- 		영양제 선택 모달창 만들어야행 -->
-	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h4 class="modal-title fs-5" id="staticBackdropLabel">영양제 선택</h4>
-	        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-circle"></i></button>
-	      </div>
-	      
-	      <div class="modal-body">
-	        <input type="text" placeholder="영양제 이름으로 검색">
-	        <button type="button" class="btn bn_btn_search2"><i class="bi bi-search"></i></button>
-	      </div>
-	      
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">선택하지 않고 닫기</button>
-	        <button type="button" class="btn btn-primary">선택</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	
-<button type="button" class="btn bn_btn_search2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-	<i class="bi bi-capsule"></i>
-</button>
 
     <div class="container">
         <div class="bn_index mt-5">
@@ -51,7 +28,7 @@
                 <li><a href="#">게시글 상세보기</a></li>
             </ul>
         </div>
-
+${qresp }
         <div class="row">
             <div class="col-lg-10">
                 <div class="row justify-content-end ">
@@ -68,8 +45,6 @@
             </div>
             <div class="col-lg-2"> <!--공란--> </div>
         </div>
-        
-        ${qresp }
 
         <div class="row">
             <div class="col-lg-10 bn_card-top"><!--영양제복용법질문======================================-->
@@ -172,21 +147,40 @@
 		               <div class="col-lg-10">
 		                   <div class="row bn_pro-box m-1"> <!--전문가칸-->
 		                       <div class="col-lg-7  align-self-center">
-		                           <h5 class="bn_pro-name">김가람&nbsp;&nbsp;<span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">약사</span></h5>
-		                           <span class="bn_pro-info">답변수 493개</span><br>
-		                           <span class="bn_pro-info">전문과목 약학</span><br>
-		                           <span class="bn_pro-info">소속 : 서울 중구 종로약국&nbsp;&nbsp;<span class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">병원 정보 보기</span></span><br>
+		                           <h5 class="bn_pro-name">${ans.eresp.member.userName}&nbsp;&nbsp;
+		                           <span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+			                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'D' }">의사</c:if>
+			                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'C' }">약사</c:if>
+		                           </span></h5>
+		                           <span class="bn_pro-info">답변수 ${ans.eresp.answerListSize} 개</span><br>
+		                           <span class="bn_pro-info">전문과목 ${ans.eresp.expert.expertMedi}</span><br>
+		                           <span class="bn_pro-info">소속 : ${ans.eresp.expert.expertDept}&nbsp;&nbsp;
+			                           <span class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
+				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'D' }">병원</c:if>
+				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'C' }">약국</c:if>
+			                           정보 보기
+			                           </span>
+		                           </span><br>
 		                       </div>
 		
-		                       <div class="col-3 align-self-center">
-		                           <img src="img/pro_profile1.png" class="bn_pro-profile" alt="...">
+								<div class="col-3 align-self-center">
+									<c:if test="${ans.eresp.eattach != null }">
+									<div class="bn_pro-profile">
+										<img src="${contextPath}/resources/uploadFiles/${qresp.qattach.attachRename}"alt="전문가프로필">
+									</div>
+									</c:if>
+									<c:if test="${ans.eresp.eattach == null }">
+									<div style="vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;">
+										<img src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
+									</div>
+									</c:if>
 		                       </div>
 		                       <div class="col-2 align-self-center">
-		                           <div class="bn_pro-icon"><i class="bi bi-list-ul"></i></div>
-		                           <div class="bn_pro-icon"><i class="bi bi-send"></i></div>
+		                           <div class="bn_pro-icon" id="goToExpert" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover"><a style="text-decoration:none; color:white;" href="${contextPath}/expertprofile.qa?expertNum=${ans.eresp.member.userNum}"><i class="bi bi-list-ul"></i></a></div>
+		                           <div class="bn_pro-icon" id="goToChat" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover"><a style="text-decoration:none; color:white;" href="${contextPath}/open.ch?expertNum=${ans.eresp.member.userNum}"><i class="bi bi-send"></i></a></div>
 		                       </div>
 		                   </div>
-		
+		                   
 		                   <div class="row bn_content">
 		                       ${ans.board.boardContent}
 		                   </div>
@@ -219,15 +213,19 @@
 		                   </div>
 		               </div>
 		
-		               <div class="dropdown col-lg-1 align-items-center justify-content-center">
-		                   <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-		                       <i class="bi lg bi-three-dots" style="font-size: 1.5rem; color:darkgray;"></i>
-		                   </button>
-		                   <ul class="dropdown-menu">
-		                       <li><a class="dropdown-item" href="#">수정하기</a></li>
-		                       <li><a class="dropdown-item" onclick="deleteBoard();">삭제하기</a></li>
-		                       <li><a class="dropdown-item" onclick="openPopUp();" >신고하기</a></li>
-		                   </ul>
+		                <div class="dropdown col-lg-1 align-items-center justify-content-center">
+							<button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+			                	<i class="bi lg bi-three-dots" style="font-size: 1.5rem; color:darkgray;"></i>
+		                	</button>
+		                	<ul class="dropdown-menu">
+		                	<c:if test="${loginUser.userNum eq ans.board.userNum}">
+		                		<li><a class="dropdown-item" href="#">수정하기</a></li>
+		                		<li><a class="dropdown-item" onclick="deleteBoard();">삭제하기</a></li>
+		                	</c:if>
+		                	<c:if test="${loginUser.userNum ne ans.board.userNum}">
+		                		<li><a class="dropdown-item" onclick="openPopUp();" >신고하기</a></li>
+		                	</c:if>
+		                	</ul>
 		               </div>
 		           </div>
 		       </div>
@@ -247,8 +245,6 @@
 	            </div>
 			</div>
 		</c:forEach>
-
-<!-- 		영양제 선택 모달창 만들어야행 -->
 
         <div class="row">
             <div class="d-flex col-lg-10 row justify-content-between">
@@ -288,8 +284,7 @@
 	//영양제 검색 > 영양제이름으로만 검색결과 > 뷰 > 선택 > 유저에게 보이는 창에는 영양제이름이, 전달되는 값은 영양제제품번호만
 	//모달이 아니고 팝업으로 구현 따로 창을 만들어야 함
 	});
-
-
+	
 	
 </script>
 </body>

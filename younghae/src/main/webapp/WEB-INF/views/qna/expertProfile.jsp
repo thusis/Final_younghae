@@ -26,7 +26,7 @@
         </div>
 
         <div class="mt-5" style="padding: 30px 0 10px 0;">
-            <h2 class="bn_txt_strong pb-3" style="font-size: 2rem;">남나눔 님의 프로필</h2>
+            <h2 class="bn_txt_strong pb-3" style="font-size: 2rem;">${eresp.member.userName} 님의 프로필</h2>
             <hr style="border:2px solid #24E082; background-color: #24E082;">
         </div>
 
@@ -43,6 +43,8 @@
                 </div>
 
                 <div class="row bn_pro-infobox-bottom" id="infoboxBottom1">
+                    <c:if test="${eresp.expert.expertCareer != null}">${eresp.expert.expertCareer}</c:if>
+                    <c:if test="${eresp.expert.expertCareer == null}">
                     <ul>
                         <li>(현) 세계로마취통증의학과의원, 마취통증의학과 전문의</li>
                         <li>1984 제천서울병원 공동설립</li>
@@ -51,6 +53,7 @@
                         <li>1979 서울대학병원마취통증의학과 전문의 수료 및 전문의취득</li>
                         <li>1982년 서울의대.박사학위 취득</li>
                     </ul>
+                    </c:if>
                 </div>
                 <div class=" row bn_pro-infobox-bottom" id="infoboxBottom2">
                     <div class="row d-flex align-items-center ">
@@ -62,10 +65,10 @@
                         </div>
 
                         <div class="col-3">
-                            <button class="btn bn_btn_search2" style="font-size:small; padding: 0.5rem; background-color: #cacfd4;">수정하기</button>
-                        </div>
-                        <div class="col-3">
-                            <button class="btn bn_btn_search2" style="font-size:small; padding: 0.5rem; background-color: #cacfd4;">스케줄보기</button>
+                        	<c:if test="${eresp.member.userNum eq loginUser.userNum}">
+                           		<button class="btn bn_btn_search2" style="font-size:small; padding: 0.5rem; background-color: #cacfd4;">수정하기</button>
+                            	<button class="btn bn_btn_search2" style="font-size:small; padding: 0.5rem; background-color: #cacfd4;">스케줄보기</button>
+                        	</c:if>
                         </div>
                     </div>
                     <hr>
@@ -75,7 +78,9 @@
                     </div> 
                     <div class="row mb-4 align-items-center">
                         <h5 class="col-3">예상금액</h5>
-                        <span class="col bn_txt_strong">10,000원 (10분당)</span>
+                        <span class="col bn_txt_strong">
+                        ${eresp.expert.expertEstimate}
+                        </span>
                     </div>
                     <div class="row">
                         <button class="col btn bn_txt_strong p-3 " style="display: inline-block; background-color: black; color:white;">상담 가능 시간 보기</button>
@@ -87,21 +92,39 @@
                 <div class="bn_pro-box" style="padding:1.5rem; background: linear-gradient(to bottom, white 80%, #24E082 20%);">
                     <div class="row">
                         <div class="col-lg-8 align-self-center">
-                            <h5 class="bn_pro-name">김가람&nbsp;&nbsp;<span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">약사</span></h5>
-                            <span style="display: inline-block; width: 3.5rem;">답변수 </span><span>: 493개</span><br>
-                            <span style="display: inline-block; width: 3.5rem;">전문과목 </span><span>: 약학</span><br>
-                            <span style="display: inline-block; width: 3.5rem;">소속 </span><span>: 서울 중구 종로약국&nbsp;&nbsp;<span class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">병원 정보 보기</span></span><br>
+                            <h5 class="bn_pro-name">${eresp.member.userName}&nbsp;&nbsp;<span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">약사</span></h5>
+                            <span style="display: inline-block; width: 3.5rem;">답변수 </span><span>: ${ eresp.answerListSize }개</span><br>
+                            <span style="display: inline-block; width: 3.5rem;">전문과목 </span><span>: ${ eresp.expert.expertMedi}</span><br>
+                            <span style="display: inline-block; width: 3.5rem;">소속 </span><span>: ${ eresp.expert.expertDept}</span>&nbsp;&nbsp;
+	                         	<span class="badge rounded-pill bn_badge" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;" id="goToExpertHospital">
+		                           <c:if test="${eresp.expert.expertSort.trim() eq 'D' }">병원</c:if>
+		                           <c:if test="${eresp.expert.expertSort.trim() eq 'C' }">약국</c:if>
+	                          	정보 보기
+	                           	</span>
                         </div>
 
                         <div class="col-4 align-self-center">
-                            <img src="img/pro_profile1.png" class="bn_pro-profile" alt="...">
+                        	<c:if test="${eresp.eattach != null }">
+							<div class="bn_pro-profile">
+								<img src="${contextPath}/resources/uploadFiles/${qresp.qattach.attachRename}"alt="전문가프로필">
+							</div>
+							</c:if>
+							<c:if test="${eresp.eattach == null }">
+							<div style="vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;">
+								<img src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
+							</div>
+							</c:if>
                         </div>
                     </div>
 
-                    <div class="row" style="padding: 1.5rem;"><span>친절과 사랑으로 전하는 복용상식! 10:00-19:00 상담가능합니다. 어쩌구 저쩌구 룰루리랄라라 친절과 사랑으로 전하는 복용상식! 10:00-19:00 상담가능합니다. 어쩌구 저쩌</span></div>
+                    <div class="row" style="padding: 1.5rem;">
+                    	<span>
+                    	${ eresp.expert.expertProfile }
+                    	</span>
+                   	</div>
                     
                     <div class="row justify-content-center">
-                        <button class="btn" style="color:white;" onclick="openChat();"><h3 class="bn_txt_strong">채팅하러가기</h3></button>
+                        <button class="btn" style="color:white;" onclick="location.href='${contextPath}/open.ch?expertNum=${eresp.member.userNum}'"><h3 class="bn_txt_strong">채팅하러가기</h3></button>
                     </div>
                 </div>
             </div>
@@ -115,72 +138,41 @@
             <table class="table">
                 <thead>
                   <tr class="text-teal-100">
-                    <div class="col-lg-3">
-                        <th scope="col">해결되었어요</th>
-                        <th scope="col">글번호</th>
-                    </div>
+                    <th scope="col">해결되었어요</th>
+                    <th scope="col">글번호</th>
                     <th scope="col" class="col-lg-4">제목</th>
-                    <th scope="col" class="col-lg-1">글쓴이</th>
-                    <th scope="col" class="col-lg-1">답변수</th>
-                    <th scope="col" class="col-lg-1">조회수</th>
+                    <th scope="col">글쓴이</th>
+   	                <th scope="col">답변수</th>
+                    <th scope="col">조회수</th>
                     <th scope="col" class="col-lg-2">날짜</th>
                   </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>1</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Otto</td>
-                        <td>@mdo</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square"></i></th>
-                        <td>2</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Thornton</td>
-                        <td>@fat</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>3</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>4</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>5</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">Larry the Bird</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
-                    <tr>
-                        <th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-check-square-fill"></i></th>
-                        <td>6</td>
-                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;"">왜 border-bottom 생겨서 날 괴롭게 해?</td>
-                        <td>@twitter</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>2022-12-06</td>
-                    </tr>
+                	<c:if test="${eresp.answerListSize eq 0}">
+                		<tr>
+                		<td class="text-center">
+                		아직 작성한 답변이 없습니다
+                		</td>
+                		</tr>
+                	</c:if>
+                	<c:if test="${eresp.answerListSize ne 0}">
+                    <c:forEach items="${qlist}" var="q" >
+	                    <tr class="questionTr">
+	                    	<c:if test="${q.question.isSolved  eq 'Y'}">
+	                        	<th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square-fill"></i></th>
+	                        </c:if>
+	                    	<c:if test="${q.question.isSolved eq 'N'}">
+	                        	<th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square"></i></th>
+	                        </c:if>
+	                        <td>${q.board.boardNum}</td>
+	                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${q.board.boardTitle}</td>
+	                        <td>${q.writerInfo}</td>
+	                        <td>${q.answerList.size()}</td>
+	                        <td>${q.board.boardView }</td>
+	                        <td>${q.board.boardCreateDate }</td>
+	                    </tr>
+                    </c:forEach>
+                    </c:if>
                 </tbody>
             </table>
         </div>
@@ -233,8 +225,20 @@
             estimate.style.display = 'block';
             document.getElementById('infobox2').style.border = '3px solid #24E082';
         }
-
-
+window.onload=()=>{
+	document.getElementById('goToExpertHospital').addEventListener('click', function(){
+		console.log(this);
+		location.href = '${contextPath}/experthospital.qa?expertNum='+${eresp.member.userNum};
+	})
+	
+  	const questionTr = document.getElementsByClassName('questionTr');
+  	for(const question of questionTr){
+  		question.addEventListener('click', function(){
+  			const boardNum = this.querySelector('td').innerText;
+  			location.href='${contextPath}/question.qa?boardNum='+boardNum;
+  		})
+  	}
+}
 
 </script>
 </body>

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.young.qna.dto.AnswerRespDto;
+import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
@@ -30,6 +32,10 @@ public interface QaService {
 	boolean getAlreadyAnswered(int questionNum, HttpServletRequest request);
 
 	int insertAnswer(QuestionInsertDto quest, HttpServletRequest request);
+
+	ExpertRespDto selectExpertResp(int userNum);
+
+	ArrayList<QuestionRespDto> selectExpertQuestionList(int expertNum);
 
 
 }

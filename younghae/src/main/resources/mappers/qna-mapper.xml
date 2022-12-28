@@ -90,13 +90,14 @@
 		<association property="board" javaType="Board" resultMap="Board"/>
 	  	<association property="answer" javaType="Answer" resultMap="Answer"/>
 	  	<association property="aattach" javaType="Attachment" resultMap="Attachment"/>
-	  	<association property="eresp" javaType="Attachment" resultMap="Attachment"/>
   	</resultMap>
   	
   	<resultMap type="ExpertRespDto" id="ExpertRespDto">
+  		<id column="USER_NUM" property="member.userNum"/>
 		<association property="member" javaType="Member" resultMap="Member"/>
 		<association property="expert" javaType="ExpertUser" resultMap="ExpertUser"/>
 		<association property="eattach" javaType="Attachment" resultMap="Attachment"/>
+<!-- 		<collection column="USER_NUM" property="answerList" javaType="java.util.ArrayList" ofType="AnswerRespDto" select="selectAnswerListByUserNum"/> -->
   	</resultMap>
 
 	<select id="login" resultMap="Member">
@@ -175,7 +176,7 @@
 		SELECT PRO_NUM, PRO_IMAGE, PRO_NAME, PRO_COMPANY, PRO_EFFECT, CATE_NAME
 		FROM PRODUCT
 		JOIN CATEGORY USING (CATE_NUM)
-		WHERE PRO_NAME LIKE '%#{keyword}%'
+		WHERE PRO_NAME LIKE #{keyword}
 	</select>
 
 	<!-- 질문(quest) 삽입 -->
@@ -190,7 +191,7 @@
 					NULL,
 				</if>
 			DEFAULT, DEFAULT)
-			<if test="attachParam != null">
+			<if test="attachParam.getAttachRename() != null">
 				INTO ATTACHMENT VALUES (SEQ_ATTACH.NEXTVAL, DEFAULT, #{attachParam.attachName}, #{attachParam.attachRename}, #{attachParam.attachPath}, 5, SEQ_BOARD.CURRVAL, DEFAULT)
 			</if>
 		SELECT * FROM DUAL
@@ -227,6 +228,44 @@
 			</if>
 		SELECT * FROM DUAL
 	</insert>
+	
+	<!-- 전문가회원정보조회(userNum) -->
+	<select id="selectExpertResp" resultMap="ExpertRespDto">
+		SELECT * 
+		FROM MEMBER
+		JOIN EXPERT_USER USING (USER_NUM)
+		LEFT JOIN ATTACHMENT ON (USER_NUM = SERIALNUMBER)
+		WHERE USER_NUM = #{userNum}
+	</select>
+	
+	<select id="selectAnswerListSize" resultType="_int">
+		SELECT COUNT(*) AS ANSWERLISTSIZE
+		FROM BOARD WHERE BOARD.BOARD_TYPE = '8' AND BOARD_STATUS = 'Y' AND USER_NUM = #{userNum}
+	</select>
+	
+	<!-- 유저번호(userNum)로 질문 리스트 조회-->
+	<select id="selectQuestionListByExpertNum" resultMap="QuestionRespDto">
+		SELECT * FROM BOARD 
+		JOIN QUESTION ON (BOARD_NUM=QUESTION_NUM) 
+		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+		WHERE (BOARD_NUM) IN 
+		    (SELECT QUESTION_NUM 
+		    FROM BOARD JOIN ANSWER ON (BOARD_NUM = ANSWER_NUM)
+		    WHERE BOARD_TYPE='8' AND BOARD_STATUS='Y' AND USER_NUM = #{userNum})
+		ORDER BY BOARD_NUM DESC
+	</select>
+	
+	<!-- 유저번호(userNum)로 대한 답변 리스트 조회 : 아마 필요 없을 듯 해-->
+	<select id="selectAnswerListByUserNum" resultMap="AnswerRespDto">
+		SELECT * FROM BOARD
+		JOIN ANSWER ON (BOARD_NUM=ANSWER_NUM)
+		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+		WHERE 
+		BOARD.BOARD_TYPE='8' AND 
+		BOARD_STATUS='Y' AND 
+		(USER_NUM = #{userNum})
+		ORDER BY QUESTION_NUM DESC
+	</select>
 	
 	
 </mapper>

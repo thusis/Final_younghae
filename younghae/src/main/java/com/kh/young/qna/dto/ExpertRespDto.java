@@ -23,9 +23,10 @@ public class ExpertRespDto { //답변, 프로필
 	private ExpertUser expert;
 	private Attachment eattach;
 	
+	private int answerListSize;
 	private ArrayList<AnswerRespDto> answerList;
 
-	//	private int userNum;
+//	private int userNum;
 //	private String userId;
 //	private String userName;
 //	private String userNickname;

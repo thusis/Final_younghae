@@ -1,12 +1,12 @@
 package com.kh.young.qna.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.kh.young.model.vo.Attachment;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
 import com.kh.young.model.vo.Member;
 import com.kh.young.qna.common.Qexception;
 import com.kh.young.qna.dto.AnswerRespDto;
@@ -111,11 +114,22 @@ public class QaController {
 	}
 	
 	/**게시글 삽입 - supplement검색**/
-	@PostMapping("searchSupplement.qa")
-	public String searchSupplement(@RequestParam("keyword") String keyword, Model model) {
-		model.addAttribute("keyword", keyword);
-		model.addAttribute("list", qService.searchSupplement(keyword));
-		return "supplementPopup";
+	@RequestMapping(value = "searchSupplement.qa")
+	@ResponseBody
+	public void searchSupplement(@RequestParam("keyword") String keyword, HttpServletResponse response) {
+		response.setContentType("application/json; charset=UTF-8");
+		ArrayList<SupplementRespDto> sresp = qService.searchSupplement(keyword);
+		
+		System.out.println(sresp);
+		
+		GsonBuilder gb = new GsonBuilder();
+		Gson gson = gb.create();
+
+		try {
+			gson.toJson(sresp, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**게시글 삽입**/
@@ -123,7 +137,7 @@ public class QaController {
 	public String insertQuestion(@ModelAttribute QuestionInsertDto quest, HttpServletRequest request) {
 		int result = qService.insertQuestion(quest, request);
 		if(result>0) {
-			return "selectquestion";
+			return "redirect:home.qa";
 		} else {
 			throw new Qexception("질문 작성 실패");
 		}
@@ -147,9 +161,10 @@ public class QaController {
 	}
 	
 	@PostMapping("insertanswer.qa")
-	public String insertAnswer(@ModelAttribute QuestionInsertDto quest, HttpServletRequest request) {
+	public String insertAnswer(@ModelAttribute QuestionInsertDto quest, HttpServletRequest request, Model model) {
 		int result = qService.insertAnswer(quest, request); // quest의 boardTitle로 questionNum 받아올거야
 		if(result>0) {
+			model.addAttribute("boardNum", quest.getBoardTitle());
 			return "redirect:question.qa";
 		} else {
 			throw new Qexception("답변 작성 실패");
@@ -164,17 +179,30 @@ public class QaController {
 		return "searchresult";
 	}
 	
+	/*******************************************************************/
 	/**전문가찾기**/
 	@GetMapping("expertfind.qa")
 	public String findExpertList() {
+
 		return "expertFind";
 	}
+	
+	/*******************************************************************/
 	@GetMapping("expertprofile.qa")
-	public String selectExpert() {
+	public String selectExpert(@RequestParam("expertNum") int expertNum, Model model, HttpServletRequest request) {
+		ExpertRespDto eresp = qService.selectExpertResp(expertNum);
+		model.addAttribute("eresp",eresp);
+		if(eresp.getAnswerListSize()!=0) {
+			ArrayList<QuestionRespDto> qlist = qService.selectExpertQuestionList(expertNum);
+			model.addAttribute("qlist",qlist);
+		}
 		return "expertProfile";
 	}
+	
+	/*****************************************************************/
 	@GetMapping("experthospital.qa")
-	public String selectHospital() {
+	public String selectHospital(@RequestParam("expertNum") int expertNum, Model model, HttpServletRequest request) {
+		model.addAttribute("expert", qService.selectExpertResp(expertNum).getExpert());
 		return "expertHospital";
 	}
 	

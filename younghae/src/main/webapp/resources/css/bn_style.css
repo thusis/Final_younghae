@@ -269,7 +269,13 @@
         border-radius: 3rem 3rem 0px 0px;
     }
 
-
+	.bn_badge{
+		cursor:pointer;
+	}
+	
+	.bn_badge:hover{
+		cursor:pointer;
+	}
 
     /*게시글 작성====--*/
     .bn_txt_strong{
@@ -352,6 +358,14 @@
         color:#24E082;
         font-weight: 900;
         font-family: 'IBM Plex Sans KR', sans-serif;
+    }
+    
+    /*===================================================*/
+    .bn_txtElipsis{
+    	width:15rem;
+    	overflow:hidden;
+    	text-overflow:ellipsis;
+    	white-space:nowrap;
     }
 
     /*채팅방===============================================*/

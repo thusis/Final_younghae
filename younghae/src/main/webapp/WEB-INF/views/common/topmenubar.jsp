@@ -67,30 +67,27 @@
 					<div class="header__cart">
 						<c:if test="${ !empty loginUser }">
 							<ul>
-								<li><a href="#"
-									onclick="location.href='${contextPath}/myCart.my'"><p
-											style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i
-										class="fa fa-shopping-bag"></i><span>1</span></a></li>
-								<li><a href="#"
-									onclick="location.href='${contextPath}/myPage.my'"><p
-											style="font-size: 12px; display: inline;">마이페이지</p>&nbsp;&nbsp;<i
-										class="bi bi-caret-down-fill"></i></a></li>
-								<li><a href="#"
-									onclick="location.href='${contextPath}/logout.me'"><p
-											style="font-size: 12px; display: inline;">로그아웃</p>&nbsp;&nbsp;<i
-										class="bi bi-person-dash"></i></a></li>
+								<li><a href="#" onclick="location.href='${contextPath}/myCart.my'">
+									<p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i class="fa fa-shopping-bag"></i><span>1</span></a>
+								</li>
+								<li><a href="#" onclick="location.href='${contextPath}/myPage.my'">
+									<p style="font-size: 12px; display: inline;">마이페이지</p>&nbsp;&nbsp;<i class="bi bi-caret-down-fill"></i></a>
+								</li>
+								<li><a href="#" onclick="location.href='${contextPath}/logout.me'">
+									<p style="font-size: 12px; display: inline;">로그아웃</p>&nbsp;&nbsp;<i class="bi bi-person-dash"></i></a>
+								</li>
 							</ul>
 						</c:if>
 						<c:if test="${ empty loginUser }">
 							<ul>
-								<li><a href="#"
-									onclick="location.href='${contextPath}/login.me'"><p
-											style="font-size: 12px; display: inline;">로그인</p>&nbsp;&nbsp;<i
-										class="bi bi-person-check-fill"></i></a></li>
-								<li><a href="#"
-									onclick="location.href='${contextPath}/enroll.me'"><p
-											style="font-size: 12px; display: inline;">회원가입</p>&nbsp;&nbsp;<i
-										class="bi bi-person-plus-fill"></i></a></li>
+								<li>
+									<a href="#"onclick="location.href='${contextPath}/login.me'">
+									<p style="font-size: 12px; display: inline;">로그인</p>&nbsp;&nbsp;<i class="bi bi-person-check-fill"></i></a>
+								</li>
+								<li>
+									<a href="#" onclick="location.href='${contextPath}/enroll.me'">
+									<p style="font-size: 12px; display: inline;">회원가입</p>&nbsp;&nbsp;<i class="bi bi-person-plus-fill"></i></a>
+								</li>
 							</ul>
 						</c:if>
 					</div>

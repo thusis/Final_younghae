@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.qna.dto.AnswerRespDto;
+import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
@@ -33,6 +34,7 @@ public class QaDao {
 			
 			for(AnswerRespDto answer : myQuest.getAnswerList()) {
 				answer.setSresp(getQuestSresp(sqlSession, answer.getBoard().getBoardNum()));
+				answer.setEresp(selectExpertResp(sqlSession, answer.getBoard().getUserNum()));
 			}
 		}
 		
@@ -63,6 +65,7 @@ public class QaDao {
 	}
 
 	public ArrayList<SupplementRespDto> searchSupplement(SqlSessionTemplate sqlSession, String keyword) {
+		keyword="%"+keyword+"%";
 		return (ArrayList)sqlSession.selectList("qnaMapper.searchSupplement", keyword);
 	}
 
@@ -76,6 +79,7 @@ public class QaDao {
 		
 		for(AnswerRespDto answer : qresp.getAnswerList()) {
 			answer.setSresp(getQuestSresp(sqlSession, answer.getBoard().getBoardNum()));
+			answer.setEresp(selectExpertResp(sqlSession, answer.getBoard().getUserNum()));
 		}
 		
 		return qresp;
@@ -90,7 +94,22 @@ public class QaDao {
 	}
 
 	public int insertAnswer(SqlSessionTemplate sqlSession, QuestionInsertDto quest) {
+		System.out.println(quest);
 		return sqlSession.insert("qnaMapper.insertAnswer", quest);
+	}
+
+	public ExpertRespDto selectExpertResp(SqlSessionTemplate sqlSession, int userNum) {
+		ExpertRespDto eresp = sqlSession.selectOne("qnaMapper.selectExpertResp", userNum);
+		eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, userNum));
+		return eresp;
+	}
+
+	private int selectExpertAnswerListSize(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("qnaMapper.selectAnswerListSize", userNum);
+	}
+
+	public ArrayList<QuestionRespDto> selectExpertQuestionList(SqlSessionTemplate sqlSession, int expertNum) {
+		return (ArrayList)sqlSession.selectList("qnaMapper.selectQuestionListByExpertNum", expertNum);
 	}
 
 }

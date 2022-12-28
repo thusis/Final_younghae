@@ -26,6 +26,13 @@
 			max-width: none;
 			height: 50%;
 		}
+		
+		.bn_txtElipsis{
+			width:15rem;
+	    	overflow:hidden;
+	    	text-overflow:ellipsis;
+	    	white-space:nowrap;
+		}
 	</style>
 </head>
 <body>
@@ -38,20 +45,21 @@
 	        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-circle"></i></button>
 	      </div>
 	      
-	      <div class="modal-body">
-	        <form action="${contextPath}/searchSupplement.qa" method="post">
-		        <input type="text" name="keyword" placeholder="영양제 이름으로 검색">
-		        <button type="button" class="btn bn_btn_search2"><i class="bi bi-search"></i></button>
-	      	</form>
-	      </div>
+		<div class="modal-body">
+			<input type="text" id="searchSrespInput" name="keyword" placeholder="영양제 이름으로 검색">
+			<button type="button" id="searchSrespBtn" class="btn bn_btn_search2"><i class="bi bi-search"></i></button>
+			<div id="resultBox"></div>
+       	</div>
 	      
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">선택하지 않고 닫기</button>
-	        <button type="button" class="btn btn-primary">선택</button>
+	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">선택</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
+	
+	
 
     <div class="container">
     
@@ -84,6 +92,7 @@
 						<i class="bi bi-capsule"></i>
 					</button>
 					<input type="text" class="inline" id="selectPill" placeholder="영양제 선택" style="border:0px; background-color: transparent;" disabled>
+					<input type="hidden" id="selectPillHidden" name="supplement">
 				</div>
 
                 <div class="filebox row m-3">
@@ -123,12 +132,64 @@
 	<br>
 	<script>
 		window.onload=()=>{
+			
 			$("#file").on('change',function(){ //첨부파일
+// 				var fileName = $("#file").val();
 				var fileName = $("#file").val();
 				$(".upload-name").val(fileName);
 			});
+			
+			//============================영양제검색====================================
+			document.getElementById('searchSrespBtn').addEventListener('click', ()=>{
+				document.getElementById('resultBox').innerHTML='';
+				
+				$.ajax({
+					url: '${contextPath}/searchSupplement.qa',
+					data: { keyword: document.getElementById('searchSrespInput').value},
+					success: (sresp)=>{
+						document.getElementById('searchSrespInput').value='';
+						document.getElementById('resultBox').innerHTML='';
+						console.log(sresp);
+						
+						str = '<div class="container" style="font-family: '+'IBM Plex Sans KR'+', sans-serif;"><div class="row justify-content-between">'
+						
+						$.each(sresp , function(i){
+							str += '<div class="col-5 srespEach" style="border: 1px solid #e5e3e3; margin:1rem; border-radius: 0.5em; cursor:pointer;" onmouseover="selectProNum();">'
+			                +'<div class="row" style="height: 1.8rem ; background-color: #F5F5F5; border-top-left-radius: 0.5em; border-top-right-radius: 0.5em;"><span class="bn_txtElipsis">'+sresp[i].proName+'</span>'
+							+'<input type="hidden" class="proNum" value="'+sresp[i].proNum+'">'							
+							+'</div><div style="text-align: center;">'
+							+'<img width="50px" src="'+sresp[i].proImage+'">' 
+							+'</div><div style="color: gray; text-align: center;"><span>제조사:'
+							+sresp[i].proCompany+'</span></div></div>';
+						});
+						
+						str += '</div></div>';
+						$('#resultBox').append(str);
+					},
+					error: (sresp)=>{alert("실패!");},
+				});
+			})
+			
 		}
-		  
+		
+		function selectProNum(){
+			var sresps = document.getElementsByClassName('srespEach');
+			
+			for(const srespEach of sresps){
+				srespEach.addEventListener('click', function(){
+					console.log(this);
+					const proNum = this.querySelectorAll('div')[0].querySelector('input').value;
+					const proName =  this.querySelectorAll('div')[0].querySelector('span').innerText;
+					console.log(proNum); // 이거 여러개 출력하는 거 막고 싶다.
+					console.log(proName);
+					
+					document.getElementById('selectPillHidden').value = proNum;
+					document.getElementById('selectPill').value = proName;
+					return proNum;
+				})
+			}
+		}
+
 		$('#summernote').summernote({
 			placeholder: '내용을 작성하세요',
 			tabsize: 2,

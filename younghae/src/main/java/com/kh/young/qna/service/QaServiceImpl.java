@@ -127,23 +127,60 @@ public class QaServiceImpl implements QaService {
 		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
 		
 		MultipartFile attachment = quest.getAttachment();
-		getAttachParam(attachment, request);
-		quest.setAttachParam(getAttachParam(attachment, request));
+		System.out.println("130+"+attachment);
 		
+		if(attachment.getOriginalFilename().trim().equals("") || attachment.getOriginalFilename()==null) { //값이 있으면 넘겨서 세팅하고
+			quest.setAttachParam(null);
+		} else {
+			quest.setAttachParam(getAttachParam(attachment, request));
+		}
+		System.out.println("135+" +quest);
 		return qdao.insertQuestion(sqlSession, quest);
 	}
 
-	private Attachment getAttachParam(MultipartFile attachment, HttpServletRequest request) {
+	@Override
+	public boolean getAlreadyAnswered(int questionNum, HttpServletRequest request) {
 		
-		Attachment attachParam = new Attachment();
-		attachParam.setAttachName(attachment.getOriginalFilename());
-		if(attachment != null && !attachment.isEmpty()) {
-			String[] returnArr = saveFile(attachment, request);// returnArr[0] = savePath; returnArr[1] = rename;
-			if(returnArr[1] != null) {
-				attachParam.setAttachPath(returnArr[0]);
-				attachParam.setAttachRename(returnArr[1]);
+		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+		
+		QuestionRespDto qresp = qdao.selectQuestion(sqlSession, questionNum);
+		for( AnswerRespDto answer : qresp.getAnswerList()) {
+			if(userNum == answer.getBoard().getUserNum()) {
+				return true;
 			}
 		}
+		return false;
+	}
+
+	@Override
+	public int insertAnswer(QuestionInsertDto quest, HttpServletRequest request) {
+		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
+		
+		MultipartFile attachment = quest.getAttachment();
+		
+		System.out.println(attachment);
+		System.out.println(attachment.getOriginalFilename());
+		
+		if(attachment.getOriginalFilename().trim().equals("") || attachment.getOriginalFilename()==null) { //값이 있으면 넘겨서 세팅하고
+			quest.setAttachParam(null);
+		} else {
+			quest.setAttachParam(getAttachParam(attachment, request));
+		}
+		System.out.println("226+"+quest.getAttachParam());
+		
+		return qdao.insertAnswer(sqlSession, quest);
+	}
+
+	private Attachment getAttachParam(MultipartFile attachment, HttpServletRequest request) {
+		Attachment attachParam = new Attachment();
+		attachParam.setAttachName(attachment.getOriginalFilename());
+		String[] returnArr = saveFile(attachment, request);// returnArr[0] = savePath; returnArr[1] = rename;
+		if(returnArr[1] != null) {
+			attachParam.setAttachPath(returnArr[0]);
+			attachParam.setAttachRename(returnArr[1]);
+		}
+		
+		System.out.println("152+"+attachParam);
 		return attachParam;
 	}
 	
@@ -196,31 +233,19 @@ public class QaServiceImpl implements QaService {
 	}
 
 	@Override
-	public boolean getAlreadyAnswered(int questionNum, HttpServletRequest request) {
-		
-		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
-		
-		QuestionRespDto qresp = qdao.selectQuestion(sqlSession, questionNum);
-		for( AnswerRespDto answer : qresp.getAnswerList()) {
-			if(userNum == answer.getBoard().getUserNum()) {
-				return true;
-			}
-		}
-		return false;
+	public ExpertRespDto selectExpertResp(int userNum) {
+		ExpertRespDto expertResp = qdao.selectExpertResp(sqlSession, userNum);
+		String str1 = expertResp.getExpert().getExpertEstimate().split(",")[0];
+		String str2 = expertResp.getExpert().getExpertEstimate().split(",")[1];
+		String str = str2 + " 원 (" + str1 + "분당)";
+		expertResp.getExpert().setExpertEstimate(str);
+		return expertResp;
 	}
 
 	@Override
-	public int insertAnswer(QuestionInsertDto quest, HttpServletRequest request) {
-		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
-		
-		MultipartFile attachment = quest.getAttachment();
-		getAttachParam(attachment, request);
-		quest.setAttachParam(getAttachParam(attachment, request));
-		
-		return qdao.insertAnswer(sqlSession, quest);
+	public ArrayList<QuestionRespDto> selectExpertQuestionList(int expertNum) {
+		return qdao.selectExpertQuestionList(sqlSession, expertNum);
 	}
-
-	
 
 
 

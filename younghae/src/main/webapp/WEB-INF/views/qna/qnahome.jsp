@@ -15,11 +15,7 @@
 </head>
 <body style="background-color: #f8f8fa;">
 
-                ${myQuest}
-                ${isRead }
-                ${qlist }
-                ${topTwo }
-
+${ qlist}
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
