@@ -21,7 +21,6 @@ import com.kh.young.model.vo.Member;
 import com.kh.young.qna.common.Qexception;
 import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.ExpertRespDto;
-import com.kh.young.qna.dto.MyQuestDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;

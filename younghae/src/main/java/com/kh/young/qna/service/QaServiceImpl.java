@@ -23,7 +23,6 @@ import com.kh.young.model.vo.Supplement;
 import com.kh.young.qna.dao.QaDao;
 import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.ExpertRespDto;
-import com.kh.young.qna.dto.MyQuestDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
