@@ -46,6 +46,7 @@
 		from product
 			left outer join sale_product using(pro_num)
 		where pro_sale_status = 'Y' and pro_status = 'Y' and pro_num = #{proNum}
+		order by pro_num
 	</select>
 	
 	<select id="selemetMember" resultMap="memberResultSet">

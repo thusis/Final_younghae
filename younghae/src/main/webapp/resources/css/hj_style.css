@@ -37,16 +37,7 @@
 		color: #24E082; 
 	}
 	
-    .btn_toCart{
-        background-color: white; 
-        border-color: #24E082; 
-        border-radius: 0.3em; 
-        height: 2.5rem;
-        width: 13rem;
-        font-weight: bold; 
-        font-size: 20px;
-        color: #24E082;                       
-    }
+    
 /* ---------------- 상품 디테일 end ------------------	 */
 	
 /* ---------------- 배송지 변경 부분 ------------------	 */

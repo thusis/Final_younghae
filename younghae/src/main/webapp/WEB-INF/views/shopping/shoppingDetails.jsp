@@ -185,27 +185,28 @@
             color: rgb(242, 232, 46);
         }
 
-        .btn_toBuy{
-            background-color: #24E082; 
+        .btn_toCartView{
+			background-color: #24E082; 
             border: none; 
             border-radius: 0.3em; 
             height: 2.5rem;
             width: 13rem;
             font-weight: bold; 
             font-size: 20px;
-            color: white;            
+            color: white;        
+        
         }
 
-        .btn_toCart{
-            background-color: white; 
-            border-color: #24E082; 
-            border-radius: 0.3em; 
-            height: 2.5rem;
-            width: 13rem;
-            font-weight: bold; 
-            font-size: 20px;
-            color: #24E082;                       
-        }
+	    .btn_toSopping{
+	        background-color: white; 
+	        border-color: #24E082; 
+	        border-radius: 0.3em; 
+	        height: 2.5rem;
+	        width: 13rem;
+	        font-weight: bold; 
+	        font-size: 20px;
+	        color: #24E082;                       
+	    }
 
         .product_info{
             width: 100%;
@@ -250,7 +251,7 @@
             padding: 0.3rem;
             font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         .cart_product{
@@ -259,6 +260,10 @@
             border: 1px solid #24E082;
             border-radius: 0.5em;
             margin: 2rem;
+        }
+        
+        #cartListDiv>div: hover{
+			cursor : pointer;
         }
 
         .cart_item_img{
@@ -626,24 +631,22 @@
     <!-- 장바구니 모달창 -->
     <div id="cartModal" class="hj_modal" >
         <!-- Modal content -->
-        <div class="modal-content" style="width: 1000px; height: 720px;">
-			<br>
-            <div class="compareTitle" style="margin-top: -1rem;">
+        <div class="modal-content" style="width: 67%; height: 95%;">
+            <div class="compareTitle">
                 장바구니 목록
 				<span class="close" style="text-align: right; font-size: 2rem; margin-right:1rem;">&times;</span>
             </div>
 			
-            <div style="font-size: 1.3rem;">총<span style="color: #24E082;"> 2 </span>개</div>
-            <div class="container" style="overflow: auto; height: 80%">
-                <div id="cartListDiv" class="row" style="margin-bottom: -5%;">
+            <div style="font-size: 1.3rem;">총 <span id="cartTotalCount" style="color: #24E082;">2</span> 개</div>
+            <div class="container" style="overflow: auto; height: 77%">
+                <div id="cartListDiv" class="row">
 <!-- 				장바구니 목록 div 들어가는 곳 -->
                 </div>
             </div>
-            <div style="text-align: center;">
-                <button type="button" class="btn btn_toCart" id="btn_toCart" style="margin-right: 2%;">쇼핑 계속하기</button>
-                <button type="button" class="btn btn_toBuy">장바구니 가기</button>
+            <div style="text-align: center; height: 8%; padding-top: 1rem;">
+                <button type="button" class="btn_toSopping" id="btn_toSopping" style="margin-right: 2%;">쇼핑 계속하기</button>
+                <button type="button" class="btn_toCartView" id="btn_toCartView">장바구니 가기</button>
             </div>
-
         </div>
     </div>
     <!-- /장바구니 모달창 -->
@@ -653,7 +656,7 @@
 <script>
     window.onload = function(){
     	
-//     	1:1비교 모달
+// 	    1:1 비교 모달 시작 -----------------------------------------------------------------------
 	    // Get the modal
 	    var modal1 = document.getElementById("myModal");
 	    // Get the button that opens the modal
@@ -678,53 +681,20 @@
 			cartModal.style.display = "none";
 	      }    
 	    }
+// 	    1:1 비교 모달 끝 -----------------------------------------------------------------------
 
-//     	장바구니 모달
+	    
+// 	    장바구니 모달 시작 -----------------------------------------------------------------------
 	    // Get the modal
 	    var cartModal = document.getElementById("cartModal");
 	    // Get the button that opens the modal
 	    var cartBtn = document.getElementById("btn_cart");
 	    // Get the <span> element that closes the modal
 	    var closeSpan = document.getElementsByClassName("close")[1];
-	    var btn_toCart = document.getElementById("btn_toCart");
+	    var btnToSopping = document.getElementById("btn_toSopping");
 	
 	    // When the user clicks the button, open the modal 
-	    
-	    const cartList = function(){
-	    	$.ajax({
-	    		url: '${contextPath}/selectCartList.sh',
-	    		data: {userNum : ${loginUser.userNum},
-	    				proNum: ${supplementDetail.proNum},
-	    				cartQuantity : quantity.value},
-	    		success:(data)=>{
-					const cartListDivs = document.getElementById("cartListDiv");
-					cartListDivs.innerHTML = '';
-					
-					for(const c of data){
-						$.ajax({
-							url: '${contextPath}/selectCartDetail.sh',
-							data: {proNum : c.proNum},
-							success:(data)=>{
-								const cartDiv= document.createElement("div");
-								cartDiv.innerHTML = '<div class="col cart_product" style="text-align: center; width: 10rem;">'+
-														'<img class="cart_item_img" src="'+data.proImage+'">'+
-														'<div class="product__item__text" style="text-align: left;">'+
-															'<div style="color: gray; font-size: 13px;">'+data.proCompany+'</div>'+
-															'<div style="font-weight: bold; font-size: 15px;">'+data.proName+'</div>'+
-															'<div style="font-weight: bold; font-size: 15px;">'+data.proPrice.toLocaleString()+'원</div>'+
-															'<div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">'+c.cartQuantity+'개</span></div>'+
-															'<input type="hidden" value="'+c.proNum+'">'+
-														'</div>'+
-													'</div>';
-								cartListDivs.append(cartDiv);
-							}
-						})
-					}
-	    		}
-	    	})	
-	    	cartModal.style.display = "block";
-	    }
-	    
+	    	    
 	    const quantity = document.getElementById("quantity");
 	    cartBtn.onclick = function() {
 	    	$.ajax({
@@ -741,7 +711,6 @@
 		    		    				proNum: ${supplementDetail.proNum},
 		    		    				cartQuantity : quantity.value},
 		    	    			success:(data)=>{
-		    	    				console.log(data);
 		    	    				if(confirm('상품이 추가되었습니다.')){
 								    	cartList();
 		    	    				};
@@ -756,14 +725,79 @@
 	    	});
 	    }
 	    
+// 	    장바구니 창 열기
+	    const cartList = function(){
+	    	cartModal.style.display = "block";
+	    	$.ajax({
+	    		url: '${contextPath}/selectCartList.sh',
+	    		data: {userNum : ${loginUser.userNum},
+	    				proNum: ${supplementDetail.proNum},
+	    				cartQuantity : quantity.value},
+	    		success:(data)=>{
+					const cartListDivs = document.getElementById("cartListDiv");
+					cartListDivs.innerHTML = '';
+					console.log(data);
+					console.log(data.length);
+					document.getElementById("cartTotalCount").innerText = data.length;
+					
+					for(const c of data){
+						$.ajax({
+							url: '${contextPath}/selectCartDetail.sh',
+							data: {proNum : c.proNum},
+							success:(data)=>{
+								const cartDiv= document.createElement("div");
+								cartDiv.innerHTML = '<div class="col cart_product" style="text-align: center; width: 10rem; margin-bottom: -5%;">'+
+														'<img class="cart_item_img" src="'+data.proImage+'">'+
+														'<div class="product__item__text" style="text-align: left;">'+
+															'<div style="color: gray; font-size: 13px;">'+data.proCompany+'</div>'+
+															'<div style="font-weight: bold; font-size: 15px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+data.proName+'</div>'+
+															'<div style="font-weight: bold; font-size: 15px;">'+data.proPrice.toLocaleString()+'원</div>'+
+															'<div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">'+c.cartQuantity+'개</span></div>'+
+															'<input id="cartProNum" type="hidden" value="'+c.proNum+'">'+
+														'</div>'+
+													'</div>';
+								cartListDivs.append(cartDiv);
+								
+								const cartProducts = document.getElementsByClassName('cart_product');
+								for(const cartProduct of cartProducts){
+									cartProduct.addEventListener('click',function(){
+										const cartProNum = $(this).children().children()[4].value;
+										console.log(cartProNum);
+										location.href ='${contextPath}/supplementDetail.sh?proNum=' + cartProNum;
+									})
+									cartProduct.addEventListener('mouseover',function(){
+										this.style.cursor = 'pointer';
+										this.style.border = '2px solid #FD9F28';
+									})
+									cartProduct.addEventListener('mouseout',function(){
+										this.style.cursor = 'pointer';
+										this.style.boxShadow = 'none';
+										this.style.border = '1px solid #24E082';
+									})
+								}
+							}
+						})
+					}
+					
+	    		}
+	    	})	
+	    }
+	    
 	    // When the user clicks on <span> (x), close the modal
 	    closeSpan.onclick = function() {
 	    	cartModal.style.display = "none";
 	    }
 	
-	    btn_toCart.onclick = function() {
+	    btnToSopping.onclick = function() {
 	    	cartModal.style.display = "none";
 	    }
+	    
+	    const btnToCartView = document.getElementById('btn_toCartView');
+	    btnToCartView.addEventListener('click',function(){
+	    	location.href = '${contextPath}/cartView.sh';
+	    });
+	    
+// 	    장바구니 모달 끝 -----------------------------------------------------------------------
     
     
     	const plus = document.getElementById("plus");

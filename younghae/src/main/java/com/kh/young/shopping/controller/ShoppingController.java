@@ -287,4 +287,10 @@ public class ShoppingController {
 			e.printStackTrace();
 		}
 	}
+	
+	@RequestMapping("cartView.sh")
+	public String cartView(HttpSession session) {
+		
+		return "myCart";
+	}
 }
