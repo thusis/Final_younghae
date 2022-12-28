@@ -17,13 +17,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
-import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.qna.dao.QaDao;
 import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.ExpertRespDto;
+import com.kh.young.qna.dto.MyQuestDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
@@ -37,12 +37,24 @@ public class QaServiceImpl implements QaService {
 	@Autowired
 	private QaDao qdao;
 
+	/**간이로그인**/
 	@Override
 	public void setLoginUser(Integer userNum, HttpServletRequest request) {
 		Member loginMember = qdao.setLoginUser(sqlSession,userNum);
 		ServletContext application = request.getSession().getServletContext();
 		application.setAttribute("loginUser", loginMember);
-		System.out.println("서비스임플"+((Member)application.getAttribute("loginUser")).getUserId());
+	}
+	
+	/**내 질문목록**/
+	@Override
+	public ArrayList<QuestionRespDto> getMyQna(HttpServletRequest request) { 
+		
+		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+		ArrayList<QuestionRespDto> myQuestions = qdao.getMyQuestions(sqlSession,userNum);
+	
+		System.out.println("test"+myQuestions);
+
+		return myQuestions;
 	}
 
 	@Override
@@ -51,36 +63,29 @@ public class QaServiceImpl implements QaService {
 	}
 
 	@Override
-	public HashMap<String, ArrayList> selectQuestionList(Integer page, int listCount) {
-		
+	public ArrayList<QuestionRespDto> getQuestionList(Integer page, int listCount) {
 		int currentPage = 1;
 		if(page!=null) {
 			currentPage=page;
 		}
 		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 10);
 		
-		HashMap<String, ArrayList> respMap = qdao.selectQuestionList(sqlSession, pi);
+		ArrayList<QuestionRespDto> questionList = qdao.selectQuestionList(sqlSession, pi);
 		
-		ArrayList<Map> writerInfo = respMap.get("writerInfo");
-//		writerInfo = setWriterInfo(writerInfo);
-		respMap.put("writerInfo", setWriterInfoList(writerInfo));
-//		System.out.println(respMap);
-		return respMap;
-	}
-
-	private Map getWriterInfo(int userNum) {
-		return qdao.selectWriterInfo(sqlSession, userNum);
+		for(QuestionRespDto q : questionList) {
+			q.setWriterInfo(
+					writerInfoToString(getWriterInfoMap(q.getBoard().getUserNum()))
+					);
+		}
+		return questionList;
 	}
 	
-	private ArrayList<Map> setWriterInfoList(ArrayList<Map> writerInfo) {
-		
-		for(int i=0 ; i<writerInfo.size(); i++) {
-			writerInfo.get(i).put("info", setWriterInfo(writerInfo.get(i)));
-		}
-		return writerInfo;
+	private Map getWriterInfoMap(int userNum) {
+		return qdao.getWriterInfoMap(sqlSession, userNum);
 	}
-
-	private String setWriterInfo(Map paramap) {
+	
+	/**글쓴이 정보 세팅 ex) 20대 / 남 **/
+	private String writerInfoToString(Map paramap) {
 		
 		String info = "";
 		
@@ -93,32 +98,44 @@ public class QaServiceImpl implements QaService {
 		int age = currentYear - birthYear + 1;
 		info = (age/10) + "0 대";
 		
-		if(paramap.get("USER_GENDER").equals("F")) {
-			info += " / 남";
-		}else if(paramap.get("USER_GENDER").equals("M")) {
-			info += " / 여";
-		}
+		String gender = ((String) paramap.get("USER_GENDER")).trim().toString();
+		
+		if(gender.equals("F")) { info += " / 남"; }
+		else if(gender.equals("M")) { info += " / 여"; }
 		
 		return info;
 	}
 
 	@Override
-	public Object getMyQna(HttpServletRequest request) {
-		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
-		// 유저아이디로 검색 => (1)질문 수 (2)확인하지 않은 답변 여부 (3)최근 세 개 게시글의 [boardNum, 제목, 답변 수, 답변 확인 여부]
-		int count = qdao.getMyQuestionCount(sqlSession, userNum);
-		boolean isRead = qdao.getIsRead(sqlSession, userNum);
-		HashMap<Integer, ArrayList> respMap = qdao.getMyRecentQuestions(sqlSession, userNum);
+	public ArrayList<QuestionRespDto> getTopTwo() {
+		ArrayList<QuestionRespDto> topTwo = qdao.getTopTwo(sqlSession);
 		
-		return null;
+		for(QuestionRespDto q : topTwo) {
+			q.setWriterInfo(
+					writerInfoToString(getWriterInfoMap(q.getBoard().getUserNum()))
+					);
+		}
+		return topTwo;
 	}
 
 	@Override
+	public ArrayList<SupplementRespDto> searchSupplement(String keyword) {
+		return qdao.searchSupplement(sqlSession, keyword);
+	}
+	
+	@Override
 	public int insertQuestion(QuestionInsertDto quest, HttpServletRequest request) {
-		
 		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
 		
 		MultipartFile attachment = quest.getAttachment();
+		getAttachParam(attachment, request);
+		quest.setAttachParam(getAttachParam(attachment, request));
+		
+		return qdao.insertQuestion(sqlSession, quest);
+	}
+
+	private Attachment getAttachParam(MultipartFile attachment, HttpServletRequest request) {
+		
 		Attachment attachParam = new Attachment();
 		attachParam.setAttachName(attachment.getOriginalFilename());
 		if(attachment != null && !attachment.isEmpty()) {
@@ -127,12 +144,10 @@ public class QaServiceImpl implements QaService {
 				attachParam.setAttachPath(returnArr[0]);
 				attachParam.setAttachRename(returnArr[1]);
 			}
-			quest.setAttachParam(attachParam);
 		}
-		System.out.println(quest);
-		return qdao.insertQuestion(sqlSession, quest);
+		return attachParam;
 	}
-
+	
 	private String[] saveFile(MultipartFile attachment, HttpServletRequest request) {
 		String root = request.getSession().getServletContext().getRealPath("resources");
 		String savePath = root + "\\uploadFiles";
@@ -162,86 +177,53 @@ public class QaServiceImpl implements QaService {
 	}
 
 	@Override
-	public ArrayList<Supplement> searchSupplement(String keyword) {
-		return qdao.searchSupplement(sqlSession, keyword);
-	}
-
-	@Override
-	public HashMap<String, ArrayList> getTopTwo() {
-		HashMap<String, ArrayList> topTwo = qdao.getTop(sqlSession);
+	public QuestionRespDto selectQuestion(int boardNum, HttpServletRequest request) {
 		
-		ArrayList<Map> writerInfo = topTwo.get("writerInfo");
-		topTwo.put("writerInfo", setWriterInfoList(writerInfo));
-		System.out.println(topTwo);
+		QuestionRespDto qresp = qdao.selectQuestion(sqlSession, boardNum);
+		qresp.setWriterInfo(
+				writerInfoToString(getWriterInfoMap(qresp.getBoard().getUserNum()))
+		);
 		
-		return topTwo;
-	}
-
-	@Override
-	public QuestionRespDto getQresp(int boardNum, HttpServletRequest request) {
-
-		QuestionRespDto qresp = qdao.selectQuestionResp(sqlSession, boardNum);
-		
-		qresp.setWriterInfo(setWriterInfo(getWriterInfo(qresp.getUserNum())));
-		qresp.setReplyCount(qdao.selectReplyCount(sqlSession, boardNum));
-		qresp.setAnswerCount(qdao.selectAnswerCount(sqlSession, boardNum));
-		qresp.setScrapCount(qdao.selectScrapCount(sqlSession, boardNum));
-		
-		qresp.setSresp(selectSupplementRespDto(qresp.getProNum()));
-		qresp.setQAttach(selectBoardImage(boardNum));
-		
-		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
-		
-		if(qresp.getUserNum() != userNum) {
-			qdao.addViewCount(sqlSession, boardNum);
-		} else {
-			qdao.updateIsRead(sqlSession, boardNum);
+		if((Member)request.getSession().getServletContext().getAttribute("loginUser") != null) {
+			int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+			
+			if(qresp.getBoard().getUserNum() != userNum) {
+				qdao.addViewCount(sqlSession, boardNum);
+			} else {
+				qdao.updateIsRead(sqlSession, boardNum);
+			}
 		}
-		
 		return qresp;
 	}
 
 	@Override
-	public ArrayList<AnswerRespDto> getAnsRespList(int boardNum) {
-		ArrayList<AnswerRespDto> ansRespList = selectAnswerResp(boardNum);
+	public boolean getAlreadyAnswered(int questionNum, HttpServletRequest request) {
 		
-		for(int i=0; i<ansRespList.size(); i++) {
-			AnswerRespDto ansResp = ansRespList.get(i);
-
-			ansResp.setExpertResp(selectExpertResp(ansResp.getUserNum()));
-			ansResp.setAnsSresp(selectSupplementRespDto(ansResp.getProNum()));
-			ansResp.setAnsAttach(selectBoardImage(ansResp.getBoardNum()));
+		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+		
+		QuestionRespDto qresp = qdao.selectQuestion(sqlSession, questionNum);
+		for( AnswerRespDto answer : qresp.getAnswerList()) {
+			if(userNum == answer.getBoard().getUserNum()) {
+				return true;
+			}
 		}
-		return ansRespList;
+		return false;
 	}
 
-	private Attachment selectBoardImage(int boardNum) {
-		return qdao.selectBoardImage(sqlSession, boardNum);
-	}
-
-	private SupplementRespDto selectSupplementRespDto(int proNum) {
-		return  qdao.selectSupplementResp(sqlSession, proNum);
-	}
-
-	private ExpertRespDto selectExpertResp(int userNum) {
-		ExpertRespDto expertResp = qdao.selectExpertResp(sqlSession, userNum);
-		expertResp.setAnswerCount(getExpertAnswerCount(userNum));
-		expertResp.setExpertAttach(selectExpertImage(userNum));
+	@Override
+	public int insertAnswer(QuestionInsertDto quest, HttpServletRequest request) {
+		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
 		
-		return null;
+		MultipartFile attachment = quest.getAttachment();
+		getAttachParam(attachment, request);
+		quest.setAttachParam(getAttachParam(attachment, request));
+		
+		return qdao.insertAnswer(sqlSession, quest);
 	}
 
-	private Attachment selectExpertImage(int userNum) {
-		return qdao.selectExpertImage(sqlSession, userNum);
-	}
+	
 
-	private int getExpertAnswerCount(int userNum) {
-		return qdao.getExpertAnswerCount(sqlSession, userNum);
-	}
 
-	private ArrayList<AnswerRespDto> selectAnswerResp(int boardNum) {
-		return qdao.selectAnswerResp(sqlSession, boardNum);
-	}
 
 
 }

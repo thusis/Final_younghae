@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Member;
 import com.kh.young.qna.common.Qexception;
 import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.ExpertRespDto;
+import com.kh.young.qna.dto.MyQuestDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
@@ -30,33 +33,7 @@ public class QaController {
 	@Autowired
 	private QaService qService;
 	
-	@GetMapping("home.qa")
-	public String goHome(HttpServletRequest request, Model model) {
-//		model.addAttribute("myqna", getMyQna(request));
-		model.addAttribute("respMap", getQuestionList(1, 1));
-		model.addAttribute("topTwo", getTopTwo());
-		/**	respMap.put("board", boardList);
-		respMap.put("writerInfo", writerInfo);
-		respMap.put("answerCount", answerCount);*/
-		return "qnahome";
-	}
-
-	private  HashMap<String, ArrayList> getTopTwo() {
-		return qService.getTopTwo();
-	}
-
-	private Object getMyQna(HttpServletRequest request) {
-		return qService.getMyQna(request);
-	}
-	
-	private HashMap<String, ArrayList> getQuestionList(Integer page, int listCount) {
-		return qService.selectQuestionList(page, listCount);
-	}
-	
-	public int getListCount() {
-		return qService.getListCount();
-	}
-	
+	/**간이 로그인&로그아웃**/
 	@GetMapping("login.qa")
 	public String loginHome(@RequestParam("userNum") Integer userNum, HttpServletRequest request) {
 		qService.setLoginUser(userNum, request);
@@ -70,32 +47,81 @@ public class QaController {
 	    return "redirect:home.qa";
 	}
 	
+	/******************************************************************/
+	/**홈 화면**/
+	@GetMapping("home.qa")
+	public String goHome(HttpServletRequest request, Model model) {
+		
+		if(((Member)request.getSession().getServletContext().getAttribute("loginUser")) != null) {
+			ArrayList<QuestionRespDto> myQuest = getMyQna(request);
+			System.out.println(myQuest);
+			model.addAttribute("myQuest", myQuest);
+			model.addAttribute("isRead",getIsRead(myQuest));
+		}
+		
+		model.addAttribute("qlist", getQuestionList(1, 1));
+		model.addAttribute("topTwo", getTopTwo());
+
+		return "qnahome";
+	}
+
+	/**내 질문목록**/
+	private ArrayList<QuestionRespDto> getMyQna(HttpServletRequest request) {
+		return qService.getMyQna(request);
+	}
+
+	/**내 질문목록 - 새로운답글 읽음여부**/
+	private boolean getIsRead(ArrayList<QuestionRespDto> myQuest) {
+	 	for(QuestionRespDto q : myQuest ) {
+	 		if(q.getQuestion().getIsRead().equals("N")) {return false;}
+	 	}
+	 	return true;
+	}
+	
+	/**페이지네이션 - listCount 구하기**/
+	public int getListCount() {
+		return qService.getListCount();
+	}
+	
+	/**페이지 넘버 입력받아 리스트 조회**/
+	private ArrayList<QuestionRespDto> getQuestionList(Integer page, int listCount){
+		return qService.getQuestionList(page, listCount);
+	}
+	
+	/**조회수 기준 상위 두 개 게시글 반환**/
+	private ArrayList<QuestionRespDto> getTopTwo(){
+		return qService.getTopTwo();
+	}
+	
+	/******************************************************************/
+	/**게시글 목록 조회**/
 	@GetMapping("boardList.qa")
 	public String selectList(@RequestParam(value="page", required=false) Integer page, Model model) {
 		int listCount = getListCount();
-		HashMap<String, ArrayList> respMap = getQuestionList(page, listCount);
-		model.addAttribute("respMap", respMap);
-		/**	respMap.put("board", boardList);
-			respMap.put("writerInfo", writerInfo);
-			respMap.put("answerCount", answerCount);*/
+		ArrayList<QuestionRespDto> questionList = getQuestionList(page, listCount);
+		model.addAttribute("qlist", questionList);
+
 		return "recentList";
 	}
-	
-	/**게시글 삽입**/
+
+	/******************************************************************/
+	/**게시글 삽입 페이지 조회**/
 	@GetMapping("writequestion.qa")
 	public String writeQuestion() {
 		return "writequestion";
 	}
 	
+	/**게시글 삽입 - supplement검색**/
 	@PostMapping("searchSupplement.qa")
 	public String searchSupplement(@RequestParam("keyword") String keyword, Model model) {
 		model.addAttribute("keyword", keyword);
-		model.addAttribute("list",qService.searchSupplement(keyword));
+		model.addAttribute("list", qService.searchSupplement(keyword));
 		return "supplementPopup";
 	}
 	
+	/**게시글 삽입**/
 	@PostMapping("insertquestion.qa")
-	public String insertQuestion(@ModelAttribute QuestionInsertDto quest,HttpServletRequest request) {
+	public String insertQuestion(@ModelAttribute QuestionInsertDto quest, HttpServletRequest request) {
 		int result = qService.insertQuestion(quest, request);
 		if(result>0) {
 			return "selectquestion";
@@ -104,30 +130,40 @@ public class QaController {
 		}
 	}
 	
+	/******************************************************************/
 	/**게시글 조회**/
 	@GetMapping("question.qa")
-	public String selectQuestion(
-			@RequestParam("boardNum") int boardNum, 
-			@RequestParam(value="page", required=false) int page, 
-			HttpServletRequest request, 
-			Model model) {
-		
-		QuestionRespDto qresp = qService.getQresp(boardNum, request);
-		ArrayList<AnswerRespDto> ansRespList = qService.getAnsRespList(boardNum);
-		
-		model.addAttribute("qresp", qresp);
-		model.addAttribute("ansRespList", ansRespList);
-		
+	public String selectQuestion(@RequestParam("boardNum") int boardNum, @RequestParam(value="page", required=false) Integer page, HttpServletRequest request, Model model) {
+		model.addAttribute("qresp", qService.selectQuestion(boardNum, request));
 		return "selectquestion";
 	}
 
+	/*******************************************************************/
+	/**답변 작성**/
+	@GetMapping("writeanswer.qa")
+	public String writeAnswer(@RequestParam("boardNum") int questionNum, HttpServletRequest request, Model model){
+		model.addAttribute("qresp", qService.selectQuestion(questionNum, request));
+		model.addAttribute("alert", qService.getAlreadyAnswered(questionNum, request)); //이미 작성시 true 반환 -> alert
+		return "writeanswer";
+	}
+	
+	@PostMapping("insertanswer.qa")
+	public String insertAnswer(@ModelAttribute QuestionInsertDto quest, HttpServletRequest request) {
+		int result = qService.insertAnswer(quest, request); // quest의 boardTitle로 questionNum 받아올거야
+		if(result>0) {
+			return "redirect:question.qa";
+		} else {
+			throw new Qexception("답변 작성 실패");
+		}
+	}
+	
+	/*******************************************************************/
+	
+	/**게시글 검색**/
 	@GetMapping("search.qa")
 	public String seachQuestion() {
 		return "searchresult";
 	}
-	
-	
-	
 	
 	/**전문가찾기**/
 	@GetMapping("expertfind.qa")
@@ -142,7 +178,6 @@ public class QaController {
 	public String selectHospital() {
 		return "expertHospital";
 	}
-	
 	
 	
 	/**채팅방**/

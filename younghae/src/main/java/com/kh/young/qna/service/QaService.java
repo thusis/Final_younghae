@@ -1,36 +1,35 @@
 package com.kh.young.qna.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import com.kh.young.model.vo.Supplement;
-import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
+import com.kh.young.qna.dto.SupplementRespDto;
 
 @Service
 public interface QaService {
 
 	void setLoginUser(Integer userNum, HttpServletRequest request);
-
+	
 	int getListCount();
 
-	HashMap<String, ArrayList> selectQuestionList(Integer page, int listCount);
+	ArrayList<QuestionRespDto> getMyQna(HttpServletRequest request);
+	ArrayList<QuestionRespDto> getQuestionList(Integer page, int listCount);
+	ArrayList<QuestionRespDto> getTopTwo();
 
-	Object getMyQna(HttpServletRequest request);
+	ArrayList<SupplementRespDto> searchSupplement(String keyword);
 
 	int insertQuestion(QuestionInsertDto quest, HttpServletRequest request);
 
-	ArrayList<Supplement> searchSupplement(String keyword);
+	QuestionRespDto selectQuestion(int boardNum, HttpServletRequest request);
 
-	HashMap<String, ArrayList> getTopTwo();
+	boolean getAlreadyAnswered(int questionNum, HttpServletRequest request);
 
-	QuestionRespDto getQresp(int boardNum, HttpServletRequest request);
+	int insertAnswer(QuestionInsertDto quest, HttpServletRequest request);
 
-	ArrayList<AnswerRespDto> getAnsRespList(int boardNum);
 
 }
