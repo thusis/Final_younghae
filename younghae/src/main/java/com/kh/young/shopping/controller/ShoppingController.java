@@ -20,9 +20,9 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
-import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.service.ShoppingService;
 
@@ -138,7 +138,7 @@ public class ShoppingController {
 		return "paymentView";
 	}
 	
-	@RequestMapping(value="selectAddressList.sh", produces="text/plain;charset=UTF-8")
+	@RequestMapping("selectAddressList.sh")
 	public void selectAddressList(HttpSession session, HttpServletResponse response){
 		Member m = (Member)session.getAttribute("loginUser");
 		ArrayList<Address> addressList = shService.selectAddressList(m.getUserNum());
@@ -180,6 +180,7 @@ public class ShoppingController {
 		return result;
 	}
 	
+//	배송지 주소 수정
 	@ResponseBody
 	@RequestMapping("updateAddress.sh")
 	public String updateAddress(@ModelAttribute Address a, HttpSession session) {
@@ -191,7 +192,6 @@ public class ShoppingController {
 		if(a.getAddressBasic().equals("Y")) {
 			shService.updateBasicAll(m.getUserNum());
 		}
-
 		int updateYn = shService.updateAddress(a);
 		
 		String result = null;
@@ -204,6 +204,7 @@ public class ShoppingController {
 		return result;
 	}
 	
+//	배송지 주소 삭제
 	@ResponseBody
 	@RequestMapping("deleteAddress.sh")
 	public String deleteAddress(@RequestParam("addressNum") int addressNum) {
@@ -220,4 +221,39 @@ public class ShoppingController {
 		return result;
 	}
 	
+//	장바구니 담기
+	@RequestMapping("insertCart.sh")
+	public void insertCart(@ModelAttribute Cart c, HttpServletResponse response) throws Exception{
+		int checkCart = shService.checkCart(c);
+		
+		ArrayList<Cart> cartList = new ArrayList<Cart>();
+		if(checkCart > 0) {
+			cartList = null;
+		}else {
+			shService.insertCart(c);
+			cartList = shService.selectCartList(c);
+			Gson gson = new GsonBuilder().create();
+			try {
+				gson.toJson(cartList, response.getWriter());
+			} catch (JsonIOException | IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+//	장바구니 수량 추가하기
+	@ResponseBody
+	@RequestMapping("addCartCount.sh")
+	public String addCartCount(@ModelAttribute Cart c) {
+		
+		int cartCountYn = shService.addCartCount(c); 
+		
+		String result = null;
+		if(cartCountYn > 0) {
+			result = "YES";
+		}else {
+			result = "NO";
+		}
+		return result;
+	}
 }

@@ -3,6 +3,7 @@ package com.kh.young.shopping.service;
 import java.util.ArrayList;
 
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
@@ -29,6 +30,14 @@ public interface ShoppingService {
 	void updateBasicAll(int userNum);
 	
 	int deleteAddress(int addressNum);
+	
+	int insertCart(Cart c);
+	
+	ArrayList<Cart> selectCartList(Cart c);
+	
+	int checkCart(Cart c);
+	
+	int addCartCount(Cart c);
 	
 
 

@@ -88,13 +88,14 @@
 	<insert id="insertAddress">
 		insert into address
 		values (seq_address.nextval,#{addressName}, #{addressAddressee}, #{addressPhone},
-				 #{addressZipcode}, #{addressBuilding}, #{addressDetail}, #{addressBasic},#{userNum}), default
+				 #{addressZipcode}, #{addressBuilding}, #{addressDetail}, #{addressBasic},#{userNum}, default)
 	</insert>
 	
 	<select id="selectAddressList" resultMap="addressListResultMap">
 		select *
 		from address
 		where user_num = #{userNum} and address_status='Y'
+		order by address_num desc
 	</select>
 	
 	<resultMap type="Address" id="addressListResultMap">
@@ -134,5 +135,34 @@
 		where address_num = #{addressNum}
 	</update>
 	
+	<insert id="insertCart">
+		insert into cart
+		values (seq_cart.nextval, #{userNum}, #{proNum}, #{cartQuantity})
+	</insert>
+	
+	<select id="selectCartList" resultMap="cartListResultSet">
+		select *
+		from cart
+		where user_num = #{userNum}
+	</select>
+
+	<resultMap type="Cart" id="cartListResultSet">
+		<id column="CART_NUM" property="cartNum"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="PRO_NUM" property="proNum"/>
+		<result column="CART_QUANTITY" property="cartQuantity"/>
+	</resultMap>
+	
+	<select id="checkCart" resultType="_int">
+		select count(*)
+		from cart
+		where user_num = #{userNum} and pro_num = #{proNum}
+	</select>
+	
+	<update id="addCartCount">
+		update cart
+		set cart_quantity = cart_quantity + #{cartQuantity}
+		where user_num = #{userNum} and pro_num = #{proNum}
+	</update>
 	
 </mapper>

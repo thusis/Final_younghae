@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
@@ -76,6 +77,26 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Override
 	public int deleteAddress(int addressNum) {
 		return shDAO.deleteAddress(sqlSession, addressNum);
+	}
+	
+	@Override
+	public int insertCart(Cart c) {
+		return shDAO.insertCart(sqlSession, c);
+	}
+	
+	@Override
+	public ArrayList<Cart> selectCartList(Cart c) {
+		return shDAO.selectCartList(sqlSession, c);
+	}
+	
+	@Override
+	public int checkCart(Cart c) {
+		return shDAO.checkCart(sqlSession, c);
+	}
+	
+	@Override
+	public int addCartCount(Cart c) {
+		return shDAO.addCartCount(sqlSession, c);
 	}
 	
 }

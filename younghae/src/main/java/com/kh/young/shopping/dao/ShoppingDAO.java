@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
@@ -55,6 +56,22 @@ public class ShoppingDAO {
 
 	public int deleteAddress(SqlSessionTemplate sqlSession, int addressNum) {
 		return sqlSession.update("shoppingMapper.deleteAddress", addressNum);
+	}
+
+	public int insertCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.insert("shoppingMapper.insertCart", c);
+	}
+
+	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, Cart c) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectCartList", c);
+	}
+
+	public int checkCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.selectOne("shoppingMapper.checkCart", c);
+	}
+
+	public int addCartCount(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.update("shoppingMapper.addCartCount", c);
 	}
 
 }
