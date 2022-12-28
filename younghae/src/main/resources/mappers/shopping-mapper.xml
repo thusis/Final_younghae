@@ -144,6 +144,7 @@
 		select *
 		from cart
 		where user_num = #{userNum}
+		order by cart_num desc
 	</select>
 
 	<resultMap type="Cart" id="cartListResultSet">

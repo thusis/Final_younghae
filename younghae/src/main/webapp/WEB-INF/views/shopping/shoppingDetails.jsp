@@ -251,7 +251,6 @@
             font-size: 1.5rem;
             font-weight: bold;
             margin-bottom: 2rem;
-
         }
 
         .cart_product{
@@ -627,87 +626,28 @@
     <!-- 장바구니 모달창 -->
     <div id="cartModal" class="hj_modal" >
         <!-- Modal content -->
-        <div class="modal-content" style="width: 1000px; height: 720px; overflow: auto;">
-			<div class="close" style="text-align: right; font-size: 2rem;">&times;</div>
-            <div class="compareTitle">
+        <div class="modal-content" style="width: 1000px; height: 720px;">
+			<br>
+            <div class="compareTitle" style="margin-top: -1rem;">
                 장바구니 목록
+				<span class="close" style="text-align: right; font-size: 2rem; margin-right:1rem;">&times;</span>
             </div>
-
+			
             <div style="font-size: 1.3rem;">총<span style="color: #24E082;"> 2 </span>개</div>
-            <div class="container">
-                <div class="row" style="margin-bottom: -5%;">
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/blb/blb01012/v/29.jpg">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
+            <div class="container" style="overflow: auto; height: 80%">
+                <div id="cartListDiv" class="row" style="margin-bottom: -5%;">
+<!-- 				장바구니 목록 div 들어가는 곳 -->
                 </div>
-                <div class="row" style="margin-bottom: -2%;">
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col" style="margin:2rem;"></div>
-                    <div class="col" style="margin:2rem;"></div>
-                </div>
-                
-                <hr>
-                <div style="text-align: center;">
-                    <button type="button" class="btn btn_toCart" id="btn_toCart" style="margin-right: 2%;">쇼핑 계속하기</button>
-                    <button type="button" class="btn btn_toBuy">장바구니 가기</button>
-                </div>
+            </div>
+            <div style="text-align: center;">
+                <button type="button" class="btn btn_toCart" id="btn_toCart" style="margin-right: 2%;">쇼핑 계속하기</button>
+                <button type="button" class="btn btn_toBuy">장바구니 가기</button>
             </div>
 
         </div>
     </div>
     <!-- /장바구니 모달창 -->
 </div>
-
 
 
 <script>
@@ -751,7 +691,38 @@
 	    // When the user clicks the button, open the modal 
 	    
 	    const cartList = function(){
-	    	
+	    	$.ajax({
+	    		url: '${contextPath}/selectCartList.sh',
+	    		data: {userNum : ${loginUser.userNum},
+	    				proNum: ${supplementDetail.proNum},
+	    				cartQuantity : quantity.value},
+	    		success:(data)=>{
+					const cartListDivs = document.getElementById("cartListDiv");
+					cartListDivs.innerHTML = '';
+					
+					for(const c of data){
+						$.ajax({
+							url: '${contextPath}/selectCartDetail.sh',
+							data: {proNum : c.proNum},
+							success:(data)=>{
+								const cartDiv= document.createElement("div");
+								cartDiv.innerHTML = '<div class="col cart_product" style="text-align: center; width: 10rem;">'+
+														'<img class="cart_item_img" src="'+data.proImage+'">'+
+														'<div class="product__item__text" style="text-align: left;">'+
+															'<div style="color: gray; font-size: 13px;">'+data.proCompany+'</div>'+
+															'<div style="font-weight: bold; font-size: 15px;">'+data.proName+'</div>'+
+															'<div style="font-weight: bold; font-size: 15px;">'+data.proPrice.toLocaleString()+'원</div>'+
+															'<div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">'+c.cartQuantity+'개</span></div>'+
+															'<input type="hidden" value="'+c.proNum+'">'+
+														'</div>'+
+													'</div>';
+								cartListDivs.append(cartDiv);
+							}
+						})
+					}
+	    		}
+	    	})	
+	    	cartModal.style.display = "block";
 	    }
 	    
 	    const quantity = document.getElementById("quantity");
@@ -762,10 +733,8 @@
 	    				proNum: ${supplementDetail.proNum},
 	    				cartQuantity : quantity.value},
 	    		success:(data)=>{
-	    			console.log(data);
-	    			if(data == ''){
+	    			if(data == 'YES'){
 	    				if(confirm('이미 장바구니에 있는 상품입니다. 수량을 추가하시겠습니까?')){
-	    					console.log("엉");
 		    				$.ajax({
 		    		    		url: '${contextPath}/addCartCount.sh',
 		    		    		data: {userNum : ${loginUser.userNum},
@@ -773,12 +742,14 @@
 		    		    				cartQuantity : quantity.value},
 		    	    			success:(data)=>{
 		    	    				console.log(data);
-		    	    				alert('상품이 추가되었습니다.');
+		    	    				if(confirm('상품이 추가되었습니다.')){
+								    	cartList();
+		    	    				};
 		    	    			}
 		    				})
 	    				}
 	    			}else{
-				    	cartModal.style.display = "block";
+	    				cartList();
 	    			}
 	    		}
 	    		
@@ -821,10 +792,7 @@
     	
     }
     
-    
-    
     </script>
-
     <script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
 
 

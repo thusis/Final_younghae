@@ -222,23 +222,21 @@ public class ShoppingController {
 	}
 	
 //	장바구니 담기
+	@ResponseBody
 	@RequestMapping("insertCart.sh")
-	public void insertCart(@ModelAttribute Cart c, HttpServletResponse response) throws Exception{
+	public String insertCart(@ModelAttribute Cart c, HttpServletResponse response) throws Exception{
 		int checkCart = shService.checkCart(c);
 		
-		ArrayList<Cart> cartList = new ArrayList<Cart>();
+		String result = null;
 		if(checkCart > 0) {
-			cartList = null;
-		}else {
+			result = "YES";
+		}else{
+			result = "NO";
 			shService.insertCart(c);
-			cartList = shService.selectCartList(c);
-			Gson gson = new GsonBuilder().create();
-			try {
-				gson.toJson(cartList, response.getWriter());
-			} catch (JsonIOException | IOException e) {
-				e.printStackTrace();
-			}
 		}
+		
+		return result;
+
 	}
 	
 //	장바구니 수량 추가하기
@@ -255,5 +253,38 @@ public class ShoppingController {
 			result = "NO";
 		}
 		return result;
+	}
+	
+	@RequestMapping("selectCartList.sh")
+	public void selectCartList(@ModelAttribute Cart c, HttpServletResponse response) {
+		ArrayList<Cart> cartList = shService.selectCartList(c);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		
+		GsonBuilder gb = new GsonBuilder();
+		Gson gson = gb.create();
+
+		try {
+			gson.toJson(cartList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@RequestMapping("selectCartDetail.sh")
+	public void selectCartDetail(@RequestParam("proNum") int proNum, HttpServletResponse response) {
+		Supplement cartDetail = shService.selectDetail(proNum);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		
+		GsonBuilder gb = new GsonBuilder();
+		Gson gson = gb.create();
+
+		try {
+			gson.toJson(cartDetail, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
