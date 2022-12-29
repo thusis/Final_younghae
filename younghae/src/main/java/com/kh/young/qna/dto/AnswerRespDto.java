@@ -27,7 +27,7 @@ public class AnswerRespDto {
 
 	private ExpertRespDto eresp;
 
-	private ArrayList<Reply> replyList;
+	private ArrayList<ReplyRespDto> replyList;
 
 	
 //	private int boardNum;

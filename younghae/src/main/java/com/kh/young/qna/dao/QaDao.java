@@ -1,14 +1,17 @@
 package com.kh.young.qna.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
+import com.kh.young.model.vo.Reply;
 import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
@@ -110,6 +113,31 @@ public class QaDao {
 
 	public ArrayList<QuestionRespDto> selectExpertQuestionList(SqlSessionTemplate sqlSession, int expertNum) {
 		return (ArrayList)sqlSession.selectList("qnaMapper.selectQuestionListByExpertNum", expertNum);
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("qnaMapper.insertReply", r);
+	}
+
+	public ArrayList<Reply> getReplyList(SqlSessionTemplate sqlSession, int boardNum) {
+		return (ArrayList)sqlSession.selectList("qnaMapper.getReplyList", boardNum);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNum) {
+		return sqlSession.update("qnaMapper.updateReplyToDelete", replyNum);
+	}
+
+	public int getScrapCount(SqlSessionTemplate sqlSession, int boardNum) {
+		List<Object> scrapList = sqlSession.selectList("qnaMapper.selectScrapList", boardNum);
+		return scrapList.size();
+	}
+
+	public int setScrap(SqlSessionTemplate sqlSession, Clip clip) {
+		return sqlSession.insert("qnaMapper.insertScrap", clip);
+	}
+
+	public int deleteScrap(SqlSessionTemplate sqlSession, Clip clip) {
+		return sqlSession.delete("qnaMapper.deleteScrap",clip);
 	}
 
 }

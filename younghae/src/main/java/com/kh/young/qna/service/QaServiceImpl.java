@@ -4,12 +4,12 @@ import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,14 +17,16 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
-import com.kh.young.model.vo.Supplement;
+import com.kh.young.model.vo.Reply;
 import com.kh.young.qna.dao.QaDao;
 import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
+import com.kh.young.qna.dto.ReplyRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
 
 @Service("QaService")
@@ -216,9 +218,17 @@ public class QaServiceImpl implements QaService {
 	public QuestionRespDto selectQuestion(int boardNum, HttpServletRequest request) {
 		
 		QuestionRespDto qresp = qdao.selectQuestion(sqlSession, boardNum);
+		qresp.setReplyList(getReplyList(boardNum));
 		qresp.setWriterInfo(
 				writerInfoToString(getWriterInfoMap(qresp.getBoard().getUserNum()))
 		);
+		System.out.println("서비스224"+qresp.getScrapList());
+
+		for(AnswerRespDto answer : qresp.getAnswerList()) {
+			answer.setReplyList(
+					getReplyList(answer.getBoard().getBoardNum())
+					);
+		}
 		
 		if((Member)request.getSession().getServletContext().getAttribute("loginUser") != null) {
 			int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
@@ -245,6 +255,55 @@ public class QaServiceImpl implements QaService {
 	@Override
 	public ArrayList<QuestionRespDto> selectExpertQuestionList(int expertNum) {
 		return qdao.selectExpertQuestionList(sqlSession, expertNum);
+	}
+
+	@Override
+	public int insertReply(Reply r) {
+		return qdao.insertReply(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<ReplyRespDto> getReplyList(int boardNum) {
+		ArrayList<Reply> rList = qdao.getReplyList(sqlSession, boardNum);
+		ArrayList<ReplyRespDto> replyList = new ArrayList<>();
+		
+		for(int i=0; i<rList.size();i++) {
+			replyList.add(new ReplyRespDto( rList.get(i), writerInfoToString(getWriterInfoMap(rList.get(i).getUserNum())) ));
+		}
+		
+		System.out.println("서비스"+replyList);
+
+		return replyList;
+	}
+
+	@Override
+	public int deleteReply(int replyNum) {
+		return qdao.deleteReply(sqlSession, replyNum);
+	}
+
+	@Override
+	public int getScrapCount(int boardNum) {
+		return qdao.getScrapCount(sqlSession,boardNum);
+	}
+
+	@Override
+	public int setScrap(Clip clip) {
+		return qdao.setScrap(sqlSession, clip);
+	}
+
+	@Override
+	public int deleteScrap(Clip clip) {
+		return qdao.deleteScrap(sqlSession,clip);
+	}
+
+	@Override
+	public int updateQuestion(QuestionInsertDto quest, HttpServletRequest request) {
+		return 0;
+	}
+
+	@Override
+	public int deleteQuestion(QuestionInsertDto quest, HttpServletRequest request) {
+		return 0;
 	}
 
 

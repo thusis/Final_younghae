@@ -85,6 +85,7 @@
 	  	<association property="question" javaType="Question" resultMap="Question"/>
 	  	<association property="qattach" javaType="Attachment" resultMap="Attachment"/>
   		<collection column="BOARD_NUM" property="answerList" javaType="java.util.ArrayList" ofType="AnswerRespDto" select="selectAnswerList"/>
+  		<collection column="BOARD_NUM" property="scrapList" javaType="java.util.ArrayList" ofType="Integer" select="selectScrapList"/>
   	</resultMap>
   	
   	<resultMap type="AnswerRespDto" id="AnswerRespDto">
@@ -102,6 +103,16 @@
 <!-- 		<collection column="USER_NUM" property="answerList" javaType="java.util.ArrayList" ofType="AnswerRespDto" select="selectAnswerListByUserNum"/> -->
   	</resultMap>
 
+  	<resultMap type="Reply" id="Reply">
+  		<id column="REPLY_NUM" property="replyNum"/>
+  		<result column="REPLY_CONTENT" property="replyContent"/>
+  		<result column="REPLY_DATE" property="replyDate"/>
+  		<result column="REPLY_STATUS" property="replyStatus"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="BOARD_NUM" property="boardNum"/>
+  		<result column="USER_NUM" property="userNum"/>
+  	</resultMap>
+  	
 	<select id="login" resultMap="Member">
 		SELECT * FROM MEMBER WHERE USER_NUM = #{userNum}
 	</select>
@@ -269,6 +280,26 @@
 		(USER_NUM = #{userNum})
 		ORDER BY QUESTION_NUM DESC
 	</select>
+
+	<!-- 댓글 작성 -->
+	<insert id="insertReply">
+		INSERT INTO REPLY VALUES(SEQ_REPLY.NEXTVAL, #{replyContent},DEFAULT, DEFAULT,#{boardType},#{boardNum}, #{userNum})
+	</insert>
 	
+	<!-- 게시글번호로 댓글리스트 조회 -->
+	<select id="getReplyList" resultMap="Reply">SELECT * FROM REPLY WHERE BOARD_NUM = #{boardNum}</select>
+	
+	<!-- 댓글 삭제처리 -->
+	<update id="updateReplyToDelete">
+		UPDATE REPLY SET REPLY_STATUS = 'N' WHERE REPLY_NUM = #{replyNum} 
+	</update>
+	
+	<!-- Scrap (boardNum) 조회 -->
+	<select id="selectScrapList" resultType="int">
+		SELECT USER_NUM FROM CLIP WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+	<insert id="insertScrap">INSERT INTO CLIP VALUES (#{boardNum}, #{userNum})</insert>
+	<delete id="deleteScrap">DELETE FROM CLIP WHERE BOARD_NUM = #{boardNum} AND USER_NUM = #{userNum}</delete>
 	
 </mapper>

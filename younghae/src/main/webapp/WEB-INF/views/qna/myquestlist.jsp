@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>질문게시판 - 최신글보기</title>
+<title>질문게시판 - 내가 남긴 질문 더보기</title>
 
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 
@@ -19,13 +19,21 @@
         <div class="bn_index mt-5">
             <ul>
                 <li>Q&A</li>
-                <li> / </li>
-                <li><a href="#">둘러보기</a></li>
                 <li> <b>/</b> </li>
-                <li><a href="#">Q&A최신글</a></li>
+                <li><a href="#">내가 남긴 질문 더보기</a></li>
             </ul>
         </div>
-
+        
+		<c:if test="${myQuest.size() eq 0 }">
+			<div class="row">
+				<div class="col-lg-10 bn_card-top">
+					<h3><i class="bi bi-x-square-fill"></i>아직 작성한 질문이 없어요!</h3>
+					<span>질문을 남겨 영양제에 대해 궁금한 점을 물어보세요!</span>
+				</div>
+			</div>
+		</c:if>
+		
+		<c:if test="${myQuest.size() ne 0 }">
         <div class="bn_boardlist mt-2" style="background-color: #ffffff;">
             <table class="table" >
                 <thead>
@@ -40,7 +48,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                    <c:forEach items="${qlist}" var="q" >
+                    <c:forEach items="${myQuest}" var="q" >
 	                    <tr class="questionTr">
 	                    	<c:if test="${q.question.isSolved  eq 'Y'}">
 	                        	<th scope="row" class="d-flex justify-content-center bn_board_check"><i class="bi bi-square-fill"></i></th>
@@ -59,27 +67,8 @@
                 </tbody>
             </table>
         </div>
+        </c:if>
 
-        <div class="product__pagination blog__pagination d-flex justify-content-center mt-3 ">
-          <a href="#">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-        </div>
-
-        <div class="row d-flex justify-content-center">
-            <div class="input-group mt-3 col-lg-6">
-                <select class="form-select form-select-sm bn_detail-search">
-                    <option selected>카테고리 선택</option>
-                    <option value="제목내용">제목+내용</option>
-                    <option value="제목">제목</option>
-                    <option value="내용">내용</option>
-                    <option value="글쓴이">글쓴이</option>
-                </select>
-                <input type="text" class="form-control" id="bn_detail-search-point" placeholder="내용을 입력하세요">
-                <button class="btn bn_btn_search2" >검색</button>
-            </div>
-        </div>
     </div>
 </body>
 </html>

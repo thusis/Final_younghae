@@ -30,7 +30,7 @@ public class QuestionRespDto {
 	private String writerInfo;
 
 	private ArrayList<AnswerRespDto> answerList;
-	private ArrayList<Reply> replyList;
+	private ArrayList<ReplyRespDto> replyList;
 	private ArrayList<Clip> scrapList; 
 	
 //	private int boardNum;
