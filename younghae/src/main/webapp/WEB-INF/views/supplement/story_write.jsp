@@ -161,6 +161,7 @@
                 <form action="${ contextPath }/insertStory.st" method="post" id="writeForm">
 <%--                 	<input type="hidden" name="userNum" value="${ loginUser.userNum }"> --%>
                 	<input type="hidden" name="userNum" value="8">
+                	<input type="hidden" id="thumbnail" name="thumbnail" value="">
                     <div id="storyTitle">
                         <label
                         style="font-size: 25px; color: #24E082; font-weight: 700; padding-left: 1%; padding-top: 1.5%; padding-right: 1%;"
@@ -301,10 +302,19 @@
       
       const form = document.getElementById('writeForm');
       document.getElementById('write').addEventListener('click', ()=>{
-//     	  console.log($('#summernote').html());
-//     	  console.log
+		  //summernote 내용 가져오기
+		  const img = $('#summernote').summernote('code');
+		  
+		  var thumbnail = img.substring(img.indexOf('/summer'), img.indexOf('src="')+44);
+		  console.log("얍"+thumbnail);
+		  
+		  document.getElementById('thumbnail').value = thumbnail;
+		  console.log(document.getElementById('thumbnail').value);
+		  
     	  form.submit();
       });
+      
+      
     </script>
     
 </body>

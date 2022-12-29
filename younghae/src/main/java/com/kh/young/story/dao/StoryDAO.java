@@ -6,6 +6,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.PageInfo;
 
@@ -25,6 +26,10 @@ public class StoryDAO {
 
 	public int insertStory(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("storyMapper.insertStory", b);
+	}
+
+	public int insertThumbnail(SqlSessionTemplate sqlSession, Attachment att) {
+		return sqlSession.insert("storyMapper.insertThumbnail", att);
 	}
 
 }

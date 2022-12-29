@@ -14,9 +14,38 @@
 		<result column="BOARD_TYPE" property="boardType"/>
 	</resultMap>
 	
+	<!-- 첨부파일 폼 -->
+	<resultMap type="Attachment" id="AttmResultSet">
+		<id  column="ATTACH_NUM" property="attachNum"/>
+		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
+		<result column="ATTACH_NAME" property="attachName"/>
+		<result column="ATTACH_RENAME" property="attachRename"/>
+		<result column="ATTACH_PATH" property="attachPath"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="SERIALNUMBER" property="serialNumber"/>
+		<result column="ATTACH_STATUS" property="attachStatus"/>
+	</resultMap>
+	
 	<!-- 컬럼 작성 -->
 	<insert id="insertStory">
 		insert into board
-		values(SEQ_BOARD.nextVal, #{boardTitle}, SYSDATE, SYSDATE,  0, 'Y', #{userNum}, 3, #{boardContent})
+		values(SEQ_BOARD.nextVal, #{boardTitle}, #{boardContent}, SYSDATE, SYSDATE,  0, 'Y', #{userNum}, 3)
 	</insert>
+	
+	<!-- 컬럼 리스트 수 가져오기 -->
+	<select id="getStoryListCount" resultType="_int">
+		select count(*) from board where board_status = 'Y';
+	</select>
+	
+	<!-- 컬럼 썸네일 등록 -->
+	<insert id="insertThumbnail">
+		insert into attachment
+		values(SEQ_ATTACH.nextval, SYSDATE, #{attachName}, #{attachRename}, #{attachPath}, #{boardType}, SEQ_BOARD.currval, 'Y')
+	</insert>
+	
+	<!-- 컬럼 리스트 가져오기 -->
+	<select id="selectStoryList">
+		select * from
+		where BOARD_STATUS = 'Y' and BOARD_TYPE = 3
+	</select>
 </mapper>
