@@ -30,6 +30,8 @@
   		<result column="EXPERT_HOMEPAGE" property="expertHomepage"/>
   		<result column="EXPERT_CAREER" property="expertCareer"/>
   		<result column="EXPERT_ESTIMATE" property="expertEstimate"/>
+  		<result column="EXPERT_LATITUDE" property="expertLatitude"/>
+  		<result column="EXPERT_LONGITUDE" property="expertLongtitude"/>
   	</resultMap>
   	
 	<resultMap type="Board" id="Board">

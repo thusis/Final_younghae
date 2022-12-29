@@ -225,6 +225,7 @@
             estimate.style.display = 'block';
             document.getElementById('infobox2').style.border = '3px solid #24E082';
         }
+        
 window.onload=()=>{
 	document.getElementById('goToExpertHospital').addEventListener('click', function(){
 		console.log(this);
