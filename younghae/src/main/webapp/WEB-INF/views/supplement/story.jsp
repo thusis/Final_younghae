@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -148,98 +150,65 @@
         <div class="container">
             <div class="col-lg-12 col-md-12">
                 <div class="row" style="width: 100%; margin: 0; height: 60%;">
-                    <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
-                        <div class="blog__item">
-                            <div class="blog__item__pic">
-                                <img src="resources/img/blog/blog-2.jpg" alt="">
-                            </div>
-                            <div class="blog__item__text">
-                                <ul>
-                                    <li><i class="fa fa-calendar-o"></i>  2022-12-09</li>
-                                    <li><i class="fa fa-comment-o"></i> 5</li>
-                                    <div  class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
-                                        <i class="bi bi-bookmark-plus"></i>
-                                    </div>
-                                </ul>
-                                <h5><a href="#">위장질환 종합영양제 비타민U 성분은?</a></h5>
-                                <div id="detail">
-                                    지나가는 무성할 새겨지는 애기 아침이 헤는 겨울이 피어나듯이 까닭이요, 까닭입니다. 잔디가 언덕 까닭이요, 계십니다. 내일 비둘기, 가슴속에 까닭이요, 거외다. 이런 어머니, 프랑시스 별 책상을 말 아스라히 지나고 있습니다. 다 별들을 별 나의 듯합니다. 가득 무성할 풀이 아무 지나고 버리었습니다. 경, 이름을 가을 이름을 하나의 오는 별을 하늘에는 별 까닭입니다. 위에 부끄러운 이름과, 나의 남은 이름자 지나가는 버리었습니다. 마디씩 했던 시와 써 덮어 이런 차 하나에 까닭이요, 있습니다.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
-                        <div class="blog__item">
-                            <div class="blog__item__pic">
-                                <img src="resources/img/blog/blog-3.jpg" alt="">
-                            </div>
-                            <div class="blog__item__text">
-                                <ul>
-                                    <li><i class="fa fa-calendar-o"></i> 2022-12-09</li>
-                                    <li><i class="fa fa-comment-o"></i> 5</li>
-                                    <div class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
-                                        <i class="bi bi-bookmark-plus"></i>
-                                    </div>
-                                </ul>
-                                <h5><a href="#">위장질환 종합영양제 비타민U 성분은?</a></h5>
-                                <div id="detail">
-                                    지나가는 무성할 새겨지는 애기 아침이 헤는 겨울이 피어나듯이 까닭이요, 까닭입니다. 잔디가 언덕 까닭이요, 계십니다. 내일 비둘기, 가슴속에 까닭이요, 거외다. 이런 어머니, 프랑시스 별 책상을 말 아스라히 지나고 있습니다. 다 별들을 별 나의 듯합니다. 가득 무성할 풀이 아무 지나고 버리었습니다. 경, 이름을 가을 이름을 하나의 오는 별을 하늘에는 별 까닭입니다. 위에 부끄러운 이름과, 나의 남은 이름자 지나가는 버리었습니다. 마디씩 했던 시와 써 덮어 이런 차 하나에 까닭이요, 있습니다.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                	<c:forEach items="${ list }" var="story">
+	                    <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
+	                        <div class="blog__item">
+	                            <div class="blog__item__pic">
+	                                <img src="resources/img/blog/blog-2.jpg" alt="">
+	                            </div>
+	                            <div class="blog__item__text">
+                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
+                                	<input type="hidden" name="userNum" value="${ story.userNum }">
+	                                <ul>
+	                                    <li><i class="fa fa-calendar-o"></i>${ story.boardModifyDate }</li>
+	                                    <li><i class="fa fa-comment-o"></i>${ story.boardView }</li>
+	                                    <div class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
+	                                        <i class="bi bi-bookmark-plus"></i>
+	                                    </div>
+	                                </ul>
+	                                <h5>${ story.boardTitle }</h5>
+	                                <div id="detail" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
+<%-- 	                                	${ fn:split(story.boardContent,'</span>')[0] } --%>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+                	</c:forEach>
 
-                    <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
-                    <div class="blog__item">
-                            <div class="blog__item__pic">
-                                <img src="resources/img/blog/blog-1.jpg" alt="">
-                            </div>
-                            <div class="blog__item__text">
-                                <ul>
-                                    <li><i class="fa fa-calendar-o"></i>  2022-12-09</li>
-                                    <li><i class="fa fa-comment-o"></i> 5</li>
-                                    <div class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
-                                        <i class="bi bi-bookmark-plus"></i>
-                                    </div>
-                                </ul>
-                                <h5><a href="#">위장질환 종합영양제 비타민U 성분은?</a></h5>
-                                <div id="detail">
-                                    지나가는 무성할 새겨지는 애기 아침이 헤는 겨울이 피어나듯이 까닭이요, 까닭입니다. 잔디가 언덕 까닭이요, 계십니다. 내일 비둘기, 가슴속에 까닭이요, 거외다. 이런 어머니, 프랑시스 별 책상을 말 아스라히 지나고 있습니다. 다 별들을 별 나의 듯합니다. 가득 무성할 풀이 아무 지나고 버리었습니다. 경, 이름을 가을 이름을 하나의 오는 별을 하늘에는 별 까닭입니다. 위에 부끄러운 이름과, 나의 남은 이름자 지나가는 버리었습니다. 마디씩 했던 시와 써 덮어 이런 차 하나에 까닭이요, 있습니다.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
-                        <div class="blog__item">
-                            <div class="blog__item__pic">
-                                <img src="resources/img/blog/blog-4.jpg" alt="">
-                            </div>
-                            <div class="blog__item__text">
-                                <ul>
-                                    <li><i class="fa fa-calendar-o"></i>  2022-12-09</li>
-                                    <li><i class="fa fa-comment-o"></i> 5</li>
-                                    <div class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
-                                        <i class="bi bi-bookmark-plus"></i>
-                                    </div>
-                                </ul>
-                                <h5><a href="#">위장질환 종합영양제 비타민U 성분은?</a></h5>
-                                <div id="detail">
-                                    지나가는 무성할 새겨지는 애기 아침이 헤는 겨울이 피어나듯이 까닭이요, 까닭입니다. 잔디가 언덕 까닭이요, 계십니다. 내일 비둘기, 가슴속에 까닭이요, 거외다. 이런 어머니, 프랑시스 별 책상을 말 아스라히 지나고 있습니다. 다 별들을 별 나의 듯합니다. 가득 무성할 풀이 아무 지나고 버리었습니다. 경, 이름을 가을 이름을 하나의 오는 별을 하늘에는 별 까닭입니다. 위에 부끄러운 이름과, 나의 남은 이름자 지나가는 버리었습니다. 마디씩 했던 시와 써 덮어 이런 차 하나에 까닭이요, 있습니다.
-                                </div>
-                                <!-- <a href="#" class="blog__btn">READ MORE <span class="arrow_right"></span></a> -->
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-12 text-center" style="margin-top: 8%;">
-                        <div class="product__pagination blog__pagination">
-                            <a href="#"><i class="fa fa-long-arrow-left"></i></a>
-                            <a href="#">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-                        </div>
-                    </div>
-                </div>
+
+
+					<!-- 페이징 -->
+					<div class="col-lg-12 text-center" style="margin-top: 8%;">
+						<div class="product__pagination blog__pagination">
+							<c:url var="goBack" value="${ loc }">
+								<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+								<c:param name="cateNum" value="${ cateNum }" />
+								<c:param name="cateName" value="${ cateName }" />
+							</c:url>
+							<c:if test="${ pi.currentPage > 1 }">
+								<a href="${ goBack }" aria-label="Previous"><i
+									class="fa fa-long-arrow-left"></i></a>
+							</c:if>
+							<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }"
+								var="p">
+								<c:url var="goNum" value="${ loc }">
+									<c:param name="page" value="${p}"></c:param>
+									<c:param name="cateNum" value="${ cateNum }" />
+									<c:param name="cateName" value="${ cateName }" />
+								</c:url>
+								<a href="${ goNum }">${ p }</a>
+							</c:forEach>
+							<c:url var="goNext" value="${ loc }">
+								<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+								<c:param name="cateNum" value="${ cateNum }" />
+								<c:param name="cateName" value="${ cateName }" />
+							</c:url>
+							<c:if test="${ pi.currentPage <= 1 }">
+								<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+							</c:if>
+						</div>
+					</div>
+				</div>
             </div>
         </div>
     </section>
@@ -314,7 +283,16 @@
                         check = false;
                     }
                 }); // 스크랩 한개 하고 다른 한개 할때 두번 클릭해야하는 문제점 있음 check 값이 true라서 그럼
-
+                
+                
+				$('.col-lg-5.col-md-5.col-sm-5').on('click', function(){
+					console.log($(this).find('.blog__item__text').children()[0].value);
+					const boardNum = $(this).find('.blog__item__text').children()[0].value;
+					const userNum = $(this).find('.blog__item__text').children()[1].value;
+					
+					location.href = '${contextPath}/selectStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
+					
+				});
             }
         </script>
     </body>
