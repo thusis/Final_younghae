@@ -1,7 +1,11 @@
 package com.kh.young.qna.service;
 
+import java.io.File;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -9,14 +13,19 @@ import javax.servlet.http.HttpServletRequest;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.young.common.Pagination;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.qna.dao.QaDao;
+import com.kh.young.qna.dto.AnswerRespDto;
+import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
+import com.kh.young.qna.dto.SupplementRespDto;
 
 @Service("QaService")
 public class QaServiceImpl implements QaService {
@@ -27,12 +36,24 @@ public class QaServiceImpl implements QaService {
 	@Autowired
 	private QaDao qdao;
 
+	/**간이로그인**/
 	@Override
 	public void setLoginUser(Integer userNum, HttpServletRequest request) {
 		Member loginMember = qdao.setLoginUser(sqlSession,userNum);
 		ServletContext application = request.getSession().getServletContext();
 		application.setAttribute("loginUser", loginMember);
-		System.out.println("서비스임플"+((Member)application.getAttribute("loginUser")).getUserId());
+	}
+	
+	/**내 질문목록**/
+	@Override
+	public ArrayList<QuestionRespDto> getMyQna(HttpServletRequest request) { 
+		
+		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+		ArrayList<QuestionRespDto> myQuestions = qdao.getMyQuestions(sqlSession,userNum);
+	
+		System.out.println("test"+myQuestions);
+
+		return myQuestions;
 	}
 
 	@Override
@@ -41,43 +62,192 @@ public class QaServiceImpl implements QaService {
 	}
 
 	@Override
-	public ArrayList<QuestionRespDto> selectQuestionList(Integer page, int listCount) {
-		
+	public ArrayList<QuestionRespDto> getQuestionList(Integer page, int listCount) {
 		int currentPage = 1;
 		if(page!=null) {
 			currentPage=page;
 		}
 		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 10);
-		ArrayList<QuestionRespDto> list = qdao.selectQuestionList(sqlSession, pi);
-		return list;
-	}
-
-	@Override
-	public Object getMyQna(HttpServletRequest request) {
-		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
-		// 유저아이디로 검색 => (1)질문 수 (2)확인하지 않은 답변 여부 (3)최근 세 개 게시글의 [boardNum, 제목, 답변 수, 답변 확인 여부]
-		int count = qdao.getMyQuestionCount(sqlSession, userNum);
-		boolean isRead = qdao.getIsRead(sqlSession, userNum);
-		HashMap<Integer, ArrayList> recentQuestions = qdao.getMyRecentQuestions(sqlSession, userNum);
 		
-		return null;
+		ArrayList<QuestionRespDto> questionList = qdao.selectQuestionList(sqlSession, pi);
+		
+		for(QuestionRespDto q : questionList) {
+			q.setWriterInfo(
+					writerInfoToString(getWriterInfoMap(q.getBoard().getUserNum()))
+					);
+		}
+		return questionList;
+	}
+	
+	private Map getWriterInfoMap(int userNum) {
+		return qdao.getWriterInfoMap(sqlSession, userNum);
+	}
+	
+	/**글쓴이 정보 세팅 ex) 20대 / 남 **/
+	private String writerInfoToString(Map paramap) {
+		
+		String info = "";
+		
+		Date thisyear = new Date(System.currentTimeMillis());
+		SimpleDateFormat yyyy = new SimpleDateFormat("yyyy");
+		
+		int currentYear = Integer.parseInt(yyyy.format(thisyear));
+		
+		int birthYear = Integer.parseInt(paramap.get("USER_BIRTH").toString().split("-")[0]);
+		int age = currentYear - birthYear + 1;
+		info = (age/10) + "0 대";
+		
+		String gender = ((String) paramap.get("USER_GENDER")).trim().toString();
+		
+		if(gender.equals("F")) { info += " / 남"; }
+		else if(gender.equals("M")) { info += " / 여"; }
+		
+		return info;
 	}
 
 	@Override
 	public ArrayList<QuestionRespDto> getTopTwo() {
-//		ArrayList<QuestionRespDto> toptwo = qdao.getToptwo(sqlSession);
-//		return toptwo;
-		return null;
+		ArrayList<QuestionRespDto> topTwo = qdao.getTopTwo(sqlSession);
+		
+		for(QuestionRespDto q : topTwo) {
+			q.setWriterInfo(
+					writerInfoToString(getWriterInfoMap(q.getBoard().getUserNum()))
+					);
+		}
+		return topTwo;
 	}
 
 	@Override
-	public int insertQuestion(QuestionInsertDto quest, HttpServletRequest request) {
-		return 0;
-	}
-
-	@Override
-	public ArrayList<Supplement> searchSupplement(String keyword) {
+	public ArrayList<SupplementRespDto> searchSupplement(String keyword) {
 		return qdao.searchSupplement(sqlSession, keyword);
 	}
 	
+	@Override
+	public int insertQuestion(QuestionInsertDto quest, HttpServletRequest request) {
+		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
+		
+		MultipartFile attachment = quest.getAttachment();
+		System.out.println("130+"+attachment);
+		
+		if(attachment.getOriginalFilename().trim().equals("") || attachment.getOriginalFilename()==null) { //값이 있으면 넘겨서 세팅하고
+			quest.setAttachParam(null);
+		} else {
+			quest.setAttachParam(getAttachParam(attachment, request));
+		}
+		System.out.println("135+" +quest);
+		return qdao.insertQuestion(sqlSession, quest);
+	}
+
+	@Override
+	public boolean getAlreadyAnswered(int questionNum, HttpServletRequest request) {
+		
+		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+		
+		QuestionRespDto qresp = qdao.selectQuestion(sqlSession, questionNum);
+		for( AnswerRespDto answer : qresp.getAnswerList()) {
+			if(userNum == answer.getBoard().getUserNum()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public int insertAnswer(QuestionInsertDto quest, HttpServletRequest request) {
+		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
+		
+		MultipartFile attachment = quest.getAttachment();
+		
+		System.out.println(attachment);
+		System.out.println(attachment.getOriginalFilename());
+		
+		if(attachment.getOriginalFilename().trim().equals("") || attachment.getOriginalFilename()==null) { //값이 있으면 넘겨서 세팅하고
+			quest.setAttachParam(null);
+		} else {
+			quest.setAttachParam(getAttachParam(attachment, request));
+		}
+		System.out.println("226+"+quest.getAttachParam());
+		
+		return qdao.insertAnswer(sqlSession, quest);
+	}
+
+	private Attachment getAttachParam(MultipartFile attachment, HttpServletRequest request) {
+		Attachment attachParam = new Attachment();
+		attachParam.setAttachName(attachment.getOriginalFilename());
+		String[] returnArr = saveFile(attachment, request);// returnArr[0] = savePath; returnArr[1] = rename;
+		if(returnArr[1] != null) {
+			attachParam.setAttachPath(returnArr[0]);
+			attachParam.setAttachRename(returnArr[1]);
+		}
+		
+		System.out.println("152+"+attachParam);
+		return attachParam;
+	}
+	
+	private String[] saveFile(MultipartFile attachment, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
+		
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		int ranNum = (int)(Math.random()*100000);
+		String rawname = attachment.getOriginalFilename();
+		String rename = sdf.format(new Date(System.currentTimeMillis())) + ranNum + rawname.substring(rawname.lastIndexOf("."));
+		String fileRoute = folder + "\\" + rename;
+		
+		try {
+			attachment.transferTo(new File(fileRoute));
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 : " + e.getMessage());
+		}
+		
+		String[] returnArr = new String[2];
+		returnArr[0] = savePath;
+		returnArr[1] = rename;
+		
+		return returnArr;
+	}
+
+	@Override
+	public QuestionRespDto selectQuestion(int boardNum, HttpServletRequest request) {
+		
+		QuestionRespDto qresp = qdao.selectQuestion(sqlSession, boardNum);
+		qresp.setWriterInfo(
+				writerInfoToString(getWriterInfoMap(qresp.getBoard().getUserNum()))
+		);
+		
+		if((Member)request.getSession().getServletContext().getAttribute("loginUser") != null) {
+			int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+			
+			if(qresp.getBoard().getUserNum() != userNum) {
+				qdao.addViewCount(sqlSession, boardNum);
+			} else {
+				qdao.updateIsRead(sqlSession, boardNum);
+			}
+		}
+		return qresp;
+	}
+
+	@Override
+	public ExpertRespDto selectExpertResp(int userNum) {
+		ExpertRespDto expertResp = qdao.selectExpertResp(sqlSession, userNum);
+		String str1 = expertResp.getExpert().getExpertEstimate().split(",")[0];
+		String str2 = expertResp.getExpert().getExpertEstimate().split(",")[1];
+		String str = str2 + " 원 (" + str1 + "분당)";
+		expertResp.getExpert().setExpertEstimate(str);
+		return expertResp;
+	}
+
+	@Override
+	public ArrayList<QuestionRespDto> selectExpertQuestionList(int expertNum) {
+		return qdao.selectExpertQuestionList(sqlSession, expertNum);
+	}
+
+
+
+
 }

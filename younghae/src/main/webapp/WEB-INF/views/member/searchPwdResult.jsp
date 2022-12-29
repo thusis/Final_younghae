@@ -142,28 +142,97 @@ a[target='_blank'] {
 							변경</span>
 						<div style="font-size: 5px;">로그인을 통해 영해의 다양한 서비스를 사용해 보세요.</div>
 					</div>
+					
 					<div class="panel-body p-3">
-						<form action="login_script.php" method="POST">
+						<form action="${contextPath }/updatePwd.me" method="POST" id="updatePwd2">
+						<input id="userId" name="userId" type="hidden" value="${ userId }">
 							<div class="form-group py-2" style="margin-top: 15px;">
 								<div>새 비밀번호*</div>
-								<div class="input-field">
-									<input type="text" placeholder="비밀번호를 입력해주세요" required>
+								<div class="input-field" id="myPwd2">
+									<input type="password" id="myPwd" name="myPwd" placeholder="비밀번호를 입력해주세요" required>
 								</div>
 							</div>
 							<div class="form-group py-1 pb-2" style="margin-bottom: 15px;">
 								<div>새 비밀번호 확인*</div>
-								<div class="input-field">
-									<input type="email" style="width: 450px; border: 0;"
+								<div class="input-field" id="myPwdChk2">
+									<input type="password" id="myPwdChk" style="width: 450px; border: 0;"
 										placeholder="비밀번호를 입력해주세요" required>
 								</div>
 							</div>
-							<div class="btn btn-primary btn-block mt-3 "
-								style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);">비밀번호변경</div>
+							<input type="submit" id="enrollBtn" class="btn btn-primary btn-block mt-3 "
+								style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" value="비밀번호변경">
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<script>
+	// 비밀번호 일치 확인
+	window.onload = () => {
+		// 비밀번호 정규표현식
+        const pwd1 = document.getElementById('myPwd');
+        const pwd2 = document.getElementById('myPwdChk');
+        const myPwd2 = document.getElementById('myPwd2');
+        const myPwdChk2 = document.getElementById('myPwdChk2');
+        const regExp2 = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}$/
+
+        const checkRegPwd = document.getElementById('checkRegPwd');
+        const checkPwd = document.getElementById('checkPwd');
+
+        pwd1.addEventListener('change', function() {
+            if (regExp2.test(this.value)) {
+                pwd1.style.backgroundColor = '#24E082';
+                myPwd2.style.backgroundColor = '#24E082';
+                isPwd = true;
+                if (pwd1.value != pwd2.value && pwd1.value != "") {
+                    pwd2.style.backgroundColor = '#FFCECE';
+                    myPwdChk2.style.backgroundColor = '#FFCECE';
+                }
+            } else {
+                pwd1.style.backgroundColor = '#FFCECE';
+                myPwd2.style.backgroundColor = '#FFCECE';
+                isPwd = false;
+                if (pwd1.value != pwd2.value && pwd1.value != "") {
+                    pwd2.style.backgroundColor = '#FFCECE';
+                    myPwdChk2.style.backgroundColor = '#FFCECE';
+                }
+            }
+        })
+
+
+        // 비밀번호 일치 확인
+        pwd2.addEventListener('change', function() {
+            if (pwd1.value == pwd2.value && pwd1.value != "") {
+                console.log('일치');
+                pwd2.style.backgroundColor = '#24E082';
+                myPwdChk2.style.backgroundColor = '#24E082';
+                isPwd2 = true;
+
+            } else {
+                console.log('불일치');
+                pwd2.style.backgroundColor = '#FFCECE';
+                myPwdChk2.style.backgroundColor = '#FFCECE';
+                isPwd2 = false;
+            }
+        });
+        
+    	 // 회원가입 버튼 활성화
+        document.getElementById('enrollBtn').addEventListener('click', function() {
+            const enrollBtn = document.getElementById('enrollBtn');
+
+            if (isPwd && isPwd2) {
+                document.getElementById('updatePwd2').submit();
+            } else {
+                alert('회원가입 폼에 맞춰주세요.');
+                if (!isPwd) {
+                    document.getElementById('myPwd').focus();
+                } else if (!isPwd2) {
+                    document.getElementById('myPwdChk').focus();
+                } 
+            }
+        });
+	}
+	</script>
 </body>
 </html>

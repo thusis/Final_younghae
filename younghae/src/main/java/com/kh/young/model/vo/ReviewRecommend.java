@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ReviewReCommend {
+public class ReviewRecommend {
 	private int rvNum;
 	private int userNum;
 }

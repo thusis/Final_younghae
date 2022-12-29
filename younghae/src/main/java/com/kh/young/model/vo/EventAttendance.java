@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class EventAttenDance {
+public class EventAttendance {
 	private int att_no;
 	private Date att_date;
 	private int user_num;

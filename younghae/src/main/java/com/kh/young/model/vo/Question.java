@@ -14,5 +14,6 @@ import lombok.ToString;
 public class Question {
 	private int questionNum;
 	private int proNum;
+	private String isRead;
 	private String isSolved;
 }
