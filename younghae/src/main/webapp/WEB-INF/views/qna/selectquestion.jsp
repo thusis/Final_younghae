@@ -14,6 +14,9 @@
 	
 	<style>
 		a{text-decoration:none;}
+		.bn_board-meta > i : hover {
+			color: green;
+		}
 	</style>
 </head>
 <body>
@@ -56,12 +59,13 @@ ${qresp }
                         </div>
                         <div class="row bn_content">
                         	${qresp.board.boardContent}
+							<c:if test="${ qresp.qattach.attachNum ne 0}">
+	                        <div class="row" style="padding:3rem;">
+								<img src="${contextPath}/resources/uploadFiles/${qresp.qattach.attachRename}" alt="" class="img-fluid">
+								<br>
+							</div>
+							</c:if>
                         </div>
-
-						<c:if test="${ !empty qresp.qattach.attachNum }">
-							<img src="${contextPath }/resources/uploadFiles/${qresp.qattach.attachRename}" alt="" class="img-fluid">
-						</c:if>
-						<c:if test="${ empty qresp.qattach.attachNum }">없다</c:if>
                        	
                         <div class="row">
                             <div class="col-2"><span>${qresp.writerInfo}</span></div>
@@ -69,25 +73,36 @@ ${qresp }
                             <div class="col d-flex align-items-center justify-content-end bn_board-meta text-end">
                                 <i class="view fa-solid fa-eye m-2"></i><span class=" m-2">${qresp.board.boardView}</span>
                                 <i class="bi bi-clipboard-plus-fill"></i><span class=" m-2"><c:if test="${ empty qresp.answerList }">0</c:if><c:if test="${ !empty qresp.answerList }">${qresp.answerList.size()}</c:if></span>
-                                <i class="bi bi-chat-dots m-2"></i><span class=" m-2"><c:if test="${ empty qresp.replyList }">0</c:if>${qresp.replyList.size()}</span>
-                                <i class="save fa-regular fa-bookmark m-2"></i><span class=" m-2"><c:if test="${ empty qresp.scrapList }">0</c:if>${qresp.scrapList.size()}</span>
+                                <i class="bi bi-chat-dots m-2"></i><span class=" m-2">${qresp.replyList.size()}</span>
+                                <i class="save fa-regular fa-bookmark m-2" onclick="deleteScrap();"></i><span class=" m-2">${qresp.scrapList.size()}</span>
+                                <i class="save fa-regular fa-bookmark m-2" onclick="setScrap();"></i><span class=" m-2">${qresp.scrapList.size()}</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="dropdown col-lg-1 align-items-center justify-content-center">
+                    	<c:if test="${loginUser!=null }">
                         <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi lg bi-three-dots" style="font-size: 1.5rem; color:darkgray;"></i>
                         </button>
                         <ul class="dropdown-menu">
+                        
 	                        <c:if test="${loginUser.userNum==qresp.board.userNum}">
-	                            <li><a class="dropdown-item" href="#">수정하기</a></li>
-	                            <li><a class="dropdown-item" onclick="deleteBoard();">삭제하기</a></li>
+	                        	<c:if test="${ qresp.answerList.size() eq 0 }">
+		                            <li><a class="dropdown-item" onclick="updateQuestion();">수정하기</a></li>
+		                            <li><a class="dropdown-item" onclick="location.href='${contextPath}/deletequestion.qa'">삭제하기</a></li>
+	                            </c:if>
+	                        	<c:if test="${ qresp.answerList.size() ne 0 }">
+		                            <li><a class="dropdown-item" onclick="disabledAlert();">수정하기</a></li>
+		                            <li><a class="dropdown-item" onclick="disabledAlert();">삭제하기</a></li>
+	                            </c:if>
 	                         </c:if>
+	                         
 	                        <c:if test="${loginUser.userNum!=qresp.board.userNum}">
 	                            <li><a class="dropdown-item" onclick="openPopUp();" >신고하기</a></li>
 	                        </c:if>
                         </ul>
+                        </c:if>
                     </div>
                 </div>
 
@@ -97,16 +112,47 @@ ${qresp }
                     <div class="col-lg d-flex align-items-center" >
                       <h4 class="bn_txt_strong">댓글을 남기세요&nbsp;&nbsp;<i class="bi bi-chat-dots"></i></h4>
                     </div>
-                  </div>
+                </div>
                 <br>
-                <div class="row">
+
+                <div class="row"> <!--================ Q댓글작성파트 ================-->
+                    <c:if test="${ loginUser != null }">
                     <div class="col-lg">
-                        <textarea name="comment" class="form-control" placeholder="Your Comment*" id="replyContent"></textarea>
+                        <input name="comment" class="col" style="height:4rem;" placeholder="Your Comment*" class="replyContent">
                     </div>
                     <div class="col-lg-2"> 
-                        <button class="btn bn_btn_search2" id="replySubmit" type="button">Post Comment</button>
+                        <button class="btn bn_btn_search2 replySubmits" type="button">
+                        	Post Comment
+                        	<span style="display:none">${qresp.board.boardNum}</span>                        
+                        	<h6 style="display:none">${qresp.board.boardType}</h6>                        
+                        </button>
                     </div>
-                </div>
+                    </c:if>
+                    <c:if test="${ loginUser == null }">
+                    <div class="col-lg">
+                    	<input name="comment" class="col" style="height:4rem;" placeholder="로그인한 회원만 작성할 수 있습니다">
+                    </div>
+                    <div class="col-lg-2"> 
+                        <button class="btn bn_btn_search2" type="button" disabled>Post Comment</button>
+                    </div>
+                    </c:if>
+                </div><!--================ Q댓글작성파트 ================-->
+                
+                <br>
+				<div class="row reply_list"><!-- ===========Q댓글리스트============== -->
+	                <c:forEach items="${qresp.replyList }" var="r">
+	                <div class="col-lg-12 mt-3"> <!-- secondDiv -->
+	                    <div class="row reply_item" >
+		                    <span style="display:none;">${r.reply.replyNum }</span>
+		                    <span class="col-lg-2 text-start reply_item_replyUserNum">${r.writerInfo }</span>
+		                    <span class="col-lg-8 reply_item_replyContent">${r.reply.replyContent }</span>
+		                    <span class="col-lg-2 reply_item_replyContent">${r.reply.replyDate }</span>
+	                    </div>
+	                    <hr>
+                    </div>
+	                </c:forEach>   
+                </div><!-- =============================Q댓글리스트================================ -->
+                <br>
             </div>
 
             <div class="col-lg-2"><!--관련영양제-->
@@ -121,10 +167,12 @@ ${qresp }
 						</a>
 					</c:if>
 				</div>
-                <div class="mt-3">
-                	<h5 style="font-family:'IBM Plex Sans KR', sans-serif;font-weight:600;">전문가세요? 관련 답변을 작성해보세요</h5>
-                	<button class="text-left" style="border:0px; font-size:1rem;" onclick="location.href='${contextPath}/writeanswer.qa?boardNum='+'${qresp.board.boardNum}'">답변 등록</button>
-                </div>
+               	<c:if test="${loginUser !=null && loginUser.userCNumber eq 2}">
+	                <div class="mt-3">
+	                	<h5 style="font-family:'IBM Plex Sans KR', sans-serif;font-weight:600;">전문가세요? 관련 답변을 작성해보세요</h5>
+	                	<button class="text-left" style="border:0px; font-size:1rem;" onclick="location.href='${contextPath}/writeanswer.qa?boardNum='+'${qresp.board.boardNum}'">답변 등록</button>
+	                </div>
+                </c:if>
             </div>
             
             
@@ -141,7 +189,7 @@ ${qresp }
 		
 		<c:forEach items="${qresp.answerList}" var="ans" varStatus="Astatus">
 			<div class="row">
-		       <div class="col-lg-10 bn_card-bottom"><!--영양제복용법답변 ===============-->
+		       <div class="col-lg-10 bn_card-bottom"><!--A영양제복용법답변 ===============-->
 		           <div class="row">
 		               <div class="col-lg-1 d-flex bn_txt_big"><h2>A</h2><h3>${Astatus.index+1}</h3></div>
 		               <div class="col-lg-10">
@@ -185,12 +233,12 @@ ${qresp }
 		                       ${ans.board.boardContent}
 		                   </div>
 		                   
-		                   <c:if test="${ !empty ans.aattach.attachNum }">
+		                   <c:if test="${ ans.aattach.attachNum ne 0 }">
 								<img src="${contextPath }/resources/uploadFiles/${ans.aattach.attachRename}" alt="" class="img-fluid">
 		                   </c:if>
 		
 		                   <div class="row justify-content-end bn_board-meta">
-		                       <i class="bi bi-chat-dots m-2"></i><span class=" m-2"><c:if test="${ empty ans.replyList }">0</c:if>${ans.replyList.size()}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		                       <i class="bi bi-chat-dots m-2"></i><span class=" m-2">${ans.replyList.size()}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		                   </div>
 		
 		                   <hr>
@@ -201,16 +249,45 @@ ${qresp }
 		                       </div>
 		                     </div>
 		                   <br>
-		                   <div class="row">
-		
-		                       <div class="col-lg">
-		                           <textarea name="comment" class="form-control" placeholder="Your Comment*" id="replyContent"></textarea>
-		                       </div>
-		                       
-		                       <div class="col-lg-2"> 
-		                           <button class="btn bn_btn_search2" id="replySubmit" type="button">Post Comment</button>
-		                       </div>
-		                   </div>
+		                   <div class="row"><!--================ A댓글작성파트 ================-->
+			                    <c:if test="${ loginUser != null }">
+			                    <div class="col-lg">
+			                        <input name="comment" class="col" style="height:4rem;" placeholder="Your Comment*" class="replyContent">
+			                    </div>
+			                    <div class="col-lg-2"> 
+			                        <button class="btn bn_btn_search2 replySubmits" type="button">
+			                        Post Comment
+			                        <span style="display:none">${ans.board.boardNum}</span>    
+			                        <h6 style="display:none">${ans.board.boardType}</h6>                        
+			                        </button>
+			                    </div>
+			                    </c:if>
+			                    <c:if test="${ loginUser == null }">
+			                    <div class="col-lg">
+			                    	<input name="comment" class="col" style="height:4rem;" placeholder="로그인한 회원만 작성할 수 있습니다">
+			                    </div>
+			                    <div class="col-lg-2">
+			                        <button class="btn bn_btn_search2" type="button" disabled>Post Comment</button>
+			                    </div>
+			                    </c:if>
+		                   </div><!--================ A댓글작성파트 ================-->
+		                   
+		                   <br>
+		                   <div class="row reply_list"><!-- ===========A댓글리스트============== -->
+				                <c:forEach items="${ans.replyList }" var="r">
+				                <div class="col-lg-12 mt-3"> <!-- secondDiv -->
+				                    <div class="row reply_item" >
+					                    <span style="display:none;">${r.reply.replyNum }</span>
+					                    <span class="col-lg-2 text-start reply_item_replyUserNum">${r.writerInfo }</span>
+					                    <span class="col-lg-8 reply_item_replyContent">${r.reply.replyContent }</span>
+					                    <span class="col-lg-2 reply_item_replyContent">${r.reply.replyDate }</span>
+				                    </div>
+				                    <hr>
+			                    </div>
+				                </c:forEach>   
+			                </div><!-- =============================A댓글리스트================================ -->
+			             	<br>
+		                   
 		               </div>
 		
 		                <div class="dropdown col-lg-1 align-items-center justify-content-center">
@@ -268,24 +345,153 @@ ${qresp }
 <br>
 <br>
 <br>
+	
+	<script>
+	console.log(document.getElementsByClassName('replySubmits')[0])
+		
+		const replyBtns = document.getElementsByClassName('replySubmits');
+		
+		for(const btn of replyBtns){//댓글달기===================================================================================
+			btn.addEventListener('click', function(){
+				
+				const replyContent = btn.parentNode.parentNode.querySelector('input').value;
+				var boardNum = this.querySelector('span').innerText;
+				const boardType = this.querySelector('h6').innerText;
+				if( ${loginUser.userNum} ){
+					var userNum = ${loginUser.userNum};
+				}
+				
+				console.log(btn.parentNode.parentNode.querySelector('input').value);
+				console.log(boardNum, boardType, userNum);
+				
+				$.ajax({
+					url: '${contextPath}/insertreply.qa',
+					type: 'POST',
+					data: {
+						replyContent : replyContent,
+						boardNum : boardNum,
+						boardType : boardType,
+						userNum : userNum
+					},
+					success: (data)=>{
+						btn.parentNode.parentNode.querySelector('input').value = '';
+						
+						const replyListDiv = btn.parentNode.parentNode.parentNode.querySelector('.reply_list');
+						replyListDiv.innerHTML = "";
+						replyListDiv.classList.add("row", "reply_list");
+						
+						console.log(data[0].reply.replyNum); //
+						console.log(data[0].writerInfo);
+						console.log(data[0].reply.replyContent);
+						console.log(data[0].reply.replyDate);
+						
+						for ( var i=0; i<data.length; i++ ){
+							const secondDiv = document.createElement('div'); secondDiv.classList.add("col-lg-12", "mt-3");
+							const replyItemDiv = document.createElement('div'); replyItemDiv.classList.add("row", "reply_item");
+							
+							const replyNumSpan = document.createElement('span');
+							replyNumSpan.style.display = "none";
+							replyNumSpan.innerText = data[i].reply.replyNum;
+							
+							const writerInfoSpan = document.createElement('span');
+							writerInfoSpan.classList.add("col-lg-2", "text-start", "reply_item_replyUserNum");
+							writerInfoSpan.innerText = data[i].writerInfo;
+							
+							const replyContentSpan = document.createElement('span');
+							replyContentSpan.classList.add("col-lg-8", "reply_item_replyContent");
+							replyContentSpan.innerText = data[i].reply.replyContent;
+							
+							const replyDateSpan = document.createElement('span');
+							replyDateSpan.classList.add("col-lg-2", "reply_item_replyContent");
+							replyDateSpan.innerText = data[i].reply.replyDate;
+							
+							const hr = document.createElement('hr');
+	
+							replyItemDiv.append(replyNumSpan);
+							replyItemDiv.append(writerInfoSpan);
+							replyItemDiv.append(replyContentSpan);
+							replyItemDiv.append(replyDateSpan);
+							secondDiv.append(replyItemDiv);
+							secondDiv.append(hr);
+							replyListDiv.append(secondDiv);
+						}
+					},
+					error: (data)=>{
+						alert("실패!");
+					}
+				});
+			});
+		}//댓글달기 끝===================================================================================
 
-	
-<script>
-	window.onload=()=>{
-		$("#file").on('change',function(){ //첨부파일
-			var fileName = $("#file").val();
-			$(".upload-name").val(fileName);
-		});
-	}
+			
+		//====게시글 수정
+		function updateQuestion(){
+			console.log("수정");
+			
+		}
+		
+		//====수정/삭제 불가
+		function disabledAlert(){
+			alert('이미 답글이 달린 게시글은 수정/삭제가 불가능합니다‼‼');
+		}
+		
+		//====스크랩불러오기
+		var boardNum = "${qresp.board.boardNum}";
+		var userNum = "${loginUser.userNum}";
 
-	$("#selectPillBtn").click(function(){ //영양제 선택 모달창 팝업
-		$("#modalPillChoice").modal({backdrop:'static'});
-		$('#modalPillChoice').modal("show");
-	//영양제 검색 > 영양제이름으로만 검색결과 > 뷰 > 선택 > 유저에게 보이는 창에는 영양제이름이, 전달되는 값은 영양제제품번호만
-	//모달이 아니고 팝업으로 구현 따로 창을 만들어야 함
-	});
+		function deleteScrap(){
+	   			$.ajax({
+	   				url:'${contextPath}/deleteScrap.qa',
+	   				data :{ boardNum : boardNum , userNum : userNum },
+	   				success : (data)=>{
+	   					console.log("스크랩취소");
+// 						document.getElementById('isScrap').innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
+	// 					this.innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
+// 						document.getElementById('scrapCount').innerHTML = '<i class="save fa-regular fa-bookmark"></i>' + data;
+// 	    				isScrap = 0;
+	   				}
+	   			}); // ajax 스크랩 취소
+			} 
+		function setScrap(){
+				$.ajax({
+	  				url:'${contextPath}/setScrap.qa',
+	   				data :{ boardNum : boardNum , userNum : userNum },
+	   				success : (data)=>{
+	   					console.log("스크랩함");
+// 	   					document.getElementById('isScrap').innerHTML = '<h2><i class="fa-solid fa-bookmark"></i></h2>';
+// 						document.getElementById('scrapCount').innerHTML = '<i class="fa-solid fa-bookmark"></i>' + data;
+// 	    				isScrap = 1;
+	  				}
+	  			}); // ajax 스크랩 추가
+			}
+// 		function changeScrap(){
+// 			if(isScrap==1){
+// 	   			$.ajax({
+// 	   				url:'${contextPath}/deleteScrap.qa',
+// 	   				data :{ boardNum : boardNum , userNum : userNum },
+// 	   				success : (data)=>{
+// 	   					console.log("스크랩취소");
+// // 						document.getElementById('isScrap').innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
+// 	// 					this.innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
+// // 						document.getElementById('scrapCount').innerHTML = '<i class="save fa-regular fa-bookmark"></i>' + data;
+// // 	    				isScrap = 0;
+// 	   				}
+// 	   			}); // ajax 스크랩 취소
+// 			} else {
+// 				$.ajax({
+// 	  				url:'${contextPath}/setScrap.qa',
+// 	   				data :{boardId:boardId,userId:userId},
+// 	   				success : (data)=>{
+// 	   					console.log("스크랩함");
+// // 	   					document.getElementById('isScrap').innerHTML = '<h2><i class="fa-solid fa-bookmark"></i></h2>';
+// // 						document.getElementById('scrapCount').innerHTML = '<i class="fa-solid fa-bookmark"></i>' + data;
+// // 	    				isScrap = 1;
+// 	  				}
+// 	  			}); // ajax 스크랩 추가
+// 			}
+// 		}
 	
 	
-</script>
+	</script>
 </body>
 </html>

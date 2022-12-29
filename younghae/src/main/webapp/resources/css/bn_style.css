@@ -275,6 +275,7 @@
 	
 	.bn_badge:hover{
 		cursor:pointer;
+		color:#24E082;
 	}
 
     /*게시글 작성====--*/
@@ -328,9 +329,13 @@
     /*게시글 상세보기*/
 
     .bn_board-meta{
-        align-items: ;
+		cursor:pointer;
         font-size: 1.5rem;
         font-weight: 900;
+    }
+    
+    .bn_board-meta: hover{
+		color:#24E082;
     }
 
     .bn_card-top{
@@ -522,7 +527,7 @@
         font-family: 'IBM Plex Sans KR', sans-serif; 
     }
 
-    .bn_homebox h4,.bn_homebox  h5,.bn_homebox  h6{
+    .bn_homebox h4,.bn_homebox h5,.bn_homebox  h6{
         color:#f8f8fa;
     }
 

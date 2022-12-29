@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.Reply;
 import com.kh.young.qna.common.Qexception;
-import com.kh.young.qna.dto.AnswerRespDto;
 import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
+import com.kh.young.qna.dto.ReplyRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
 import com.kh.young.qna.service.QaService;
 
@@ -56,7 +58,6 @@ public class QaController {
 		
 		if(((Member)request.getSession().getServletContext().getAttribute("loginUser")) != null) {
 			ArrayList<QuestionRespDto> myQuest = getMyQna(request);
-			System.out.println(myQuest);
 			model.addAttribute("myQuest", myQuest);
 			model.addAttribute("isRead",getIsRead(myQuest));
 		}
@@ -107,6 +108,14 @@ public class QaController {
 	}
 
 	/******************************************************************/
+	/**내가 남긴 질문 - 더보기**/
+	@GetMapping("myquest.qa")
+	public String goMyQuest(HttpServletRequest request, Model model) {
+		model.addAttribute("myQuest",getMyQna(request));
+		return "myquestlist";
+		
+	}
+	/******************************************************************/
 	/**게시글 삽입 페이지 조회**/
 	@GetMapping("writequestion.qa")
 	public String writeQuestion() {
@@ -150,7 +159,7 @@ public class QaController {
 		model.addAttribute("qresp", qService.selectQuestion(boardNum, request));
 		return "selectquestion";
 	}
-
+	
 	/*******************************************************************/
 	/**답변 작성**/
 	@GetMapping("writeanswer.qa")
@@ -172,7 +181,82 @@ public class QaController {
 	}
 	
 	/*******************************************************************/
+	/**댓글 입력**/
+	@PostMapping("insertreply.qa")
+	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
+		System.out.println("컨트롤러INSERT"+r);
+		int result = qService.insertReply(r);
+		System.out.println("컨트롤러"+result);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		ArrayList<ReplyRespDto> replyList = getReplyList(r.getBoardNum());
+		
+		System.out.println("컨트롤러SELECTLIST"+replyList);
+		
+		GsonBuilder gb = new GsonBuilder();
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd"); // 형식 지정 후
+		Gson gson = gb2.create();
+
+		try {
+			gson.toJson(replyList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
+	private ArrayList<ReplyRespDto> getReplyList(int boardNum) {
+		return qService.getReplyList(boardNum);
+	}
+
+	/**댓글 삭제**/
+	@GetMapping("deletereply.qa")
+	@ResponseBody
+	public int deleteReply(@RequestParam("replyNum") int replyNum, HttpServletResponse response) {
+		return qService.deleteReply(replyNum);
+	}
+	
+	/*******************************************************************/
+	/**스크랩**/
+	@GetMapping(value = "setScrap.qa")
+	@ResponseBody
+	public String setScrap(@ModelAttribute Clip clip, HttpServletResponse response) {
+		qService.setScrap(clip);
+		return String.valueOf(qService.getScrapCount(clip.getBoardNum()));
+	}
+	
+	@GetMapping(value = "deleteScrap.qa")
+	@ResponseBody
+	public String deleteScrap(@ModelAttribute Clip clip, HttpServletResponse response) {
+		qService.deleteScrap(clip);
+		return String.valueOf(qService.getScrapCount(clip.getBoardNum()));
+	}
+	
+	/*******************************************************************/
+	/**게시글 수정**/
+	@PostMapping("updatequestion.qa")
+	public String updateQuestion(@ModelAttribute QuestionInsertDto quest, HttpServletRequest request, Model model) {
+		int result = qService.updateQuestion(quest, request); // quest의 boardTitle로 questionNum 받아올거야
+		if(result>0) {
+			return "redirect:question.qa";
+		} else {
+			throw new Qexception("답변 작성 실패");
+		}
+	}
+	/*******************************************************************/
+	/**게시글 삭제**/
+	@PostMapping("deletequestion.qa")
+	public String deleteQuestion(@ModelAttribute QuestionInsertDto quest, HttpServletRequest request, Model model) {
+		int result = qService.deleteQuestion(quest, request); // quest의 boardTitle로 questionNum 받아올거야
+		if(result>0) {
+			return "redirect:question.qa";
+		} else {
+			throw new Qexception("답변 작성 실패");
+		}
+	}
+	
+	
+	
+	/*******************************************************************/
 	/**게시글 검색**/
 	@GetMapping("search.qa")
 	public String seachQuestion() {

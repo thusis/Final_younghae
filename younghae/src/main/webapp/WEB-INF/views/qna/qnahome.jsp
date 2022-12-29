@@ -25,13 +25,11 @@ ${ qlist}
             </ul>
         </div>
 		
-		<c:if test="${loginUser==null }">
-			<input type="text" id="tempUserNum"/>
-			<button class="loginBtn">1</button>관리자<br>
-		</c:if>
-
+		<input type="text" id="tempUserNum"/>
+		<button id="loginBtn">로그인</button>
+		<button id="logoutBtn">로그아웃</button><br>
+		
 		<c:if test="${ loginUser != null }">
-		<button id="logout">로그아웃</button>
         <div style="padding: 30px 0 10px 0;">
             <h3 class="text-start" style="font-weight: 700;">내가 남긴 질문</h3>
             <h6 class="mt-3"><b>전문가와 함께 건강관리를 시작하세요</b></h6>
@@ -51,7 +49,7 @@ ${ qlist}
                         	<c:if test="${ isread eq false }"><div class="bn_round_badge" id="checkMyQaBadge"></div></c:if>
                         </div>
                     </div>
-                    <button class="btn">더보기</button>
+                    <button class="btn" onclick="location.href='${contextPath}/myquest.qa'">더보기</button>
                 </div>
                 
                 <c:if test="${myQuest.size()==0 }">
@@ -63,12 +61,13 @@ ${ qlist}
                 </c:if>
 
                 <c:if test="${myQuest.size()!=0 }">
+                <c:forEach items="${myQuest}" var="mq" end="2">
 				<div class="bn_homebox_3 row">
                     <div class="col-lg-10">
-                        <h5>${myQuest[0].board.boardTitle}</h5>
+                        <h5>${mq.board.boardTitle}</h5>
                         <h6>
                             <i class="fa-solid fa-arrow-right-long" style="color: rgb(212, 212, 212);"></i>
-                            <span>${myQuest[0].answerList.size()}</span>개의 답변
+                            <span>${mq.answerList.size()}</span>개의 답변
                         </h6>
                     </div>
                     <div class="col-lg-2">
@@ -78,48 +77,11 @@ ${ qlist}
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">수정하기</a></li>
                             <li><a class="dropdown-item" onclick="deleteBoard();">삭제하기</a></li>
-                            <li><a class="dropdown-item" onclick="openPopUp();" >신고하기</a></li>
                         </ul>
                     </div>
                 </div>
-				<div class="bn_homebox_3 row">
-                    <div class="col-lg-10">
-                        <h5>${myQuest[1].board.boardTitle}</h5>
-                        <h6>
-                            <i class="fa-solid fa-arrow-right-long" style="color: rgb(212, 212, 212);"></i>
-                            <span>${myQuest[1].answerList.size()}</span>개의 답변
-                        </h6>
-                    </div>
-                    <div class="col-lg-2">
-                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi lg bi-three-dots" style="font-size: 1.5rem; color:darkgray;"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">수정하기</a></li>
-                            <li><a class="dropdown-item" onclick="deleteBoard();">삭제하기</a></li>
-                            <li><a class="dropdown-item" onclick="openPopUp();" >신고하기</a></li>
-                        </ul>
-                    </div>
-                </div>
-				<div class="bn_homebox_3 row">
-                    <div class="col-lg-10">
-                        <h5>${myQuest[2].board.boardTitle}</h5>
-                        <h6>
-                            <i class="fa-solid fa-arrow-right-long" style="color: rgb(212, 212, 212);"></i>
-                            <span>${myQuest[2].answerList.size()}</span>개의 답변
-                        </h6>
-                    </div>
-                    <div class="col-lg-2">
-                        <button class="btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi lg bi-three-dots" style="font-size: 1.5rem; color:darkgray;"></i>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">수정하기</a></li>
-                            <li><a class="dropdown-item" onclick="deleteBoard();">삭제하기</a></li>
-                            <li><a class="dropdown-item" onclick="openPopUp();" >신고하기</a></li>
-                        </ul>
-                    </div>
-                </div>
+                </c:forEach>
+
                 </c:if>
              </div>
 
@@ -204,32 +166,33 @@ ${ qlist}
              <h6>지난 24시간 동안 조회수가 가장 높은 질문글입니다</h6>
          </div>
 
-           <div class="row" style="padding: 1.25rem;">
-           <c:forEach items="${topTwo}" var="t">
-               <div class="col bn_homebox_4">
-                   <div class="row" id="titel1" style="font-size: 1.25rem; font-weight: 600; color:#24E082;">${t.board.boardTitle}</div>
-                   <div class="row" id="titel1">
+		<div class="row" style="padding: 1.25rem;">
+			<c:forEach items="${topTwo}" var="t">
+			<div class="col bn_homebox_4 toptwo">
+				<div class="row" id="titel1" style="font-size: 1.25rem; font-weight: 600; color:#24E082;">${t.board.boardTitle}</div>
+                <div class="row" id="titel1">
+                   	<span style="display:none" class="topTwoBoardNum">${t.board.boardNum} </span>
                        <span style="font-size: 0.5rem; font-weight: 600;" >${t.writerInfo}</span>&nbsp;&nbsp;
                        <span style="font-size: 0.5rem;" >${t.board.boardCreateDate}</span>
-                   </div>
-                   <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">
-                   	${t.board.boardContent}
-                   </div>
-                   <hr style="border: 1px solid darkgrey; width: 5rem; text-align:left; margin-left: 0;">
-                   <div class="row">
-                       <span style="line-height:1.5rem; font-size: 1rem; font-weight: 600; color:#24E082;">약사</span>
-                       <span style="line-height:1.5rem; font-size: 1.25rem; font-weight: 600; color:#24E082;">김가람</span>
-                   </div>
-                   <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">안녕하세요. 네이버 지식iN 상담 약사 강병구 입니다.
-                       오랜시간 앉아서 공부를 해야 하는 수험생의 경우 필요한 영양제에 대해서 문의하신 것으로 보입니다.
-                       우선 말씀하신 비타민B 군의 경우 에너지 생성에 도움을 줄 수 있어 매일 오전에 섭취하는 것이 좋습니다.
-                       그리고 활발한 두뇌활동을 위해 고함량의 오메가3가 권장되는데 중요한 점은 DHA 함량이 뛰어난 식물성오메가3를 섭취하는 것이 권장됩니다.
-                       추가로 햇빛을 많이 보지 못하는 경우 5000IU 단위의 비타민D 의 섭취도 면역력 및 지구력 강화에 도움이 될 수 있습니다.
-                       식물성오메가3에 대한 자세한 내용은 아래를 참고하세요.</div>
-                   <div class="row  justify-content-end" style="margin-right: 1.5rem;">
-                       <i class="view fa-solid fa-eye m-2"></i><span class="m-1">${t.board.boardView}</span>
-                       <i class="save fa-regular fa-bookmark m-2"></i><span class="m-1">10</span>
-                   </div>
+                </div>
+				<div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">
+					${t.board.boardContent}
+				</div>
+				<hr style="border: 1px solid darkgrey; width: 5rem; text-align:left; margin-left: 0;">
+				<div class="row">
+					<span style="line-height:1.5rem; font-size: 1rem; font-weight: 600; color:#24E082;">약사</span>
+					<span style="line-height:1.5rem; font-size: 1.25rem; font-weight: 600; color:#24E082;">김가람</span>
+				</div>
+                <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">안녕하세요. 네이버 지식iN 상담 약사 강병구 입니다.
+                    오랜시간 앉아서 공부를 해야 하는 수험생의 경우 필요한 영양제에 대해서 문의하신 것으로 보입니다.
+                    우선 말씀하신 비타민B 군의 경우 에너지 생성에 도움을 줄 수 있어 매일 오전에 섭취하는 것이 좋습니다.
+                    그리고 활발한 두뇌활동을 위해 고함량의 오메가3가 권장되는데 중요한 점은 DHA 함량이 뛰어난 식물성오메가3를 섭취하는 것이 권장됩니다.
+                    추가로 햇빛을 많이 보지 못하는 경우 5000IU 단위의 비타민D 의 섭취도 면역력 및 지구력 강화에 도움이 될 수 있습니다.
+                    식물성오메가3에 대한 자세한 내용은 아래를 참고하세요.</div>
+                <div class="row  justify-content-end" style="margin-right: 1.5rem;">
+                    <i class="view fa-solid fa-eye m-2"></i><span class="m-1">${t.board.boardView}</span>
+                    <i class="save fa-regular fa-bookmark m-2"></i><span class="m-1">10</span>
+                </div>
                </div>
              </c:forEach>
 
@@ -245,20 +208,19 @@ ${ qlist}
 <script>
 window.onload=()=>{
 	
-	const loginBtn= document.getElementsByClassName("loginBtn");
-	const loginNum = document.getElementById("tempUserNum");
-	console.log(loginNum);
-	for(const btn of loginBtn){
-		btn.addEventListener('click', function(){
-			console.log(document.getElementById("tempUserNum").value);
-			location.href='${contextPath}/login.qa?userNum='+document.getElementById("tempUserNum").value;
-		})
-	}
 	
-// 	const logout = document.getElementById('logout');
-// 	logout.addEventListener('click', function() {
-// 	   location.href='${contextPath}/logout.qa';
-// 	})
+	const loginBtn= document.getElementById("loginBtn");
+	const logoutBtn= document.getElementById("logoutBtn");
+
+	loginBtn.addEventListener('click', function(){
+		const loginNum = document.getElementById("tempUserNum").value;
+		console.log(document.getElementById("tempUserNum").value);
+		location.href='${contextPath}/login.qa?userNum='+loginNum;
+	})
+
+	logoutBtn.addEventListener('click', function() {
+	   location.href='${contextPath}/logout.qa';
+	})
 	
 	const questionTr = document.getElementsByClassName('questionTr');
 	for(const question of questionTr){
@@ -268,7 +230,14 @@ window.onload=()=>{
 		})
 	}
 	
-	
+	const toptwo = document.getElementsByClassName('toptwo');
+	for(const top of toptwo){
+		top.addEventListener('click', function(){
+			const boardNum = this.querySelector('.topTwoBoardNum').innerText;
+			console.log(boardNum);
+			location.href='${contextPath}/question.qa?boardNum='+boardNum;
+		})
+	}
 	
 	
 }

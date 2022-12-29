@@ -6,10 +6,12 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
-import com.kh.young.qna.dto.AnswerRespDto;
+import com.kh.young.model.vo.Clip;
+import com.kh.young.model.vo.Reply;
 import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
 import com.kh.young.qna.dto.QuestionRespDto;
+import com.kh.young.qna.dto.ReplyRespDto;
 import com.kh.young.qna.dto.SupplementRespDto;
 
 @Service
@@ -36,6 +38,18 @@ public interface QaService {
 	ExpertRespDto selectExpertResp(int userNum);
 
 	ArrayList<QuestionRespDto> selectExpertQuestionList(int expertNum);
+
+	int insertReply(Reply r);
+	ArrayList<ReplyRespDto> getReplyList(int boardNum);
+	int deleteReply(int replyNum);
+
+	int getScrapCount(int boardNum);
+	int setScrap(Clip clip);
+	int deleteScrap(Clip clip);
+
+	int updateQuestion(QuestionInsertDto quest, HttpServletRequest request);
+	int deleteQuestion(QuestionInsertDto quest, HttpServletRequest request);
+
 
 
 }
