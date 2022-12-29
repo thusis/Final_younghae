@@ -165,16 +165,16 @@
                         for="">제목</label>
                         <input type="text" placeholder="제목을 입력하세요" required style="width: 60%; padding: 0.5%;">
                     </div>
-                    <div id="storyFile">
-                        <label
-                        style="font-size: 25px; color: #24E082; font-weight: 700; padding-left: 1%; padding-top: 1.5%; padding-right: 1%;"
-                        for="">첨부파일</label>
-                        <input type="text" placeholder="파일 이름" required style="width: 60%; padding: 0.5%;">
-                        <div class="text-right float-right" id="fileBtn" style="margin-top: 2%; margin-right: 20%;">
-                            <button type="button"
-                                style="height: 30px; width: 150%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">찾아보기</button>
-                        </div>
-                    </div>
+<!--                     <div id="storyFile"> -->
+<!--                         <label -->
+<!--                         style="font-size: 25px; color: #24E082; font-weight: 700; padding-left: 1%; padding-top: 1.5%; padding-right: 1%;" -->
+<!--                         for="">첨부파일</label> -->
+<!--                         <input type="text" placeholder="파일 이름" required style="width: 60%; padding: 0.5%;"> -->
+<!--                         <div class="text-right float-right" id="fileBtn" style="margin-top: 2%; margin-right: 20%;"> -->
+<!--                             <button type="button" -->
+<!--                                 style="height: 30px; width: 150%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">찾아보기</button> -->
+<!--                         </div> -->
+<!--                     </div> -->
                     <div class="text-center" id="column">
                         <br>
                         <textarea id="summernote" name="editordata"></textarea>
@@ -189,17 +189,8 @@
         </div>
     </section>
     
-    <img src="${contextPath}/summerNote/2022122718131518621619.png" alt="0" />
+    <img src="/resources/summerNote/2022122909340307173756.png" alt="1">
     
-    <img src="summerNote/2022122718131518621619.png" alt="1">
-    <img src="/summerNote/2022122718131518621619.png" alt="1">
-    <img src="../summerNote/2022122718131518621619.png" alt="2">
-    <img src="../../summerNote/2022122718131518621619.png" alt="3">
-    <img src="../../summerNote/2022122718131518621619.png" alt="3">
-    <img src="../../webapp/summerNote/2022122718131518621619.png" alt="3">
-    <img src="/younghae/src/main/webapp/summerNote/2022122718131518621619.png" alt="4">
-    <img src="resources/uploadFiles/" alt="5">
-
     <!-- Footer Section Begin -->
     <footer class="footer spad">
         <div class="container">
@@ -297,16 +288,11 @@
 	          	enctype: 'multipart/form-data',
 	          	processData: false,
 	          	success: function(img_name) {
-	          			console.log("1"+ img_name);
-	          			console.log("2"+ img_name);
 						$(".spinner-border").css("display","none");
-// 						const root = "F:\younghae_final\younghae\src\main\webapp\sbap
-						img_name = img_name.split("webapp\\")[1];
 // 	            		$(el).summernote('editor.insertImage', "resources/img/logo.svg");
 
 	            		$(el).summernote('editor.insertImage', img_name);
 	            		
-	          			console.log("3"+ img_name);
 	          	}
        		});
       }

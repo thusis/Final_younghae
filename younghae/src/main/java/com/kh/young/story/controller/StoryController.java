@@ -75,32 +75,33 @@ public class StoryController {
 	@RequestMapping("summernoteImage.st")
 	public void profileUpload(String email, MultipartFile file, HttpServletRequest request,
 			HttpServletResponse response) throws Exception{
-
-		response.setContentType("text/html;charset=utf-8");
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root +  "\\summerNote";
+		
+		File folder = new File(savePath);
+		if(!folder.exists()) {
+			folder.mkdirs();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		int ranNum = (int)(Math.random()*100000);
+		
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + ranNum
+				+ originFileName.substring(originFileName.lastIndexOf("."));
+		
+		String renamePath = folder + "\\" + renameFileName;
+		
+		try {
+			file.transferTo(new File(renamePath));
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 :" + e.getMessage());
+		}
+		
+		System.out.println("파일경로 : " + renamePath);
+		
 		PrintWriter out = response.getWriter();
-		// 업로드할 폴더 경로
-		String realFolder = request.getSession().getServletContext().getRealPath("summerNote");
-		UUID uuid = UUID.randomUUID();
-
-		// 업로드할 파일 이름
-		String org_filename = file.getOriginalFilename();
-		String str_filename = uuid.toString() + org_filename;
-
-		System.out.println("원본 파일명 : " + org_filename);
-		System.out.println("저장할 파일명 : " + str_filename);
-
-		String filepath = realFolder  + "\\" + str_filename;
-		System.out.println("파일경로 : " + filepath);
-
-//		File f = new File(filepath);
-//		if (!f.exists()) {
-//			f.mkdirs();
-//		}
-		
-		file.transferTo(new File(filepath));
-		System.out.println(realFolder+"\\"+str_filename);
-		out.println(realFolder+"\\"+str_filename);
+		out.println(renamePath+"\\"+renameFileName);
 		out.close();
-		
 	}
 }
