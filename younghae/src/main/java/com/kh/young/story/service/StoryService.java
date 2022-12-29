@@ -4,6 +4,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.story.dao.StoryDAO;
 
@@ -23,5 +24,10 @@ public class StoryService {
 	public int insertStory(Board b) {
 		return stDAO.insertStory(sqlSession, b);
 	}
+
+	public int insertThumbnail(Attachment att) {
+		return stDAO.insertThumbnail(sqlSession, att);
+	}
+
 
 }

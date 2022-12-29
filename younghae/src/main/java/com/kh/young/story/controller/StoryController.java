@@ -1,11 +1,9 @@
 package com.kh.young.story.controller;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,17 +11,14 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.kh.young.common.Pagination;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
-import com.kh.young.model.vo.Member;
-import com.kh.young.model.vo.PageInfo;
 import com.kh.young.story.exception.StoryException;
 import com.kh.young.story.service.StoryService;
 import com.kh.young.supplement.service.SupplementService;
@@ -57,18 +52,29 @@ public class StoryController {
 
 	// 스토리 작성하기
 	@RequestMapping("insertStory.st")
-	public String insertStory(@ModelAttribute Board b, HttpSession session) {
+	public String insertStory(@ModelAttribute Board b, @RequestParam("thumbnail") String image,
+								HttpSession session) {
 //		String nickName = ((Member) session.getAttribute("loginUser")).getUserNickname();
 		String nickName = "ss";
 //		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
-//		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
 		
+		System.out.println("controller"+image);
 		
 		System.out.println(b);
 		
 		int result = stService.insertStory(b);
+		
+		Attachment att = new Attachment();
+		
+		att.setAttachName(image);
+		att.setAttachRename(image);
+		att.setAttachPath(image);
+		att.setBoardType(3);
+		att.setSerialNumber(b.getBoardNum());
+		
+		int attm = stService.insertThumbnail(att);
 
-		if(result > 0) {
+		if(result + attm >= 2) {
 			return null;
 //			return "redirect:list.st";
 		}else {
