@@ -3,19 +3,20 @@
 <mapper namespace="storyMapper">
 	<!-- Board 폼 -->
 	<resultMap type="Board" id="BoardResultSet">
-		<id column="" property="boardNum"/>
-		<result column="" property="boardTitle"/>
-		<result column="" property="boardContent"/>
-		<result column="" property="boardCreateDate"/>
-		<result column="" property="boardModifyDate"/>
-		<result column="" property="boardView"/>
-		<result column="" property="boardStatus"/>
-		<result column="" property="userNum"/>
-		<result column="" property="boardType"/>
+		<id column="BOARD_NUM" property="boardNum"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_CREATEDATE" property="boardCreateDate"/>
+		<result column="BOARD_MODIFYDATE" property="boardModifyDate"/>
+		<result column="BOARD_VIEW" property="boardView"/>
+		<result column="BOARD_STATUS" property="boardStatus"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="BOARD_TYPE" property="boardType"/>
 	</resultMap>
 	
 	<!-- 컬럼 작성 -->
 	<insert id="insertStory">
-		insert 
+		insert into board
+		values(SEQ_BOARD.nextVal, #{boardTitle}, SYSDATE, SYSDATE,  0, 'Y', #{userNum}, 3, #{boardContent})
 	</insert>
 </mapper>

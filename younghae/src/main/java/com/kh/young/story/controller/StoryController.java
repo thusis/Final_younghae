@@ -56,21 +56,25 @@ public class StoryController {
 //	}
 
 	// 스토리 작성하기
-//	@RequestMapping("insertStory.st")
-//	public String insertStory(@ModelAttribute Board b, HttpSession session) {
+	@RequestMapping("insertStory.st")
+	public String insertStory(@ModelAttribute Board b, HttpSession session) {
 //		String nickName = ((Member) session.getAttribute("loginUser")).getUserNickname();
+		String nickName = "ss";
 //		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
-//
-////		int result = stService.insertStory(b);
-//
-////		if(result > 0) {
-////			return "redirect:list.st";
-////		}else {
-////			throw new StoryException("컬럼 쓰기 실패");
-////		}
-//
-//		return null;
-//	}
+//		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+		
+		
+		System.out.println(b);
+		
+		int result = stService.insertStory(b);
+
+		if(result > 0) {
+			return null;
+//			return "redirect:list.st";
+		}else {
+			throw new StoryException("컬럼 쓰기 실패");
+		}
+	}
 
 	@RequestMapping("summernoteImage.st")
 	public void profileUpload(String email, MultipartFile file, HttpServletRequest request,
@@ -101,7 +105,9 @@ public class StoryController {
 		System.out.println("파일경로 : " + renamePath);
 		
 		PrintWriter out = response.getWriter();
-		out.println(renamePath+"\\"+renameFileName);
+		
+		// 사진 이름 전송
+		out.println(renameFileName);
 		out.close();
 	}
 }

@@ -158,12 +158,14 @@
     <section class="featured spad" style="margin-left: 20%; margin-right: 20%;">
         <div class="row align-items-center">
             <div class="col-lg-12 col-md-12" style="border: 2px solid #24E082; padding: 3%; border-radius: 2em;">
-                <form action="" method="post">
+                <form action="${ contextPath }/insertStory.st" method="post" id="writeForm">
+<%--                 	<input type="hidden" name="userNum" value="${ loginUser.userNum }"> --%>
+                	<input type="hidden" name="userNum" value="8">
                     <div id="storyTitle">
                         <label
                         style="font-size: 25px; color: #24E082; font-weight: 700; padding-left: 1%; padding-top: 1.5%; padding-right: 1%;"
                         for="">제목</label>
-                        <input type="text" placeholder="제목을 입력하세요" required style="width: 60%; padding: 0.5%;">
+                        <input type="text" name="boardTitle" placeholder="제목을 입력하세요" required style="width: 60%; padding: 0.5%;  border: none;">
                     </div>
 <!--                     <div id="storyFile"> -->
 <!--                         <label -->
@@ -177,19 +179,17 @@
 <!--                     </div> -->
                     <div class="text-center" id="column">
                         <br>
-                        <textarea id="summernote" name="editordata"></textarea>
+                        <textarea id="summernote" name="boardContent"></textarea>
                         <!-- ${ info.storyContent } -->
                     </div>
                     <div class="text-center" id="Btn" style="margin-top: 2%;">
-                        <button type="button"
-                            style="height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">목록</button>
+                        <button type="button" id="write"
+                            style="height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">작성하기</button>
                     </div>
                 </form>
             </div>
         </div>
     </section>
-    
-    <img src="/resources/summerNote/2022122909340307173756.png" alt="1">
     
     <!-- Footer Section Begin -->
     <footer class="footer spad">
@@ -262,7 +262,7 @@
 			    ['para', ['ul', 'ol', 'paragraph']],
 			    ['height', ['height']],
 			    ['insert',['picture']],
-			    ['view', ['fullscreen', 'help']]
+			    ['view', ['fullscreen', 'codeview' ,'help']]
 			  ],
 			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
 			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
@@ -289,13 +289,22 @@
 	          	processData: false,
 	          	success: function(img_name) {
 						$(".spinner-border").css("display","none");
-// 	            		$(el).summernote('editor.insertImage', "resources/img/logo.svg");
-
-	            		$(el).summernote('editor.insertImage', img_name);
+						
+						console.log(img_name);
+						
+						// 외부 경로 저장소 tomcat server.xml 에서 수정 후 /summerNote/로 경로 붙이기
+	            		$(el).summernote('editor.insertImage', "/summerNote/"+ img_name);
 	            		
 	          	}
        		});
       }
+      
+      const form = document.getElementById('writeForm');
+      document.getElementById('write').addEventListener('click', ()=>{
+//     	  console.log($('#summernote').html());
+//     	  console.log
+    	  form.submit();
+      });
     </script>
     
 </body>
