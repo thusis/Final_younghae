@@ -193,7 +193,8 @@
 					NULL,
 				</if>
 			DEFAULT, DEFAULT)
-			<if test="attachParam.getAttachRename() != null">
+			<if test="attachParam != null ">
+<!-- 			<if test="attachParam != null or attachParam.attachRename != null or !attachParam.attachRename.equals('')"> -->
 				INTO ATTACHMENT VALUES (SEQ_ATTACH.NEXTVAL, DEFAULT, #{attachParam.attachName}, #{attachParam.attachRename}, #{attachParam.attachPath}, 5, SEQ_BOARD.CURRVAL, DEFAULT)
 			</if>
 		SELECT * FROM DUAL
