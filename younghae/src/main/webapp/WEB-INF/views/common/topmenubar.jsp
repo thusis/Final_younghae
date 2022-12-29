@@ -132,8 +132,8 @@
 									<li><a href="#">전문가 찾기</a></li>
 								</ul></li>
 							<li><a href="#">건강콘텐츠</a></li>
-							<li><a href="#">자유게시판</a></li>
-							<li><a href="#">이벤트</a></li>
+							<li><a href="#" onclick="location.href='${contextPath}/boardList.bo'">자유게시판</a></li>
+							<li><a href="#" onclick="location.href='${contextPath}/event.ev'">이벤트</a></li>
 						</ul>
 					</nav>
 				</div>

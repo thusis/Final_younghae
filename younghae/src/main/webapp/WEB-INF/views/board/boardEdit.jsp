@@ -68,12 +68,12 @@
 						</div>
 						<div class="blog__sidebar__item">
 							<h4>Categories</h4>
-							<ul>
-								<li><a href="#">운동(32)</a></li>
-								<li><a href="#">식단 (20)</a></li>
-								<li><a href="#">영양제 (5)</a></li>
-								<li><a href="#">자유 (9)</a></li>
-							</ul>
+                            <ul>
+                                <li class="ll 11">운동 (32)</li>
+                                <li class="ll 12">식단 (21)</li>
+                                <li class="ll 13">영양제 (54)</li>
+                                <li class="ll 14">자유 (47)</li>
+                            </ul>  
 						</div>
 						<div class="blog__sidebar__item">
 							<h4>TOP5 게시글</h4>
@@ -354,6 +354,15 @@
 								$(this).parent().remove();
 							});
 						})
+		/** boardCategories Bar */						
+	   const categorys = document.getElementsByClassName('ll');
+	   for(const category of categorys){
+		   category.addEventListener('click', function(){
+			   const boardCategory = category.className.substr(2);
+			   location.href='${contextPath}/boardList.bo?boardCategory=' + boardCategory;
+			   console.log(boardCategory);
+		   });
+	   }												
 	</script>
 </body>
 </html>

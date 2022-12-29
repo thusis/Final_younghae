@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="eventMapper">
+	
+	<resultMap type="EventAttendance" id="EventAttendanceResultMap">
+		<id column="ATT_NO" property="att_no"/>
+		<result column="ATT_DATE"  property="att_date"/>
+		<result column="USER_NUM"  property="user_num"/>
+		<result column="EVENT_NUM"  property="event_num"/>		
+	</resultMap>
+	
+	<resultMap type="Event" id="EventResultMap">
+		<id column="EVENT_NUM" property="event_num"/>
+		<result column="EVENT_NAME" property="event_name"/>
+		<result column="EVENT_STARTDATE" property="event_startDate"/>
+		<result column="EVENT_ENDDATE" property="event_endDate"/>
+		<result column="EVENT_STATUS" property="event_status"/>
+	</resultMap>
+
+	<insert id="insertAttendance">
+		insert into event_attendance values(seq_att.nextval, sysdate, #{userNum}, 2)
+	</insert>
+	
+	<select id="selectCountAttendance">
+		select count(*) from event_attendance where user_num = #{userNum}
+	</select>
+	
+	<select id="checkBirth">
+		<![CDATA[ 
+			select count(*) 
+			from member 
+			where user_num = #{userNum}
+						and 
+						user_birth between to_date ('')
+						
+		 ]]>
+	</select>
+</mapper>
+

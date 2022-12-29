@@ -29,13 +29,13 @@ public class BoardServiceImpl implements BoardService{
 	 
 
 	@Override
-	public ArrayList<Board> selectBoardList(PageInfo pi) {
-		return bDAO.selectBoardList(sqlSession, pi);
+	public ArrayList<Board> selectBoardList(PageInfo pi, Integer boardCategory) {
+		return bDAO.selectBoardList(sqlSession, pi, boardCategory);
 	}
 
 	@Override
-	public ArrayList<Attachment> selectPhotoList() {
-		return bDAO.selectPhotoList(sqlSession);
+	public ArrayList<Attachment> selectPhotoList(Integer boardCategory) {
+		return bDAO.selectPhotoList(sqlSession, boardCategory);
 	}
 
 	@Override
@@ -66,7 +66,21 @@ public class BoardServiceImpl implements BoardService{
 	      application.setAttribute("loginUser", loginMember);
 	      System.out.println("서비스임플"+((Member)application.getAttribute("loginUser")).getUserId());
 	   }
+
+
+	@Override
+	public Board boardView(int boardNum) {
+//		int viewCount = bDAO.viewCount(sqlSession, boardNum);
+		return null;
+	}
+
+
+	@Override
+	public Attachment photoView(int boardNum) {
 		
-	
+		return null;
+	}
+
+
 
 }

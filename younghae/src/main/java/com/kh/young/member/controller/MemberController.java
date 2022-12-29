@@ -59,11 +59,6 @@ public class MemberController {
 		}
 	}
 	
-    
-
-    
-
-	
 	// 회원가입
 		@RequestMapping("insertMember.me")
 		public String insertMember(@ModelAttribute Member m, HttpServletRequest req) {

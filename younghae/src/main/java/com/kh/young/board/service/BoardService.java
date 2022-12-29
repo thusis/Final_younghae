@@ -12,10 +12,10 @@ public interface BoardService {
 
 	int getBoardListCount();
 
-	ArrayList<Board> selectBoardList(PageInfo pi);
+	ArrayList<Board> selectBoardList(PageInfo pi, Integer boardCategory);
 
-	ArrayList<Attachment> selectPhotoList();
-
+	ArrayList<Attachment> selectPhotoList(Integer boardCategory);
+	
 	int insertBoard(Board b);
 
 	int insertPhoto(Attachment photo);
@@ -25,6 +25,12 @@ public interface BoardService {
 	int deletePhoto(int boardNo);
 
 	void setLoginUser(Integer userNum, HttpServletRequest request);
+
+	Board boardView(int boardNum);
+
+	Attachment photoView(int boardNum);
+
+
 
 
 }

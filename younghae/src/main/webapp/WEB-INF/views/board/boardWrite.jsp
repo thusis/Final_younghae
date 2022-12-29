@@ -45,6 +45,18 @@
  	margin-top: -5px;
  	margin-left:-10px;
  }
+ 	.ll{
+		color:black;
+		font-size: 17px;
+		padding-bottom: 10px; 
+	}
+	.ll:hover{
+		color:#24E082;
+		cursor: pointer;
+	}
+	.boardselect{
+		cursor: pointer;
+	}	
 </style>
 </head>
 <body>
@@ -83,12 +95,12 @@
 						</div>
 						<div class="blog__sidebar__item">
 							<h4 style="color: #ffc53e;">Categories</h4>
-							<ul>
-								<li><a href="#">운동(32)</a></li>
-								<li><a href="#">식단 (20)</a></li>
-								<li><a href="#">영양제 (5)</a></li>
-								<li><a href="#">자유 (9)</a></li>
-							</ul>
+                            <ul>
+                                <li class="ll 11">운동 (32)</li>
+                                <li class="ll 12">식단 (21)</li>
+                                <li class="ll 13">영양제 (54)</li>
+                                <li class="ll 14">자유 (47)</li>
+                            </ul> 
 						</div>
 						<div class="blog__sidebar__item">
 							<h4 style="color: #ffc53e;">TOP5 게시글</h4>
@@ -181,12 +193,12 @@
 					-->
 					<form action="${contextPath}/insertBoard.bo" method="POST" enctype="multipart/form-data"  id="boardWriteForm">
 						<div class="row justify-content-between">
-								<select name="category"  id="category">
+								<select name="category"  id="category" class="category">
 										<option disabled selected value="no">선택</option>
-										<option value="exercise">🏓운동</option>
-										<option value="diet">🥗식단</option>
-										<option value="tonic">💊영양제</option>
-										<option value="free">😀자유</option>
+										<option value="11">🏓운동</option>
+										<option value="12">🥗식단</option>
+										<option value="13">💊영양제</option>
+										<option value="14">😀자유</option>
 								</select>
 								<br>
 						<label for="title" style="font-weight:900; line-height:1.5rem; font-size:1.25rem;color: #24E082;">제목</label>
@@ -409,6 +421,24 @@
 								$(this).parent().remove();
 							});
 						})
+		/** boardCategories Bar */						
+	   const categorys = document.getElementsByClassName('ll');
+	   for(const category of categorys){
+		   category.addEventListener('click', function(){
+			   const boardCategory = category.className.substr(2);
+			   location.href='${contextPath}/boardList.bo?boardCategory=' + boardCategory;
+			   console.log(boardCategory);
+		   });
+	   }			
+		<!-- 카테고리 -->
+		   const categorys = document.getElementsByClassName('ll');
+		   for(const category of categorys){
+			   category.addEventListener('click', function(){
+				   const boardCategory = category.className.substr(2);
+				   location.href='${contextPath}/boardList.bo?boardCategory=' + boardCategory + '&page=' + ${pi.currentPage};
+				   console.log(boardCategory);
+			   });
+		   }
 	</script>
 </body>
 </html>
