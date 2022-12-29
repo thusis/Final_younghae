@@ -143,21 +143,21 @@ a[target='_blank'] {
 						<div style="font-size: 5px;">로그인을 통해 영해의 다양한 서비스를 사용해 보세요.</div>
 					</div>
 					<div class="panel-body p-3">
-						<form action="login_script.php" method="POST">
+						<form action="${contextPath }/searchId.me" method="POST">
 							<div class="form-group py-2">
 								<div>성명*</div>
 								<div class="input-field">
-									<input type="password" placeholder="성명을 입력해주세요" required>
+									<input type="text" name="userName" id="userName" placeholder="성명을 입력해주세요" required>
 								</div>
 							</div>
 							<div class="form-group py-1 pb-2">
 								<div>이메일*</div>
 								<div class="input-field">
-									<input type="password" placeholder="이메일을 입력해주세요" required>
+									<input type="email" name="email" id="email" placeholder="이메일을 입력해주세요" style="width:100%; border:none;"required>
 								</div>
 							</div>
-							<div class="btn btn-primary btn-block mt-3 "
-								style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);">아이디찾기</div>
+							<input type="submit" value="아이디찾기" class="btn btn-primary btn-block mt-3 "
+								style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);">
 						</form>
 					</div>
 				</div>

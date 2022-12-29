@@ -25,7 +25,7 @@ public class Supplement {
 	private String proSaleStatus;
 	private Date proCreateDate;
 	private Date proModifyDate;
-	private int proGrade;
+	private double proGrade;
 	private String proStatus;
 	private int cateNum;
 	private String formatPrice;

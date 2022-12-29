@@ -10,31 +10,51 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>게시판 메인</title>
-		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-<!--Soyeon-->
+<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
+<!-- 추가 CSS -->
 <link rel="stylesheet" href="resources/css/soyeon.css" type="text/css">
-    <link rel="stylesheet" href="css/bn_style.css" type="text/css">
+<link rel="stylesheet" href="css/bn_style.css" type="text/css">
+<!-- 부트 스트랩 -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
 
 </head>
 <body>
 	<nav>
 	</nav>
-	<!-- Blog Section Begin -->
 
+	<!-- Blog Section Begin -->
+		      <c:if test="${loginUser==null }">
+		         <button class="loginBtn">1</button>관리자<br>
+		         <button class="loginBtn">2</button>일반유저<br>
+		         <button class="loginBtn">4</button>약사<br>
+		      </c:if>
+
+      
+      <c:if test="${loginUser!=null }">
+		<p>      	${loginUser.userName } 님 환영합니다.</p>
+		<button onclick="location.href='${contextPath}/logout.bo'">로그아웃</button>
+	  </c:if> 
 	<section class="blog spad">
 		<div class="container">
+					    <div>
+					    <c:if test="${loginUser != null }">
+					    <button type="button" class="btn btn-success"  onclick="location.href='${contextPath}/boardWrite.bo'">
+					    <i class="bi bi-pencil-square"></i> Write
+					    </button>
+					    </c:if>
+					    </div>  	
 			<div class="row">
 				<div class="col-lg-4 col-md-5">
-				    <div><button type="button" class="btn btn-success"  onclick="location.href='${contextPath}/boardWrite.bo' "><i class="bi bi-pencil-square"></i> 글쓰기</button></div>  
-                    <div class="blog__sidebar">
+                    <div class="blog__sidebar/">
                         <div class="blog__sidebar__search">
                             <form action="#">
-                                <select>
-                                    <option>작성자</option>
-                                    <option>제목</option>
-                                    <option>내용</option>
-                                </select>
-                                <br><br>
+                            <select class="boardselect">
+							  <option value="1">작성자</option>
+							  <option value="2">제목</option>
+							  <option value="3">내용</option>
+							  <option value="4">해시태그</option>
+							</select>
+                                <br>
                                 <input type="text" placeholder="Search...">
                                 <button type="submit"><br><br><i class="fa-solid fa-magnifying-glass"></i></button>
                             </form>
@@ -46,7 +66,7 @@
                                 <li><a href="#">식단 (20)</a></li>
                                 <li><a href="#">영양제 (5)</a></li>
                                 <li><a href="#">자유 (9)</a></li>
-                            </ul>
+                            </ul>  
                         </div>
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">TOP5 게시글</h4>
@@ -112,30 +132,40 @@
                     </div>
 				</div>
 				<div class="col-lg-8 col-md-7">
+
 					<div class="row">
-						<div class="col-lg-6 col-md-6 col-sm-6">
+					<c:forEach items="${ bList }"  var="b" >
+						<input type="hidden" value="${b.boardNum}" name="boardNum">
+						<div class="col-lg-6 col-md-6 col-sm-6" >
 							<div class="blog__item">
-								<div class="blog__item__pic">
-									<img src="resources/img/blog/blog-2.jpg" alt="">
-								</div>
 								<div class="blog__item__text">
+								<div class="blog__item__pic">
+<%--  								<c:forEach items="${pList }" var="p"> --%>
+
+ 									<c:if test="${ b.boardNum eq pList[0].serialNumber}">
+										<img src="/upload/${pList[0].attachRename}" style="height:231.89px; width:322.57px;" alt="">
+										<input type="hidden" value="${pList[0].attachName}" name="boardPhotoName">
+									</c:if>
+<%-- 								</c:forEach> --%>
+								</div>
+								<div class="boardMiniCard"></div>
 									<ul>
-										<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-										<li><i class="fa fa-comment-o"></i> 5</li>
-										<li><i class="fa-regular fa-heart"></i> 17</li>
-										<li><i class="fa-regular fa-eye"></i> 78</li>
+										<li><i class="fa fa-calendar-o"></i>&nbsp;${b.boardCreateDate}</li>
+										<li><i class="fa fa-comment-o"></i> 댓글수</li>
+										<li><i class="fa-regular fa-heart"></i> 10</li>
+										<li><i class="fa-regular fa-eye"></i>&nbsp;${b.boardView}</li>
 									</ul>
 									<h5>
-										<a href="#">오늘 운동 완료(오운완 :D)</a>
+										<a href="#">${b.boardTitle }	 </a>
 									</h5>
-									<p>Sed quia non numquam modi tempora indunt ut labore et
-										dolore magnam aliquam quaerat</p>
-									<a href="#" class="blog__btn">READ MORE <span
+									<p>${b.boardContent}</p>
+									<a href="#" class="blog__btn" id="boardView">READ MORE <span
 										class="arrow_right"></span></a>
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6">
+						</c:forEach>
+<!-- 						<div class="col-lg-6 col-md-6 col-sm-6">
 							<div class="blog__item">
 								<div class="blog__item__pic">
 									<img src="resources/img/blog/blog-3.jpg" alt="">
@@ -246,16 +276,94 @@
 										class="arrow_right"></span></a>
 								</div>
 							</div>
-						</div>
+						</div> -->
 						<div class="col-lg-12">
 							<div class="product__pagination blog__pagination">
-								<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a
+<!-- 								<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a
 									href="#">4</a> <a href="#">5</a> <a href="#">6</a> <a href="#"><i
-									class="fa fa-long-arrow-right"></i></a>
+									class="fa fa-long-arrow-right"></i></a> -->
+															<ul class="pagination justify-content-center">
+	            <li class="page-item">
+	           		<c:url var="PListFirst" value="${ loc }"> <!--  직접적으로 주소를 가져오지않아도 select주소를 가져오는것 loc -->
+						<c:param name="page" value="1"/>
+					</c:url>
+					<c:if test="${ pi.payCurrentPage <= 1 }">
+						<a class="page-link">
+	                    	<span>처음</span>
+	                	</a>
+					</c:if>
+					<c:if test="${ pi.payCurrentPage > 1 }">
+		                <a class="page-link" href="${ PListFirst }">
+		                    <span>처음</span>
+		                </a>
+	                </c:if>
+	            </li>
+	            <li class="page-item">
+	            	<c:url var="PListBack" value="${ loc }">
+						<c:param name="page" value="${ pi.payCurrentPage -1 }"/>
+					</c:url>
+					<c:if test="${ pi.payCurrentPage <= 1 }">
+		                <a class="page-link">
+	                    	<span>이전</span>
+	                	</a>
+	                </c:if>
+	                <c:if test="${ pi.payCurrentPage > 1 }">
+						<a class="page-link" href="${ PListBack }">
+	                    	<span>이전</span>
+	                	</a>
+					</c:if>          
+	            </li>			
+	            <li class="page-item">
+	            	<c:forEach begin="${ pi.payStartPage }" end="${ pi.payEndPage }" var="p">
+	            		<c:if test="${ pi.payCurrentPage eq p }">
+							<a class="page-link">
+								<font color="red">${ p }</font>
+							</a>
+						</c:if>
+						<c:if test="${ pi.payCurrentPage ne p }">
+							<c:url var="PListCheck" value="${ loc }">
+								<c:param name="page" value="${ p }"/>
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${ PListCheck }">${ p }</a></li>
+						</c:if>
+	            	</c:forEach>
+	            </li>
+	            <li class="page-item">
+	            	<c:url var="PListNext" value="${ loc }"> <!--  직접적으로 주소를 가져오지않아도 select주소를 가져오는것 loc -->
+						<c:param name="page" value="${ pi.payCurrentPage + 1 }"/>
+					</c:url>
+					<c:if test="${ pi.payCurrentPage >= pi.payMaxPage }">
+						<a class="page-link">
+	                    	<span>다음</span>
+	                	</a>
+					</c:if>
+					<c:if test="${ pi.payCurrentPage < pi.payMaxPage }">
+						<a class="page-link" href="${ PListNext }">
+							<span>다음</span>
+						</a>
+					</c:if>
+	            </li>
+	            <li class="page-item">
+	            	<c:url var="PListLast" value="${ loc }"> <!--  직접적으로 주소를 가져오지않아도 select주소를 가져오는것 loc -->
+						<c:param name="page" value="${ pi.payMaxPage }"/>
+					</c:url>
+					<c:if test="${ pi.payCurrentPage >= pi.payMaxPage }">
+						<a class="page-link">
+	                    	<span>마지막</span>
+	                	</a>
+					</c:if>
+					<c:if test="${ pi.payCurrentPage < pi.payMaxPage }">
+						<a class="page-link" href="${ PListLast }">
+							<span>마지막</span>
+						</a>
+					</c:if>
+	            </li>
+	        </ul>
 							</div>
 						</div>
 					</div>
 				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -341,6 +449,41 @@
 		</div>
 	</footer>
 	<!-- Footer Section End -->
+	<!-- 부트스트랩 -->
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script> -->
+
+<script>
+window.onload=()=>{
+	   
+/* 	   const boardWriteView = document.getElementById('boardWriteView');
+	   boardWriteView.addEventListener('click', function() {
+		   location.href='${contextPath}/boardWrite.bo';
+	   }) */
+
+	   const loginBtn= document.getElementsByClassName("loginBtn");
+	   for(const btn of loginBtn){
+	      btn.addEventListener('click', function(){
+	         const userNum = this.innerText;
+	         console.log(userNum);
+	         location.href='${contextPath}/login.bo?userNum='+userNum;
+	      });
+	   }
+	   
+/* 	   const logout = document.getElementById('logout');
+	   logout.addEventListener('click', function() {
+		   location.href='${contextPath}/logout.bo';
+	   }); */
+	   
+	   
+	   const boardViews = document.getElementById('boardView');
+	   for(const bv of boardViews)	{
+	   bv.addEventListener('click', function() {
+		   location.href = '${contextPath}/selectBoard.bo?bNo=' + boardNo + '&writer=' + writer + '&page=' + ${pi.currentPage};
+		   
+	   });
+	   }
+	}
+</script>
 
 </body>
 </html>

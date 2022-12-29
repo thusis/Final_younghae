@@ -180,14 +180,13 @@
             font-size: 12px;
             color: #24E082;    
         }
+
     </style>   
-
-
+    <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">
 </head>
 
 <body>
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-
     <!-- Checkout Section Begin -->
     <section class="checkout spad">
         <div class="container">
@@ -203,6 +202,7 @@
             </div>
 
 
+
             <div class="checkout__form mt-5">
                 <h3 class="mb-5">주문/결제</h3>
                 <form action="#">
@@ -213,7 +213,8 @@
                                     <p style="font-weight: bold; font-size: 1.5rem;">배송지</p>
                                 </div>
                                 <div class="col-lg-6">
-                                    <p style="text-align: end; color: #24E082; font-weight: bold; font-size: 1.3rem;">변경</p>
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#exampleModal" 
+                                    style="border:none; background-color:white; float:right; color: #24E082; font-weight: bold; font-size: 1.3rem;">변경</button>
                                 </div>
                             </div>
                             <hr>
@@ -241,7 +242,7 @@
                                     <p style="font-weight: bold; font-size: 1.5rem;">주문자</p>
                                 </div>
                             </div>
-                            <hr>
+                  -          <hr>
 
                             <div class="mb-3" >
                                 <label for="orderName" style="margin-right: 3rem">이름</label>
@@ -401,7 +402,51 @@
         </div>
     </section>
     <!-- Checkout Section End -->
-
+    
+    
+	<!-- change address Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" style="width: 30%;">
+	    <div class="modal-content" style="height: 90%">
+	      <div class="modal-header" style="height: 10%; border-bottom-color:white; ">
+	        <div class="modal-title fs-5" id="exampleModalLabel" style="margin:auto; font-size: 1.5rem; font-weight:bold;">배송지 선택</div>
+	        <button type="button" class="hj_btn_closeAddressModal" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-x"></i></button>
+	      </div>
+	      <div class="modal-body">
+			<div style="width:100%; height:auto; background-color: white; border-radius: 0.5em; padding:1rem; border:2px solid #24E082; margin-bottom: 1rem;">
+				<div style="font-weight:bold; font-size:1.2rem; margin-bottom:0.2rem;">KH종로지원</div>
+				<div style="margin-bottom:0.2rem;">서울 중구 남대문로 120 (남대문로1가) 그레이츠 청계, 대일빌딩 2층, 3층</div>
+				<div style="margin-bottom:0.7rem; color: gray;"><span>영양단</span>&nbsp;&nbsp;&nbsp;010-1234-5678</div>
+				<button type="button" class="hj_btn_changeAddress">삭제</button>
+				<button type="button" class="hj_btn_changeAddress">수정</button>
+				<button class="hj_btn_selectAddress" style="float:right;">선택</button>
+			</div>
+	      </div>
+	      <div class="modal-footer" style="border-top-color: white;">
+	        <button type="button" class="hj_btn_addAddress" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="font-size: 20px;">배송지 추가</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">Modal 2</h1>
+	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	      </div>
+	      <div class="modal-body">
+	        Hide this modal and show the first with the button below.
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="goFirstModal" data-bs-toggle="modal" data-bs-target="#exampleModal">Back to first</button>
+	        
+	      </div>
+	    </div>
+	  </div>
+	</div>      
+    
+    
     <!-- Footer Section Begin -->
     <footer class="footer spad">
         <div class="container">
@@ -483,10 +528,17 @@
                     }
                 }).open();
             });
+
+            document.getElementById('goFirstModal').addEventListener('click', ()=>{
+// 				$('#exampleModalToggle2').modal("hide");
+// 				$('#exampleModal').modal('show');	
+		        $('#exampleModal').modal("toggle");
+			});
         }
+        
+
+     
     </script>
-
-
 
 </body>
 

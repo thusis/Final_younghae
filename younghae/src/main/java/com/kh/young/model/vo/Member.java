@@ -22,7 +22,7 @@ public class Member {
 	private String email;
 	private String gender;
 	private Date userBirth;
-	private int userPhone;
+	private String userPhone;
 	private String userRecommend;
 	private Date userEnrollDate;
 	private int userCNumber;

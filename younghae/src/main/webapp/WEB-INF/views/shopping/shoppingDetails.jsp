@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -10,7 +12,7 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Ogani | Template</title>
+    <title>Shopping | Details</title>
 
     <style>
             /*  구글 폰트
@@ -178,48 +180,10 @@
             text-decoration: underline;
         }
 
-        .btn_cart{
-            border-color: rgb(0, 123, 255);
-            color: rgb(0, 123, 255);
-            font-size: 10px;
-            width: 90px;
-            height: 30px;
-        }
-
-        .btn_comment{
-            border-color: rgb(0, 123, 255);
-            color: rgb(0, 123, 255);
-            font-size: 11px;
-            width: 65px; 
-            height: 30px;
-        }
 
         .star{
             color: rgb(242, 232, 46);
         }
-
-        .btn_buy{
-            background-color: #24E082; 
-            border: none; 
-            border-radius: 10px; 
-            height: 60px;
-            width: 48%;
-            font-weight: 600; 
-            font-size: 24px;
-            color: white;            
-        }
-
-        .btn_cart{
-            background-color: white; 
-            border-color: #24E082; 
-            border-radius: 10px; 
-            height: 60px;
-            width: 48%; 
-            font-weight: 600; 
-            font-size: 24px;
-            color: #24E082;                       
-        }
-
 
         .btn_toBuy{
             background-color: #24E082; 
@@ -260,7 +224,9 @@
             cursor: default;
             border: none;
             margin-right: 20px;
-            padding : 10px;
+            margin-top : 20px;
+            padding-left : 20px;
+            padding-right : 20px;
         }
 
         /* component */
@@ -362,13 +328,18 @@
             background: #DCFFE9;
         }
 
+		.btn:active, .btn:focus {
+			border: none !important;
+			box-shadow:none !important;
+		}
+
+
     </style>   
 
-
+    <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">
 </head>
 
 <body>
-<c:set value="${pageContext.servletContext.contextPath}" var="contextPath" scope="application"/>
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	<!--네비 상세-->
 	<div class="container">
@@ -380,255 +351,263 @@
 			</ul>
 		</div>
 		<!--/네비 상세-->
-
     <!-- Product Details Section Begin -->
     <section class="product-details spad">
-        <div class="container">
-            <div class="row">
-                <!-- 상품이미지 -->
-                <div class="col-lg-6 col-md-6" style="margin-bottom: 50px;">
-                    <div class="product__details__pic">
-                        <div class="product__details__pic__item">
-                            <img class="product__details__pic__item--large"
-                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg" alt="">
-                        </div>
-                        <div class="product__details__pic__slider owl-carousel">
-                            <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg"
-                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg" alt="">
-                            <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"
-                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg" alt="">
-                            <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg"
-                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg" alt="">
-                            <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/car/car01733/v/16.jpg""
-                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/car/car01733/v/16.jpg" alt="">
-                        </div>
-                    </div>
-                </div>
-                <!-- /상품이미지 -->
-                <div class="col-lg-6 col-md-6" >
-                    <div class="product__details__text">
-                        <h5 style="color: gray;">나우푸드</h5>
-                        <h3 style="display: inline;">울트라 오메가3</h3>
-                        <div style="display: inline; float: right; font-size: 150%;">
-                            <i class="fa-regular fa-heart"></i>&nbsp;
-                            <i class="bi bi-share"></i>
-                        </div><br><br>
-                        <div class="product__details__rating" style="display: inline; font-size: 150%;">
-                            <i class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32
-                        </div>
-                        <div class="product__details" style="display: inline; font-size: 100%; float: right; margin-top: 2.5%;">
-                            <span style="color: orange; text-decoration: underline;">153개의 리뷰&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>&nbsp;&nbsp;&nbsp;
-                            <span id="compareproduct" style="color: rgb(242, 67, 230); text-decoration: underline;">상품 비교&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>
-                        </div>
-
-                        <div style="font-size: 250%; font-weight: 600;">33,000 원</div>
-                        <hr>
-                        <h6 style="padding: 3%;">흡수율 높은 글루콘산 아연과 항산화 비타민C의 황금배합에 무설탕 천연 포도맛을 더했습니다.</h6>
-                        <hr>
-
-                        <table style="width: 150%;">
-                            <tr>
-                                <th>혜택</th>
-                                <td>20P 적립</td>
-                            </tr>
-                            <tr>
-                                <th>배송</th>
-                                <td>2,500원</td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td>(50,000원 이상 구매 시 무료배송)</td>
-                            </tr>
-                        </table>
-                        <hr>
-
-                        <h5 style="font-weight: bold; color: black;">울트라 오메가3</h5><br>
-
-
-                        <h6 style="display: inline-block; font-weight: bold; color: black; margin-top: 2%;">수량</h6>
-                        <div class="product__details__quantity" style="display: inline; float: right; margin-right: 10%; " >
-                            <div class="quantity">
-                                <div class="pro-qty"  style="width: 150%; border-radius: 5em">
-                                    <input type="text" value="1">
-                                </div>
-                            </div>
-                        </div><br><br>
-
-                        <hr>
-                        
-                        <h5 style="font-weight: bold; display: inline;">주문 금액</h5>
-                        <h5 style="font-weight: bold; display: inline; float: right;">33,000원</h5><br><br><br>
-                        
-                        <button type="button" class="btn btn_cart" id="btn_cart" style="margin-right: 2%;">장바구니</button>
-                        <button type="button" class="btn btn_buy">바로구매</button> &nbsp;&nbsp;&nbsp;
-                    </div>
-                </div>
-
-                <div class="col-lg-12">
-                    <div class="product__details__tab">
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#tabs-1" 
-                                    aria-selected="true">영양제효과</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#tabs-2" 
-                                    aria-selected="false">상품 정보</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#tabs-3" 
-                                    aria-selected="false">리뷰<span>(1)</span></a>
-                            </li>
-                        </ul><br><br>
-                        
-                        <div class="tab-content">
-                            <!-- 상품정보 탭 -->
-                            <div class="" id="tabs-1" role="tabpanel">
-                                <div class="col-lg-12" style="margin-bottom: 5%;">
-                                    <div class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline; margin-bottom: 50px;">영양제 효과</div>
-                                    <div class="product_info" style=" border-radius: 1em; padding: 5%;">
-                                        <div style="font-size: 20px; font-weight: bold; color: #5B555C; margin-bottom: 5px;">주요기능</div>
-                                        <button class="product_info_each">뼈와 치아 형성</button>
-                                        <button class="product_info_each">신경과 근육 유지 기능</button>
-                                        <button class="product_info_each">면역 기능</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /상품정보 탭 -->
-
-                            <!-- 상품상세사진 탭 -->
-                            <div class="" id="tabs-2" role="tabpanel" style="margin-bottom: 10%;">
-                                <div class="col-lg-12" style="margin-bottom: 5%;">
-                                    <div class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline; margin-bottom: 50px;">상품 정보</div><br><br>
-                                    <div style="text-align: center;">
-                                        <img src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01665/l/11.jpg" style="width: 500px; margin: auto; display: block; margin-bottom: 10%;">
-                                        <img src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01665/l/17.jpg" style="width: 500px; margin: auto; display: block;">
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- /상품상세사진 탭 -->
-
-                            <!-- 리뷰 -->
-                            <div class="" id="tabs-3" role="tabpanel">
-                                <div style="color: #24E082; font-weight: bold; font-size: 30px; display: inline; margin-bottom: 50px;">리뷰&nbsp;<span>153</span></div>
-                                <div style="color: #FD9F28; font-weight: bold; font-size: 20px; display: inline; float: right; margin-right: 35px;">리뷰작성</div><br><br>
-
-                                <div class="col-lg-12" style="margin-bottom: 10%; text-align: center; margin-left: -1.5%;">
-                                    <div class="product_info" style=" border-radius: 1em; padding: 5%; margin-bottom: 5%;">
-                                        <table style="text-align: center; width: 100%;">
-                                            <tr>
-                                                <td style="font-size: 30px;">
-                                                    <i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32
-                                                </td>
-                                                <td style="font-size: 20px;">
-                                                    <div>
-                                                        <div style="display: inline;">5점</div><div class="rating-count"></div><div style="display: inline;">15</div><br>
-                                                        <div style="display: inline;">4점</div><div class="rating-count"></div><div style="display: inline;">18</div><br>
-                                                        <div style="display: inline;">3점</div><div class="rating-count"></div><div style="display: inline;">10</div><br>
-                                                        <div style="display: inline;">2점</div><div class="rating-count"></div><div style="display: inline;">10</div><br>
-                                                        <div style="display: inline;">1점</div><div class="rating-count"></div><div style="display: inline;">11</div><br>
-                                                    </div>
-
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </div> 
-
-
-                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">학원이너무좋다</p>
-                                            </div>
-                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">4.8</p>
-                                            </div>
-                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">10</p>
-                                            </div>
-                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20221119/7377cf67-da5e-4008-b194-67aaafdcf321/l.jpeg" class=".img-fluid" style="margin: 5%;">
-                                            </div>
-                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
-                                                안 좋은 콜레스테롤을 낮춰 혈관 건강, 심장 질환, 눈 건강에도 좋다고 하여 구매하여 온 가족이 먹고 있어요, 품질 좋은 생선 오일을 식품으로 채우려면 비용도 많이 들고 한계가 있는데 저렴하게 효능 좋은 제품 먹을 수 있어 좋습니다. 생물학 박사님이 필수로 챙겨 먹는 영양제 중 하나가 오메가3 라고 추천해 주셔서 믿고 먹고 있습니다. 다 먹으면 재구매 할 거에요
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">코딩너무좋다</p>
-                                            </div>
-                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">4.8</p>
-                                            </div>
-                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">10</p>
-                                            </div>
-                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20220929/f7b13f35-8481-4662-996c-ff1ccef87f67/l.jpeg" class=".img-fluid" style="margin: 5%;">
-                                            </div>
-                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
-                                                자주 먹던 오메가3가 품절이라 대안으로 구매했습니다. 성분이 나쁘지 않고 믿을만한 회사라 주문했습니다. 개별 포장이면 더 좋겠지만, 직구 제품은 대부분 이런 형태라 아쉽긴 합니다. 하지만 가성비 생각하면 아주 최고!
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
-                                        <div name="reviewDetail">
-                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
-                                            </div>
-                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="font-weight: 600;">코딩천재깡혜찐</p>
-                                            </div>
-                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
-                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">4.8</p>
-                                            </div>
-                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
-                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-                                            </div>
-                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-                                                <p style="color: black; font-size: 130%;">10</p>
-                                            </div>
-                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20220926/c9eeb673-082a-43cd-a6d5-a46b99c0c9aa/l.jpeg" class=".img-fluid" style="margin: 5%;">
-                                            </div>
-                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
-                                                2021.8.1 (일) 주문. 8.5 (목) 배송받음. 180정 이라서 오늘까지 다 먹었습니다. 오메가-3 는 꼭 챙겨 먹기에 아주 잘 먹었습니다. 비린내는 나지 않고 알약 사이즈가 커서 목 넘김이 쫌 불편하긴 합니다. 잘못 먹으면 목에 걸리기도 합니다. 꾸준히 영양제 잘 챙겨 먹겠습니다.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 리뷰 -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+<%--     	<form action="${ contextPath }/payment.sh" method="post"> --%>
+	        <div class="container">
+	            <div class="row">
+	                <!-- 상품이미지 -->
+	                <div class="col-lg-6 col-md-6" style="margin-bottom: 50px;">
+	                    <div class="product__details__pic">
+	                        <div class="product__details__pic__item">
+	                            <img name="proImage" class="product__details__pic__item--large"
+	                                src=${ supplementDetail.proImage }>
+	                        </div>
+	                        <div class="product__details__pic__slider owl-carousel">
+	                            <img data-imgbigurl=${ supplementDetail.proImage }
+	                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg" alt="">
+	                            <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"
+	                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg" alt="">
+	                            <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg"
+	                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg" alt="">
+	                            <img data-imgbigurl="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/car/car01733/v/16.jpg""
+	                                src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/car/car01733/v/16.jpg" alt="">
+	                        </div>
+	                    </div>
+	                </div>
+	                <!-- /상품이미지 -->
+	                <div class="col-lg-6 col-md-6" >
+	                    <div class="product__details__text">
+	                        <h5 style="color: gray;">${ supplementDetail.proCompany }</h5>
+	                        <h3 style="display: inline;">${ supplementDetail.proName }</h3>
+	                        <div style="display: inline; float: right; font-size: 150%;">
+	                            <i class="fa-regular fa-heart"></i>&nbsp;
+	                            <i class="bi bi-share"></i>
+	                        </div><br><br>
+	                        <div class="product__details__rating" style="display: inline; font-size: 150%;">
+	                            <i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ supplementDetail.proGrade }
+	                        </div>
+	                        <div class="product__details" style="display: inline; font-size: 100%; float: right; margin-top: 2.5%;">
+	                            <span style="color: orange; text-decoration: underline;">153개의 리뷰&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>&nbsp;&nbsp;&nbsp;
+	                            <span id="compareproduct" style="color: rgb(242, 67, 230); text-decoration: underline;">상품 비교&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>
+	                        </div>
+	
+	                        <div style="font-size: 250%; font-weight: 600;"><fmt:formatNumber value="${ supplementDetail.proPrice }" type="number"/>원</div>
+	                        <hr>
+	                        <h6 style="padding: 3%;">흡수율 높은 글루콘산 아연과 항산화 비타민C의 황금배합에 무설탕 천연 포도맛을 더했습니다.</h6>
+	                        <hr>
+	
+	                        <table style="width: 150%;">
+	                            <tr>
+	                                <th>혜택</th>
+	                                <c:set var="points" value="${ supplementDetail.proPrice * 0.01}"/>
+	                                <td><fmt:parseNumber value="${points}" integerOnly="true"/> P</td>
+	                            </tr>
+	                            <tr>
+	                                <th>배송</th>
+	                                <td>2,500원</td>
+	                            </tr>
+	                            <tr>
+	                                <td></td>
+	                                <td>(50,000원 이상 구매 시 무료배송)</td>
+	                            </tr>
+	                        </table>
+	                        <hr>
+							
+	                        <h5 style="font-weight: bold; color: black;">${ supplementDetail.proName }</h5><br>
+	
+	
+	                        <h6 class="hj_amount">수량</h6>
+	                        <div class="product__details__quantity" style="display: inline; float: right; margin-right: 2%;">
+								<div class="btn-group" role="group" aria-label="Basic example">
+								  <button type="button" id="minus" class="btn" style="width: 2.5rem; border-bottom-left-radius: 2em; border-top-left-radius: 2em; background-color: #24E082; border: none;">-</button>
+								  <input type="text" id="quantity" value="1" style="width: 3rem; text-align: center; border: 1px solid #24E082; font-size: 1rem; font-weight: 400;" readonly>
+								  <button type="button" id="plus" class="btn" style="width: 2.5rem; border-bottom-right-radius: 2em; border-top-right-radius: 2em; background-color: #24E082; border: none;">+</button>
+								</div>
+	                        </div><br><br>
+	
+	                        <hr>
+	                        
+	                        <h5 style="font-weight: bold; display: inline; font-size: 25px;">주문 금액</h5>
+	                        <h5 id="totalPrice" style="font-weight: bold; display: inline; float: right; font-size: 25px;"><fmt:formatNumber value="${ supplementDetail.proPrice }" type="number"/> 원</h5><br><br><br>
+	<!--                         <input type="hidden" id="totalPriceHidden"> -->
+	                        <button type="button" class="btn_cart" id="btn_cart" style="margin-right: 2%;">장바구니</button>
+	                        <button type="button" class="btn_buy" id="btn_buy">바로구매</button> &nbsp;&nbsp;&nbsp;
+	                    </div>
+	                </div>
+					
+	                <div class="col-lg-12">
+	                    <div class="product__details__tab">
+	                        <ul class="nav nav-tabs" role="tablist">
+	                            <li class="nav-item">
+	                                <a class="nav-link active" href="#tabs-1" 
+	                                    aria-selected="true">영양제효과</a>
+	                            </li>
+	                            <li class="nav-item">
+	                                <a class="nav-link" href="#tabs-2" 
+	                                    aria-selected="false">상품 정보</a>
+	                            </li>
+	                            <li class="nav-item">
+	                                <a class="nav-link" href="#tabs-3" 
+	                                    aria-selected="false">리뷰<span>(1)</span></a>
+	                            </li>
+	                        </ul><br><br>
+	                        
+	                        <div class="tab-content">
+	                            <!-- 상품정보 탭 -->
+	                            <div class="" id="tabs-1" role="tabpanel">
+	                                <div class="col-lg-12" style="margin-bottom: 5%;">
+	                                    <div class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline; margin-bottom: 50px;">영양제 효과</div>
+	                                    <div class="product_info" style=" border-radius: 1em; padding: 5%;">
+	                                        <div style="font-size: 20px; font-weight: bold; color: #5B555C; margin-bottom: 5px;">주요기능</div>
+	                                        <c:set var="effect" value="${ fn:split(supplementDetail.proEffect, ',')}"/>
+	                                        <c:forEach var="proEffect" items="${ effect }">
+		                                        <button class="product_info_each">${proEffect}</button>
+	                                        </c:forEach>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <!-- /상품정보 탭 -->
+	
+	                            <!-- 상품상세사진 탭 -->
+	                            <div class="" id="tabs-2" role="tabpanel" style="margin-bottom: 10%;">
+	                                <div class="col-lg-12" style="margin-bottom: 5%;">
+	                                    <div class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline; margin-bottom: 50px;">상품 정보</div><br><br>
+	                                    <div style="text-align: center;">
+	                                    	
+	                                        <img src="${supplementDetail.proImage }" style="width: 700px; margin: auto; display: block; margin-bottom: 5%;">
+	                                        <img src="resources/img/product_details/${supplementDetail.proNum }_2.png" style="width: 700px; margin: auto; display: block; margin-bottom: 5%;">
+	                                        <img src="resources/img/product_details/${supplementDetail.proNum }_1.png" style="width: 700px; margin: auto; display: block; margin-bottom: 5%;">
+	                                        
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <!-- /상품상세사진 탭 -->
+	
+	                            <!-- 리뷰 -->
+	                            <div class="" id="tabs-3" role="tabpanel">
+	                                <div style="color: #24E082; font-weight: bold; font-size: 30px; display: inline; margin-bottom: 50px;">리뷰&nbsp;<span>153</span></div>
+	                                <div style="color: #FD9F28; font-weight: bold; font-size: 20px; display: inline; float: right; margin-right: 35px;">리뷰작성</div><br><br>
+	
+	                                <div class="col-lg-12" style="margin-bottom: 10%; text-align: center; margin-left: -1.5%;">
+	                                    <div class="product_info" style=" border-radius: 1em; padding: 5%; margin-bottom: 5%;">
+	                                        <table style="text-align: center; width: 100%;">
+	                                            <tr>
+	                                                <td style="font-size: 30px;">
+	                                                    <i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32
+	                                                </td>
+	                                                <td style="font-size: 20px;">
+	                                                    <div>
+	                                                        <div style="display: inline;">5점</div><div class="rating-count"></div><div style="display: inline;">15</div><br>
+	                                                        <div style="display: inline;">4점</div><div class="rating-count"></div><div style="display: inline;">18</div><br>
+	                                                        <div style="display: inline;">3점</div><div class="rating-count"></div><div style="display: inline;">10</div><br>
+	                                                        <div style="display: inline;">2점</div><div class="rating-count"></div><div style="display: inline;">10</div><br>
+	                                                        <div style="display: inline;">1점</div><div class="rating-count"></div><div style="display: inline;">11</div><br>
+	                                                    </div>
+	
+	                                                </td>
+	                                            </tr>
+	                                        </table>
+	                                    </div> 
+	
+	
+	                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
+	                                        <div name="reviewDetail">
+	                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
+	                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
+	                                            </div>
+	                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="font-weight: 600;">학원이너무좋다</p>
+	                                            </div>
+	                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
+	                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
+	                                            </div>
+	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="color: black; font-size: 130%;">4.8</p>
+	                                            </div>
+	                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
+	                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
+	                                            </div>
+	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="color: black; font-size: 130%;">10</p>
+	                                            </div>
+	                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
+	                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20221119/7377cf67-da5e-4008-b194-67aaafdcf321/l.jpeg" class=".img-fluid" style="margin: 5%;">
+	                                            </div>
+	                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
+	                                                안 좋은 콜레스테롤을 낮춰 혈관 건강, 심장 질환, 눈 건강에도 좋다고 하여 구매하여 온 가족이 먹고 있어요, 품질 좋은 생선 오일을 식품으로 채우려면 비용도 많이 들고 한계가 있는데 저렴하게 효능 좋은 제품 먹을 수 있어 좋습니다. 생물학 박사님이 필수로 챙겨 먹는 영양제 중 하나가 오메가3 라고 추천해 주셔서 믿고 먹고 있습니다. 다 먹으면 재구매 할 거에요
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
+	                                        <div name="reviewDetail">
+	                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
+	                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
+	                                            </div>
+	                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="font-weight: 600;">코딩너무좋다</p>
+	                                            </div>
+	                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
+	                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
+	                                            </div>
+	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="color: black; font-size: 130%;">4.8</p>
+	                                            </div>
+	                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
+	                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
+	                                            </div>
+	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="color: black; font-size: 130%;">10</p>
+	                                            </div>
+	                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
+	                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20220929/f7b13f35-8481-4662-996c-ff1ccef87f67/l.jpeg" class=".img-fluid" style="margin: 5%;">
+	                                            </div>
+	                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
+	                                                자주 먹던 오메가3가 품절이라 대안으로 구매했습니다. 성분이 나쁘지 않고 믿을만한 회사라 주문했습니다. 개별 포장이면 더 좋겠지만, 직구 제품은 대부분 이런 형태라 아쉽긴 합니다. 하지만 가성비 생각하면 아주 최고!
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
+	                                        <div name="reviewDetail">
+	                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
+	                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
+	                                            </div>
+	                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="font-weight: 600;">코딩천재깡혜찐</p>
+	                                            </div>
+	                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
+	                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
+	                                            </div>
+	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="color: black; font-size: 130%;">4.8</p>
+	                                            </div>
+	                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
+	                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
+	                                            </div>
+	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
+	                                                <p style="color: black; font-size: 130%;">10</p>
+	                                            </div>
+	                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
+	                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20220926/c9eeb673-082a-43cd-a6d5-a46b99c0c9aa/l.jpeg" class=".img-fluid" style="margin: 5%;">
+	                                            </div>
+	                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
+	                                                2021.8.1 (일) 주문. 8.5 (목) 배송받음. 180정 이라서 오늘까지 다 먹었습니다. 오메가-3 는 꼭 챙겨 먹기에 아주 잘 먹었습니다. 비린내는 나지 않고 알약 사이즈가 커서 목 넘김이 쫌 불편하긴 합니다. 잘못 먹으면 목에 걸리기도 합니다. 꾸준히 영양제 잘 챙겨 먹겠습니다.
+	                                            </div>
+	                                        </div>
+	                                    </div>
+	                                </div>
+	                            </div>
+	                            <!-- 리뷰 -->
+	                        </div>
+	                    </div>
+	                </div>
+	            </div>
+	        </div>
+<!-- 	    </form>																						 -->
     </section>
     <!-- Product Details Section End -->
+    
+    
 
     <!-- 상품비교 모달창 -->
     <div id="myModal" class="modal" >
@@ -869,7 +848,7 @@
     
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-      if (event.target == modal) {
+      if (event.target == modal1) {
         modal1.style.display = "none";
       }
     }
@@ -906,11 +885,48 @@
     window.onclick = function(event) {
       if (event.target == modal) {
         modal.style.display = "none";
-      }
+      }    
+      
     }
+    
+    window.onload = function(){
+    	const plus = document.getElementById("plus");
+    	const quantity = document.getElementById("quantity");
+    	const minus = document.getElementById("minus");
+    	const totalPrice = document.getElementById("totalPrice");
+   
+    	plus.addEventListener('click',function(){
+    		quantity.value = Number(quantity.value) + 1;
+    		totalPrice.innerHTML = (${ supplementDetail.proPrice } * quantity.value).toLocaleString() +" 원"
+    	});
+    	
+    	minus.addEventListener('click',function(){
+    		if(quantity.value > 1){
+	    		quantity.value = Number(quantity.value) - 1;
+	    		totalPrice.innerHTML = (${ supplementDetail.proPrice } * quantity.value).toLocaleString() +" 원"
+    		}
+    	});    	
+    	
+    	// 로그인했을때 안했을 때 구분해야함!!!!!!!!(로그인세션 있을 때 수정할 것!!)
+    	const btnBuy = document.getElementById("btn_buy");
+    	btnBuy.addEventListener('click',function(){
+    		const paymentTotal = ${ supplementDetail.proPrice } * quantity.value;
+    		const proNum = ${supplementDetail.proNum};
+    		location.href='${ contextPath }/payment.sh?proNum='+proNum+'&quantity='+quantity.value;
+    	});
+    	
+    	
+    	
+    	
+    	
+    }
+    
+    
+    
     </script>
 
     <script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
+
 
 </body>
 

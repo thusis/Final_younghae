@@ -50,7 +50,7 @@
 <body>
 	<div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
 		<ul>
-			<li><a href="#">마이페이지</a></li>
+			<li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>
 			<li>/</li>
 			<li><a href="#">내 게시물 관리</a></li>
 		</ul>
@@ -71,7 +71,7 @@
 							내가 작성한 게시물
 							<div class="bn_boardlist mt-2">
 								<button style="float: right; border: 0; margin-bottom: 5px;"
-									onclick="location.href='/Users/Song/Desktop/final/ogani-master/myWriteBoardDetail.html'">+</button>
+									onclick="location.href='${contextPath}/myWriteBoardDetail.my'">+</button>
 								<table class="table">
 									<thead>
 										<tr class="text-teal-100">
@@ -151,7 +151,7 @@
 										style="padding-top: 0px;">
 										<div class="bn_boardlist mt-2">
 											<button style="float: right; border: 0; margin-bottom: 5px;"
-												onclick="location.href='/Users/Song/Desktop/final/ogani-master/myWriteReviewDetail.html'">+</button>
+												onclick="location.href='${contextPath}/myWriteReviewDetail.my'">+</button>
 											<table class="table">
 												<thead>
 													<tr class="text-teal-100">
@@ -218,7 +218,7 @@
 										style="padding-top: 0px;">
 										<div class="bn_boardlist mt-2">
 											<button style="float: right; border: 0; margin-bottom: 5px;"
-												onclick="location.href='/Users/Song/Desktop/final/ogani-master/myWriteReplyDetail.html'">+</button>
+												onclick="location.href='${contextPath}/myWriteReplyDetail.my'">+</button>
 											<table class="table">
 												<thead>
 													<tr class="text-teal-100">

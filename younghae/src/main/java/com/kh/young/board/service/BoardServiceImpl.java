@@ -2,6 +2,9 @@ package com.kh.young.board.service;
 
 import java.util.ArrayList;
 
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.kh.young.board.dao.BoardDAO;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 
 @Service("bService")
@@ -18,10 +22,11 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired
 	private BoardDAO bDAO;
 	
-	@Override
-	public int getBoardListCount() {
-		return bDAO.getBoardListCount(sqlSession);
-	}
+	
+	  @Override public int getBoardListCount() { 
+		return bDAO.getBoardListCount(sqlSession); 
+	 }
+	 
 
 	@Override
 	public ArrayList<Board> selectBoardList(PageInfo pi) {
@@ -52,5 +57,16 @@ public class BoardServiceImpl implements BoardService{
 	public int deletePhoto(int boardNo) {
 		return bDAO.deletePhoto(sqlSession, boardNo);
 	}
+
+
+	@Override
+	public void setLoginUser(Integer userNum, HttpServletRequest request) {
+	     Member loginMember = bDAO.setLoginUser(sqlSession,userNum);
+	      ServletContext application = request.getSession().getServletContext();
+	      application.setAttribute("loginUser", loginMember);
+	      System.out.println("서비스임플"+((Member)application.getAttribute("loginUser")).getUserId());
+	   }
+		
+	
 
 }
