@@ -263,7 +263,6 @@ public class MemberController {
 		}
 	}
     
-    
     //로그아웃
     @RequestMapping("logout.me")
     public String logout(HttpSession session, SessionStatus status, Model model) {

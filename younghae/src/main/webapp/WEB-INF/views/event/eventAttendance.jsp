@@ -42,7 +42,7 @@
 	<br>
 	<br>
 	<div id="eventAttendanceBtn">
-		<a href="#" class="btn-3d purple">출석 보상받기</a>
+		<a href="#" class="btn-3d purple" onclick="location.href='${contextPath}/attendanceEventAward.ev'">출석 보상받기</a>
 	</div>
 	<br>
 	<br>
@@ -135,6 +135,9 @@
 		});
 	</script>
 
+	<script>
+		document.getElmentById()
+	</script>
 
 </body>
 </html>
