@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="storyMapper">
+	<!-- Board 폼 -->
+	<resultMap type="Board" id="BoardResultSet">
+		<id column="BOARD_NUM" property="boardNum"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_CREATEDATE" property="boardCreateDate"/>
+		<result column="BOARD_MODIFYDATE" property="boardModifyDate"/>
+		<result column="BOARD_VIEW" property="boardView"/>
+		<result column="BOARD_STATUS" property="boardStatus"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+	</resultMap>
+	
+	<!-- 컬럼 작성 -->
+	<insert id="insertStory">
+		insert into board
+		values(SEQ_BOARD.nextVal, #{boardTitle}, SYSDATE, SYSDATE,  0, 'Y', #{userNum}, 3, #{boardContent})
+	</insert>
+</mapper>
