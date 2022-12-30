@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,14 +12,19 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.story.exception.StoryException;
 import com.kh.young.story.service.StoryService;
 import com.kh.young.supplement.service.SupplementService;
@@ -33,22 +39,39 @@ public class StoryController {
 	@Autowired
 	private SupplementService sService;
 
-//	@RequestMapping("storyList.st")
-//	public String AllStoryList(@RequestParam(value = "page", required = false) Integer page, Model model) {
-//		int currentPage = 1;
-//
-//		if (page != null) {
-//			currentPage = page;
-//		}
-//
-//		Member mem = sService.selectMember(9);
-//
-//		int listCount = stService.getStoryListCount();
-//
-//		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
-//
-//		return null;
-//	}
+	@RequestMapping("storyList.st")
+	public String AllStoryList(@RequestParam(value = "page", required = false) Integer page, Model model) {
+		int currentPage = 1;
+
+		if (page != null) {
+			currentPage = page;
+		}
+
+		Member mem = sService.selectMember(27);
+		System.out.println(mem);
+
+		int listCount = stService.getStoryListCount();
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
+		
+		ArrayList<Board> allList = stService.allStory(pi);
+//		System.out.println(allList);
+		
+		if(allList != null) {
+			model.addAttribute("pi", pi);
+			model.addAttribute("list", allList);
+			model.addAttribute("loginUser", mem);
+			
+//			System.out.println(allList);
+			
+//			return null;
+			return "story";
+		}else {
+			throw new StoryException("story오류");
+		}
+		
+
+	}
 
 	// 스토리 작성하기
 	@RequestMapping("insertStory.st")
@@ -62,19 +85,26 @@ public class StoryController {
 		
 		System.out.println(b);
 		
+//		b.setUserNum(28);
+		
 		int result = stService.insertStory(b);
+		int attm = 0;
 		
-		Attachment att = new Attachment();
+		if(!image.contains("<p")) {
+			// 컬럼 내용 복붙할때 이미지 경로가 이상하게 등록되는 오류 걸러내는 if문
+			Attachment att = new Attachment();
+			
+			att.setAttachName(image);
+			att.setAttachRename(image);
+			att.setAttachPath(image);
+			att.setBoardType(3);
+			att.setSerialNumber(b.getBoardNum());
+			
+			attm = stService.insertThumbnail(att);
+		}
 		
-		att.setAttachName(image);
-		att.setAttachRename(image);
-		att.setAttachPath(image);
-		att.setBoardType(3);
-		att.setSerialNumber(b.getBoardNum());
-		
-		int attm = stService.insertThumbnail(att);
 
-		if(result + attm >= 2) {
+		if(result + attm >= 1) {
 			return null;
 //			return "redirect:list.st";
 		}else {
@@ -115,5 +145,28 @@ public class StoryController {
 		// 사진 이름 전송
 		out.println(renameFileName);
 		out.close();
+	}
+	
+	@RequestMapping("selectStory.st")
+	public ModelAndView selectStory(@RequestParam("boardNum") int boardNum, @RequestParam("userNum") int userNum,
+									@RequestParam(value = "page", required = false) Integer page,
+								ModelAndView mv, HttpSession session) {
+		System.out.println(boardNum);
+		
+		Board b = stService.selectStory(boardNum);
+		
+		System.out.println(b);
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		if(m.getUserNum() != userNum) {
+			int result = stService.updateView(boardNum);
+		}
+		
+		mv.addObject("board", b);
+		mv.addObject("loginUser", m);
+		mv.setViewName("story_Detail");
+		
+		return mv;
 	}
 }

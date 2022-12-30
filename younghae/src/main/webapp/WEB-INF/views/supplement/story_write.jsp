@@ -159,8 +159,8 @@
         <div class="row align-items-center">
             <div class="col-lg-12 col-md-12" style="border: 2px solid #24E082; padding: 3%; border-radius: 2em;">
                 <form action="${ contextPath }/insertStory.st" method="post" id="writeForm">
-<%--                 	<input type="hidden" name="userNum" value="${ loginUser.userNum }"> --%>
-                	<input type="hidden" name="userNum" value="8">
+                	<input type="hidden" name="userNum" value="${ loginUser.userNum }">
+<!--                 	<input type="hidden" name="userNum" value="8"> -->
                 	<input type="hidden" id="thumbnail" name="thumbnail" value="">
                     <div id="storyTitle">
                         <label

@@ -34,7 +34,7 @@
 	
 	<!-- 컬럼 리스트 수 가져오기 -->
 	<select id="getStoryListCount" resultType="_int">
-		select count(*) from board where board_status = 'Y';
+		select count(*) from board where board_status = 'Y'
 	</select>
 	
 	<!-- 컬럼 썸네일 등록 -->
@@ -44,8 +44,22 @@
 	</insert>
 	
 	<!-- 컬럼 리스트 가져오기 -->
-	<select id="selectStoryList">
-		select * from
+	<select id="allStory" resultMap="BoardResultSet">
+		select * from board
 		where BOARD_STATUS = 'Y' and BOARD_TYPE = 3
 	</select>
+	
+	<!-- 컬럼 디테일 가져오기 -->
+	<select id="selectStory" resultMap="BoardResultSet">
+		select * from board
+		where board_status ='Y' and board_type= 3 and board_num = #{ boardNum }
+	</select>
+	
+	<!-- 조회수 올리기 -->
+	<update id="updateView">
+		update board
+		set board_view = board_view + 1
+		where board_status = 'Y' and board_type = 3 and board_num = #{ boardNum }
+	</update>
+	
 </mapper>

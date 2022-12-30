@@ -32,4 +32,12 @@ public class StoryDAO {
 		return sqlSession.insert("storyMapper.insertThumbnail", att);
 	}
 
+	public Board selectStory(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("storyMapper.selectStory", boardNum);
+	}
+
+	public int updateView(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.update("storyMapper.updateView", boardNum);
+	}
+
 }
