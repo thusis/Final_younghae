@@ -41,9 +41,9 @@
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
-                <li>건강해지는 이야기</li>
+                <li><a href="${ contextPath }/storyList.st?page=${ page }">건강해지는 이야기</a></li>
                 <li> <b>/</b> </li>
-                <li><a href="#">건강해지는 이야기 상세보기</a></li>
+                <li>건강해지는 이야기 상세보기</li>
             </ul>
         </div>
     </div>
@@ -55,14 +55,19 @@
             </div>
             <div class="col-lg-12 col-md-12" style="border: 2px solid #24E082; padding: 3%; border-radius: 2em;">
                 <div class="text-center" id="column">
+                	<h3>${ board.boardTitle }</h3>
+                	<br><br>
                     <!-- <textarea name="storyContent" id="storyContent" cols="145"
                         rows="10">내용이 어쩌구 저쩌구 그렇습니다 그래서욥</textarea> -->
-                    <img src="resources/img/storyContent.jpg" style="width: 650px;" alt="">
+<!--                     <img src="resources/img/storyContent.jpg" style="width: 650px;" alt=""> -->
                     <!-- 썸머노트 도입할 예정 -->
+                    	${ board.boardContent }
+                    <br><br>
                 </div>
                 <div class="text-center" id="Btn" style="margin-top: 2%;">
                     <button type="button"
-                    style="height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">목록</button>
+                    style="height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;"
+                    onclick="toGoList()">목록</button>
                 </div>
             </div>
         </div>
@@ -124,7 +129,9 @@
     </footer>
     <!-- Footer Section End -->
     <script>
-
+		const toGoList = () =>{
+			location.href="${ contextPath }/storyList.st?page="+${ page };
+		}
     </script>
 </body>
 

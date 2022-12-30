@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.young.model.vo.Attachment;
-import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.PageInfo;
+import com.kh.young.model.vo.Story;
 import com.kh.young.story.dao.StoryDAO;
 
 @Service("storyService")
@@ -24,7 +24,7 @@ public class StoryService {
 		return stDAO.getStoryListCount(sqlSession);
 	}
 
-	public int insertStory(Board b) {
+	public int insertStory(Story b) {
 		return stDAO.insertStory(sqlSession, b);
 	}
 
@@ -32,16 +32,28 @@ public class StoryService {
 		return stDAO.insertThumbnail(sqlSession, att);
 	}
 
-	public ArrayList<Board> allStory(PageInfo pi) {
+	public ArrayList<Story> allStory(PageInfo pi) {
 		return stDAO.allStory(sqlSession, pi);
 	}
 
-	public Board selectStory(int boardNum) {
+	public Story selectStory(int boardNum) {
 		return stDAO.selectStory(sqlSession, boardNum);
 	}
 
 	public int updateView(int boardNum) {
 		return stDAO.updateView(sqlSession, boardNum);
+	}
+
+	public int bookmark(Story b) {
+		return stDAO.insertBookmark(sqlSession, b);
+	}
+
+	public int DeleteBookmark(Story b) {
+		return stDAO.deleteBookmark(sqlSession, b);
+	}
+
+	public Attachment selectThumbnail(int boardNum) {
+		return stDAO.selectThumbnail(sqlSession, boardNum);
 	}
 
 

@@ -160,17 +160,17 @@
 	                            </div>
 	                            <div class="blog__item__text">
 	                                <ul>
-	                                    <li><i class="fa fa-calendar-o"></i>${ story.boardModifyDate }</li>
+	                                    <li><i class="fa fa-calendar-o"></i>${ story.boardModifyDate }/${ story.boardNum }</li>
 	                                    <li><i class="fa fa-comment-o"></i>${ story.boardView }</li>
 	                                    <c:if test="${ loginUser ne null }">
-				                            <div class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
+				                            <div class="trashIcon" style="display: inline; float: right; font-size: 150%; color: #CC2525;">
 			                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
-				                                <i class="bi bi-bookmark-plus"></i>
+				                                <i class="bi bi-trash3"></i>
 				                            </div>
 			                            </c:if>
 	                                </ul>
 	                                <div class="title" style="font-size: 20px; font-weight: bold;">${ story.boardTitle }</div>
-	                                <>
+	                                
 	                                <div id="detail" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 <%-- 	                                	${ fn:split(story.boardContent,'</span>')[0] } --%>
 	                                </div>
@@ -268,31 +268,31 @@
 
         <script>
             window.onload=()=>{
-                $('.scrapIcon').children().on('click', function(){
+                $('.trashIcon').children().on('click', function(){
                 	var check = 'N';
-                    if($(this).attr("class") != "bi bi-bookmark-plus-fill"){
+                    if($(this).attr("class") != "bi bi-trash3-fill"){
                         // 스크랩 버튼 활성화 됐을 때
-                        $(this).attr("class", "bi bi-bookmark-plus-fill");
+                        $(this).attr("class", "bi bi-trash3-fill");
                         check = 'Y';
                     }else{
                         // 스크랩 버튼 비활성화
-                        $(this).attr("class", "bi bi-bookmark-plus");
+                        $(this).attr("class", "bi bi-trash3");
                         check = 'N';
                     }
-                    console.log($(this).siblings()[0].value);
-                    $.ajax({
-                    	url:'${ contextPath }/bookmark.st',
-                    	data: {userNum: ${ loginUser.userNum }, boardNum: $(this).siblings()[0].value, 
-                    			check: check},
-                    	success:(data)=>{
-                    		console.log(data);
-                    	},
-                    	error:(data)=>{
-                    		console.log(data);
-                    	}
-                    });
-                    console.log($(this).attr("class"));
-                }); // 클래스 이름으로 비교해서 ajax 실행
+//                     console.log($(this).siblings()[0].value);
+//                     $.ajax({
+//                     	url:'${ contextPath }/bookmark.st',
+//                     	data: {userNum: ${ loginUser.userNum }, boardNum: $(this).siblings()[0].value, 
+//                     			check: check},
+//                     	success:(data)=>{
+//                     		console.log(data);
+//                     	},
+//                     	error:(data)=>{
+//                     		console.log(data);
+//                     	}
+//                     });
+//                     console.log($(this).attr("class"));
+                }); // 클래스 이름으로 비교해서 ajax 실행...인데 ajax로 삭제 후 리스트도 뿌려야하나...?
                 
                 
                 // 이미지, 제목 클릭시 상세보기로 넘기기
@@ -301,7 +301,7 @@
 					const boardNum = $(this).children('input')[0].value;
 					const userNum = $(this).children('input')[1].value;
 					
-					location.href = '${contextPath}/selectStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
+					location.href = '${contextPath}/updateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});
                 
 				$('.title').on('click', function(){
@@ -309,7 +309,7 @@
 					const boardNum = $(this).parents().children('.blog__item__pic').children()[0].value;
 					const userNum = $(this).parents().children('.blog__item__pic').children()[1].value;
 					
-					location.href = '${contextPath}/selectStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
+					location.href = '${contextPath}/updateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});
             }
         </script>
