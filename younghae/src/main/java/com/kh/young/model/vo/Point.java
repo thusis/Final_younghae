@@ -17,6 +17,6 @@ public class Point {
 	private int pointNum;
 	private String pointContent;
 	private String pointAmount;
-	private Date PointDate;
+	private Date pointDate;
 	private int userNum;
 }

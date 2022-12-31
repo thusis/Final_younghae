@@ -78,4 +78,5 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.updatePwd(sqlSession, map);
 	}
 	
+	
 }

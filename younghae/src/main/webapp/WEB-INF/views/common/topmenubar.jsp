@@ -37,97 +37,105 @@
 	<script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
 	
 </head>
-<body>
-	
-	<!-- Header Section Begin -->
-	<header class="header">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-1">
-					<div class="header__logo">
-						<a href="#"><img src="resources/img/logo.svg" alt=""></a>
-					</div>
-				</div>
-				<div class="col-lg-2"></div>
-				<div class="col-lg">
-					<div class="input-group mt-3">
-						<select class="form-select bn_navbar-select-input">
-							<option value="전체">전체</option>
-							<option value="영양제">영양제</option>
-							<option value="브랜드">브랜드</option>
-						</select> <input type="text" class="form-control"
-							id="bn_navbar-search-input" style="height: 42px;"
-							placeholder="영양제 이름이나 브랜드명 입력" aria-label="search"
-							aria-describedby="search">
-						<button class="btn bn_btn_search">
-							<i class="bi bi-search"></i>
-						</button>
-					</div>
-				</div>
-				<div class="col-lg-4">
-					<div class="header__cart">
-						<c:if test="${ !empty loginUser }">
-							<ul>
 
-								<li><a href="#" onclick="location.href='${contextPath}/cartView.sh'">
-									<p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i class="fa fa-shopping-bag"></i><span>1</span></a>
-								</li>
-								<li><a href="#" onclick="location.href='${contextPath}/myPage.my'">
-									<p style="font-size: 12px; display: inline;">마이페이지</p>&nbsp;&nbsp;<i class="bi bi-caret-down-fill"></i></a>
-								</li>
-								<li><a href="#" onclick="location.href='${contextPath}/logout.me'">
-									<p style="font-size: 12px; display: inline;">로그아웃</p>&nbsp;&nbsp;<i class="bi bi-person-dash"></i></a>
-								</li>
-							</ul>
-						</c:if>
-						<c:if test="${ empty loginUser }">
-							<ul>
-								<li>
-									<a href="#"onclick="location.href='${contextPath}/login.me'">
-									<p style="font-size: 12px; display: inline;">로그인</p>&nbsp;&nbsp;<i class="bi bi-person-check-fill"></i></a>
-								</li>
-								<li>
-									<a href="#" onclick="location.href='${contextPath}/enroll.me'">
-									<p style="font-size: 12px; display: inline;">회원가입</p>&nbsp;&nbsp;<i class="bi bi-person-plus-fill"></i></a>
-								</li>
-							</ul>
-						</c:if>
-					</div>
-				</div>
-			</div>
-			<div class="humberger__open">
-				<i class="fa fa-bars"></i>
-			</div>
-		</div>
-	</header>
-	<nav class="bn_nav1">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg">
-					<nav class="yh_header__menu">
-						<ul>
-							<li><a href="#">영양제</a>
-								<ul class="yh_header__menu__dropdown">
-									<li><a href="#">영양성분조회</a></li>
-									<li><a href="#">영양제 검색</a></li>
-								</ul></li>
-							<li><a href="#">쇼핑</a></li>
-							<li><a href="#">Q&A</a>
-								<ul class="yh_header__menu__dropdown">
-									<li><a href="#">둘러보기</a></li>
-									<li><a href="#">질문하기</a></li>
-									<li><a href="#">답변하기</a></li>
-									<li><a href="#">전문가 찾기</a></li>
-								</ul></li>
-							<li><a href="#">건강콘텐츠</a></li>
-							<li><a href="#" onclick="location.href='${contextPath}/boardList.bo'">자유게시판</a></li>
-							<li><a href="#" onclick="location.href='${contextPath}/event.ev'">이벤트</a></li>
-						</ul>
-					</nav>
-				</div>
-			</div>
-		</div>
-	</nav>
+<body>
+
+  <!-- Header Section Begin -->
+  <header class="header">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg-1">
+                  <div class="header__logo">
+                      <a href="#"><img src="resources/img/logo.svg" alt=""></a>
+                  </div>
+              </div>
+              <div class="col-lg-2"></div>
+              <div class="col-lg">
+                  <div class="input-group mt-3">
+                      <select class="form-select bn_navbar-select-input">
+                          <option value="전체">전체</option>
+                          <option value="영양제">영양제</option>
+                          <option value="브랜드">브랜드</option>
+                      </select> <input type="text" class="form-control" id="bn_navbar-search-input" style="height: 42px;" placeholder="영양제 이름이나 브랜드명 입력" aria-label="search" aria-describedby="search">
+                      <button class="btn bn_btn_search">
+                          <i class="bi bi-search"></i>
+                      </button>
+                  </div>
+              </div>
+              <div class="col-lg-4">
+                  <div class="header__cart">
+                      <c:if test="${ !empty loginUser && loginUser.userCNumber ne '3'}">
+                          <ul>
+                              <li><a href="#" onclick="location.href='${contextPath}/cartView.sh'">
+                                      <p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i class="fa fa-shopping-bag"></i><span>1</span>
+                                  </a></li>
+                              <li><a href="#" onclick="location.href='${contextPath}/myPage.my'">
+                                      <p style="font-size: 12px; display: inline;">마이페이지</p>&nbsp;&nbsp;<i class="bi bi-caret-down-fill"></i>
+                                  </a></li>
+                              <li><a href="#" onclick="location.href='${contextPath}/logout.me'">
+                                      <p style="font-size: 12px; display: inline;">로그아웃</p>&nbsp;&nbsp;<i class="bi bi-person-dash"></i>
+                                  </a></li>
+                          </ul>
+                      </c:if>
+                      <c:if test="${ loginUser.userCNumber eq '3' }">
+                        <ul>
+                            <li><a href="#" onclick="location.href='${contextPath}/adminPage.ad'">
+                                    <p style="font-size: 12px; display: inline;">관리자페이지</p>&nbsp;&nbsp;<i class="bi bi-caret-down-fill"></i>
+                                </a></li>
+                            <li><a href="#" onclick="location.href='${contextPath}/logout.me'">
+                                    <p style="font-size: 12px; display: inline;">로그아웃</p>&nbsp;&nbsp;<i class="bi bi-person-dash"></i>
+                                </a></li>
+                        </ul>
+                      </c:if>
+                      <c:if test="${ empty loginUser }">
+                          <ul>
+                              <li><a href="#" onclick="location.href='${contextPath}/login.me'">
+                                      <p style="font-size: 12px; display: inline;">로그인</p>&nbsp;&nbsp;<i class="bi bi-person-check-fill"></i>
+                                  </a></li>
+                              <li><a href="#" onclick="location.href='${contextPath}/enroll.me'">
+                                      <p style="font-size: 12px; display: inline;">회원가입</p>&nbsp;&nbsp;<i class="bi bi-person-plus-fill"></i>
+                                  </a></li>
+                          </ul>
+                      </c:if>
+                  </div>
+              </div>
+          </div>
+          <div class="humberger__open">
+              <i class="fa fa-bars"></i>
+          </div>
+      </div>
+  </header>
+  <nav class="bn_nav1">
+      <div class="container">
+          <div class="row">
+              <div class="col-lg">
+                  <nav class="yh_header__menu">
+                      <ul>
+                          <li><a href="#">영양제</a>
+                              <ul class="yh_header__menu__dropdown">
+                                  <li><a href="#">영양성분조회</a></li>
+                                  <li><a href="#">영양제 검색</a></li>
+                              </ul>
+                          </li>
+                          <li><a href="#">쇼핑</a></li>
+                          <li><a href="#">Q&A</a>
+                              <ul class="yh_header__menu__dropdown">
+                                  <li><a href="#">둘러보기</a></li>
+                                  <li><a href="#">질문하기</a></li>
+                                  <li><a href="#">답변하기</a></li>
+                                  <li><a href="#">전문가 찾기</a></li>
+                              </ul>
+                          </li>
+                          <li><a href="#">건강콘텐츠</a></li>
+                          <li><a href="#">자유게시판</a></li>
+                          <li><a href="#">이벤트</a></li>
+                      </ul>
+                  </nav>
+              </div>
+          </div>
+      </div>
+  </nav>
+  <!-- Header Section End -->
 
 	<!-- Js Plugins -->
 	<script src="resources/js/jquery-ui.min.js"></script>	
@@ -143,4 +151,5 @@
 	<script src="resources/js/main.js"></script>	
 
 </body>
+
 </html>

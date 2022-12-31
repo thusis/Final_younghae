@@ -176,18 +176,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2" style="margin-top: 15px;">
-								<div>새 비밀번호*</div>
-								<div class="input-field" id="myPwd2">
-									<input type="password" id="myPwd" name="myPwd" placeholder="비밀번호를 입력해주세요">
-								</div>
-							</div>
-							<div class="form-group py-1 pb-2" style="margin-bottom: 15px;">
-								<div>비밀번호 확인*</div>
-								<div class="input-field" id="myPwdChk2">
-									<input type="password" id="myPwdChk" style="width: 450px; border: 0;"
-										placeholder="비밀번호를 입력해주세요">
-								</div>
-							</div>
+                                    <div>새 비밀번호*</div>
+                                    <div class="input-field" id="myPwd2">
+                                        <input type="password" id="myPwd" name="myPwd" placeholder="비밀번호를 입력해주세요">
+                                    </div>
+                                </div>
+                                <div class="form-group py-1 pb-2" style="margin-bottom: 15px;">
+                                    <div>비밀번호 확인*</div>
+                                    <div class="input-field" id="myPwdChk2">
+                                        <input type="password" id="myPwdChk" style="width: 450px; border: 0;" placeholder="비밀번호를 입력해주세요">
+                                    </div>
+                                </div>
                                 <div class="form-group py-2">
                                     <div>이름*</div>
                                     <div class="input-field" id="myName2">
@@ -266,7 +265,7 @@
                     </c:if>
                     <!-- 전문가회원 -->
                     <c:if test="${ loginUser.userCNumber eq '2'}">
-                    <form action="${ contextPath }/myInfoEdit.me" method="POST" id='insertForm'>
+                        <form action="${ contextPath }/myInfoEdit.me" method="POST" id='insertForm'>
                             <input type="hidden" name="category" value="export">
                             <div class="panel-body p-3">
                                 <div class="form-group py-2">
@@ -276,18 +275,17 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2" style="margin-top: 15px;">
-								<div>새 비밀번호*</div>
-								<div class="input-field" id="myPwd2">
-									<input type="password" id="myPwd" name="myPwd" placeholder="비밀번호를 입력해주세요">
-								</div>
-							</div>
-							<div class="form-group py-1 pb-2" style="margin-bottom: 15px;">
-								<div>비밀번호 확인*</div>
-								<div class="input-field" id="myPwdChk2">
-									<input type="password" id="myPwdChk" style="width: 450px; border: 0;"
-										placeholder="비밀번호를 입력해주세요">
-								</div>
-							</div>
+                                    <div>새 비밀번호*</div>
+                                    <div class="input-field" id="myPwd2">
+                                        <input type="password" id="myPwd" name="myPwd" placeholder="비밀번호를 입력해주세요">
+                                    </div>
+                                </div>
+                                <div class="form-group py-1 pb-2" style="margin-bottom: 15px;">
+                                    <div>비밀번호 확인*</div>
+                                    <div class="input-field" id="myPwdChk2">
+                                        <input type="password" id="myPwdChk" style="width: 450px; border: 0;" placeholder="비밀번호를 입력해주세요">
+                                    </div>
+                                </div>
                                 <div class="form-group py-2">
                                     <div>이름*</div>
                                     <div class="input-field" id="myName2">
@@ -329,24 +327,46 @@
                                         <input type="text" id="myPhone" name="userPhone" value="${loginUser.userPhone }">
                                     </div>
                                 </div>
-                                <div class="form-group py-2">
-                                    <div>
-                                        주소*
-                                        <button type="button" id="searchAddress" style="float: right; border: 0;">주소 검색</button>
-                                    </div>
-                                    <div class="input-field" style="margin-bottom: 5px">
-                                        <input type="text" id="myAddress1" name="userZipcode" placeholder="우편번호" required readonly>
-                                    </div>
-                                    <div class="input-field">
-                                        <input type="text" id="myAddress2" name="userAddress" placeholder="주소를 입력해주세요" required readonly>
-                                    </div>
-                                </div>
-                                <div class="form-group py-2">
-                                    <div>상세주소</div>
-                                    <div class="input-field">
-                                        <input type="text" id="myAddress3" name="userAddressDetail" placeholder="상세주소를 입력해주세요" required>
-                                    </div>
-                                </div>
+                                <c:if test="${loginUser.userCNumber eq '1' }">
+	                                <div class="form-group py-2">
+	                                    <div>
+	                                        주소*
+	                                        <button type="button" id="searchAddress" style="float: right; border: 0;">주소 검색</button>
+	                                    </div>
+	                                    <div class="input-field" style="margin-bottom: 5px">
+	                                        <input type="text" id="myAddress1" name="userZipcode" placeholder="우편번호" value="${GeneralUser.userZipcode }" required readonly>
+	                                    </div>
+	                                    <div class="input-field">
+	                                        <input type="text" id="myAddress2" name="userAddress" placeholder="주소를 입력해주세요" value="${GeneralUser.userAddress }" required readonly>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group py-2">
+	                                    <div>상세주소</div>
+	                                    <div class="input-field">
+	                                        <input type="text" id="myAddress3" name="userAddressDetail" placeholder="상세주소를 입력해주세요" value="${GeneralUser.userAddressDetail }" required>
+	                                    </div>
+	                                </div>
+                                </c:if>
+                               <c:if test="${loginUser.userCNumber eq '2' }">
+	                                <div class="form-group py-2">
+	                                    <div>
+	                                        주소*
+	                                        <button type="button" id="searchAddress" style="float: right; border: 0;">주소 검색</button>
+	                                    </div>
+	                                    <div class="input-field" style="margin-bottom: 5px">
+	                                        <input type="text" id="myAddress1" name="userZipcode" placeholder="우편번호" value="${ExpertUser.expertPostAdd }" required readonly>
+	                                    </div>
+	                                    <div class="input-field">
+	                                        <input type="text" id="myAddress2" name="userAddress" placeholder="주소를 입력해주세요" value="${ExpertUser.expertAddress }" required readonly>
+	                                    </div>
+	                                </div>
+	                                <div class="form-group py-2">
+	                                    <div>상세주소</div>
+	                                    <div class="input-field">
+	                                        <input type="text" id="myAddress3" name="userAddressDetail" placeholder="상세주소를 입력해주세요" value="${ExpertUser.expertAddDetail }" required>
+	                                    </div>
+	                                </div>
+                                </c:if>
                                 <div class="form-group py-2">
                                     <div>내 추천인코드</div>
                                     <div class="input-field">
@@ -366,7 +386,8 @@
     <script>
         window.onload = () => {
             // 주소검색
-            let isNickName, isGender, isAddress = false;
+            let isGender, isAddress = false;
+            let isNickName = true;
             document.getElementById('searchAddress').addEventListener('click', function() {
                 new daum.Postcode({
                     oncomplete: function(data) {
@@ -383,14 +404,14 @@
                 }).open();
 
             });
-            
+
             // 닉네임 중복 확인
             document.getElementById('myNickName').addEventListener('change', function() {
                 const checkNickName = document.getElementById('myNickName');
                 const regExp4 = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣0-9#]{1,}$/;
 
                 if (this.value.trim() == '') {
-                	checkNickName.style.backgroundColor = '#FFCECE';
+                    checkNickName.style.backgroundColor = '#FFCECE';
                 } else {
                     $.ajax({
                         url: '${contextPath}/checkNickName.me',
@@ -400,17 +421,17 @@
                         success: (data) => {
                             console.log(data);
                             if (data.trim() == 'yes' && regExp4.test(this.value)) {
-                            	checkNickName.style.backgroundColor = '#24E082';
+                                checkNickName.style.backgroundColor = '#24E082';
                                 isNickName = true;
                             } else if (data.trim() == 'yes' && !regExp4.test(this.value)) {
                                 checkNickName.style.backgroundColor = '#FFCECE';
                                 isNickName = false;
                             } else if (data.trim() == 'no') {
                                 if (this.value == '${ loginUser.userNickname }') {
-                                	 checkNickName.style.backgroundColor = '#24E082';
+                                    checkNickName.style.backgroundColor = '#24E082';
                                     isNickName = true;
                                 } else {
-                                	checkNickName.style.backgroundColor = '#FFCECE';
+                                    checkNickName.style.backgroundColor = '#FFCECE';
                                     isNickName = false;
                                 }
                             }
@@ -421,8 +442,8 @@
                     });
                 }
             });
-            
-         // 비밀번호 정규표현식
+
+            // 비밀번호 정규표현식
             const pwd1 = document.getElementById('myPwd');
             const pwd2 = document.getElementById('myPwdChk');
             const myPwd2 = document.getElementById('myPwd2');
@@ -470,18 +491,18 @@
             });
             // 회원가입 버튼 활성화
             document.getElementById('editInfoBtn').addEventListener('click', function() {
-            	
-            	var radios = document.querySelector('input[type=radio][name=gender]:checked');
-            	var Address = document.getElementById('myAddress1').value;
-            	var Address1 = document.getElementById('myAddress2').value;
-            	var Address2 = document.getElementById('myAddress3').value;
-            	
-            	if(Address != "" && Address1 != "" && Address2 != ""){
-            		isAddress = true;
-            	}
-            	
+
+                var radios = document.querySelector('input[type=radio][name=gender]:checked');
+                var Address = document.getElementById('myAddress1').value;
+                var Address1 = document.getElementById('myAddress2').value;
+                var Address2 = document.getElementById('myAddress3').value;
+
+                if (Address != "" && Address1 != "" && Address2 != "") {
+                    isAddress = true;
+                }
+
                 if (!!radios) {
-                	isGender = true;
+                    isGender = true;
                 }
                 if (isNickName && isGender && isAddress) {
                     this.type = 'submit';
@@ -490,8 +511,8 @@
                     alert('수정 폼에 맞춰주세요.');
                     if (!isNickName) {
                         document.getElementById('myNickName').focus();
-                    }else if(!isGender){
-                    	document.getElementsByName('gender')[0].focus();
+                    } else if (!isGender) {
+                        document.getElementsByName('gender')[0].focus();
                     }
                 }
 

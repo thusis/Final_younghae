@@ -156,7 +156,7 @@ public class MemberController {
  		m.setUserBirth(d);
  		
         //추천인코드입력하고 다른 추천포인트올려주기.(포인트단하면서하기)
-
+ 		
 
         //추천인코드자동부여
         String generatedString = RandomStringUtils.randomAlphanumeric(6);
@@ -395,7 +395,7 @@ public class MemberController {
             e.printStackTrace();
         }
     }
-
+    
     //		--------------------------------- 이메일 인증 ---------------------------------------
  // 내 정보 수정
  	@RequestMapping("myInfoEdit.me")
@@ -403,8 +403,10 @@ public class MemberController {
  			HttpServletRequest req, @RequestParam("myPwd") String newPwd) {
  							
  		int result = 0;
+ 		int resultGenral = 0;
  		Member mem = (Member)session.getAttribute("loginUser");
  		
+ 		//생일 date형식으로 변경
  		String str = req.getParameter("birth");
  		str = str.replaceAll("[^0-9]", "");
  		if(str.length()==8) {
@@ -421,6 +423,8 @@ public class MemberController {
  		java.sql.Date d = java.sql.Date.valueOf(str);
  		
  		m.setUserBirth(d);
+ 		
+ 		//비밀번호 변경
  		if(newPwd !=null) {
  			HashMap<String, String> map = new HashMap<String,String>();
  			map.put("memberId", mem.getUserId());
@@ -429,41 +433,42 @@ public class MemberController {
  			mService.updatePwd(map);
  		}
  		
+ 		
+ 		// member 업데이트
  		result = mService.updateMember(m);
  		
- 		 String userHealth = null;
-         if (req.getParameter("userHealth") != null) {
-             String[] arr = req.getParameterValues("userHealth");
-             for (int i = 0; i < arr.length; i++) {
-                 if (i == 0) {
-                     userHealth = arr[i];
-                 } else {
-                     userHealth = userHealth + "," + arr[i];
-                 }
-             }
-         }else {
-        	 userHealth = "없음";
-         }
-         
- 		
- 		System.out.println(mem.getUserNum());
-        HashMap < String, Object > map = new HashMap < String, Object > ();
-        String category = req.getParameter("category");
-        map.put("category", category);
-        map.put("userNum", mem.getUserNum());
-        map.put("userZipcode", req.getParameter("userZipcode"));
-        map.put("userAddress", req.getParameter("userAddress"));
-        map.put("userAddressDetail", req.getParameter("userAddressDetail"));
-        map.put("userHealth", userHealth);
-        
-        int resultGenral = 0;
-        if(StringUtils.isNumeric(m.getUserId())) {
-        	resultGenral = mService.insertMemberAddress(map);
-        }else {
-        	resultGenral = mService.updateMemberAddress(map);
-        }
-        
- 		
+ 		// 일반회원/전문가 정보업데이트
+ 			String userHealth = null;
+ 	         if (req.getParameter("userHealth") != null) {
+ 	             String[] arr = req.getParameterValues("userHealth");
+ 	             for (int i = 0; i < arr.length; i++) {
+ 	                 if (i == 0) {
+ 	                     userHealth = arr[i];
+ 	                 } else {
+ 	                     userHealth = userHealth + "," + arr[i];
+ 	                 }
+ 	             }
+ 	         }else {
+ 	        	 userHealth = "없음";
+ 	         }
+ 	         
+ 	 		
+ 	 		System.out.println(mem.getUserNum());
+ 	        HashMap < String, Object > map = new HashMap < String, Object > ();
+ 	        String category = req.getParameter("category");
+ 	        map.put("category", category);
+ 	        map.put("userNum", mem.getUserNum());
+ 	        map.put("userZipcode", req.getParameter("userZipcode"));
+ 	        map.put("userAddress", req.getParameter("userAddress"));
+ 	        map.put("userAddressDetail", req.getParameter("userAddressDetail"));
+ 	        map.put("userHealth", userHealth);
+ 	        
+ 	        resultGenral = 0;
+ 	        if(StringUtils.isNumeric(m.getUserId())) {
+ 	        	resultGenral = mService.insertMemberAddress(map);
+ 	        }else {
+ 	        	resultGenral = mService.updateMemberAddress(map);
+ 	        }
  		if(result > 0 && resultGenral>0) {
  			model.addAttribute("loginUser", mService.login(m));
  			return "../myPage/myPage";
