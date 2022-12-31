@@ -16,15 +16,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
-import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
+import com.kh.young.model.vo.Story;
 import com.kh.young.story.exception.StoryException;
 import com.kh.young.story.service.StoryService;
 import com.kh.young.supplement.service.SupplementService;
@@ -47,126 +48,180 @@ public class StoryController {
 			currentPage = page;
 		}
 
-		Member mem = sService.selectMember(27);
+		Member mem = sService.selectMember(8);
 		System.out.println(mem);
 
 		int listCount = stService.getStoryListCount();
 
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
+
+		ArrayList<Story> allList = stService.allStory(pi);
 		
-		ArrayList<Board> allList = stService.allStory(pi);
 //		System.out.println(allList);
 		
-		if(allList != null) {
-			model.addAttribute("pi", pi);
-			model.addAttribute("list", allList);
-			model.addAttribute("loginUser", mem);
-			
-//			System.out.println(allList);
-			
-//			return null;
-			return "story";
-		}else {
-			throw new StoryException("story오류");
-		}
-		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", allList);
+		model.addAttribute("loginUser", mem);
+
+		return "story";
 
 	}
 
 	// 스토리 작성하기
 	@RequestMapping("insertStory.st")
-	public String insertStory(@ModelAttribute Board b, @RequestParam("thumbnail") String image,
-								HttpSession session) {
+	public String insertStory(@ModelAttribute Story b, @RequestParam("thumbnail") String image, HttpSession session) {
 //		String nickName = ((Member) session.getAttribute("loginUser")).getUserNickname();
 		String nickName = "ss";
 //		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
-		
-		System.out.println("controller"+image);
-		
+
+		System.out.println("controller" + image);
+
 		System.out.println(b);
-		
-//		b.setUserNum(28);
-		
+
+		b.setUserNum(5);
+
 		int result = stService.insertStory(b);
 		int attm = 0;
-		
-		if(!image.contains("<p")) {
+
+		if (!image.contains("<p")) {
 			// 컬럼 내용 복붙할때 이미지 경로가 이상하게 등록되는 오류 걸러내는 if문
 			Attachment att = new Attachment();
-			
+
 			att.setAttachName(image);
 			att.setAttachRename(image);
 			att.setAttachPath(image);
 			att.setBoardType(3);
 			att.setSerialNumber(b.getBoardNum());
-			
+
 			attm = stService.insertThumbnail(att);
 		}
-		
 
-		if(result + attm >= 1) {
-			return null;
-//			return "redirect:list.st";
-		}else {
+		if (result + attm >= 1) {
+//			return null;
+			return "redirect:storyList.st";
+		} else {
 			throw new StoryException("컬럼 쓰기 실패");
 		}
 	}
 
 	@RequestMapping("summernoteImage.st")
-	public void profileUpload(String email, MultipartFile file, HttpServletRequest request,
-			HttpServletResponse response) throws Exception{
+	public void profileUpload(MultipartFile file, HttpServletRequest request,
+			HttpServletResponse response) throws Exception {
 		String root = request.getSession().getServletContext().getRealPath("resources");
-		String savePath = root +  "\\summerNote";
-		
+		String savePath = root + "\\summerNote";
+
 		File folder = new File(savePath);
-		if(!folder.exists()) {
+		if (!folder.exists()) {
 			folder.mkdirs();
 		}
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-		int ranNum = (int)(Math.random()*100000);
-		
+		int ranNum = (int) (Math.random() * 100000);
+
 		String originFileName = file.getOriginalFilename();
 		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + ranNum
 				+ originFileName.substring(originFileName.lastIndexOf("."));
-		
+
 		String renamePath = folder + "\\" + renameFileName;
-		
+
 		try {
 			file.transferTo(new File(renamePath));
 		} catch (Exception e) {
 			System.out.println("파일 전송 에러 :" + e.getMessage());
 		}
-		
+
 		System.out.println("파일경로 : " + renamePath);
-		
+
 		PrintWriter out = response.getWriter();
-		
+
 		// 사진 이름 전송
 		out.println(renameFileName);
 		out.close();
 	}
-	
+
 	@RequestMapping("selectStory.st")
 	public ModelAndView selectStory(@RequestParam("boardNum") int boardNum, @RequestParam("userNum") int userNum,
-									@RequestParam(value = "page", required = false) Integer page,
-								ModelAndView mv, HttpSession session) {
+			@RequestParam(value = "page", required = false) Integer page, ModelAndView mv, HttpSession session) {
 		System.out.println(boardNum);
-		
-		Board b = stService.selectStory(boardNum);
-		
+
+		Story b = stService.selectStory(boardNum);
+
 		System.out.println(b);
-		
-		Member m = (Member)session.getAttribute("loginUser");
-		
-		if(m.getUserNum() != userNum) {
+
+		Member m = (Member) session.getAttribute("loginUser");
+
+		if (m.getUserNum() != userNum) {
 			int result = stService.updateView(boardNum);
 		}
-		
+
 		mv.addObject("board", b);
 		mv.addObject("loginUser", m);
+		mv.addObject("page", page);
 		mv.setViewName("story_Detail");
-		
+
 		return mv;
+	}
+
+	@RequestMapping("bookmark.st")
+	@ResponseBody
+	public Integer bookmark(@RequestParam("boardNum") int boardNum, @RequestParam("userNum") int userNum,
+			@RequestParam("check") String check) {
+		int result = 0;
+		// 보드로 설정
+		Story b = new Story();
+		// 여기서 userNum은 보드를 쓴 사람이 아님(=로그인 유저), 그냥 담을 곳이 없어서 넣어서 보낸거임
+		b.setUserNum(userNum);
+		b.setBoardNum(boardNum);
+
+		System.out.println(check);
+
+		if (check.equals("N")) {
+			System.out.println("delete 들어옴");
+			result = stService.DeleteBookmark(b);
+		} else if (check.equals("Y")) {
+			System.out.println("insert 들어옴");
+			result = stService.bookmark(b);
+		}
+
+		return result;
+	}
+	
+//======================관리자 페이지===============================================================================================================
+	
+	@RequestMapping("updateStory.st")
+	public String updateStory(@ModelAttribute Story s,@RequestParam("check") String check) {
+		if(check.equals("U")) {
+			// 업데이트
+		}else {
+			// 삭제
+		}
+		return null;
+	}
+	
+	@RequestMapping("AdminStoryList.st")
+	public String AdminAllStoryList(@RequestParam(value = "page", required = false) Integer page, Model model) {
+		int currentPage = 1;
+
+		if (page != null) {
+			currentPage = page;
+		}
+
+		Member mem = sService.selectMember(8);
+		System.out.println(mem);
+
+		int listCount = stService.getStoryListCount();
+
+		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
+
+		ArrayList<Story> allList = stService.allStory(pi);
+		
+//		System.out.println(allList);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", allList);
+		model.addAttribute("loginUser", mem);
+
+		return "admin_StoryPage";
+
 	}
 }

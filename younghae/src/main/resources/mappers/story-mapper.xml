@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="storyMapper">
 	<!-- Board 폼 -->
-	<resultMap type="Board" id="BoardResultSet">
+	<resultMap type="Story" id="BoardResultSet">
 		<id column="BOARD_NUM" property="boardNum"/>
 		<result column="BOARD_TITLE" property="boardTitle"/>
 		<result column="BOARD_CONTENT" property="boardContent"/>
@@ -12,6 +12,7 @@
 		<result column="BOARD_STATUS" property="boardStatus"/>
 		<result column="USER_NUM" property="userNum"/>
 		<result column="BOARD_TYPE" property="boardType"/>
+		<association property="attachment" javaType="Attachment" resultMap="AttmResultSet"></association>
 	</resultMap>
 	
 	<!-- 첨부파일 폼 -->
@@ -43,10 +44,18 @@
 		values(SEQ_ATTACH.nextval, SYSDATE, #{attachName}, #{attachRename}, #{attachPath}, #{boardType}, SEQ_BOARD.currval, 'Y')
 	</insert>
 	
+	<!-- 컬럼 썸네일 가져오기 -->
+	<select id="selectThunbnail" resultMap="AttmResultSet">
+		select * from attachment
+		where board_type= 3 and SERIALNUMBER = #{ boardNum }
+	</select>
+	
 	<!-- 컬럼 리스트 가져오기 -->
 	<select id="allStory" resultMap="BoardResultSet">
-		select * from board
-		where BOARD_STATUS = 'Y' and BOARD_TYPE = 3
+		select board_num, board_title, board_content, board_createDate, board_modifyDate, board_view, board_status, user_num, attach_rename
+		from board 
+		join attachment on board_num = SERIALNUMBER
+		order by board_num desc
 	</select>
 	
 	<!-- 컬럼 디테일 가져오기 -->
@@ -62,4 +71,15 @@
 		where board_status = 'Y' and board_type = 3 and board_num = #{ boardNum }
 	</update>
 	
+	<!-- 북마크 -->
+	<insert id="insertBookmark">
+		insert into clip
+		values( #{boardNum}, #{userNum})
+	</insert>
+	
+	<!-- 북마크 삭제하기 -->
+	<delete id="deleteBookmark">
+		delete from clip
+		where board_num = #{boardNum} and user_num = #{userNum}
+	</delete>
 </mapper>

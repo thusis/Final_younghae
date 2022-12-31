@@ -9,14 +9,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <title>컬럼 수정 and 삭제</title>
-
-	<!-- 써머노트때문에 위로 올라감 -->
-	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
 	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
 	crossorigin="anonymous"></script>
+
+<!-- 써머노트때문에 위로 올라감 -->
+<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
+
 
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css"
@@ -218,9 +218,9 @@ textarea:focus {
 			<ul>
 				<li>건강해지는 이야기</li>
 				<li><b>/</b></li>
-				<li><a href="#">건강해지는 이야기 상세보기</a></li>
+				<li><a href="${ contextPath }/storyList.st?page=${ page }">건강해지는 이야기 상세보기</a></li>
 				<li><b>/</b></li>
-				<li><a href="#">건강해지는 이야기 수정하기</a></li>
+				<li>건강해지는 이야기 수정하기</li>
 			</ul>
 		</div>
 	</div>
@@ -231,7 +231,9 @@ textarea:focus {
 		<div class="row align-items-center">
 			<div class="col-lg-12 col-md-12"
 				style="border: 2px solid #24E082; padding: 3%; border-radius: 2em;">
-				<form action="" method="post">
+				<form action="${ contextPath }/updateStory.st" method="post" id="formmm">
+					<input type="hidden" id="thumbnail" name="thumbnail" value="">
+					<input type="hidden" name="userNum" value="${ loginUser.userNum }">
 					<div id="storyTitle">
 						<label
 							style="font-size: 25px; color: #24E082; font-weight: 700; padding-left: 1%; padding-top: 1.5%; padding-right: 1%; border: none;"
@@ -252,13 +254,13 @@ textarea:focus {
 					<div class="text-center" id="column">
 						<br>
 						<textarea id="summernote" name="editordata"></textarea>
-						<!-- ${ info.storyContent } -->
 					</div>
 					<div class="text-center" id="Btn" style="margin-top: 2%;">
-						<button type="button"
+						<input type="hidden" id="check" name="check" value="">S
+						<button type="button" id="updateBtn"
 							style="height: 40px; width: 13%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">수정</button>
 						&emsp;&emsp;&emsp;&emsp;&emsp;
-						<button type="button"
+						<button type="button" id="deleteBtn"
 							style="height: 40px; width: 13%; background-color: #FD9F28; border: none; border-radius: 5em; color: #ffffff;">삭제</button>
 					</div>
 				</form>
@@ -309,7 +311,9 @@ textarea:focus {
 					<div class="footer__widget">
 						-o Colorlib can't be removed. Template is licensed under CC BY
 						3.0. --> Copyright &copy;
-						<script>document.write(new Date().getFullYear());</script>
+						<script>
+							document.write(new Date().getFullYear());
+						</script>
 						All rights reserved | This template is made with <i
 							class="fa fa-heart" aria-hidden="true"></i> by <a
 							href="https://colorlib.com" target="_blank">Colorlib</a>
@@ -328,26 +332,51 @@ textarea:focus {
 
 
 	<script>
-      $('#summernote').summernote({
-        placeholder: 'Hello stand alone ui',
-        tabsize: 2,
-        height: 120,
-        toolbar: [
-			    // [groupName, [list of button]]
-			    ['fontname', ['fontname']],
-			    ['fontsize', ['fontsize']],
-			    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
-			    ['color', ['forecolor','color']],
-			    ['table', ['table']],
-			    ['para', ['ul', 'ol', 'paragraph']],
-			    ['height', ['height']],
-			    ['insert',['picture','link','video']],
-			    ['view', ['fullscreen', 'help']]
-			  ],
-			fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
-			fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72']
-      });
-    </script>
+		$('#summernote').summernote({
+	        placeholder: 'Hello stand alone ui',
+	        tabsize: 2,
+	        height: 500,
+	        disableResizeEditor: true,
+	        toolbar: [
+				    // [groupName, [list of button]]
+				    ['fontname', ['fontname']],
+				    ['fontsize', ['fontsize']],
+				    ['style', ['bold', 'italic', 'underline','strikethrough', 'clear']],
+				    ['color', ['forecolor','color']],
+				    ['table', ['table']],
+				    ['para', ['ul', 'ol', 'paragraph']],
+				    ['height', ['height']],
+				    ['insert',['picture']],
+				    ['view', ['fullscreen', 'codeview' ,'help']]
+				  ],
+				fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New','맑은 고딕','궁서','굴림체','굴림','돋움체','바탕체'],
+				fontSizes: ['8','9','10','11','12','14','16','18','20','22','24','28','30','36','50','72'],
+				
+				callbacks: {
+					onImageUpload: function(files, editor, welEditable) {
+			            for (var i = files.length - 1; i >= 0; i--) {
+			            	sendFile(files[i], this);
+			            }
+			        }
+				}
+	      });
+		
+		window.onload=()=>{
+			const form = document.getElementById("formmm");
+			document.getElementById("deleteBtn").addEventListener('click', ()=>{
+				document.getElementById("check").value = "D";
+				
+// 				form.commit();
+			});
+			
+			document.getElementById("updateBtn").addEventListener('click', ()=>{
+				document.getElementById("check").value = "U";
+				
+// 				form.commit();
+			});
+		}
+		
+	</script>
 </body>
 </html>
 

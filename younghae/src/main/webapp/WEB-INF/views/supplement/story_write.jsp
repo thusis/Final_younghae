@@ -159,7 +159,7 @@
         <div class="row align-items-center">
             <div class="col-lg-12 col-md-12" style="border: 2px solid #24E082; padding: 3%; border-radius: 2em;">
                 <form action="${ contextPath }/insertStory.st" method="post" id="writeForm">
-                	<input type="hidden" name="userNum" value="${ loginUser.userNum }">
+<%--                 	<input type="hidden" name="userNum" value="${ loginUser.userNum }"> --%>
 <!--                 	<input type="hidden" name="userNum" value="8"> -->
                 	<input type="hidden" id="thumbnail" name="thumbnail" value="">
                     <div id="storyTitle">
@@ -168,20 +168,9 @@
                         for="">제목</label>
                         <input type="text" name="boardTitle" placeholder="제목을 입력하세요" required style="width: 60%; padding: 0.5%;  border: none;">
                     </div>
-<!--                     <div id="storyFile"> -->
-<!--                         <label -->
-<!--                         style="font-size: 25px; color: #24E082; font-weight: 700; padding-left: 1%; padding-top: 1.5%; padding-right: 1%;" -->
-<!--                         for="">첨부파일</label> -->
-<!--                         <input type="text" placeholder="파일 이름" required style="width: 60%; padding: 0.5%;"> -->
-<!--                         <div class="text-right float-right" id="fileBtn" style="margin-top: 2%; margin-right: 20%;"> -->
-<!--                             <button type="button" -->
-<!--                                 style="height: 30px; width: 150%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">찾아보기</button> -->
-<!--                         </div> -->
-<!--                     </div> -->
                     <div class="text-center" id="column">
                         <br>
                         <textarea id="summernote" name="boardContent"></textarea>
-                        <!-- ${ info.storyContent } -->
                     </div>
                     <div class="text-center" id="Btn" style="margin-top: 2%;">
                         <button type="button" id="write"
