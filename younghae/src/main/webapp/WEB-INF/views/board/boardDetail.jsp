@@ -5,15 +5,47 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="description" content="Ogani Template">
+<meta name="keywords" content="Ogani, unica, creative, html">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>게시글 상세</title>
+<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
+<!-- 추가 CSS -->
+<link rel="stylesheet" href="resources/css/soyeon.css" type="text/css">
+<link rel="stylesheet" href="css/bn_style.css" type="text/css">
+<!-- 부트 스트랩 -->
+<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
+<style>
+	.ll{
+		color:black;
+		font-size: 17px;
+		padding-bottom: 10px; 
+	}
+	.ll:hover{
+		color:#24E082;
+		cursor: pointer;
+	}
+	.boardselect{
+		cursor: pointer;
+	}	
+
+</style>
+</head>
+<body>
+	<section class="blog spad">
+		<div class="container">
+			<div class="row">
 				<div class="col-lg-4 col-md-5">
                     <div class="blog__sidebar">
                         <div class="blog__sidebar__search">
                             <form action="#">
-                                <select>
-                                    <option>작성자</option>
-                                    <option>제목</option>
-                                    <option>내용</option>
-                                </select>
+	                            <select class="boardselect" id="searchCondition">
+									  <option value="1">작성자</option>
+									  <option value="2">제목</option>
+									  <option value="3">내용</option>
+									  <option value="4">해시태그</option>
+								</select>
                                 <br><br>
                                 <input type="text" placeholder="Search...">
                                 <button type="submit"><br><br><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -22,11 +54,11 @@
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">Categories</h4>
                             <ul>
-                                <li><a href="#">운동(32)</a></li>
-                                <li><a href="#">식단 (20)</a></li>
-                                <li><a href="#">영양제 (5)</a></li>
-                                <li><a href="#">자유 (9)</a></li>
-                            </ul>
+                                <li class="ll 11">운동 (32)</li>
+                                <li class="ll 12">식단 (21)</li>
+                                <li class="ll 13">영양제 (54)</li>
+                                <li class="ll 14">자유 (47)</li>
+                            </ul>  
                         </div>
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">TOP5 게시글</h4>
@@ -314,7 +346,15 @@
 			                shareTwitter();
 			            });
           });
-            
+    		/** boardCategories Bar */						
+     	   const categorys = document.getElementsByClassName('ll');
+     	   for(const category of categorys){
+     		   category.addEventListener('click', function(){
+     			   const boardCategory = category.className.substr(2);
+     			   location.href='${contextPath}/boardList.bo?boardCategory=' + boardCategory;
+     			   console.log(boardCategory);
+     		   });
+     	   }						            
             </script>
 
 </body>

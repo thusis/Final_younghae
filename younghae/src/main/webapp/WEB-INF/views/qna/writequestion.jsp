@@ -1,40 +1,73 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set value="${pageContext.servletContext.contextPath}" var="contextPath" scope="application"/>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>질문게시판 - 질문하기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>질문게시판 - 질문상세보기</title>
+
+    <script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"crossorigin="anonymous"></script>
 
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 
     <!--내가만든 css-->
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
     
-	<!-- jQuery -->	
-<!--     <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script> -->
-
     <!-- 써머 노트 :CDN방식 -->
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
-
+    
 	<style>
 		#selectPillModal{
 			width: 50vw;
 			max-width: none;
 			height: 50%;
 		}
+		
+		.bn_txtElipsis{
+			width:15rem;
+	    	overflow:hidden;
+	    	text-overflow:ellipsis;
+	    	white-space:nowrap;
+		}
 	</style>
 </head>
 <body>
-
+	<!-- 		영양제 선택 모달창 만들어야행 -->
+	<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h4 class="modal-title fs-5" id="staticBackdropLabel">영양제 선택</h4>
+	        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-circle"></i></button>
+	      </div>
+	      
+		<div class="modal-body">
+			<input type="text" id="searchSrespInput" name="keyword" placeholder="영양제 이름으로 검색">
+			<button type="button" id="searchSrespBtn" class="btn bn_btn_search2"><i class="bi bi-search"></i></button>
+			<div id="resultBox"></div>
+       	</div>
+	      
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">선택하지 않고 닫기</button>
+	        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">선택</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	
+	
+
     <div class="container">
+    
         <div class="bn_index mt-5">
             <ul>
                 <li>Q&A</li>
+                <li> <b>/</b> </li>
+                <li><a href="#">둘러보기</a></li>
                 <li> <b>/</b> </li>
                 <li><a href="#">질문하기</a></li>
             </ul>
@@ -54,19 +87,22 @@
 
             <div class="mb-3">
                 <label for="content" class="form-label bn_txt_strong">내용</label>
-                <div class="row m-3">
-                    <button type="button" class="site-btn" id="selectPillBtn"><i class="bi bi-capsule"></i></button>
-                    <input type="text" class="inline" id="selectPill" placeholder=" 영양제 선택" name="supplement" style="border:0px; background-color: transparent;" disabled>
-                </div>
+				<div class="row m-3">
+					<button type="button" class="btn bn_btn_search2" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+						<i class="bi bi-capsule"></i>
+					</button>
+					<input type="text" class="inline" id="selectPill" placeholder="영양제 선택" style="border:0px; background-color: transparent;" disabled>
+					<input type="hidden" id="selectPillHidden" name="supplement">
+				</div>
 
                 <div class="filebox row m-3">
-                    <button type="button" class="site-btn" id="addFile"><i class="bi bi-paperclip"></i></button>
+                    <button type="button" class="site-btn bn_btn_search2" id="addFile"><i class="bi bi-paperclip"></i></button>
                     <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
                     <label for="file">파일찾기</label> 
                     <input type="file" id="file" name="attachment">
                 </div>
 
-		       <div class="text-center" id="column">
+		       <div id="column">
 		           <br>
 		           <textarea id="summernote" name="boardContent"></textarea>
 		       </div>
@@ -83,76 +119,6 @@
 	<br>
 	<br>
 	<br>
-	
-	<div class="modal fade" tabindex="-1" role="dialog" id="modalPillChoice" aria-hidden="false" style="background-color: white;">
-	    <div class="modal-dialog modal-dialog-centered" role="document">
-	            <div class="modal-body p-4 text-center">
-	                <!--영양제 목록 보여줄건데 이건 include 해야 할 것 같다!-->
-<!-- 	                <div class="row"> -->
-<!-- 	                    <div class="col-lg-4 col-md-6 col-sm-6"> -->
-<!-- 	                        <div class="product__item"> -->
-<!-- 	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-1.jpg"> -->
-<!-- 	                                <ul class="product__item__pic__hover"> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li> -->
-<!-- 	                                </ul> -->
-<!-- 	                            </div> -->
-<!-- 	                            <div class="product__item__text"> -->
-<!-- 	                                <h6><a href="#">Crab Pool Security</a></h6> -->
-<!-- 	                                <h5>$30.00</h5> -->
-<!-- 	                            </div> -->
-<!-- 	                        </div> -->
-<!-- 	                    </div> -->
-<!-- 	                    <div class="col-lg-4 col-md-6 col-sm-6"> -->
-<!-- 	                        <div class="product__item"> -->
-<!-- 	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-2.jpg"> -->
-<!-- 	                                <ul class="product__item__pic__hover"> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li> -->
-<!-- 	                                </ul> -->
-<!-- 	                            </div> -->
-<!-- 	                            <div class="product__item__text"> -->
-<!-- 	                                <h6><a href="#">Crab Pool Security</a></h6> -->
-<!-- 	                                <h5>$30.00</h5> -->
-<!-- 	                            </div> -->
-<!-- 	                        </div> -->
-<!-- 	                    </div> -->
-<!-- 	                    <div class="col-lg-4 col-md-6 col-sm-6"> -->
-<!-- 	                        <div class="product__item"> -->
-<!-- 	                            <div class="product__item__pic set-bg" data-setbg="img/product/product-3.jpg"> -->
-<!-- 	                                <ul class="product__item__pic__hover"> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-heart"></i></a></li> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-retweet"></i></a></li> -->
-<!-- 	                                    <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li> -->
-<!-- 	                                </ul> -->
-<!-- 	                            </div> -->
-<!-- 	                            <div class="product__item__text"> -->
-<!-- 	                                <h6><a href="#">Crab Pool Security</a></h6> -->
-<!-- 	                                <h5>$30.00</h5> -->
-<!-- 	                            </div> -->
-<!-- 	                        </div> -->
-<!-- 	                    </div> -->
-<!-- 					</div> -->
-				<h5>영양제 선택</h5>
-				<form action="${contextPath}/searchSupplement.qa" method="post">
-					<input type="text" name="keyword">
-				</form>
-		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">검색하지 않고 닫기</button>
-		        <button type="submit" class="btn btn-primary">검색하기</button>
-		      </div>
-	        </div>
-	    </div>
-	</div>
-<%-- 	<%@ include file="supplementModal.jsp" %> --%>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
-	<br>
 	<br>
 	<br>
 	<br>
@@ -166,20 +132,64 @@
 	<br>
 	<script>
 		window.onload=()=>{
+			
 			$("#file").on('change',function(){ //첨부파일
+// 				var fileName = $("#file").val();
 				var fileName = $("#file").val();
 				$(".upload-name").val(fileName);
 			});
+			
+			//============================영양제검색====================================
+			document.getElementById('searchSrespBtn').addEventListener('click', ()=>{
+				document.getElementById('resultBox').innerHTML='';
+				
+				$.ajax({
+					url: '${contextPath}/searchSupplement.qa',
+					data: { keyword: document.getElementById('searchSrespInput').value},
+					success: (sresp)=>{
+						document.getElementById('searchSrespInput').value='';
+						document.getElementById('resultBox').innerHTML='';
+						console.log(sresp);
+						
+						str = '<div class="container" style="font-family: '+'IBM Plex Sans KR'+', sans-serif;"><div class="row justify-content-between">'
+						
+						$.each(sresp , function(i){
+							str += '<div class="col-5 srespEach" style="border: 1px solid #e5e3e3; margin:1rem; border-radius: 0.5em; cursor:pointer;" onmouseover="selectProNum();">'
+			                +'<div class="row" style="height: 1.8rem ; background-color: #F5F5F5; border-top-left-radius: 0.5em; border-top-right-radius: 0.5em;"><span class="bn_txtElipsis">'+sresp[i].proName+'</span>'
+							+'<input type="hidden" class="proNum" value="'+sresp[i].proNum+'">'							
+							+'</div><div style="text-align: center;">'
+							+'<img width="50px" src="'+sresp[i].proImage+'">' 
+							+'</div><div style="color: gray; text-align: center;"><span>제조사:'
+							+sresp[i].proCompany+'</span></div></div>';
+						});
+						
+						str += '</div></div>';
+						$('#resultBox').append(str);
+					},
+					error: (sresp)=>{alert("실패!");},
+				});
+			})
+			
 		}
-		  
+		
+		function selectProNum(){
+			var sresps = document.getElementsByClassName('srespEach');
+			
+			for(const srespEach of sresps){
+				srespEach.addEventListener('click', function(){
+					console.log(this);
+					const proNum = this.querySelectorAll('div')[0].querySelector('input').value;
+					const proName =  this.querySelectorAll('div')[0].querySelector('span').innerText;
+					console.log(proNum); // 이거 여러개 출력하는 거 막고 싶다.
+					console.log(proName);
+					
+					document.getElementById('selectPillHidden').value = proNum;
+					document.getElementById('selectPill').value = proName;
+					return proNum;
+				})
+			}
+		}
 
-		$("#selectPillBtn").click(function(){ //영양제 선택 모달창 팝업
-			$("#modalPillChoice").modal({backdrop:'static'});
-			$('#modalPillChoice').modal("show");
-		//영양제 검색 > 영양제이름으로만 검색결과 > 뷰 > 선택 > 유저에게 보이는 창에는 영양제이름이, 전달되는 값은 영양제제품번호만
-		//모달이 아니고 팝업으로 구현 따로 창을 만들어야 함
-		});
-		  
 		$('#summernote').summernote({
 			placeholder: '내용을 작성하세요',
 			tabsize: 2,

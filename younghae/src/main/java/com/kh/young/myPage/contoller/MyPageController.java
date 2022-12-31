@@ -18,6 +18,15 @@ public class MyPageController {
 	   public String myInfo() {
 	      return "myInfo";
 	 }
+	// 내 정보 수정.
+	@RequestMapping("myInfoEdit.my")
+	 public String myInfoEdit() {
+		return null;
+	}
+	
+	
+	
+	
 	// 내 스크랩 이동.
 		@RequestMapping("myScrap.my")
 		   public String myScrap() {

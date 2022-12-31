@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<% request.setCharacterEncoding("UTF-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,7 +30,33 @@
 .bn_index li:last-child a {
 	font-weight: 800;
 	color: #FD9F28;
+
 }
+/*  input::file-selector-button {
+    font-weight: bold;
+    color: dodgerblue;
+    padding: 0.5em;
+    border: thin solid grey;
+    border-radius: 3px;
+    background: #24E082;
+} 
+ */
+ #boardContent{
+ 	margin-top: -5px;
+ 	margin-left:-10px;
+ }
+ 	.ll{
+		color:black;
+		font-size: 17px;
+		padding-bottom: 10px; 
+	}
+	.ll:hover{
+		color:#24E082;
+		cursor: pointer;
+	}
+	.boardselect{
+		cursor: pointer;
+	}	
 </style>
 </head>
 <body>
@@ -52,12 +78,14 @@
 					<div class="blog__sidebar">
 						<div class="blog__sidebar__search">
 							<form action="#">
-								<select>
-									<option>작성자</option>
-									<option>제목</option>
-									<option>내용</option>
-								</select> <br>
-								<br> <input type="text" placeholder="Search...">
+                            <select class="boardselect">
+							  <option value="1">작성자</option>
+							  <option value="2">제목</option>
+							  <option value="3">내용</option>
+							  <option value="4">해시태그</option>
+							</select>
+								<br> 
+								<input type="text" placeholder="Search...">
 								<button type="submit">
 									<br>
 									<br>
@@ -67,12 +95,12 @@
 						</div>
 						<div class="blog__sidebar__item">
 							<h4 style="color: #ffc53e;">Categories</h4>
-							<ul>
-								<li><a href="#">운동(32)</a></li>
-								<li><a href="#">식단 (20)</a></li>
-								<li><a href="#">영양제 (5)</a></li>
-								<li><a href="#">자유 (9)</a></li>
-							</ul>
+                            <ul>
+                                <li class="ll 11">운동 (32)</li>
+                                <li class="ll 12">식단 (21)</li>
+                                <li class="ll 13">영양제 (54)</li>
+                                <li class="ll 14">자유 (47)</li>
+                            </ul> 
 						</div>
 						<div class="blog__sidebar__item">
 							<h4 style="color: #ffc53e;">TOP5 게시글</h4>
@@ -139,20 +167,22 @@
 						</div>
 					</div>
 				</div>
-
+<%--  				<form id="boardWriteDiv" action=" ${contextPath }/insertBoard.bo">  --%>
 				<div class="col-lg-8 col-md-7 order-md-1 order-1">
+				<!-- 
 					<table>
 						<thead>
 							<tr style="text-align: center;">
-
-								<td width="50px"><select name="category" id="category"
-									style="color: #24E082;">
+								
+								<td width="50px">
+								<select name="category"  id="category" style="color: #24E082;">
 										<option>선택</option>
 										<option>운동</option>
 										<option>식단</option>
 										<option>영양제</option>
 										<option>자유</option>
-								</select></td>
+								</select>
+								</td>
 
 								<th width="55px" style="color: #24E082;">제목</th>
 								<td><input type="text" name="boardTitle" size="70"
@@ -160,22 +190,40 @@
 							</tr>
 						</thead>
 					</table>
-
-					<hr width="80%" style="border: 1px solid #c9ffe4;" noshade />
-					<input type="file" style="float: right;" id="fileUpload">
-					<button type="button" class="btn btn-outline-warning" id="addFile"
-						name="file" onclick="onClickUpload();">파일 추가</button>
+					-->
+					<form action="${contextPath}/insertBoard.bo" method="POST" enctype="multipart/form-data"  id="boardWriteForm">
+						<div class="row justify-content-between">
+								<select name="category"  id="category" class="category">
+										<option disabled selected value="no">선택</option>
+										<option value="11">🏓운동</option>
+										<option value="12">🥗식단</option>
+										<option value="13">💊영양제</option>
+										<option value="14">😀자유</option>
+								</select>
+								<br>
+						<label for="title" style="font-weight:900; line-height:1.5rem; font-size:1.25rem;color: #24E082;">제목</label>
+						<input type="text" class="col-lg-9" name="boardTitle" id="boardTitle">
+<!-- 				 <div class="filebox row m-3">
+                    <button type="button" class="site-btn" id="addFile"><i class="bi bi-paperclip"></i></button>
+                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
+                    <label for="file">파일찾기</label> 
+                    <input type="file" id="file" name="attachment">
+                	</div> -->
+					</div>
+					<hr style="border: 1px solid #c9ffe4;" noshade />
+					<input type="file" class="form-control form-control-lg" name="file">
+					<!--  <input type="file" style="float: right;" id="fileUpload" name="file"> -->
+	<!-- 				<button type="button" class="btn btn-outline-warning" id="addFile" name="file" onclick="onClickUpload();">파일 추가</button>  -->
 					<br>
-					<textarea class="container" id="boardContent"
-						style="border: 2px solid #24E082; border-radius: 3%;">
+					<textarea class="container" id="boardContent" name="boardContent" style="border: 2px solid #24E082; border-radius: 3%;">
                     </textarea>
 					<div class="col-lg-6">
-						<button class="btn bn_btn_search2" id="boardWriteBtn"
-							type="button">SUBMIT</button>
+						<button class="btn bn_btn_search2" id="boardWriteBtn" >SUBMIT</button>
 						<div class="blog__details__widget">
 							<div style="margin-top: 40px; margin-left: 40px;" class="content">
 								<div style="display: flex;">
-									<input type="text" id="tag" size="20" placeholder="HashTag">
+<!-- 								<label for="tag" id="tagLabel">#</label><br> -->
+									<input type="text" name="tag" id="tag" size="20" placeholder="# 해시태그">
 								</div>
 								<ul id="tag-list">
 								</ul>
@@ -184,11 +232,10 @@
 						<br>
 						<br>
 					</div>
+					</form>
+					
 				</div>
-
-
 			</div>
-	</div>
 	<!-- board Detail End -->
 	<br>
 	<br>
@@ -278,12 +325,33 @@
 	<!-- Footer Section End -->
 
 	<script>
-		function onClickUpload() {
+	
+	
+	
+	
+	/** 파일관련 */
+/* 		function onClickUpload() {
 			let fileUpload = document.getElementById("fileUpload");
 			fileUpload.click();
+		} */
+	/**파일관련 모달*/
+	const form = document.getElementById('boardWriteForm');
+	document.getElementById('boardWriteBtn').addEventListener('click', ()=> {
+		const files = document.getElementsByName('file');
+		let isEmpty = true;
+		for(const f of files) {
+			if(f.value != '') {
+				isEmpty = false;
+			}
 		}
+		if(isEmpty) {
+			alert('사진을 첨부하지 않았습니다');
+		} else {
+			form.submit();
+		}
+	});
 
-		/**해시태그*/
+		/** 해시태그 */
 		$(document)
 				.ready(
 						function() {
@@ -353,6 +421,24 @@
 								$(this).parent().remove();
 							});
 						})
+		/** boardCategories Bar */						
+	   const categorys = document.getElementsByClassName('ll');
+	   for(const category of categorys){
+		   category.addEventListener('click', function(){
+			   const boardCategory = category.className.substr(2);
+			   location.href='${contextPath}/boardList.bo?boardCategory=' + boardCategory;
+			   console.log(boardCategory);
+		   });
+	   }			
+		<!-- 카테고리 -->
+		   const categorys = document.getElementsByClassName('ll');
+		   for(const category of categorys){
+			   category.addEventListener('click', function(){
+				   const boardCategory = category.className.substr(2);
+				   location.href='${contextPath}/boardList.bo?boardCategory=' + boardCategory + '&page=' + ${pi.currentPage};
+				   console.log(boardCategory);
+			   });
+		   }
 	</script>
 </body>
 </html>

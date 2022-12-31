@@ -23,7 +23,7 @@
 	<insert id="insertMember">
 		insert into member
 		values(seq_user.nextval, #{userId}, #{userPwd}, #{userName}, #{userNickname},
-			 #{email}, #{gender}, #{userBirth}, #{userPhone},#{userRecommend},SYSDATE,#{userCNumber},'Y',SYSDATE)
+			 #{email}, #{gender}, #{userBirth}, #{userPhone},#{userRecommend},SYSDATE,#{userCNumber},DEFAULT,SYSDATE)
 	</insert>
 	
 	<select id="selectMember" resultType="_int">
@@ -39,7 +39,7 @@
 	</if>
 	<if test="category == 'export'">			
 		insert into expert_user
-		values(#{userNum},#{userZipcode},#{userAddress},#{userAddressDetail},1,2,3,4,5)
+		values(#{userNum},#{userZipcode},#{userAddress},#{userAddressDetail},'N','N','N','N','N','N',DEFAULT)
 	</if>	
 	</insert>
 	
@@ -48,6 +48,44 @@
 		from member 
 		where user_id=#{userId} and user_status='Y'
 	</select>
+	
+	<update id="updateMember">
+		update member
+		set  user_name=#{userName},
+			user_nickname=#{userNickname}, user_email=#{email}, user_gender=#{gender}, user_birth=#{userBirth}
+		where user_id=#{userId}
+	</update>
+	<insert id="updateMemberAddress">
+	<if test="category == 'general'">
+		update general_user
+		set user_zipcode=#{userZipcode}, user_address=#{userAddress}, user_Address_detail=#{userAddressDetail}, user_health=#{userHealth}
+		where user_Num=#{userNum}
+	</if>
+	<if test="category == 'export'">			
+		update expert_user
+		set expert_postadd=#{userZipcode}, expert_address=#{userAddress}, expert_Add_detail=#{userAddressDetail}
+		where user_Num=#{userNum}
+	</if>	
+	</insert>
+	
+	<select id="searchId" resultMap="loginResultMap">
+		select *
+		from member
+		where USER_NAME=#{userName} and USER_EMAIL=#{email} and user_status='Y'
+	</select>
+	
+	<select id="checkIdEmail" resultMap="loginResultMap">
+		select *
+		from member
+		where USER_Id=#{userId} and user_status='Y'
+	</select>
+	
+	<update id="updatePwd">
+		update member
+		set USER_PWD=#{encPwd}
+		where USER_ID=#{memberId}
+	</update>
+	
 	
 	<resultMap type="Member" id="loginResultMap">
 		<id column="USER_NUM" property="userNum"/>

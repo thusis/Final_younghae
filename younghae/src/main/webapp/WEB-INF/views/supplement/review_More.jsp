@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,7 +44,7 @@
 			</ul>
 		</div>
 	</div>
-
+	
 	<!-- Product Section Begin -->
 	<section class="product spad" style="margin-top: -2%;">
 		<div class="container">
@@ -52,16 +53,16 @@
 					style="float: left; position: relative; left: 1%;">
 					<form action="#" style="width: 50%;">
 						<div class="input-group mt-3">
+							<input type="hidden" value="${ cateNum }" id="cateNum">
 							<label
-								style="font-size: 180%; font-weight: 800; color: rgb(118, 128, 138); margin-right: 3%;">닥터린
-								초임계 알티지 오메가3</label> <label
-								style="font-size: 180%; font-weight: 800; color: #24E082; margin-right: 3%;">에
-								대한 리뷰</label>
+								style="font-size: 180%; font-weight: 800; color: rgb(118, 128, 138); margin-right: 3%;">${ cateName }</label> <label
+								style="font-size: 180%; font-weight: 800; color: #24E082; margin-right: 3%;">에 대한 리뷰</label>
 						</div>
 					</form>
 				</div>
 			</div>
 			<br>
+			<c:forEach items="${ review }" var="r">
 			<div class="product__details__quantity"
 				style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
 				<div name="reviewDetail">
@@ -71,7 +72,7 @@
 					</div>
 					<div name="reviewNickName"
 						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="font-weight: 600;">하하하하하하</p>
+						<p style="font-weight: 600;">유저 이름</p>
 					</div>
 					<div class="product__details__rating"
 						style="float: left; padding-top: 3.5%; padding-left: 20%;">
@@ -80,7 +81,7 @@
 					</div>
 					<div name="reviewRank"
 						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">2.3</p>
+						<p style="color: black; font-size: 130%;">${ r.rvStar }</p>
 					</div>
 					<div class="product__details__rating"
 						style="float: left; padding-top: 3.2%; padding-left: 5%;">
@@ -93,186 +94,46 @@
 					</div>
 					<div name="reviewImg"
 						style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-						<img src="img/product/details/product-details-1.jpg"
+						<img src="resources/uploadFiles/${ r.image }"
 							class=".img-fluid">
 					</div>
-					<div name="reviewContent" style="padding-top: 9%;">나는 모든게 별로~
-						내 맘의 별로~~</div>
+					<div name="reviewContent" style="padding-top: 9%;">${ r.rvContent }</div>
 				</div>
 			</div>
 			<br>
 			<br>
 			<br>
-			<div class="product__details__quantity"
-				style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-				<div name="reviewDetail">
-					<div name="reviewImg" style="float: left; padding-right: -20%;">
-						<i class="bi bi-person-circle"
-							style="font-size: 350%; color: #24E082;"></i>
-					</div>
-					<div name="reviewNickName"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="font-weight: 600;">하하하하하하</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.5%; padding-left: 20%;">
-						<i class="fa fa-star"
-							style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">2.3</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.2%; padding-left: 5%;">
-						<i class="bi bi-hand-thumbs-up-fill"
-							style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">22</p>
-					</div>
-					<div name="reviewImg"
-						style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-						<img src="img/product/details/product-details-1.jpg"
-							class=".img-fluid">
-					</div>
-					<div name="reviewContent" style="padding-top: 9%;">나는 모든게 별로~
-						내 맘의 별로~~</div>
+			</c:forEach>
+			
+		<!-- 페이징 -->
+			<div class="col-lg-12 text-center" style="margin-top: 8%;">
+				<div class="product__pagination blog__pagination">
+					<c:url var="goBack" value="${ loc }">
+						<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+						<c:param name="cateNum" value="${ cateNum }"/>
+						<c:param name="cateName" value="${ cateName }"/>
+					</c:url>
+					<c:if test="${ pi.currentPage > 1 }">
+						<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a>
+					</c:if>
+					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+						<c:url var="goNum" value="${ loc }">
+							<c:param name="page" value="${p}"></c:param>
+							<c:param name="cateNum" value="${ cateNum }"/>
+							<c:param name="cateName" value="${ cateName }"/>
+						</c:url>
+						<a href="${ goNum }">${ p }</a>
+					</c:forEach>
+					<c:url var="goNext" value="${ loc }">
+						<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+						<c:param name="cateNum" value="${ cateNum }"/>
+						<c:param name="cateName" value="${ cateName }"/>
+					</c:url>
+					<c:if test="${ pi.currentPage <= 1 }">
+					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+					</c:if>
 				</div>
 			</div>
-			<br>
-			<br>
-			<br>
-			<div class="product__details__quantity"
-				style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-				<div name="reviewDetail">
-					<div name="reviewImg" style="float: left; padding-right: -20%;">
-						<i class="bi bi-person-circle"
-							style="font-size: 350%; color: #24E082;"></i>
-					</div>
-					<div name="reviewNickName"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="font-weight: 600;">하하하하하하</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.5%; padding-left: 20%;">
-						<i class="fa fa-star"
-							style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">2.3</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.2%; padding-left: 5%;">
-						<i class="bi bi-hand-thumbs-up-fill"
-							style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">22</p>
-					</div>
-					<div name="reviewImg"
-						style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-						<img src="img/product/details/product-details-1.jpg"
-							class=".img-fluid">
-					</div>
-					<div name="reviewContent" style="padding-top: 9%;">나는 모든게 별로~
-						내 맘의 별로~~</div>
-				</div>
-			</div>
-			<br>
-			<br>
-			<br>
-			<div class="product__details__quantity"
-				style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-				<div name="reviewDetail">
-					<div name="reviewImg" style="float: left; padding-right: -20%;">
-						<i class="bi bi-person-circle"
-							style="font-size: 350%; color: #24E082;"></i>
-					</div>
-					<div name="reviewNickName"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="font-weight: 600;">하하하하하하</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.5%; padding-left: 20%;">
-						<i class="fa fa-star"
-							style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">2.3</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.2%; padding-left: 5%;">
-						<i class="bi bi-hand-thumbs-up-fill"
-							style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">22</p>
-					</div>
-					<div name="reviewImg"
-						style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-						<img src="img/product/details/product-details-1.jpg"
-							class=".img-fluid">
-					</div>
-					<div name="reviewContent" style="padding-top: 9%;">나는 모든게 별로~
-						내 맘의 별로~~</div>
-				</div>
-			</div>
-			<br>
-			<br>
-			<br>
-			<div class="product__details__quantity"
-				style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
-				<div name="reviewDetail">
-					<div name="reviewImg" style="float: left; padding-right: -20%;">
-						<i class="bi bi-person-circle"
-							style="font-size: 350%; color: #24E082;"></i>
-					</div>
-					<div name="reviewNickName"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="font-weight: 600;">하하하하하하</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.5%; padding-left: 20%;">
-						<i class="fa fa-star"
-							style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">2.3</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.2%; padding-left: 5%;">
-						<i class="bi bi-hand-thumbs-up-fill"
-							style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">22</p>
-					</div>
-					<div name="reviewImg"
-						style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-						<img src="img/product/details/product-details-1.jpg"
-							class=".img-fluid">
-					</div>
-					<div name="reviewContent" style="padding-top: 9%;">나는 모든게 별로~
-						내 맘의 별로~~</div>
-				</div>
-			</div>
-		</div>
-		<br>
-		<br>
-		<br>
-		<br>
-		<div class="product__pagination" style="text-align: center;">
-			<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#"><i
-				class="fa fa-long-arrow-right"></i></a>
-		</div>
 	</section>
 
 
