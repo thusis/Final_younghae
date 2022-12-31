@@ -35,7 +35,7 @@
 	
 	<!-- 컬럼 리스트 수 가져오기 -->
 	<select id="getStoryListCount" resultType="_int">
-		select count(*) from board where board_status = 'Y'
+		select count(*) from board where board_status = 'Y' and board_type = 3
 	</select>
 	
 	<!-- 컬럼 썸네일 등록 -->
@@ -55,6 +55,7 @@
 		select board_num, board_title, board_content, board_createDate, board_modifyDate, board_view, board_status, user_num, attach_rename
 		from board 
 		join attachment on board_num = SERIALNUMBER
+		where board_type = 3
 		order by board_num desc
 	</select>
 	
