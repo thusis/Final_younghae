@@ -28,4 +28,5 @@ public class Member {
 	private int userCNumber;
 	private String userStatus;
 	private Date userModifyDate;
+	private int userPoint;
 }

@@ -22,4 +22,7 @@ public class ExpertUser {
 	private String expertProfile;
 	private String expertHomepage;
 	private String expertCareer;
+    private String expertEstimate;
+    private String expertLatitude;
+    private String expertLongtitude;
 }

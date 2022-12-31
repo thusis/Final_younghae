@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="mypageMapper">
+	<select id="selectExpert" resultMap="ExpertResultMap">
+		select *
+		from expert_user
+		where user_num = #{id}
+	</select>
+	
+	<update id="updateProfile">
+		update expert_user
+		set EXPERT_POSTADD=#{expertPostAdd}, EXPERT_ADDRESS=#{expertAddress}, EXPERT_ADD_DETAIL=#{expertAddDetail}, EXPERT_SORT=#{expertSort}, 
+		EXPERT_MEDI=#{expertMedi}, EXPERT_DEPT=#{expertDept}, EXPERT_PROFILE=#{expertProfile}, EXPERT_HOMEPAGE=#{expertHomepage}, EXPERT_CAREER=#{expertCareer}
+		where user_num=#{userNum}
+	</update>
+	
+	<select id="selectGeneral" resultMap="GeneralResultMap">
+		select *
+		from general_user
+		where user_num = #{id}
+	</select>
+	
+	<insert id="pointInsert">
+		insert into point
+		values(seq_point.nextval, #{updateTotal}, #{updateName}, #{updatePoint}, SYSDATE,
+			 #{id})
+	</insert>
+	
+	<select id="selectPoint" resultMap="pointResultMap">
+		select *
+		from (SELECT * FROM POINT WHERE USER_NUM=#{id} ORDER BY Point_num desc)
+		where ROWNUM = 1
+	</select>
+	
+	<select id="selectAllPoint" parameterType="map" resultMap="pointResultMap">
+		select *
+		from point
+		where user_num = #{id}
+		ORDER BY point_num desc
+	</select>
+	
+	<resultMap type="ExpertUser" id="ExpertResultMap">
+		<id column="USER_NUM" property="userNum"/>
+		<result column="EXPERT_POSTADD" property="expertPostAdd"/>
+		<result column="EXPERT_ADDRESS" property="expertAddress"/>
+		<result column="EXPERT_ADD_DETAIL" property="expertAddDetail"/>
+		<result column="EXPERT_SORT" property="expertSort"/>
+		<result column="EXPERT_MEDI" property="expertMedi"/>
+		<result column="EXPERT_DEPT" property="expertDept"/>
+		<result column="EXPERT_PROFILE" property="expertProfile"/>
+		<result column="EXPERT_HOMEPAGE" property="expertHomepage"/>
+		<result column="EXPERT_CAREER" property="expertCareer"/>
+		<result column="EXPERT_ESTIMATE" property="expertEstimate"/>
+		<result column="EXPERT_LATITUDE" property="expertLatitude"/>
+		<result column="EXPERT_LONGITUDE" property="expertLongtitude"/>
+	</resultMap>
+	
+	<resultMap type="GeneralUser" id="GeneralResultMap">
+		<id column="USER_NUM" property="userNum"/>
+		<result column="USER_ZIPCODE" property="userZipcode"/>
+		<result column="USER_ADDRESS" property="userAddress"/>
+		<result column="USER_ADDRESS_DETAIL" property="userAddressDetail"/>
+		<result column="USER_HEALTH" property="userHealth"/>
+	</resultMap>
+	
+	<resultMap type="Point" id="pointResultMap">
+		<id column="POINT_NUM" property="pointNum"/>
+		<result column="POINT_TOTAL" property="pointTotal"/>
+		<result column="POINT_CONTENT" property="pointContent"/>
+		<result column="POINT_AMOUNT" property="pointAmount"/>
+		<result column="POINT_DATE" property="pointDate"/>
+		<result column="USER_NUM" property="userNum"/>
+	</resultMap>
+</mapper>

@@ -68,4 +68,5 @@ public class MemberDAO {
 		return sqlSession.update("memberMapper.updatePwd", map);
 	}
 
+
 }
