@@ -1,22 +1,28 @@
 package com.kh.young.board.controller;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.UUID;
+//import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+//import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.young.board.exception.boardException;
@@ -24,46 +30,42 @@ import com.kh.young.board.service.BoardService;
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
-//@SessionAttributes("loginUser")
+@SessionAttributes("loginUser")
 @Controller
 public class BoardController {
 	@Autowired
 	private BoardService bService;
 
-   @GetMapping("login.bo")
-   public String loginHome(@RequestParam("userNum") Integer userNum, HttpServletRequest request) {
-      bService.setLoginUser(userNum, request);
-      return "redirect:boardList.bo";
-   }
-   
-   @RequestMapping("logout.bo")
-   public String logoutHome(HttpServletRequest request) {
-	   ServletContext application = request.getSession().getServletContext();
-	   application.setAttribute("loginUser",null);
-	   return "redirect:boardList.bo";
-   }
-	//Board Main
 
-	@RequestMapping("boardList.bo")
-	public String boardList(@RequestParam(value="page", required=false) Integer page, Model model) {
+   		//게시판 메인
+		@RequestMapping("boardList.bo")
+		public String boardList(Model model, @RequestParam(value="page", required=false) Integer page, @RequestParam(value="boardCategory", required=false) Integer boardCategory) {
 	
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = page;
 		}
+		
+		Member mem = bService.selectMember(27);
+		System.out.println(mem);
+		
 		int boardListCount = bService.getBoardListCount();
 		PageInfo pi = Pagination.getPageInfo(currentPage, boardListCount, 6);
 		
-		ArrayList<Board> bList = bService.selectBoardList(pi);
-		ArrayList<Attachment> pList = bService.selectPhotoList();
+		if(boardCategory == null) {
+				boardCategory = 1;
+		}
+
+		System.out.println("boardCategory : " +  boardCategory);
 		
-		System.out.println("bList : " + bList);
-		System.out.println("pList : " + pList);
+		ArrayList<Board> bList = bService.selectBoardList(pi, boardCategory);
+		
+		System.out.println("AllbList : " + bList);
 		if(bList != null) {
 			model.addAttribute("pi", pi);
 			model.addAttribute("bList", bList);
-			model.addAttribute("pList", pList);
 			return "boardList";
 		} else {
 			throw new boardException("Can't find BoardList");
@@ -71,87 +73,139 @@ public class BoardController {
 	}
 	
 	
-	//File resources
+	    //파일 저장소
+/**		public String[] addFile(MultipartFile file, HttpServletRequest request) {
+		
+		 String root = request.getSession().getServletContext().getRealPath("resources");
+	     String savePath = root + "\\uploadFiles";
 
-	public String[] addFile(MultipartFile file, HttpServletRequest request) {
-		String uploadPath = "C:/upload/";
+	      File folder = new File(savePath);
+	      if(!folder.exists()) {
+	         folder.mkdirs();
+	      }
+	      
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	      int ranNum = (int)(Math.random()*100000);
+	      String rawname = file.getOriginalFilename();
+	      String rename = sdf.format(new Date(System.currentTimeMillis())) + ranNum + rawname.substring(rawname.lastIndexOf("."));
+	      String fileRoute = folder + "\\" + rename;
+	      
+
+//	      String uploadPath = "C:/upload/";
+//		UUID uuid  = UUID.randomUUID();
 		
-		UUID uuid  = UUID.randomUUID();
+//		String originFileName = FilenameUtils.getBaseName(file.getOriginalFilename());
+//		String renameFileName = uuid + "_" + originFileName;
+//		String renameFileName =  "_" + originFileName;
 		
-		String originFileName = FilenameUtils.getBaseName(file.getOriginalFilename());
-		String renameFileName = uuid + "_" + originFileName;
-		
-		File fileFolder = new File(uploadPath + renameFileName);
+//		File fileFolder = new File(uploadPath + renameFileName);
 		
 		try {
-			file.transferTo(fileFolder);
+			file.transferTo(new File(fileRoute));
 		} catch (Exception e) {
 			System.out.println("File Transfer Error :" + e.getMessage());
 		}
 		
 		String[] returnArr = new String[3];
-		returnArr[0] = uploadPath;
-		returnArr[1] = renameFileName;
-		returnArr[2] = originFileName;
+		returnArr[0] = savePath;
+		returnArr[1] = rename;
+		returnArr[2] = rawname;
+//		returnArr[2] = originFileName;
 		System.out.println("파일저장소 나오나");
 		return returnArr;
 	}
-	
-	//boardWrite View
+	*/
+	//게시글 작성 View
 	@RequestMapping("boardWrite.bo")
 	public String boardWrite(){
 		return "boardWrite";
 	}
 	
-	//boardInsert(+ photo)
+	//게시글 작성 Insert
 	@RequestMapping("insertBoard.bo")
-	public String insertFile(Authentication authentication, @ModelAttribute Board b, @RequestParam("file") MultipartFile file, HttpServletRequest request, Model model ) {
-//		int loginUser = (Member)session.getAttribute("loginUser");
+	public String insertFile( HttpSession session,
+		@RequestParam("thumbnail") String img,	
+		@ModelAttribute Board b, HttpServletRequest request, Model model, @RequestParam("category") Integer category ) {
+
+		Member m = (Member)session.getAttribute("loginUser");
+		int userNum = m.getUserNum();
+
+		b.setBoardType(category);
 		
-		MultipartFile upload = file;
-		
-		Attachment photo = new Attachment();
-		
-		if(!upload.getOriginalFilename().equals("")) {
-			String[] returnArr = addFile(upload, request);
-			
-			photo.setAttachName(returnArr[2]);
-			photo.setAttachRename(returnArr[1]);
-			photo.setAttachPath(returnArr[0]);
-		}
-		
-		photo.setSerialNumber(b.getBoardNum());
-		
-		System.out.println("photo : " + photo);
 		int result1 = bService.insertBoard(b);
-		int result2 = bService.insertPhoto(photo);
 		
-		if(result2 > 0 && result1 > 0) {
-			model.addAttribute("photoName", photo.getAttachName());
+		Attachment attm = new Attachment();
+		
+		attm.setAttachName(img);
+		attm.setAttachRename(img);
+		attm.setAttachPath(img);
+		attm.setBoardType(1);
+		attm.setSerialNumber(b.getBoardNum());
+		
+		int att = bService.insertThumbnail(attm);
+		
+		if(result1 + att > 1) {
 			return "redirect:boardList.bo";
 		} else {
 			throw new boardException("Can't insertBoard");
 		}
 		
 	}
+	
+	@RequestMapping("summernoteImage.bo")
+	public void profileUpload(String email, MultipartFile file, HttpServletRequest request,
+	         HttpServletResponse response) throws Exception{
+	      String root = request.getSession().getServletContext().getRealPath("resources");
+	      String savePath = root +  "\\summerNote";
+	      
+	      File folder = new File(savePath);
+	      if(!folder.exists()) {
+	         folder.mkdirs();
+	      }
+	      
+	      SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+	      int ranNum = (int)(Math.random()*100000);
+	      
+	      String originFileName = file.getOriginalFilename();
+	      String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + ranNum
+	            + originFileName.substring(originFileName.lastIndexOf("."));
+	      
+	      String renamePath = folder + "\\" + renameFileName;
+	      
+	      try {
+	         file.transferTo(new File(renamePath));
+	      } catch (Exception e) {
+	         System.out.println("파일 전송 에러 :" + e.getMessage());
+	      }
+	      
+	      System.out.println("파일경로 : " + renamePath);
+	      
+	      PrintWriter out = response.getWriter();
+	      
+	      // 사진 이름 전송
+	      out.println(renameFileName);
+	      out.close();
+	   }
+	
 
-	//boardDetail
-	@RequestMapping("detailBoard.bo")
-	public String detailBoard(Authentication authentication, HttpServletRequest request, @RequestParam(value = "page", required=false) Integer page, Model model, @RequestParam(value="serialNumber", required=false) int boardNo, @RequestParam(value="attachName", required=false) String photoName) {
-		
-		Board b = new Board();
-		Attachment photo = new Attachment();
-		
-		if(b != null && photo != null) {
-			model.addAttribute("b", b);
-			model.addAttribute("photo", photo);
-			return "boardDetail";
-		} else {
-			throw new boardException("게시글 상세조회 실패");			
-		}
+	//게시글 상세보기
+	@RequestMapping("boardView.bo")
+	public String detailBoard(@RequestParam(value="boardNum") int boardNum, @RequestParam(value="writer") int writer,
+											  @RequestParam(value = "page", required=false) Integer page, HttpServletRequest request, Model model) throws boardException{
+			
+			System.out.println("writer : " + writer);
+			Board b = bService.boardView(boardNum);
+			
+			if(b != null) {
+				model.addAttribute("b", b);
+				return "boardDetail";
+			} else {
+				throw new boardException("Failed to Board details");
+			}
+			
 	}
 	
-	//deleteBoard
+	//게시글 삭제
 	@RequestMapping("deleteBoard.bo")
 	public String deleteBoard(HttpSession session, @RequestParam(value="serialNumber", required=false) int boardNo, Model model) {
 		
@@ -167,4 +221,15 @@ public class BoardController {
 		}
 	}
 	
+	//게시글 수정
+	@RequestMapping("boardEdit.bo")
+	public String boardEdit() {
+		return "boardEdit";
+	}
+	
+	//조건식 검색
+	@RequestMapping()
+	public String searchBoard() {
+		return null;
+	}
 }

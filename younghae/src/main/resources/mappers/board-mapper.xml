@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="boardMapper">
+	<select id="getBoardListCount" resultType="_int">
+		select count(*) from board where board_status = 'Y' and board_type IN (11, 12, 13, 14)
+	</select>
+	<!-- 전체 게시글 목록 -->
+	<select id="selectBoardList" resultMap="boardResultSet" >
+		select * from board
+			join attachment on(board_num = serialnumber)
+		where board_status = 'Y' and
+ 		<if test="boardCategory == 1">
+		board.board_type in (11,12,13,14)
+ 		</if>
+		<if test="boardCategory != 1 ">
+		board.board_type = #{boardCategory}
+		</if>
+		order by board_num desc
+	</select>
+	
+<!-- 	<select id="selectPhotoList" resultMap="attachmentResultSet">
+		select * from attachment 
+			where attach_status = 'Y' 
+			and 
+			<if test="boardCategory == 1 ">
+			board_type in (11, 12, 13, 14)
+			</if>
+			<if test="boardCategory != 1 ">
+			board_type = #{boardCategory}		
+			</if>
+			order by serialNumber desc
+	</select> -->
+	
+	<insert id="insertBoard">
+		insert into board values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, sysdate, default, default, 2, #{boardType})
+	</insert>
+
+<!-- 	<insert id="insertPhoto">
+		insert into attachment values(seq_attach.nextval, sysdate, #{attachName}, #{attachRename}, #{attachPath}, #{boardType}, seq_board.currval, 'Y')
+	</insert>
+ -->	
+	<insert id="insertThumbnail">
+		insert into attachment values(seq_attach.nextval, sysdate, #{attachName}, #{attachRename}, #{attachPath}, #{boardType}, seq_board.currval, 'Y')
+	</insert>
+	
+	<update id="viewCount">
+		update board set board_view = board_view + 1
+		where board_num = #{boardNum}
+	</update>
+	
+	<select id="boardView" resultMap="boardResultSet">
+		select * from board
+			join member using(user_num)
+		where board_status = 'Y' and board_num = #{boardNum}
+	</select>
+	
+	<select id="photoView"  resultMap="attachmentResultSet">
+		select * from attachment
+		where attach_status = 'Y' and serialnumber = #{boardNum}
+	</select>
+	
+	<update id="deleteBoard">
+		update board set board_status = 'N' where board_num = #{boardNo} and board_type = 1
+	</update>
+		
+	<update id="deletePhoto">
+		update attachment set attach_status = 'N' and board_num = #{boardNo}
+	</update>
+	
+	<!-- 임시 로그인 -->
+	<select id="selectMember" resultMap="memberResultSet">
+      select *
+      from member
+      where user_status='Y' and user_num=#{i}
+   	</select>
+   	
+   	<resultMap type="Member" id="memberResultSet">
+      <id column="USER_NUM" property="userNum"/>
+      <result column="USER_ID" property="userId"/>
+      <result column="USER_PWD" property="userPwd"/>
+      <result column="USER_NAME" property="userName"/>
+      <result column="USER_NICKNAME" property="userNickname"/>
+      <result column="USER_EMAIL" property="email"/>
+      <result column="USER_GENDER" property="gender"/>
+      <result column="USER_BIRTH" property="userBirth"/>
+      <result column="USER_PHONE" property="userPhone"/>
+      <result column="USER_RECOMMEND" property="userRecommend"/>
+      <result column="USER_ENROLLDATE" property="userEnrollDate"/>
+      <result column="USER_CNUMBER" property="userCNumber"/>
+      <result column="USER_STATUS" property="userStatus"/>
+      <result column="USER_MODIFYDATE" property="userModifyDate"/>
+   	  <result column="USER_POINT" property="userPoint"/>
+   </resultMap>
+	
+	<resultMap type="Story" id="boardResultSet">
+		<id column="BOARD_NUM" property="boardNum"/>
+		<result column="BOARD_TITLE" property="boardTitle"/>
+		<result column="BOARD_CONTENT" property="boardContent"/>
+		<result column="BOARD_CREATEDATE" property="boardCreateDate"/>
+		<result column="BOARD_MODIFYDATE" property="boardModifyDate"/>
+		<result column="BOARD_VIEW" property="boardView"/>
+		<result column="BOARD_STATUS" property="boardStatus"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<association property="attachment" javaType="Attachment" resultMap="attachmentResultSet"></association>
+	</resultMap>
+	
+	<resultMap type="Attachment" id="attachmentResultSet">
+		<id column="ATTACH_NUM" property="attachNum"/>
+		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
+		<result column="ATTACH_NAME" property="attachName"/>
+		<result column="ATTACH_RENAME" property="attachRename"/>
+		<result column="ATTACH_PATH" property="attachPath"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="SERIALNUMBER" property="serialNumber"/>
+		<result column="ATTACH_STATUS" property="attachStatus"/>		
+	</resultMap>
+	
+	    <resultMap type="Member" id="member">
+        <id column="USER_NUM" property="userNum"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="USER_NAME" property="userName"/>
+        <result column="USER_NICKNAME" property="userNickname"/>
+        <result column="USER_EMAIL" property="email"/>
+        <result column="USER_GENDER" property="gender"/>
+        <result column="USER_BIRTH" property="userBirth"/>
+        <result column="USER_PHONE" property="userPhone"/>
+        <result column="USER_RECOMMEND" property="userRecommend"/>
+        <result column="USER_ENROLLDATE" property="userEnrollDate"/>
+        <result column="USER_CNUMBER" property="userCNumber"/>
+        <result column="USER_STATUS" property="userStatus"/>
+        <result column="USER_MODIFYDATE" property="userModifyDate"/>
+     </resultMap>
+	
+</mapper>

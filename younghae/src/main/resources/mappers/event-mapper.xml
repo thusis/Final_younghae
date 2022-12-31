@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="eventMapper">
+	
+	<resultMap type="EventAttendance" id="EventAttendanceResultMap">
+		<id column="ATT_NO" property="att_no"/>
+		<result column="ATT_DATE"  property="att_date"/>
+		<result column="USER_NUM"  property="user_num"/>
+		<result column="EVENT_NUM"  property="event_num"/>		
+	</resultMap>
+	
+	<resultMap type="Event" id="EventResultMap">
+		<id column="EVENT_NUM" property="event_num"/>
+		<result column="EVENT_NAME" property="event_name"/>
+		<result column="EVENT_STARTDATE" property="event_startDate"/>
+		<result column="EVENT_ENDDATE" property="event_endDate"/>
+		<result column="EVENT_STATUS" property="event_status"/>
+	</resultMap>
+	
+	<resultMap type="Point" id="PointResultMap">
+		<id column="POINT_NUM" property="pointNum"/>
+		<result column="POINT_CONTENT" property="pointContent"/>
+		<result column="POINT_AMOUNT" property="pointAmount"/>
+		<result column="POINT_DATE" property="PointDate"/>
+		<result column="USER_NUM" property="userNum"/>
+	</resultMap>
+	
+	<resultMap type="Coupon" id="CouponResultMap">
+		<id column="COU_NUMBER" property="couNumber"/>
+		<result column="COU_PUBLISHDATE" property="couPublishDate"/>
+		<result column="COU_ENDDATE" property="couEndDate"/>
+		<result column="COU_USED" property="couUsed"/>
+		<result column="COU_DISCOUNT" property="couDiscount"/>
+		<result column="COU_INTRO" property="couIntro"/>
+		<result column="USER_NUM" property="userNum"/>
+	</resultMap>
+	
+	<resultMap type="Member" id="memberResultSet">
+      <id column="USER_NUM" property="userNum"/>
+      <result column="USER_ID" property="userId"/>
+      <result column="USER_PWD" property="userPwd"/>
+      <result column="USER_NAME" property="userName"/>
+      <result column="USER_NICKNAME" property="userNickname"/>
+      <result column="USER_EMAIL" property="email"/>
+      <result column="USER_GENDER" property="gender"/>
+      <result column="USER_BIRTH" property="userBirth"/>
+      <result column="USER_PHONE" property="userPhone"/>
+      <result column="USER_RECOMMEND" property="userRecommend"/>
+      <result column="USER_ENROLLDATE" property="userEnrollDate"/>
+      <result column="USER_CNUMBER" property="userCNumber"/>
+      <result column="USER_STATUS" property="userStatus"/>
+      <result column="USER_MODIFYDATE" property="userModifyDate"/>
+   	  <result column="USER_POINT" property="userPoint"/>
+   </resultMap>
+
+	<insert id="insertAttendance">
+		insert into event_attendance values(seq_att.nextval, sysdate, #{userNum}, 2)
+	</insert>
+	
+	<select id="selectCountAttendance">
+		select count(*) from event_attendance where user_num = #{userNum}
+	</select>
+	
+ 	<insert id="attendanceAward">
+ 		insert into point values(seq_point.nextval, #{content}, #{point_amount}, sysdate, #{userNum})
+ 	</insert>
+ 	
+ 	<update id="updatePoint">
+ 		update member
+ 		set user_point = user_point + #{point}
+ 		where user_num = #{userNum}
+ 	</update>
+ 	
+	<select id="checkBirth" resultType="_int">
+		select substr(to_char(user_birth, 'yyyymmdd'), 5, 2)
+			from member
+		where user_num = #{userNum}
+	</select>
+	
+	<insert id="insertCoupon">
+		insert into coupon values(seq_cou.nextval, sysdate, #{couponTimeLimit}, default, #{disCount}, #{disCountContent}, #{userNum})
+	</insert>
+ 	
+ 	
+</mapper>
+

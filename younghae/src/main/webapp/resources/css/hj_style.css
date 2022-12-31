@@ -1,4 +1,17 @@
 
+/* 색 */
+/* 	메인컬러 */
+/* 	#24E082  */
+/* 	연한연두 */
+/* 	#DCFFE9 */
+/* 	메인주황 */
+/* 	#FD9F28 */
+/* 	연한회색 */
+/* 	#D9D9D9 */
+/* 	진한회색 */
+/* 	#828282 */
+
+
 /* 버튼 */
 
 /* ---------------- 상품 디테일  ------------------	 */
@@ -23,6 +36,8 @@
 		font-size: 24px; 
 		color: #24E082; 
 	}
+	
+    
 /* ---------------- 상품 디테일 end ------------------	 */
 	
 /* ---------------- 배송지 변경 부분 ------------------	 */
@@ -35,6 +50,16 @@
        background-color: white;
        border-radius: 0.4em;
     }
+    
+/*     .hj_btn_deleteAddress{ */
+/*        border: 1px solid #24E082; */
+/*        color: #24E082; */
+/*        font-size: 12px; */
+/*        width: 65px;  */
+/*        height: 30px; */
+/*        background-color: white; */
+/*        border-radius: 0.4em; */
+/*     } */
 	
     .hj_btn_selectAddress{
        border: none;
@@ -63,6 +88,8 @@
 	    color: white;
     }
     
+
+    
 /* ---------------- 배송지 변경 부분 end ------------------	 */
     
 	
@@ -84,6 +111,14 @@
 		color: black; 
 		margin-top: 2%;
 	}
+	
+	.hj_cartAmount{
+		display: inline-block; 
+		font-weight: bold; 
+		color: black; 
+		margin-top: 2%;
+	}
+	
 
 
 	.ellipsis {
@@ -106,4 +141,71 @@
 		border:2px solid #24E082; 
 		margin-bottom: 1rem;
 	}
+	
 		
+/* 모달 */
+		
+	/* The Modal (background) */
+	.hj_modal {
+	  display: none; /* Hidden by default */
+	  position: fixed; /* Stay in place */
+	  z-index: 1; /* Sit on top */
+	  padding-top: 50px; /* Location of the box */
+	  left: 0;
+	  top: 0;
+	  width: 100%; /* Full width */
+	  height: 100%; /* Full height */
+	  overflow: auto; /* Enable scroll if needed */
+	  background-color: rgb(0,0,0); /* Fallback color */
+	  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+	}
+	
+	/* Modal Content */
+	.modal-content {
+	  background-color: #fefefe;
+	  margin: auto;
+	  padding: 20px;
+	  border: 1px solid #888;
+	  width: 80%;
+	}
+	
+	/* The Close Button */
+	.close {
+	  color: #aaaaaa;
+	  float: right;
+	  font-size: 28px;
+	  font-weight: bold;
+	}
+	
+	.close:hover,
+	.close:focus {
+	  color: #000;
+	  text-decoration: none;
+	  cursor: pointer;
+	}
+	
+/* Modal Header */
+/* .modal-header { */
+/*   padding: 2px 16px; */
+/*   background-color: #5cb85c; */
+/*   color: white; */
+/* } */
+
+/* /* Modal Body */ */
+/* .modal-body {padding: 2px 16px;} */
+
+/* Modal Footer */
+	.modal-footer {
+	  padding: 2px 16px;
+	  background-color: #5cb85c;
+	  color: white;
+	}
+
+
+	.hj_input{
+		width:65%; 
+		height: 20%; 
+		border: 1px solid #D9D9D9; 
+		border-radius: 0.3em; 
+		float: right;
+	}

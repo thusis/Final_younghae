@@ -185,27 +185,28 @@
             color: rgb(242, 232, 46);
         }
 
-        .btn_toBuy{
-            background-color: #24E082; 
+        .btn_toCartView{
+			background-color: #24E082; 
             border: none; 
             border-radius: 0.3em; 
             height: 2.5rem;
             width: 13rem;
             font-weight: bold; 
             font-size: 20px;
-            color: white;            
+            color: white;        
+        
         }
 
-        .btn_toCart{
-            background-color: white; 
-            border-color: #24E082; 
-            border-radius: 0.3em; 
-            height: 2.5rem;
-            width: 13rem;
-            font-weight: bold; 
-            font-size: 20px;
-            color: #24E082;                       
-        }
+	    .btn_toSopping{
+	        background-color: white; 
+	        border-color: #24E082; 
+	        border-radius: 0.3em; 
+	        height: 2.5rem;
+	        width: 13rem;
+	        font-weight: bold; 
+	        font-size: 20px;
+	        color: #24E082;                       
+	    }
 
         .product_info{
             width: 100%;
@@ -241,45 +242,6 @@
             border-radius: 1em;
         }
 
-        .modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Sit on top */
-        padding-top: 50px; /* Location of the box */
-        left: 50%;
-        top: 50%;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
-        transform: translate(-50%, -50%);
-        }
-
-        /* Modal Content */
-        .modal-content {
-        background-color: #fefefe;
-        margin: auto;
-        padding: 20px;
-        border: 1px solid #888;
-        width: 80%;
-        }
-
-        /* The Close Button */
-        .close {
-        color: #aaaaaa;
-        /* float: right; */
-        text-align: end;
-        font-size: 28px;
-        font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-        color: #000;
-        text-decoration: none;
-        cursor: pointer;
-        }
 
         .compareTitle{
             width: 100%;
@@ -289,8 +251,7 @@
             padding: 0.3rem;
             font-size: 1.5rem;
             font-weight: bold;
-            margin-bottom: 2rem;
-
+            margin-bottom: 1rem;
         }
 
         .cart_product{
@@ -299,6 +260,10 @@
             border: 1px solid #24E082;
             border-radius: 0.5em;
             margin: 2rem;
+        }
+        
+        #cartListDiv>div: hover{
+			cursor : pointer;
         }
 
         .cart_item_img{
@@ -327,12 +292,6 @@
         .table th:first-child{
             background: #DCFFE9;
         }
-
-		.btn:active, .btn:focus {
-			border: none !important;
-			box-shadow:none !important;
-		}
-
 
     </style>   
 
@@ -670,228 +629,191 @@
 
 
     <!-- 장바구니 모달창 -->
-    <div id="cartModal" class="modal" >
+    <div id="cartModal" class="hj_modal" >
         <!-- Modal content -->
-        <div class="modal-content" style="width: 1000px; height: 720px; overflow: auto;">
-            <p class="close">&times;</p>
-
+        <div class="modal-content" style="width:60%; height:85%;">
             <div class="compareTitle">
                 장바구니 목록
+				<span class="close" style="text-align: right; font-size: 2rem; margin-right:1rem;">&times;</span>
             </div>
-
-            <div style="font-size: 1.3rem;">총<span style="color: #24E082;">2</span>개</div>
-            <div class="container">
-                <div class="row" style="margin-bottom: -5%;">
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/blb/blb01012/v/29.jpg">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row" style="margin-bottom: -2%;">
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col cart_product" style="text-align: center;">
-                        <img class="cart_item_img" src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"">
-                        <div class="product__item__text" style="text-align: left;">
-                            <div style="color: gray; font-size: 13px;">나우푸드</div>
-                            <div style="font-weight: bold; font-size: 15px;">울트라 오메가3</div>
-                            <div style="font-weight: bold; font-size: 15px;">35,600</div>
-                            <div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">3개</span></div>
-                        </div>
-                    </div>
-                    <div class="col" style="margin:2rem;"></div>
-                    <div class="col" style="margin:2rem;"></div>
-                </div>
-                
-                <hr>
-                <div style="text-align: center;">
-                    <button type="button" class="btn btn_toCart" id="btn_toCart" style="margin-right: 2%;">쇼핑 계속하기</button>
-                    <button type="button" class="btn btn_toBuy">장바구니 가기</button>
+			
+            <div style="font-size: 1.3rem;">총 <span id="cartTotalCount" style="color: #24E082;">2</span> 개</div>
+            <div class="container" style="overflow: auto; height: 77%">
+                <div id="cartListDiv" class="row">
+<!-- 				장바구니 목록 div 들어가는 곳 -->
                 </div>
             </div>
-
+            <div style="text-align: center; height: 8%; padding-top: 1rem;">
+                <button type="button" class="btn_toSopping" id="btn_toSopping" style="margin-right: 2%;">쇼핑 계속하기</button>
+                <button type="button" class="btn_toCartView" id="btn_toCartView">장바구니 가기</button>
+            </div>
         </div>
     </div>
     <!-- /장바구니 모달창 -->
 </div>
 
-    <!-- Footer Section Begin -->
-    <footer class="footer spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__about__logo">
-                            <a href="./index.html"><img src="img/logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-                    <div class="footer__widget">
-                        <h6>Useful Links</h6>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="footer__widget">
-                        <h6>Join Our Newsletter Now</h6>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your mail">
-                            <button type="submit" class="site-btn">Subscribe</button>
-                        </form>
-                        <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer__copyright">
-                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="img/payment-item.png" alt=""></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </footer>
-    <!-- Footer Section End -->
-
-    // $('#exampleModalbtn').click(function(){
-    //     $('#exampleModal').modal();
-    // })
 
 <script>
-    // Get the modal
-    var modal1 = document.getElementById("myModal");
-    
-    // Get the button that opens the modal
-    var btn1 = document.getElementById("compareproduct");
-    
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
-    
-    // When the user clicks the button, open the modal 
-    btn1.onclick = function() {
-      modal1.style.display = "block";
-    }
-    
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal1.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal1) {
-        modal1.style.display = "none";
-      }
-    }
-    </script>
-
-
-<script>
-    // Get the modal
-    var modal = document.getElementById("cartModal");
-    
-    // Get the button that opens the modal
-    var btn = document.getElementById("btn_cart");
-    
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[1];
-    
-    var btn_toCart = document.getElementById("btn_toCart");
-
-    // When the user clicks the button, open the modal 
-    btn.onclick = function() {
-      modal.style.display = "block";
-    }
-    
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-      modal.style.display = "none";
-    }
-
-    btn_toCart.onclick = function() {
-      modal.style.display = "none";
-    }
-    
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-      if (event.target == modal) {
-        modal.style.display = "none";
-      }    
-      
-    }
-    
     window.onload = function(){
+    	
+// 	    1:1 비교 모달 시작 -----------------------------------------------------------------------
+	    // Get the modal
+	    var modal1 = document.getElementById("myModal");
+	    // Get the button that opens the modal
+	    var btn1 = document.getElementById("compareproduct");
+	    // Get the <span> element that closes the modal
+	    var span = document.getElementsByClassName("close")[0];
+	    // When the user clicks the button, open the modal 
+	    btn1.onclick = function() {
+	      modal1.style.display = "block";
+	    }
+	    // When the user clicks on <span> (x), close the modal
+	    span.onclick = function() {
+	      modal1.style.display = "none";
+	    }
+	    
+	    // When the user clicks anywhere outside of the modal, close it
+	    window.onclick = function(event) {
+	      if (event.target == modal1) {
+	        modal1.style.display = "none";
+	      }
+	      if (event.target == cartModal) {
+			cartModal.style.display = "none";
+	      }    
+	    }
+// 	    1:1 비교 모달 끝 -----------------------------------------------------------------------
+
+	    
+// 	    장바구니 모달 시작 -----------------------------------------------------------------------
+	    // Get the modal
+	    var cartModal = document.getElementById("cartModal");
+	    // Get the button that opens the modal
+	    var cartBtn = document.getElementById("btn_cart");
+	    // Get the <span> element that closes the modal
+	    var closeSpan = document.getElementsByClassName("close")[1];
+	    var btnToSopping = document.getElementById("btn_toSopping");
+	
+	    // When the user clicks the button, open the modal 
+	    	    
+	    const quantity = document.getElementById("quantity");
+	    cartBtn.onclick = function() {
+	    	$.ajax({
+	    		url: '${contextPath}/insertCart.sh',
+	    		data: {userNum : ${loginUser.userNum},
+	    				proNum: ${supplementDetail.proNum},
+	    				cartQuantity : quantity.value},
+	    		success:(data)=>{
+	    			if(data == 'YES'){
+	    				if(confirm('이미 장바구니에 있는 상품입니다. 수량을 추가하시겠습니까?')){
+		    				$.ajax({
+		    		    		url: '${contextPath}/addCartCount.sh',
+		    		    		data: {userNum : ${loginUser.userNum},
+		    		    				proNum: ${supplementDetail.proNum},
+		    		    				cartQuantity : quantity.value},
+		    	    			success:(data)=>{
+		    	    				if(confirm('상품이 추가되었습니다.')){
+								    	cartList();
+		    	    				}
+		    	    			}
+		    				})
+	    				}
+	    			}else{
+	    				cartList();
+	    			}
+	    		}
+	    		
+	    	});
+	    }
+	    
+// 	    장바구니 창 열기
+	    const cartList = function(){
+	    	cartModal.style.display = "block";
+	    	$.ajax({
+	    		url: '${contextPath}/selectCartList.sh',
+	    		data: {userNum : ${loginUser.userNum},
+	    				proNum: ${supplementDetail.proNum},
+	    				cartQuantity : quantity.value},
+	    		success:(data)=>{
+					const cartListDivs = document.getElementById("cartListDiv");
+					cartListDivs.innerHTML = '';
+					console.log(data);
+					console.log(data.length);
+					document.getElementById("cartTotalCount").innerText = data.length;
+					
+					for(const c of data){
+						console.log(c.proNum)
+						$.ajax({
+							url: '${contextPath}/selectCartDetail.sh',
+							data: {proNum : c.proNum},
+							success:(data)=>{
+								const cartDiv= document.createElement("div");
+								cartDiv.innerHTML = '<div class="col cart_product" style="text-align: center; width: 10rem; margin-bottom: -5%;">'+
+														'<img class="cart_item_img" src="'+data.proImage+'">'+
+														'<div class="product__item__text" style="text-align: left;">'+
+															'<div style="color: gray; font-size: 13px;">'+data.proCompany+'</div>'+
+															'<div style="font-weight: bold; font-size: 15px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+data.proName+'</div>'+
+															'<div style="font-weight: bold; font-size: 15px;">'+data.proPrice.toLocaleString()+'원</div>'+
+															'<div style="color: gray; font-size: 14px; font-weight: bold;">수량 : <span style="color: gray; font-size: 14px; font-weight: bold;">'+c.cartQuantity+'개</span></div>'+
+															'<input id="cartProNum" type="hidden" value="'+c.proNum+'">'+
+														'</div>'+
+													'</div>';
+								cartListDivs.append(cartDiv);
+								
+								$('.cart_product').on('click', function(){
+									const cartProNum = $(this).children().children()[4].value;
+									console.log(cartProNum);
+// 									location.href ='${contextPath}/supplementDetail.sh?proNum=' + cartProNum;
+								});
+								$('.cart_product').on('mouseover', function(){
+									$(this).css({'cursor':'pointer', 'border':'2px solid #FD9F28'});
+								});
+								$('.cart_product').on('mouseout', function(){
+									$(this).css('boxShadow', 'none');
+									$(this).css('border', '1px solid #24E082');
+								});
+// 								const cartProducts = document.getElementsByClassName('cart_product');
+// 								for(const cartProduct of cartProducts){
+// 									cartProduct.addEventListener('click',function(){
+// 										const cartProNum = $(this).children().children()[4].value;
+// 										console.log(cartProNum);
+// // 										location.href ='${contextPath}/supplementDetail.sh?proNum=' + cartProNum;
+// 									})
+// 									cartProduct.addEventListener('mouseover',function(){
+// 										this.style.cursor = 'pointer';
+// 										this.style.border = '2px solid #FD9F28';
+// 									})
+// 									cartProduct.addEventListener('mouseout',function(){
+// 										this.style.cursor = 'pointer';
+// 										this.style.boxShadow = 'none';
+// 										this.style.border = '1px solid #24E082';
+// 									})
+// 								}
+							}
+						})
+					}
+					
+	    		}
+	    	})	
+	    }
+	    
+	    // When the user clicks on <span> (x), close the modal
+	    closeSpan.onclick = function() {
+	    	cartModal.style.display = "none";
+	    }
+	
+	    btnToSopping.onclick = function() {
+	    	cartModal.style.display = "none";
+	    }
+	    
+	    const btnToCartView = document.getElementById('btn_toCartView');
+	    btnToCartView.addEventListener('click',function(){
+	    	location.href = '${contextPath}/cartView.sh';
+	    });
+	    
+// 	    장바구니 모달 끝 -----------------------------------------------------------------------
+    
+    
     	const plus = document.getElementById("plus");
-    	const quantity = document.getElementById("quantity");
     	const minus = document.getElementById("minus");
     	const totalPrice = document.getElementById("totalPrice");
    
@@ -915,16 +837,9 @@
     		location.href='${ contextPath }/payment.sh?proNum='+proNum+'&quantity='+quantity.value;
     	});
     	
-    	
-    	
-    	
-    	
     }
     
-    
-    
     </script>
-
     <script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
 
 

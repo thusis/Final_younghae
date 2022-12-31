@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="qnaMapper">
 
- 	<resultMap type="Member" id="member">
+ 	<resultMap type="Member" id="Member">
   		<id column="USER_NUM" property="userNum"/>
   		<result column="USER_ID" property="userId"/>
   		<result column="USER_NAME" property="userName"/>
@@ -18,22 +18,48 @@
   		<result column="USER_MODIFYDATE" property="userModifyDate"/>
   	</resultMap>
   	
-  	<resultMap type="QuestionRespDto" id="questionResp">
+  	<resultMap type="ExpertUser" id="ExpertUser">
+  	  	<id column="USER_NUM" property="userNum"/>
+  		<result column="EXPERT_POSTADD" property="expertPostAdd"/>
+  		<result column="EXPERT_ADDRESS" property="expertAddress"/>
+  		<result column="EXPERT_ADD_DETAIL" property="expertAddDetail"/>
+  		<result column="EXPERT_SORT" property="expertSort"/>
+  		<result column="EXPERT_MEDI" property="expertMedi"/>
+  		<result column="EXPERT_DEPT" property="expertDept"/>
+  		<result column="EXPERT_PROFILE" property="expertProfile"/>
+  		<result column="EXPERT_HOMEPAGE" property="expertHomepage"/>
+  		<result column="EXPERT_CAREER" property="expertCareer"/>
+  		<result column="EXPERT_ESTIMATE" property="expertEstimate"/>
+  		<result column="EXPERT_LATITUDE" property="expertLatitude"/>
+  		<result column="EXPERT_LONGITUDE" property="expertLongtitude"/>
+  	</resultMap>
+  	
+	<resultMap type="Board" id="Board">
   		<id column="BOARD_NUM" property="boardNum"/>
   		<result column="BOARD_TITLE" property="boardTitle"/>
   		<result column="BOARD_CONTENT" property="boardContent"/>
   		<result column="BOARD_CREATEDATE" property="boardCreateDate"/>
   		<result column="BOARD_MODIFYDATE" property="boardModifyDate"/>
   		<result column="BOARD_VIEW" property="boardView"/>
+  		<result column="BOARD_STATUS" property="boardStatus"/>
   		<result column="USER_NUM" property="userNum"/>
-  		<result column="PRO_NUM" property="proNum"/>
-  		<result column="IS_SOLVED" property="isSolved"/>
-  		<result column="ANSWERCOUNT" property="answerCount"/>
-  		<result column="REPLYCOUNT" property="replyCount"/>
-  		<result column="SCRAPCOUNT" property="scrapCount"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
   	</resultMap>
-
-	<resultMap type="SupplementRespDto" id="supplementResp">
+  	
+	<resultMap type="Question" id="Question">
+  		<id column="BOARD_NUM" property="questionNum"/>
+  		<result column="PRO_NUM" property="proNum"/>
+  		<result column="IS_READ" property="isRead"/>
+  		<result column="IS_SOLVED" property="isSolved"/>
+  	</resultMap>
+  	
+	<resultMap type="Answer" id="Answer">
+  		<id column="BOARD_NUM" property="answerNum"/>
+  		<result column="QUESTION_NUM" property="questionNum"/>
+  		<result column="PRO_NUM" property="proNum"/>
+  	</resultMap>
+  	
+	<resultMap type="SupplementRespDto" id="SupplementRespDto">
   		<id column="PRO_NUM" property="proNum"/>
   		<result column="PRO_IMAGE" property="proImage"/>
   		<result column="PRO_NAME" property="proName"/>
@@ -42,75 +68,238 @@
   		<result column="CATE_NAME" property="cateName"/>
 	</resultMap>
 	
-	<select id="login" resultMap="member">
-		select * from member
-		where user_num=#{userNum}
+	<resultMap type="Attachment" id="Attachment">
+		<id column="ATTACH_NUM" property="attachNum"/>
+  		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
+  		<result column="ATTACH_NAME" property="attachName"/>
+  		<result column="ATTACH_RENAME" property="attachRename"/>
+  		<result column="ATTACH_PATH" property="attachPath"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="SERIALNUMBER" property="serialNumber"/>
+  		<result column="ATTACH_STATUS" property="attachStatus"/>
+	</resultMap>
+
+  	<resultMap type="QuestionRespDto" id="QuestionRespDto">
+  	  	<id column="BOARD_NUM" property="board.boardNum"/>
+	  	<association property="board" javaType="Board" resultMap="Board"/>
+	  	<association property="question" javaType="Question" resultMap="Question"/>
+	  	<association property="qattach" javaType="Attachment" resultMap="Attachment"/>
+  		<collection column="BOARD_NUM" property="answerList" javaType="java.util.ArrayList" ofType="AnswerRespDto" select="selectAnswerList"/>
+  		<collection column="BOARD_NUM" property="scrapList" javaType="java.util.ArrayList" ofType="Integer" select="selectScrapList"/>
+  	</resultMap>
+  	
+  	<resultMap type="AnswerRespDto" id="AnswerRespDto">
+  	  	<id column="BOARD_NUM" property="board.boardNum"/>
+		<association property="board" javaType="Board" resultMap="Board"/>
+	  	<association property="answer" javaType="Answer" resultMap="Answer"/>
+	  	<association property="aattach" javaType="Attachment" resultMap="Attachment"/>
+  	</resultMap>
+  	
+  	<resultMap type="ExpertRespDto" id="ExpertRespDto">
+  		<id column="USER_NUM" property="member.userNum"/>
+		<association property="member" javaType="Member" resultMap="Member"/>
+		<association property="expert" javaType="ExpertUser" resultMap="ExpertUser"/>
+		<association property="eattach" javaType="Attachment" resultMap="Attachment"/>
+<!-- 		<collection column="USER_NUM" property="answerList" javaType="java.util.ArrayList" ofType="AnswerRespDto" select="selectAnswerListByUserNum"/> -->
+  	</resultMap>
+
+  	<resultMap type="Reply" id="Reply">
+  		<id column="REPLY_NUM" property="replyNum"/>
+  		<result column="REPLY_CONTENT" property="replyContent"/>
+  		<result column="REPLY_DATE" property="replyDate"/>
+  		<result column="REPLY_STATUS" property="replyStatus"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="BOARD_NUM" property="boardNum"/>
+  		<result column="USER_NUM" property="userNum"/>
+  	</resultMap>
+  	
+	<select id="login" resultMap="Member">
+		SELECT * FROM MEMBER WHERE USER_NUM = #{userNum}
 	</select>
 	
 	<select id="getListCount" resultType="_int">
 		SELECT COUNT(*) FROM QUESTION
 	</select>
-
-	<select id="selectQuestionList" resultMap="questionResp">
-		SELECT Q.QUESTION_NUM BOARD_NUM,
-	            BOARD_TITLE,
-	            BOARD_CREATEDATE, 
-	            BOARD_VIEW, 
-	            USER_NUM,
-	            IS_SOLVED,
-	            COUNT(ANSWER_NUM) ANSWERCOUNT
-		FROM QUESTION Q
-		    JOIN BOARD ON (Q.QUESTION_NUM = BOARD_NUM)
-		    JOIN ANSWER ON (Q.QUESTION_NUM = ANSWER.QUESTION_NUM)
-		WHERE BOARD_STATUS = 'Y'
-		GROUP BY Q.QUESTION_NUM, BOARD_TITLE, BOARD_CREATEDATE, BOARD_VIEW, USER_NUM, IS_SOLVED
-		ORDER BY Q.QUESTION_NUM DESC
+	
+	<!-- 	본인(userNum)이 작성한 질문 조회 -->
+	<select id="getMyQuestions" resultMap="QuestionRespDto">
+		SELECT * FROM BOARD 
+		JOIN QUESTION ON (BOARD_NUM=QUESTION_NUM) 
+		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+		WHERE BOARD.BOARD_TYPE='5' AND BOARD_STATUS='Y' AND USER_NUM = #{userNum}
+		ORDER BY BOARD_NUM
 	</select>
 
-	<select id="getMyQuestionCount" resultType="_int">
-		SELECT COUNT(*)
-		FROM BOARD
-		WHERE BOARD_STATUS='Y' AND USER_NUM =#{userNum} AND BOARD_TYPE = '5'
+	<!-- 	질문(boardNum)에 대한 답변 리스트 조회 -->
+	<select id="selectAnswerList" resultMap="AnswerRespDto">
+		SELECT * FROM BOARD
+		JOIN ANSWER ON (BOARD_NUM=ANSWER_NUM)
+		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+		WHERE 
+		BOARD.BOARD_TYPE='8' AND 
+		BOARD_STATUS='Y' AND 
+		(QUESTION_NUM = #{boardNum})
+		ORDER BY QUESTION_NUM DESC
 	</select>
 	
-	<select id="getIsRead" resultType="_int">
-		SELECT COUNT(*)
-		FROM BOARD
-		    JOIN QUESTION ON (BOARD_NUM = QUESTION_NUM)
-		WHERE IS_READ = 'N' AND BOARD_STATUS='Y' AND USER_NUM =#{userNum} AND BOARD_TYPE = '5'
+	<!-- 	질문(boardNum)글 관련 영양제 -->
+	<select id="selectQuestSresp" resultMap="SupplementRespDto">
+		SELECT PRO_NUM, PRO_IMAGE, PRO_NAME, PRO_COMPANY, PRO_EFFECT, CATE_NAME 
+		FROM PRODUCT JOIN CATEGORY USING (CATE_NUM)
+		WHERE PRO_NUM = 
+		(SELECT PRO_NUM FROM QUESTION WHERE QUESTION_NUM = #{boardNum})
 	</select>
 	
-<!-- 	<select id="getMyRecentQuestions" resultType="">  -->
-<!-- 으악 다시 -->
-<!-- 		SELECT BOARD_NUM, BOARD_TITLE, COUNT(ANSWER_NUM), IS_READ -->
-<!-- 		FROM BOARD -->
-<!-- 			JOIN QUESTION ON (BOARD_NUM = QUESTION_NUM) -->
-<!-- 			JOIN ANSWER ON (BOARD_NUM = QUESTION_NUM) -->
-<!-- 		WHERE IS_READ = 'N' AND BOARD_STATUS='Y' AND USER_NUM =#{userNum} AND BOARD_TYPE = '5' -->
-<!-- 		GROUP BY BOARD_NUM, BOARD_TITLE, COUNT(ANSWER_NUM), IS_READ -->
-<!-- 	</select> -->
+	<!-- 	답글(boardNum) 관련 영양제 -->
+	<select id="selectAnswerSresp" resultMap="SupplementRespDto">
+		SELECT PRO_NUM, PRO_IMAGE, PRO_NAME, PRO_COMPANY, PRO_EFFECT, CATE_NAME 
+		FROM PRODUCT JOIN CATEGORY USING (CATE_NUM)
+		WHERE PRO_NUM = 
+		(SELECT PRO_NUM FROM ANSWER WHERE ANSWER_NUM = #{boardNum})
+	</select>
 	
-<!-- 	<select id="getToptwoNum" resultType=""> -->
-<!-- 		SELECT BOARD_NUM -->
-<!-- 		FROM -->
-<!-- 			( -->
-<!-- 			SELECT BOARD_NUM, BOARD_VIEW -->
-<!-- 			FROM BOARD -->
-<!-- 			WHERE BOARD_STATUS='Y' AND BOARD_TYPE = '5' -->
-<!-- 			ORDER BY BOARD_VIEW DESC -->
-<!-- 			) -->
-<!-- 		<![CDATA[WHERE ROWNUM <= 2]]> -->
-<!-- 	</select> -->
-
-<!-- 	<select id="getToptwo"> -->
-<!-- 잘 안 풀리는 건 일단 두고 잘 되는 거 먼저 하자-->
-<!-- 	</select> -->
-
-	<select id="searchSupplement" resultMap="supplementResp">
+	<!--  질문목록 모두 조회 -->
+	<select id="selectQuestionList" resultMap="QuestionRespDto">
+		SELECT * FROM BOARD 
+		JOIN QUESTION ON (BOARD_NUM=QUESTION_NUM) 
+		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+		WHERE BOARD.BOARD_TYPE = '5' AND BOARD_STATUS = 'Y' ORDER BY BOARD_NUM DESC
+	</select>
+	
+	<!-- 글쓴이 정보반환(map) 	 -->
+	<select id="getWriterInfoMap" resultType="map">
+		SELECT USER_GENDER, USER_BIRTH FROM MEMBER WHERE USER_NUM = #{userNum}
+	</select>
+	
+	<!-- 상위 두 개 게시글 반환 -->
+	<select id="getTopTwo" resultMap="QuestionRespDto">
+		SELECT * FROM 
+		(
+			SELECT * FROM BOARD 
+			JOIN QUESTION ON (BOARD_NUM=QUESTION_NUM) 
+			LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+			WHERE BOARD.BOARD_TYPE='5' AND BOARD_STATUS='Y'
+			ORDER BY BOARD_VIEW DESC
+		) 
+		<![CDATA[WHERE ROWNUM <=2]]>
+	</select>
+	
+	<!-- 영양제 목록 조회 -->
+	<select id="searchSupplement" resultMap="SupplementRespDto">
 		SELECT PRO_NUM, PRO_IMAGE, PRO_NAME, PRO_COMPANY, PRO_EFFECT, CATE_NAME
 		FROM PRODUCT
 		JOIN CATEGORY USING (CATE_NUM)
-		WHERE PRO_NAME LIKE '%#{keyword}%'
+		WHERE PRO_NAME LIKE #{keyword}
 	</select>
 
+	<!-- 질문(quest) 삽입 -->
+	<insert id="insertQuestion">
+		INSERT ALL 
+			INTO BOARD VALUES(SEQ_BOARD.NEXTVAL, #{boardTitle}, #{boardContent}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{userNum}, 5)
+			INTO QUESTION VALUES(SEQ_BOARD.CURRVAL, 
+				<if test="supplement != null &amp;&amp; !supplement.equals('')">
+					#{supplement}, 
+				</if>
+				<if test="supplement == null or supplement.equals('')">
+					NULL,
+				</if>
+			DEFAULT, DEFAULT)
+			<if test="attachParam != null ">
+<!-- 			<if test="attachParam != null or attachParam.attachRename != null or !attachParam.attachRename.equals('')"> -->
+				INTO ATTACHMENT VALUES (SEQ_ATTACH.NEXTVAL, DEFAULT, #{attachParam.attachName}, #{attachParam.attachRename}, #{attachParam.attachPath}, 5, SEQ_BOARD.CURRVAL, DEFAULT)
+			</if>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<!-- 질문(boardNum) 게시글 조회 -->
+	<select id="selectQuestion" resultMap="QuestionRespDto">
+		SELECT * FROM BOARD 
+		JOIN QUESTION ON (BOARD_NUM=QUESTION_NUM) 
+		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+		WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+	<!-- 조회수 증가 -->	
+	<update id="addViewCount">UPDATE BOARD SET BOARD_VIEW = BOARD_VIEW + 1 WHERE BOARD_NUM = #{boardNum} </update>
+	
+	<!-- 글쓴이 읽음 처리 -->
+	<update id="updateIsRead">UPDATE QUESTION SET IS_READ = 'Y' WHERE QUESTION_NUM = #{boardNum} </update>
+	
+	<!-- 답변(quest) 삽입 -->
+	<insert id="insertAnswer">
+		INSERT ALL 
+			INTO BOARD VALUES(SEQ_BOARD.NEXTVAL, 'ANSWER' , #{boardContent}, DEFAULT, DEFAULT, DEFAULT, DEFAULT, #{userNum}, 8)
+			INTO ANSWER VALUES(SEQ_BOARD.CURRVAL, #{boardTitle}
+				<if test="supplement != null &amp;&amp; !supplement.equals('')">
+					, #{supplement}
+				</if>
+				<if test="supplement == null or supplement.equals('')">
+					, NULL
+				</if>
+			)
+			<if test="attachParam != null">
+				INTO ATTACHMENT VALUES (SEQ_ATTACH.NEXTVAL, DEFAULT, #{attachParam.attachName}, #{attachParam.attachRename}, #{attachParam.attachPath}, 8, SEQ_BOARD.CURRVAL, DEFAULT)
+			</if>
+		SELECT * FROM DUAL
+	</insert>
+	
+	<!-- 전문가회원정보조회(userNum) -->
+	<select id="selectExpertResp" resultMap="ExpertRespDto">
+		SELECT * 
+		FROM MEMBER
+		JOIN EXPERT_USER USING (USER_NUM)
+		LEFT JOIN ATTACHMENT ON (USER_NUM = SERIALNUMBER)
+		WHERE USER_NUM = #{userNum}
+	</select>
+	
+	<select id="selectAnswerListSize" resultType="_int">
+		SELECT COUNT(*) AS ANSWERLISTSIZE
+		FROM BOARD WHERE BOARD.BOARD_TYPE = '8' AND BOARD_STATUS = 'Y' AND USER_NUM = #{userNum}
+	</select>
+	
+	<!-- 유저번호(userNum)로 질문 리스트 조회-->
+	<select id="selectQuestionListByExpertNum" resultMap="QuestionRespDto">
+		SELECT * FROM BOARD 
+		JOIN QUESTION ON (BOARD_NUM=QUESTION_NUM) 
+		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+		WHERE (BOARD_NUM) IN 
+		    (SELECT QUESTION_NUM 
+		    FROM BOARD JOIN ANSWER ON (BOARD_NUM = ANSWER_NUM)
+		    WHERE BOARD_TYPE='8' AND BOARD_STATUS='Y' AND USER_NUM = #{userNum})
+		ORDER BY BOARD_NUM DESC
+	</select>
+	
+	<!-- 유저번호(userNum)로 대한 답변 리스트 조회 : 아마 필요 없을 듯 해-->
+	<select id="selectAnswerListByUserNum" resultMap="AnswerRespDto">
+		SELECT * FROM BOARD
+		JOIN ANSWER ON (BOARD_NUM=ANSWER_NUM)
+		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER)
+		WHERE 
+		BOARD.BOARD_TYPE='8' AND 
+		BOARD_STATUS='Y' AND 
+		(USER_NUM = #{userNum})
+		ORDER BY QUESTION_NUM DESC
+	</select>
+
+	<!-- 댓글 작성 -->
+	<insert id="insertReply">
+		INSERT INTO REPLY VALUES(SEQ_REPLY.NEXTVAL, #{replyContent},DEFAULT, DEFAULT,#{boardType},#{boardNum}, #{userNum})
+	</insert>
+	
+	<!-- 게시글번호로 댓글리스트 조회 -->
+	<select id="getReplyList" resultMap="Reply">SELECT * FROM REPLY WHERE BOARD_NUM = #{boardNum}</select>
+	
+	<!-- 댓글 삭제처리 -->
+	<update id="updateReplyToDelete">
+		UPDATE REPLY SET REPLY_STATUS = 'N' WHERE REPLY_NUM = #{replyNum} 
+	</update>
+	
+	<!-- Scrap (boardNum) 조회 -->
+	<select id="selectScrapList" resultType="int">
+		SELECT USER_NUM FROM CLIP WHERE BOARD_NUM = #{boardNum}
+	</select>
+	
+	<insert id="insertScrap">INSERT INTO CLIP VALUES (#{boardNum}, #{userNum})</insert>
+	<delete id="deleteScrap">DELETE FROM CLIP WHERE BOARD_NUM = #{boardNum} AND USER_NUM = #{userNum}</delete>
+	
 </mapper>

@@ -15,7 +15,6 @@ import lombok.ToString;
 @ToString
 public class Point {
 	private int pointNum;
-	private int pointTotal;
 	private String pointContent;
 	private String pointAmount;
 	private Date pointDate;

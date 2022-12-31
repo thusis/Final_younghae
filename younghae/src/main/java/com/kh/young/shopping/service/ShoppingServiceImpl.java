@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
@@ -50,5 +52,60 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Override
 	public Supplement selectDetail(int proNum) {
 		return shDAO.selectDetail(sqlSession, proNum);
+	}
+	
+	@Override
+	public int insertAddress(Address a) {
+		return shDAO.insertAddress(sqlSession, a);
+	}
+	
+	@Override
+	public ArrayList<Address> selectAddressList(int userNum) {
+		return shDAO.selectAddressList(sqlSession, userNum);
+	}
+	
+	@Override
+	public int updateAddress(Address a) {
+		return shDAO.updateAddress(sqlSession, a);
+	}
+	
+	@Override
+	public void updateBasicAll(int userNum) {
+		shDAO.updateBasicAll(sqlSession, userNum);
+	}
+	
+	@Override
+	public int deleteAddress(int addressNum) {
+		return shDAO.deleteAddress(sqlSession, addressNum);
+	}
+	
+	@Override
+	public int insertCart(Cart c) {
+		return shDAO.insertCart(sqlSession, c);
+	}
+	
+	@Override
+	public ArrayList<Cart> selectCartList(Cart c) {
+		return shDAO.selectCartList(sqlSession, c);
+	}
+	
+	@Override
+	public int checkCart(Cart c) {
+		return shDAO.checkCart(sqlSession, c);
+	}
+	
+	@Override
+	public int addCartCount(Cart c) {
+		return shDAO.addCartCount(sqlSession, c);
+	}
+	
+	@Override
+	public ArrayList<Cart> selectCartViewList(Member m) {
+		return shDAO.selectCartViewList(sqlSession, m);
+	}
+	
+	@Override
+	public int updateCartQuantity(Cart c) {
+		return shDAO.updateCartQuantity(sqlSession, c);
 	}
 }

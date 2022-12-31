@@ -29,13 +29,8 @@ public class BoardServiceImpl implements BoardService{
 	 
 
 	@Override
-	public ArrayList<Board> selectBoardList(PageInfo pi) {
-		return bDAO.selectBoardList(sqlSession, pi);
-	}
-
-	@Override
-	public ArrayList<Attachment> selectPhotoList() {
-		return bDAO.selectPhotoList(sqlSession);
+	public ArrayList<Board> selectBoardList(PageInfo pi, Integer boardCategory) {
+		return bDAO.selectBoardList(sqlSession, pi, boardCategory);
 	}
 
 	@Override
@@ -43,10 +38,6 @@ public class BoardServiceImpl implements BoardService{
 		return bDAO.insertBoard(sqlSession, b);
 	}
 
-	@Override
-	public int insertPhoto(Attachment photo) {
-		return bDAO.insertPhoto(sqlSession, photo);
-	}
 
 	@Override
 	public int deleteBoard(int boardNo) {
@@ -60,13 +51,24 @@ public class BoardServiceImpl implements BoardService{
 
 
 	@Override
-	public void setLoginUser(Integer userNum, HttpServletRequest request) {
-	     Member loginMember = bDAO.setLoginUser(sqlSession,userNum);
-	      ServletContext application = request.getSession().getServletContext();
-	      application.setAttribute("loginUser", loginMember);
-	      System.out.println("서비스임플"+((Member)application.getAttribute("loginUser")).getUserId());
-	   }
-		
-	
+	public Board boardView(int boardNum) {
+		int viewCount = bDAO.viewCount(sqlSession, boardNum);
+		Board b = bDAO.boardView(sqlSession, boardNum);
+		return b;
+	}
+
+
+	@Override
+	public int insertThumbnail(Attachment attm) {
+		return bDAO.insertThumbnail(sqlSession, attm);
+	}
+
+
+	@Override
+	public Member selectMember(int i) {
+		return bDAO.selectMember(sqlSession, i);
+	}
+
+
 
 }

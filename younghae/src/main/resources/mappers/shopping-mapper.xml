@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="shoppingMapper">
+
+	<select id="selectSupplementList" resultMap="supplementResultSet">
+		select *
+		from product
+		where pro_sale_status = 'Y'
+	</select>
+	
+	<resultMap type="Supplement" id="supplementResultSet">
+		<id column="PRO_NUM" property="proNum"/>
+		<result column="PRO_IMAGE" property="proImage"/>
+		<result column="PRO_NAME" property="proName"/>
+		<result column="PRO_COMPANY" property="proCompany"/>
+		<result column="PRO_INGREDIENT" property="proIngredient"/>
+		<result column="PRO_PRICE" property="proPrice"/>
+		<result column="PRO_EFFECT" property="proEffect"/>
+		<result column="PRO_INTAKE" property="proIntake"/>
+		<result column="PRO_SALE_STATUS" property="proSaleStatus"/>
+		<result column="PRO_CREATEDATE" property="proCreateDate"/>
+		<result column="PRO_MODIFYDATE" property="proModifyDate"/>
+		<result column="PRO_GRADE" property="proGrade"/>
+		<result column="PRO_STATUS" property="proStatus"/>
+		<result column="CATE_NUM" property="cateNum"/>
+	</resultMap>
+	
+	<select id="selectTrendList" resultMap="supplementResultSet">
+		select *
+		from product
+			left outer join sale_product using(pro_num)
+		where pro_sale_status = 'Y'
+		order by pro_viewcount desc
+	</select>
+	
+	<select id="selectBestsellerList" resultMap="supplementResultSet">
+		select *
+		from product
+			left outer join sale_product using(pro_num)
+		where pro_sale_status = 'Y'
+		order by pro_grade desc	
+	</select>
+	
+	<select id="selectDetail" resultMap="supplementResultSet">
+		select *
+		from product
+			left outer join sale_product using(pro_num)
+		where pro_sale_status = 'Y' and pro_status = 'Y' and pro_num = #{proNum}
+	</select>
+	
+	<select id="selemetMember" resultMap="memberResultSet">
+		select *
+		from member
+		where user_status='Y' and user_num=#{i}
+	</select>
+	
+	<resultMap type="Member" id="memberResultSet">
+		<id column="USER_NUM" property="userNum"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="USER_PWD" property="userPwd"/>
+		<result column="USER_NAME" property="userName"/>
+		<result column="USER_NICKNAME" property="userNickname"/>
+		<result column="USER_EMAIL" property="email"/>
+		<result column="USER_GENDER" property="gender"/>
+		<result column="USER_BIRTH" property="userBirth"/>
+		<result column="USER_PHONE" property="userPhone"/>
+		<result column="USER_RECOMMEND" property="userRecommend"/>
+		<result column="USER_ENROLLDATE" property="userEnrollDate"/>
+		<result column="USER_CNUMBER" property="userCNumber"/>
+		<result column="USER_STATUS" property="userStatus"/>
+		<result column="USER_MODIFYDATE" property="userModifyDate"/>
+	</resultMap>
+	
+	<select id="selectGu" resultMap="generalUserResultSet">
+		select * 
+		from general_user
+		where user_num=#{i}
+	</select>
+	
+	<resultMap type="GeneralUser" id="generalUserResultSet">
+		<id column="USER_NUM" property="userNum"/>
+		<result column="USER_ZIPCODE" property="userZipcode"/>
+		<result column="USER_ADDRESS" property="userAddress"/>
+		<result column="USER_ADDRESS_DETAIL" property="userAddressDetail"/>
+		<result column="USER_HEALTH" property="userHealth"/>
+	</resultMap>
+	
+	<insert id="insertAddress">
+		insert into address
+		values (seq_address.nextval,#{addressName}, #{addressAddressee}, #{addressPhone},
+				 #{addressZipcode}, #{addressBuilding}, #{addressDetail}, #{addressBasic},#{userNum}, default)
+	</insert>
+	
+	<select id="selectAddressList" resultMap="addressListResultMap">
+		select *
+		from address
+		where user_num = #{userNum} and address_status='Y'
+		order by address_num desc
+	</select>
+	
+	<resultMap type="Address" id="addressListResultMap">
+		<id column="ADDRESS_NUM" property="addressNum"/>
+		<result column="ADDRESS_NAME" property="addressName"/>
+		<result column="ADDRESS_ADDRESSEE" property="addressAddressee"/>
+		<result column="ADDRESS_PHONE" property="addressPhone"/>
+		<result column="ADDRESS_ZIPCODE" property="addressZipcode"/>
+		<result column="ADDRESS_BUILDING" property="addressBuilding"/>
+		<result column="ADDRESS_DETAIL" property="addressDetail"/>
+		<result column="ADDRESS_BASIC" property="addressBasic"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="ADDRESS_STATUS" property="addressStatus"/>
+	</resultMap>
+	
+	<update id="updateAddress">
+		update address
+		set address_name = #{addressName},
+			address_addressee = #{addressAddressee},
+			address_phone = #{addressPhone},
+			address_zipcode = #{addressZipcode},
+			address_building = #{addressBuilding},
+			address_detail =#{addressDetail},
+			address_basic = #{addressBasic}
+		where address_num = #{addressNum} and address_status='Y'
+	</update>
+	
+	<update id="updateBasicAll">
+		update address
+		set address_basic = 'N'
+		where user_num = #{userNum}
+	</update>
+	
+	<update id="deleteAddress">
+		update address
+		set address_status = 'N'
+		where address_num = #{addressNum}
+	</update>
+	
+	<insert id="insertCart">
+		insert into cart
+		values (seq_cart.nextval, #{userNum}, #{proNum}, #{cartQuantity})
+	</insert>
+	
+	<select id="selectCartList" resultMap="cartListResultSet">
+		select *
+		from cart
+		where user_num = #{userNum}
+		order by cart_num desc
+	</select>
+
+	<resultMap type="Cart" id="cartListResultSet">
+		<id column="CART_NUM" property="cartNum"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="PRO_NUM" property="proNum"/>
+		<result column="CART_QUANTITY" property="cartQuantity"/>
+<!-- 		<collection property="cartSupplementList" column="USER_NUM" select="selectCartViewList"></collection> -->
+		<association property="supplement" resultMap="supplementResultSet" javaType="Supplement"/>
+	</resultMap>
+	
+	<select id="checkCart" resultType="_int">
+		select count(*)
+		from cart
+		where user_num = #{userNum} and pro_num = #{proNum}
+	</select>
+	
+	<update id="addCartCount">
+		update cart
+		set cart_quantity = cart_quantity + #{cartQuantity}
+		where user_num = #{userNum} and pro_num = #{proNum}
+	</update>
+	
+	<select id="selectCartViewList" resultMap="cartListResultSet">
+		select *
+        from cart
+            outer join product using(pro_num)
+        where user_num = #{userNum}
+        order by cart_num desc
+	</select>	
+	
+	<update id="updateCartQuantity">
+		update cart
+		set cart_quantity = #{cartQuantity}
+		where user_num = #{userNum} and pro_num = #{proNum}
+	</update>
+</mapper>

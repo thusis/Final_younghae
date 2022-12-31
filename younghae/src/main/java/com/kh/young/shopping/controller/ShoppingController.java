@@ -1,18 +1,27 @@
 package com.kh.young.shopping.controller;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import com.kh.young.model.vo.GeneralUser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.service.ShoppingService;
@@ -111,22 +120,204 @@ public class ShoppingController {
 		return "shoppingDetails";
 	}
 	
-	// Go to payment view
+	// 결제페이지 가기
 	@RequestMapping("payment.sh")
-	public String paymentView(@RequestParam("proNum") int proNum, @RequestParam("quantity") int quantity, Model model) {
-		System.out.println(proNum);
-		System.out.println(quantity);
+	public String paymentView(
+//			@RequestParam("proNum") int proNum, @RequestParam("quantity") int quantity, Model model, HttpSession session
+			@RequestParam("cartNumList") String[] cartNumList
+			) {
+//		System.out.println(proNum);
+//		System.out.println(quantity);
+//		
+//		Supplement paySupplement = shService.selectDetail(proNum);
+//		ArrayList<GeneralUser> gu = shService.selectGu(1);
+//		System.out.println(gu);
+//		
+//		model.addAttribute("paySupplement", paySupplement);
+//		model.addAttribute("quantity", quantity);
 		
-		Supplement paySupplement = shService.selectDetail(proNum);
-		ArrayList<GeneralUser> gu = shService.selectGu(1);
-		System.out.println(gu);
-		
-		model.addAttribute("paySupplement", paySupplement);
-		model.addAttribute("quantity", quantity);
-		
+		System.out.println(cartNumList);
+		System.out.println(Arrays.toString(cartNumList));
 		
 		return "paymentView";
 	}
 	
+	@RequestMapping("selectAddressList.sh")
+	public void selectAddressList(HttpSession session, HttpServletResponse response){
+		Member m = (Member)session.getAttribute("loginUser");
+		ArrayList<Address> addressList = shService.selectAddressList(m.getUserNum());
+		
+		response.setContentType("application/json; charset=UTF-8");
+		
+		GsonBuilder gb = new GsonBuilder();
+		Gson gson = gb.create();
+		
+		try {
+			gson.toJson(addressList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	
+	// insert Address
+	@ResponseBody
+	@RequestMapping("insertAddress.sh")
+	public String insertAddress(@ModelAttribute Address a, HttpSession session) {
+		System.out.println(a);
+		Member m = (Member)session.getAttribute("loginUser");
+		a.setUserNum(m.getUserNum());
+		
+		if(a.getAddressBasic().equals("Y")) {
+			shService.updateBasicAll(m.getUserNum());
+		}
+		
+		int insertYn = shService.insertAddress(a);
+		
+		String result = null;
+		if(insertYn > 0) {
+			result = "YES";
+		}else {
+			result = "NO";
+		}
+		
+		return result;
+	}
+	
+//	배송지 주소 수정
+	@ResponseBody
+	@RequestMapping("updateAddress.sh")
+	public String updateAddress(@ModelAttribute Address a, HttpSession session) {
+		
+		System.out.println("수정 주소 : " + a);
+		Member m = (Member)session.getAttribute("loginUser");
+		a.setUserNum(m.getUserNum());
+		
+		if(a.getAddressBasic().equals("Y")) {
+			shService.updateBasicAll(m.getUserNum());
+		}
+		int updateYn = shService.updateAddress(a);
+		
+		String result = null;
+		if(updateYn > 0) {
+			result = "YES";
+		}else {
+			result = "NO";
+		}
+		
+		return result;
+	}
+	
+//	배송지 주소 삭제
+	@ResponseBody
+	@RequestMapping("deleteAddress.sh")
+	public String deleteAddress(@RequestParam("addressNum") int addressNum) {
+		
+		int deleteYn = shService.deleteAddress(addressNum);
+		
+		String result = null;
+		if(deleteYn > 0) {
+			result = "YES";
+		}else {
+			result = "NO";
+		}
+		
+		return result;
+	}
+	
+//	장바구니 담기
+	@ResponseBody
+	@RequestMapping("insertCart.sh")
+	public String insertCart(@ModelAttribute Cart c, HttpServletResponse response) throws Exception{
+		int checkCart = shService.checkCart(c);
+		
+		String result = null;
+		if(checkCart > 0) {
+			result = "YES";
+		}else{
+			result = "NO";
+			shService.insertCart(c);
+		}
+		
+		return result;
+
+	}
+	
+//	장바구니 수량 추가하기
+	@ResponseBody
+	@RequestMapping("addCartCount.sh")
+	public String addCartCount(@ModelAttribute Cart c) {
+		
+		int cartCountYn = shService.addCartCount(c); 
+		
+		String result = null;
+		if(cartCountYn > 0) {
+			result = "YES";
+		}else {
+			result = "NO";
+		}
+		return result;
+	}
+	
+	@RequestMapping("selectCartList.sh")
+	public void selectCartList(@ModelAttribute Cart c, HttpServletResponse response) {
+		ArrayList<Cart> cartList = shService.selectCartList(c);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		
+		GsonBuilder gb = new GsonBuilder();
+		Gson gson = gb.create();
+
+		try {
+			gson.toJson(cartList, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@RequestMapping("selectCartDetail.sh")
+	public void selectCartDetail(@RequestParam("proNum") int proNum, HttpServletResponse response) {
+		Supplement cartDetail = shService.selectDetail(proNum);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		
+		GsonBuilder gb = new GsonBuilder();
+		Gson gson = gb.create();
+
+		try {
+			gson.toJson(cartDetail, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("cartView.sh")
+	public String cartView(HttpSession session, Model model) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		ArrayList<Cart> cartViewList = shService.selectCartViewList(m);
+		System.out.println(cartViewList);
+		
+		model.addAttribute("cartViewList", cartViewList);
+		
+		return "myCart";
+	}
+	
+	@ResponseBody
+	@RequestMapping("updateCartQuantity.sh")
+	public String updateCartQuantity(@ModelAttribute Cart c, HttpSession session) {
+		System.out.println(c);
+		Member m = (Member)session.getAttribute("loginUser");
+		c.setUserNum(m.getUserNum());
+		int updateCartQuantity = shService.updateCartQuantity(c);
+		
+		String result = null;
+		if(updateCartQuantity>0) {
+			result="YES";
+		}else {
+			result="NO";
+		}
+		return result;
+	}
 }
