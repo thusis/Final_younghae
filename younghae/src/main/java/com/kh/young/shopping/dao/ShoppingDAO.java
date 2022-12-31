@@ -74,4 +74,12 @@ public class ShoppingDAO {
 		return sqlSession.update("shoppingMapper.addCartCount", c);
 	}
 
+	public ArrayList<Cart> selectCartViewList(SqlSessionTemplate sqlSession, Member m) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectCartViewList", m);
+	}
+
+	public int updateCartQuantity(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.update("shoppingMapper.updateCartQuantity", c);
+	}
+
 }

@@ -79,8 +79,8 @@
 						<c:if test="${ !empty loginUser }">
 							<ul>
 								<li><a href="#"
-									onclick="location.href='${contextPath}/myCart.my'"><p
-											style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i
+									onclick="location.href='${contextPath}/cartView.sh">
+									<p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i
 										class="fa fa-shopping-bag"></i><span>1</span></a></li>
 								<li><a href="#"
 									onclick="location.href='${contextPath}/myPage.my'"><p

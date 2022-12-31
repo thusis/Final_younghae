@@ -13,128 +13,6 @@
 <title>결제페이지</title>
 
 <style>
-	/*  구글 폰트
-	    font-family: 'Hahmlet', serif;
-	    font-family: 'IBM Plex Sans KR', sans-serif;
-	    font-family: 'Nanum Gothic', sans-serif; 
-	    */
-	@import
-		url('https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600;700&family=Nanum+Gothic:wght@400;700;800&display=swap')
-		;
-	
-	.bn_nav1 {
-		background-color: #24E082;
-	}
-	
-	.yh_header__menu {
-		padding: 12px 0;
-	}
-	
-	.yh_header__menu ul li {
-		color: white;
-		list-style: none;
-		display: inline-block;
-		margin-right: 50px;
-		position: relative;
-	}
-	
-	.yh_header__menu ul li .yh_header__menu__dropdown {
-		position: absolute;
-		left: 0;
-		/* top: 50px; */
-		background: #222222;
-		width: max-content;
-		/* z-index: 9; */
-		padding: 5px 0;
-		-webkit-transition: all, 0.3s;
-		-moz-transition: all, 0.3s;
-		-ms-transition: all, 0.3s;
-		-o-transition: all, 0.3s;
-		transition: all, 0.3s;
-		opacity: 0;
-		visibility: hidden;
-	}
-	
-	.yh_header__menu ul li .yh_header__menu__dropdown li {
-		margin-right: 0;
-		display: block;
-	}
-	
-	.yh_header__menu ul li .yh_header__menu__dropdown li:hover>a {
-		color: #24E082;
-	}
-	
-	.yh_header__menu ul li .yh_header__menu__dropdown li a {
-		text-transform: capitalize;
-		color: #ffffff;
-		font-weight: 400;
-		padding: 5px 15px;
-	}
-	
-	.yh_header__menu ul li.active a {
-		color: #24E082;
-	}
-	
-	.yh_header__menu ul li:hover .yh_header__menu__dropdown {
-		top: 30px;
-		opacity: 1;
-		visibility: visible;
-	}
-	
-	.yh_header__menu ul li:hover>a {
-		color: #FD9F28;
-	}
-	
-	.yh_header__menu ul li:last-child {
-		margin-right: 0;
-	}
-	
-	.yh_header__menu ul li a {
-		font-size: 14px;
-		color: #252525;
-		text-transform: uppercase;
-		font-weight: 700;
-		letter-spacing: 2px;
-		-webkit-transition: all, 0.3s;
-		-moz-transition: all, 0.3s;
-		-ms-transition: all, 0.3s;
-		-o-transition: all, 0.3s;
-		transition: all, 0.3s;
-		padding: 5px 0;
-		display: block;
-	}
-	
-	/* 검색창 */
-	#bn_navbar-search-input {
-		border: 0;
-		background-color: rgb(242, 242, 242);
-		border-radius: 0px 20px 20px 0px;
-	}
-	
-	.bn_navbar-select-input {
-		border: 0;
-		background-color: rgb(242, 242, 242);
-		cursor: pointer;
-		border-radius: 20px 0px 0px 20px;
-		padding-left: 10px;
-	}
-	
-	.bn_navbar-select-input option:checked, .bn_navbar-select-input option:hover
-		{
-		color: FD9F28;
-	}
-	
-	li>a {
-		text-decoration: none;
-		color: rgb(37, 36, 36);
-		font-size: 14px;
-	}
-	
-	li>a:hover {
-		font-weight: bold;
-		color: black;
-		text-decoration: underline;
-	}
 	
 	/*목차*/
 	.bn_index ul li {
@@ -408,7 +286,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-4 col-md-6">
+						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto;">
 							<div class="checkout__order">
 								<h4>결제 금액</h4>
 								<ul>
@@ -436,8 +314,8 @@
 										</label>
 									</div>
 									<div class="checkout__input__checkbox">
-										<label for="paypal"> 결제대행 서비스 이용약관 동의(필수) <input
-											type="checkbox" id="paypal"> <span class="checkmark"></span>
+										<label for="paypal"> 결제대행 서비스 이용약관 동의(필수) 
+										<input type="checkbox" id="paypal"> <span class="checkmark"></span>
 										</label>
 									</div>
 								</div>

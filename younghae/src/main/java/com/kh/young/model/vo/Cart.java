@@ -1,6 +1,6 @@
 package com.kh.young.model.vo;
 
-import java.sql.Date;
+import java.util.ArrayList;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +18,5 @@ public class Cart {
 	private int userNum;
 	private int proNum;
 	private int cartQuantity;
+	private Supplement supplement;
 }

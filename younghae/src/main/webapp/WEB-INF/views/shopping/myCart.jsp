@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -11,21 +13,69 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>나의장바구니</title>
 <style>
-.bn_index ul li {
-	list-style: none;
-	position: relative;
-	display: inline-block;
-}
-
-.bn_index a {
-	color: black;
-}
-
-.bn_index li:last-child a {
-	font-weight: 800;
-	color: #FD9F28;
-}
+/* 	설정 style ---------------------------- */
+	.bn_index ul li {
+		list-style: none;
+		position: relative;
+		display: inline-block;
+	}
+	
+	.bn_index a {
+		color: black;
+	}
+	
+	.bn_index li:last-child a {
+		font-weight: 800;
+		color: #FD9F28;
+	}
+	
+/* 	버튼 style ---------------------------- */
+	
+	.deleteSelectCartBtn{
+		background-color:white;
+		border: none;
+		font-size: 1rem;
+		float: right;
+		color: #828282;
+	}
+	.deleteSelectCartBtn:hover{
+		font-weight: bold;
+		cursor: pointer;
+	}
+	
+	.cartSelectAll{
+		accent-color: #24E082; 
+		color: white; 
+		width: 20px; 
+		height: 20px; 
+		margin-top: 10px;
+		cursor: pointer;
+	}
+	
+	.cartSelectEach{
+		accent-color: #24E082; 
+		color: white; 
+		width: 20px; 
+		height: 20px; 
+		margin-top: 10px;
+		cursor: pointer;
+	}
+	
+	label:hover{
+		cursor: pointer;
+	}
+	
+	.cartHeader{
+		height: 1.8rem; 
+		background-color: #DCFFE9; 
+		border-top-left-radius: 0.5em; 
+		border-top-right-radius: 0.5em;
+		padding-top: 5px;
+	}
+	
+	
 </style>
+	<link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">
 </head>
 <body>
 	<nav>
@@ -38,237 +88,249 @@
 			<li><a href="#">장바구니</a></li>
 		</ul>
 	</div>
-	<div class="section-title" style="padding: 30px 0 10px 0;">
-		<h3>장바구니</h3>
-	</div>
-	<div class="section-title">
-		<hr style="width: 50vw; background-color: #24E082;">
-	</div>
 	<section class="ftco-section">
 		<div class="container">
-			<div class="row">
-				<div class="table-wrap">
-					<table class="table">
-						<thead class="thead-primary">
-							<tr>
-								<th>&nbsp;</th>
-								<th>&nbsp;</th>
-								<th>상품명</th>
-								<th>가격</th>
-								<th>상품 갯수</th>
-								<th>총가격</th>
-								<th>&nbsp;</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="alert" role="alert">
-								<td><label class="checkbox-wrap checkbox-primary">
-										<input type="checkbox" name="check">
-								</label></td>
-								<td>
-									<div class="img"
-										style="background-image: url(images/prod-1.jpg);"></div>
-								</td>
-								<td>
-									<div class="email">
-										<span>Jim Beam Kentucky Straight</span> <span>Fugiat
-											voluptates quasi nemo, ipsa perferendis</span>
-									</div>
-								</td>
-								<td>$44.99</td>
-								<td class="quantity">
-									<div class="input-group">
-										<input type="text" name="quantity"
-											class="quantity form-control input-number" value="2" min="1"
-											max="100">
-									</div>
-								</td>
-								<td>$89.98</td>
-								<td>
-									<button type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true"><i class="fa fa-close"></i></span>
-									</button>
-								</td>
-							</tr>
+			<div class="checkout__form mt-5">
+				<h3 class="mb-4">장바구니</h3>
+				<form action="${contextPath }/payment.sh" method="post">
+					<div class="row">
+						<div class="col-lg-8 col-md-6">
+							<div class="row" style="margin-botton: 1rem;">
+								<div class="col-lg-6">
+									<input type="checkbox" id="cartSelectAll" class="cartSelectAll" onclick="selectAll();">
+									<label for="cartSelectAll" style="color:#828282; font-weight: bold; font-size: 1.5rem; display: inline;">&nbsp;모두선택</label>
+								</div>
+								<div class="col-lg-6">
+									<button type="button" id="deleteSelectCart" class="deleteSelectCartBtn" style="margin-top: 10px;">선택삭제</button>
+								</div>
+							</div>
+							<hr><br>
 
-							<tr class="alert" role="alert">
-								<td><label class="checkbox-wrap checkbox-primary">
-										<input type="checkbox" name="check"> <span
-										class="checkmark"></span>
-								</label></td>
-								<td>
-									<div class="img"
-										style="background-image: url(images/prod-2.jpg);"></div>
-								</td>
-								<td>
-									<div class="email">
-										<span>Jim Beam Kentucky Straight</span> <span>Fugiat
-											voluptates quasi nemo, ipsa perferendis</span>
+							<!-- 장바구니 상품 -->
+							<c:forEach items="${cartViewList}" var="c">
+							<div class="row" style="margin-bottom: 1.5rem;">
+								<div class="col-lg-1" style="margin-right: -1rem;">
+									<input type="checkbox" class="cartSelectEach" onclick="selectOne();" value=${c.cartNum }>
+									<input type="hidden" class="cartProPrices" name="cartProPrice" value="${ c.supplement.proPrice }" />
+								</div>
+								<div class="col-lg-11" style="margin-left: -1rem; width: 15rem;">
+									<div class="container mb-4 carts" style="border: 1px solid #e5e3e3; border-radius: 0.5em; width: 45rem;">
+										<div class="row cartHeader">
+											<div class="col-6">
+												<span style="font-weight: bold; color: #5B5B5B;">${ c.supplement.proCompany}</span>
+											</div>
+											<div class="col-6" style="text-align: right; color:#5B5B5B;">
+												<span>배송비 <span>2,500원</span>
+												</span>
+											</div>
+										</div>
+										<div class="row mt-3 mb-3">
+											<div class="col-auto" style="vertical-align : middle;">
+												<img style="width: 5rem; margin-top: 10px;" src="${ c.supplement.proImage }">
+											</div>
+											<div class="col" style="padding-top: 0.8rem;">
+												<div style="color: black; font-weight: bold; font-size: 15px; margin-bottom:0.5rem;">${ c.supplement.proName }</div>
+												<div style="color: black; font-weight: bold; font-size: 15px; display:inline-block; margin-bottom:0.5rem;">수량 &nbsp;&nbsp;&nbsp;</div>
+						                        <div class="product__details__quantity" style="display: inline; margin-right: 2%;">
+													<div class="btn-group" role="group" aria-label="Basic example">
+														<div class="selectInputDivs">
+															<select class="selectDivs" name="quantity" style="border-color: #24E082; border-radius: 0.3em; text-align: center; width:3rem; ">
+																<c:forEach begin="1" end="9" var="i">
+																	<c:if test="${ c.cartQuantity == i}">
+																		<option selected>${ i }</option>
+																	</c:if>
+																	<c:if test="${ c.cartQuantity != i}">
+																		<option>${ i }</option>
+																	</c:if>
+																</c:forEach>	
+																	<option value="10+">10+</option>
+																	<c:if test="${ c.cartQuantity > 9}">
+																		<option selected>${ c.cartQuantity }</option>
+																	</c:if>
+															</select>
+														</div>
+														<input type="hidden" name="proNummm" value="${ c.proNum }">
+														<input type="hidden" name="changeQuantity" value="${ c.cartQuantity }">
+													</div>
+						                        </div><br>
+												<div class = "eachPrice" style="font-size: 18px; color: gray; display:inline;">
+													${ c.supplement.proPrice }
+												</div>
+												<div class="eachTotalPrice" style="font-weight: bold; font-size: 20px;float:right; display:inline;">
+													${ c.supplement.proPrice }
+												</div>
+												<div class="cartNumListDivs">
+												</div>
+											</div>
+										</div>
 									</div>
-								</td>
-								<td>$30.99</td>
-								<td class="quantity">
-									<div class="input-group">
-										<input type="text" name="quantity"
-											class="quantity form-control input-number" value="1" min="1"
-											max="100">
-									</div>
-								</td>
-								<td>$30.99</td>
-								<td>
-									<button type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true"><i class="fa fa-close"></i></span>
-									</button>
-								</td>
-							</tr>
+								</div>
+							</div>
+							</c:forEach>
 
-							<tr class="alert" role="alert">
-								<td><label class="checkbox-wrap checkbox-primary">
-										<input type="checkbox" name="check"> <span
-										class="checkmark"></span>
-								</label></td>
-								<td>
-									<div class="img"
-										style="background-image: url(images/prod-3.jpg);"></div>
-								</td>
-								<td>
-									<div class="email">
-										<span>Jim Beam Kentucky Straight</span> <span>Fugiat
-											voluptates quasi nemo, ipsa perferendis</span>
-									</div>
-								</td>
-								<td>$35.50</td>
-								<td class="quantity">
-									<div class="input-group">
-										<input type="text" name="quantity"
-											class="quantity form-control input-number" value="1" min="1"
-											max="100">
-									</div>
-								</td>
-								<td>$35.50</td>
-								<td>
-									<button type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true"><i class="fa fa-close"></i></span>
-									</button>
-								</td>
-							</tr>
+							<!-- /주문 상품 -->
+						
+							
+						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto;">
+							<div class="checkout__order" style="width: 80%">
+								<h4>결제 금액</h4>
+								<ul>
+									<li>총 상품 금액 <span id="cartTotalPrice">68,600원</span>원</li>
+									<li>배송비<span id="deliveryPrice">2,500원</span></li>
+								</ul>
+								<div class="checkout__order__subtotal">
+									최종 결제 금액 <span id="payTotalPrice" style="color: #24E082;">71,100 원</span> <br>
+									<span style="font-size: 0.6rem;">P적립 예정</span><span
+										style="font-size: 0.6rem;">80</span>
+								</div>
 
-							<tr class="alert" role="alert">
-								<td><label class="checkbox-wrap checkbox-primary">
-										<input type="checkbox" name="check"> <span
-										class="checkmark"></span>
-								</label></td>
-								<td>
-									<div class="img"
-										style="background-image: url(images/prod-4.jpg);"></div>
-								</td>
-								<td>
-									<div class="email">
-										<span>Jim Beam Kentucky Straight</span> <span>Fugiat
-											voluptates quasi nemo, ipsa perferendis</span>
-									</div>
-								</td>
-								<td>$76.99</td>
-								<td class="quantity">
-									<div class="input-group">
-										<input type="text" name="quantity"
-											class="quantity form-control input-number" value="1" min="1"
-											max="100">
-									</div>
-								</td>
-								<td>$76.99</td>
-								<td>
-									<button type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true"><i class="fa fa-close"></i></span>
-									</button>
-								</td>
-							</tr>
-
-							<tr class="alert" role="alert">
-								<td class="border-bottom-0"><label
-									class="checkbox-wrap checkbox-primary"> <input
-										type="checkbox" name="check"> <span class="checkmark"></span>
-								</label></td>
-								<td class="border-bottom-0">
-									<div class="img"
-										style="background-image: url(images/prod-5.jpg);"></div>
-								</td>
-								<td class="border-bottom-0">
-									<div class="email">
-										<span>Jim Beam Kentucky Straight</span> <span>Fugiat
-											voluptates quasi nemo, ipsa perferendis</span>
-									</div>
-								</td>
-								<td class="border-bottom-0">$40.00</td>
-								<td class="quantity border-bottom-0">
-									<div class="input-group">
-										<input type="text" name="quantity"
-											class="quantity form-control input-number" value="1" min="1"
-											max="100">
-									</div>
-								</td>
-								<td class="border-bottom-0">$40.00</td>
-								<td class="border-bottom-0">
-									<button type="button" class="close" data-dismiss="alert"
-										aria-label="Close">
-										<span aria-hidden="true"><i class="fa fa-close"></i></span>
-									</button>
-								</td>
-							</tr>
-							<tr class="alert" role="alert">
-								<td class="border-bottom-0"><label
-									class="checkbox-wrap checkbox-primary"> <input
-										type='checkbox' name='animal' value='selectall'
-										onclick='selectAll(this)'> <span class="checkmark"></span>
-								</label></td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="row justify-content-end">
-				<div
-					class="col col-lg-5 col-md-6 mt-5 cart-wrap ftco-animate fadeInUp ftco-animated">
-					<div class="cart-total mb-3">
-						<h3>총 결제액</h3>
-						<br>
-						<p class="d-flex">
-							<span>총물품금액</span> <span>$20.60</span>
-						</p>
-						<p class="d-flex">
-							<span>배송금액</span> <span>$0.00</span>
-						</p>
-						<p class="d-flex">
-							<span>포인트사용</span> <span>$3.00</span>
-						</p>
-						<p class="d-flex">
-							<span>할인쿠폰</span> <span>$3.00</span>
-						</p>
-						<hr>
-						<p class="d-flex total-price">
-							<span>최종결제금액</span> <span>$17.60</span>
-						</p>
+								<button type="submit" class="site-btn" onclick="goToPay();">
+									<span>71,100</span>원 결제하기
+								</button>
+							</div>
+						</div>
 					</div>
-					<p class="text-center">
-						<a href="checkout.html" class="btn btn-primary py-3 px-4">결제하기</a>
-					</p>
-				</div>
-			</div>
+					</div>
+				</form>
+			</div>		
 		</div>
 	</section>
+	
 	<script>
-        function selectAll(selectAll) {
-            const checkboxes
-                = document.getElementsByName('check');
+		const cartSelectAll = document.getElementById("cartSelectAll");
+		const cartSelectEach = document.getElementsByClassName("cartSelectEach");
+		const cartProPrices = document.getElementsByClassName("cartProPrices");
+		const cartTotalPrice = document.getElementById('cartTotalPrice');
+		let allTotalPrice = 0;
+		var payTotal = document.getElementById('cartTotalPrice');
+		var pt = 0;
+		var payTotalPrice = document.getElementById('payTotalPrice');
+		
+		function loadView(){
+			var tq = document.getElementsByClassName('selectDivs');
+			var ep = document.getElementsByClassName('eachPrice');
+			var tp = document.getElementsByClassName('eachTotalPrice');
+			
+			for(var i = 0; i < tq.length; i++){
+				tp[i].innerText = (Number(ep[i].innerText) * Number(tq[i].value)).toLocaleString() ;
+				pt += Number(ep[i].innerText) * Number(tq[i].value);
+				ep[i].innerText = (Number(ep[i].innerText)).toLocaleString();
+			}
+			payTotal.innerText = pt.toLocaleString();
+		}
+		
+		function selectAll(){
+ 			if(cartSelectAll.checked){
+				for(const cartEach of cartSelectEach){
+					cartEach.checked=true;
+				}
+				for(const cartProPrice of cartProPrices){
+					allTotalPrice += Number(cartProPrice.value);
+					cartTotalPrice.innerText = allTotalPrice.toLocaleString();
+				}
+				
+			}else{
+				for(const cartEach of cartSelectEach){
+					cartEach.checked=false;
+					allTotalPrice = 0;
+					cartTotalPrice.innerText = allTotalPrice;
+				}
 
-            checkboxes.forEach((checkbox) => {
-                checkbox.checked = selectAll.checked;
-            })
-        }
+			}	
+		}
+		
+		function selectOne(){
+			let count = 0;
+			for(const cartEach of cartSelectEach){
+				if(cartEach.checked){
+					count++;
+				}
+			}
+			if(count != cartSelectEach.length){
+				cartSelectAll.checked = false;
+			}else{
+				cartSelectAll.checked = true;
+			}
+		}
+		
+		function goToPay(){
+			var cartNumDiv = document.getElementsByClassName('cartNumListDivs');
+			for(var i = 0; i < cartSelectEach.length; i++){
+				if(cartSelectEach[i].checked){
+					const cartDiv= document.createElement("div");
+					cartDiv.innerHTML = '<input type="hidden" name="cartNumList" value='+cartSelectEach[i].value+'>'+
+					cartNumDiv[i].append(cartDiv);
+				}else{
+					cartNumDiv[i]='';
+				}
+			}
+		}
+		
+
+		
+		
+		window.onload=function(){
+			cartSelectAll.checked = true;
+			selectAll();
+			loadView();
+
+			const selectInputs = document.getElementsByClassName("selectInputDivs");
+			for(const selectInput of selectInputs){
+				selectInput.addEventListener('change',function(){
+					let changeQuantity = 0;
+					let changeProNum = ($(this).siblings()[0].value);
+					if(Number($(this).children()[0].value) < 10){
+						changeQuantity = $(this).children()[0].value;
+					}else{
+						if($(this).children()[0].value =='10+'){
+							const tenInput = document.createElement("div");
+							selectInput.innerHTML = '';
+							tenInput.innerHTML = '<input type="text" name="cartQuantity"'+ 
+												'style="width:3rem; height: 2.1rem;border: 1px solid #24E082; border-radius: 0.3em; text-align: center; font-size: 1rem;" placeholder="입력";>';
+							selectInput.append(tenInput);
+						}else{
+							changeQuantity = $(this).children().children()[0].value;
+						}
+					}
+					$(this).siblings()[1].value = changeQuantity;
+					
+					if(changeQuantity !=''){
+						$.ajax({
+							url:'${contextPath}/updateCartQuantity.sh',
+							data:{cartQuantity: changeQuantity,
+								proNum: changeProNum},
+							success:(data)=>{
+							}
+						})
+					}
+				})
+			}
+			
+			let totalPrice = 0;
+			for(const cartEach of cartSelectEach){
+				cartEach.addEventListener('click',function(){
+					let totalQuantity = Number($(this).parent().siblings().children().find('input')[1].value);
+					console.log(totalQuantity);
+					
+					if(cartEach.checked){
+						totalPrice += (Number($(this).siblings().val()) * totalQuantity);
+						cartTotalPrice.innerText = totalPrice.toLocaleString();
+					}else{
+						totalPrice -= (Number($(this).siblings().val()) * totalQuantity);
+						cartTotalPrice.innerText = totalPrice.toLocaleString();
+					}
+				})
+			}
+			
+			var deliveryPrice = document.getElementById('deliveryPrice');
+			console.log(pt);
+			if(pt > 50000){
+				deliveryPrice.innerText = '0 원';
+			}else{
+				deliveryPrice.innerText = '2,500 원';
+			}
+			
+		}
     </script>
 </body>
 </html>

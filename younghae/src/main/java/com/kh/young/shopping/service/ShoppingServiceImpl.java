@@ -99,4 +99,13 @@ public class ShoppingServiceImpl implements ShoppingService{
 		return shDAO.addCartCount(sqlSession, c);
 	}
 	
+	@Override
+	public ArrayList<Cart> selectCartViewList(Member m) {
+		return shDAO.selectCartViewList(sqlSession, m);
+	}
+	
+	@Override
+	public int updateCartQuantity(Cart c) {
+		return shDAO.updateCartQuantity(sqlSession, c);
+	}
 }

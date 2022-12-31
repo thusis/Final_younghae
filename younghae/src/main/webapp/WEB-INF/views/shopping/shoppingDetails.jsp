@@ -631,7 +631,7 @@
     <!-- 장바구니 모달창 -->
     <div id="cartModal" class="hj_modal" >
         <!-- Modal content -->
-        <div class="modal-content" style="width: 67%; height: 95%;">
+        <div class="modal-content" style="width:60%; height:85%;">
             <div class="compareTitle">
                 장바구니 목록
 				<span class="close" style="text-align: right; font-size: 2rem; margin-right:1rem;">&times;</span>
@@ -713,7 +713,7 @@
 		    	    			success:(data)=>{
 		    	    				if(confirm('상품이 추가되었습니다.')){
 								    	cartList();
-		    	    				};
+		    	    				}
 		    	    			}
 		    				})
 	    				}
@@ -741,6 +741,7 @@
 					document.getElementById("cartTotalCount").innerText = data.length;
 					
 					for(const c of data){
+						console.log(c.proNum)
 						$.ajax({
 							url: '${contextPath}/selectCartDetail.sh',
 							data: {proNum : c.proNum},
@@ -758,23 +759,35 @@
 													'</div>';
 								cartListDivs.append(cartDiv);
 								
-								const cartProducts = document.getElementsByClassName('cart_product');
-								for(const cartProduct of cartProducts){
-									cartProduct.addEventListener('click',function(){
-										const cartProNum = $(this).children().children()[4].value;
-										console.log(cartProNum);
-										location.href ='${contextPath}/supplementDetail.sh?proNum=' + cartProNum;
-									})
-									cartProduct.addEventListener('mouseover',function(){
-										this.style.cursor = 'pointer';
-										this.style.border = '2px solid #FD9F28';
-									})
-									cartProduct.addEventListener('mouseout',function(){
-										this.style.cursor = 'pointer';
-										this.style.boxShadow = 'none';
-										this.style.border = '1px solid #24E082';
-									})
-								}
+								$('.cart_product').on('click', function(){
+									const cartProNum = $(this).children().children()[4].value;
+									console.log(cartProNum);
+// 									location.href ='${contextPath}/supplementDetail.sh?proNum=' + cartProNum;
+								});
+								$('.cart_product').on('mouseover', function(){
+									$(this).css({'cursor':'pointer', 'border':'2px solid #FD9F28'});
+								});
+								$('.cart_product').on('mouseout', function(){
+									$(this).css('boxShadow', 'none');
+									$(this).css('border', '1px solid #24E082');
+								});
+// 								const cartProducts = document.getElementsByClassName('cart_product');
+// 								for(const cartProduct of cartProducts){
+// 									cartProduct.addEventListener('click',function(){
+// 										const cartProNum = $(this).children().children()[4].value;
+// 										console.log(cartProNum);
+// // 										location.href ='${contextPath}/supplementDetail.sh?proNum=' + cartProNum;
+// 									})
+// 									cartProduct.addEventListener('mouseover',function(){
+// 										this.style.cursor = 'pointer';
+// 										this.style.border = '2px solid #FD9F28';
+// 									})
+// 									cartProduct.addEventListener('mouseout',function(){
+// 										this.style.cursor = 'pointer';
+// 										this.style.boxShadow = 'none';
+// 										this.style.border = '1px solid #24E082';
+// 									})
+// 								}
 							}
 						})
 					}

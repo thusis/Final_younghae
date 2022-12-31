@@ -39,6 +39,10 @@ public interface ShoppingService {
 	
 	int addCartCount(Cart c);
 	
+	ArrayList<Cart> selectCartViewList(Member m);
+	
+	int updateCartQuantity(Cart c);
+	
 
 
 

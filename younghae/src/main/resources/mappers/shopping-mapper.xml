@@ -46,7 +46,6 @@
 		from product
 			left outer join sale_product using(pro_num)
 		where pro_sale_status = 'Y' and pro_status = 'Y' and pro_num = #{proNum}
-		order by pro_num
 	</select>
 	
 	<select id="selemetMember" resultMap="memberResultSet">
@@ -153,6 +152,8 @@
 		<result column="USER_NUM" property="userNum"/>
 		<result column="PRO_NUM" property="proNum"/>
 		<result column="CART_QUANTITY" property="cartQuantity"/>
+<!-- 		<collection property="cartSupplementList" column="USER_NUM" select="selectCartViewList"></collection> -->
+		<association property="supplement" resultMap="supplementResultSet" javaType="Supplement"/>
 	</resultMap>
 	
 	<select id="checkCart" resultType="_int">
@@ -167,4 +168,17 @@
 		where user_num = #{userNum} and pro_num = #{proNum}
 	</update>
 	
+	<select id="selectCartViewList" resultMap="cartListResultSet">
+		select *
+        from cart
+            outer join product using(pro_num)
+        where user_num = #{userNum}
+        order by cart_num desc
+	</select>	
+	
+	<update id="updateCartQuantity">
+		update cart
+		set cart_quantity = #{cartQuantity}
+		where user_num = #{userNum} and pro_num = #{proNum}
+	</update>
 </mapper>

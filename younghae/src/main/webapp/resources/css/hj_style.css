@@ -111,6 +111,14 @@
 		color: black; 
 		margin-top: 2%;
 	}
+	
+	.hj_cartAmount{
+		display: inline-block; 
+		font-weight: bold; 
+		color: black; 
+		margin-top: 2%;
+	}
+	
 
 
 	.ellipsis {
