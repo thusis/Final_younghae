@@ -65,7 +65,6 @@
 	
 	<resultMap type="Point" id="pointResultMap">
 		<id column="POINT_NUM" property="pointNum"/>
-		<result column="POINT_TOTAL" property="pointTotal"/>
 		<result column="POINT_CONTENT" property="pointContent"/>
 		<result column="POINT_AMOUNT" property="pointAmount"/>
 		<result column="POINT_DATE" property="pointDate"/>

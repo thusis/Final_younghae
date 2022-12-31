@@ -25,9 +25,6 @@
             height: 100vh;
             background: linear-gradient(to top, #c9c9ff 50%, #9090fa 90%) no-repeat
         } */
-.container {
-	margin: 50px auto
-}
 
 .panel-heading {
 	text-align: center;
@@ -128,9 +125,8 @@ a[target='_blank'] {
 </head>
 
 <body>
-	<nav>
 		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-	</nav>
+		    <div style="margin-top:50px;"></div>
 	<div class="container">
 		<div class="row">
 			<div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3 ">
