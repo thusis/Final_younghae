@@ -113,22 +113,21 @@
                       <ul>
                           <li><a href="#">영양제</a>
                               <ul class="yh_header__menu__dropdown">
-                                  <li><a href="#">영양성분조회</a></li>
+                                  <li><a href="${contextPath}/category.su">영양성분조회</a></li>
                                   <li><a href="#">영양제 검색</a></li>
                               </ul>
                           </li>
-                          <li><a href="#">쇼핑</a></li>
-                          <li><a href="#">Q&A</a>
+                          <li><a href="${contextPath}/shoppingMain.sh">쇼핑</a></li>
+                          <li><a href="${contextPath}/home.qa">Q&A</a>
                               <ul class="yh_header__menu__dropdown">
-                                  <li><a href="#">둘러보기</a></li>
-                                  <li><a href="#">질문하기</a></li>
-                                  <li><a href="#">답변하기</a></li>
-                                  <li><a href="#">전문가 찾기</a></li>
+                                  <li><a href="${contextPath}/home.qa">둘러보기</a></li>
+                                  <li><a href="${contextPath}/writequestion.qa">질문하기</a></li>
+                                  <li><a href="${contextPath}/expertfind.qa">전문가 찾기</a></li>
                               </ul>
                           </li>
-                          <li><a href="#">건강콘텐츠</a></li>
-                          <li><a href="#">자유게시판</a></li>
-                          <li><a href="#">이벤트</a></li>
+                          <li><a href="${contextPath}/storyList.st">건강콘텐츠</a></li>
+                          <li><a href="${contextPath}/boardList.bo">자유게시판</a></li>
+                          <li><a href="${contextPath}/event.ev">이벤트</a></li>
                       </ul>
                   </nav>
               </div>
