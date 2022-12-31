@@ -37,7 +37,7 @@
 	<!--이벤트 버튼-->
 
 	<div id="eventBirthdayBtn">
-		<a href="#" class="btn-3d yellow" onclick="location.href='${ContextPath}/birthdayEvent.ev'">생일 보상받기</a>
+		<a href="#" class="btn-3d yellow" onclick="location.href='${contextPath}/birthdayEvent.ev'">생일 보상받기</a>
 	</div>
 	<br>
 	<br>

@@ -126,7 +126,7 @@
 
 				<div class="col-lg-8 col-md-7 order-md-1 order-1">
 					<div id="boardTitle">
-						<h4>오늘 PT 매우 성공적이야</h4>
+						<h4>${b.boardTitle }</h4>
 					</div>
 					<hr width="80%" style="border: 1px dashed #c9ffe4;" noshade />
 					<div class="container"
@@ -326,12 +326,12 @@
             
             function shareTwitter() {
               var sendText = "Y2K World의 게시글을 공유합니다 :)";
-              const boardNo = '${b.boardNo}';
-              const writer = '${b.nickName}';
+              const boardNum = '${b.boardNum}';
+              const writer = '${b.userNum}';
               const page = '${page}';
              
               
-              var sendUrl = "http://localhost:8080/selectBoard.bo?bNo=" + ${b.boardNo} + "%26writer=" + "${b.nickName}" +"%26page=" + ${page} + "%26userNo=" + ${userNo};
+              var sendUrl = "http://localhost:8080/selectBoard.bo?bNo=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page} + "%26userNo=" + ${userNo};
               console.log(sendUrl);
               window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl, "Y2K World", "height=480px, width=600px");
             }

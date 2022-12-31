@@ -42,8 +42,27 @@
 	<br>
 	<br>
 	<div id="eventAttendanceBtn">
-		<a href="#" class="btn-3d purple" onclick="location.href='${contextPath}/attendanceEventAward.ev'">출석 보상받기</a>
+		<a href="#" class="btn-3d purple"  data-bs-toggle="modal" data-bs-target="#reportMo" id="atAward">출석 보상받기</a>
 	</div>
+	
+	     <!-- model -->
+        <div class="modal fade" id="reportMo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                    </div>
+                    <div class="modal-body">                                     
+                        <img src="resources/img/event/firecracker.png" style="width: 150px; margin-left: 160px;" ><br><br>
+                        <b style="margin-left: 100px; color:#24E082;">알약 포인트 지급이 완료되었습니다</b>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+	
 	<br>
 	<br>
 
@@ -133,11 +152,18 @@
 		$('a').click(function(event) {
 			event.preventDefault();
 		});
+		
+		document.getElmentById('atAward').addEventListener('click', function() {
+			$.ajax({
+				 url:'${contextPath}/attendanceEventAward.ev',
+				 data: {key : 1},
+				 success: 
+				 error:
+					 alert("조건을 충족하지 않습니다")
+			});
+		})
 	</script>
 
-	<script>
-		document.getElmentById()
-	</script>
-
+	
 </body>
 </html>
