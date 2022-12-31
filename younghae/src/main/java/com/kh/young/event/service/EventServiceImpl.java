@@ -1,5 +1,7 @@
 package com.kh.young.event.service;
 
+import java.util.HashMap;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,5 +30,23 @@ public class EventServiceImpl implements EventService {
 	public int checkBirth(int userNum) {
 		return eDAO.checkBirth(sqlSession, userNum);
 	}
+
+	@Override
+	public int attendanceAward(HashMap<String, Object> pointTable) {
+		return eDAO.attendanceAward(sqlSession, pointTable);
+	}
+
+	@Override
+	public int updatePoint(HashMap<String, Object> pointTable) {
+		return eDAO.updatePoint(sqlSession, pointTable);
+	}
+
+	@Override
+	public int insertCoupon(HashMap map) {
+		return eDAO.insertCoupon(sqlSession, map);
+	}
+
+
+
 
 }

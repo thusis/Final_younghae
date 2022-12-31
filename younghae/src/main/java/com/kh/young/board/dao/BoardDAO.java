@@ -24,17 +24,12 @@ public class BoardDAO {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", boardCategory, rowBounds);
 	}
 
-	public ArrayList<Attachment> selectPhotoList(SqlSessionTemplate sqlSession, Integer boardCategory) {
-		return (ArrayList)sqlSession.selectList("boardMapper.selectPhotoList", boardCategory);
-	}
-
-
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
 
-	public int insertPhoto(SqlSessionTemplate sqlSession, Attachment photo) {
-		return sqlSession.insert("boardMapper.insertPhoto", photo);
+	public int insertThumbnail(SqlSessionTemplate sqlSession, Attachment attm) {
+		return sqlSession.insert("boardMapper.insertThumbnail", attm);
 	}
 	
 	public int deleteBoard(SqlSessionTemplate sqlSession, int boardNo) {
@@ -45,9 +40,19 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deletePhoto", boardNo);
 	}
 
-	public Member setLoginUser(SqlSessionTemplate sqlSession, Integer userNum) {
-		return sqlSession.selectOne("boardMapper.login", userNum);
+
+	public int viewCount(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.update("boardMapper.viewCount", boardNum);
 	}
+
+	public Board boardView(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("boardMapper.boardView", boardNum);
+	}
+
+	public Member selectMember(SqlSessionTemplate sqlSession, int i) {
+		return sqlSession.selectOne("boardMapper.selectMember", i);
+	}
+
 
 
 	

@@ -35,7 +35,7 @@
 </head>
 <body>
 	<!-- Blog Section Begin -->
-		      <c:if test="${loginUser==null }">
+<%-- 		      <c:if test="${loginUser==null }">
 		         <button class="loginBtn">1</button>관리자<br>
 		         <button class="loginBtn">2</button>일반유저<br>
 		         <button class="loginBtn">4</button>약사<br>
@@ -45,15 +45,15 @@
       <c:if test="${loginUser!=null }">
 		<p>      	${loginUser.userName } 님 환영합니다.</p>
 		<button onclick="location.href='${contextPath}/logout.bo'">로그아웃</button>
-	  </c:if> 
+	  </c:if>  --%>
 	<section class="blog spad">
 		<div class="container">
 					    <div>
-					    <c:if test="${loginUser != null }">
+<%-- 					    <c:if test="${loginUser != null }"> --%>
 					    <button type="button" class="btn btn-success"  onclick="location.href='${contextPath}/boardWrite.bo'">
 					    <i class="bi bi-pencil-square"></i> Write
 					    </button>
-					    </c:if>
+<%-- 					    </c:if> --%>
 					    </div>  	
 			<div class="row">
 				<div class="col-lg-4 col-md-5">
@@ -154,12 +154,7 @@
 							<div class="blog__item">
 								<div class="blog__item__text">
 								<div class="blog__item__pic">	
-  								<c:forEach items="${pList }" var="p"> 
- 									<c:if test="${ b.boardNum eq p.serialNumber}">
-										<img src="${contextPath}/resources/uploadFiles/${p.attachRename}" style="height:231.89px; width:322.57px;" alt="">
-										<input type="hidden" value="${p.attachName}" name="photoName">
-									</c:if>
- 								</c:forEach> 
+										<img src="${b.attachment.attachRename}" style="height:231.89px; width:322.57px;" alt="">
 								</div>
 									<ul>
 										<li><i class="fa fa-calendar-o"></i>&nbsp;${b.boardCreateDate}</li>
@@ -170,7 +165,6 @@
 									<h5>
 										<a href="#">${b.boardTitle }	 </a>
 									</h5>
-									<p>${b.boardContent}</p>
 									<a href="#" class="blog__btn" id="boardView" class="boardView" onclick="boardView();">READ MORE <span
 										class="arrow_right"></span></a>
 								</div>
@@ -442,18 +436,6 @@
 <!-- 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script> -->
 
 <script>
-window.onload=()=>{
-	<!-- 임시로그인 -->
-	   const loginBtn= document.getElementsByClassName("loginBtn");
-	   for(const btn of loginBtn){
-	      btn.addEventListener('click', function(){
-	         const userNum = this.innerText;
-	         console.log(userNum);
-	         location.href='${contextPath}/login.bo?userNum='+userNum;
-	      });
-	   }
-
-	} //window.onload() End
 	
 		<!-- 카테고리 -->
 	   const categorys = document.getElementsByClassName('ll');

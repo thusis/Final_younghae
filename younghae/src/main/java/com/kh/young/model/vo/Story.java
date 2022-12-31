@@ -13,10 +13,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Point {
-	private int pointNum;
-	private String pointContent;
-	private String pointAmount;
-	private Date PointDate;
+public class Story {
+	private int boardNum;
+	private String boardTitle;
+	private String boardContent;
+	private Date boardCreateDate;
+	private Date boardModifyDate;
+	private int boardView;
+	private String boardStatus;
 	private int userNum;
+	private int boardType;
+	private Attachment attachment;
 }
