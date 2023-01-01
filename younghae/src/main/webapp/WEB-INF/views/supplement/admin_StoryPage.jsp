@@ -141,7 +141,7 @@
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
-                <li>건강해지는 이야기</li>
+                <li>건강해지는 이야기 관리</li>
             </ul>
         </div>
     </div>
@@ -281,9 +281,8 @@
                     }
 //                     console.log($(this).siblings()[0].value);
 //                     $.ajax({
-//                     	url:'${ contextPath }/bookmark.st',
-//                     	data: {userNum: ${ loginUser.userNum }, boardNum: $(this).siblings()[0].value, 
-//                     			check: check},
+//                     	url:'${ contextPath }/trash.st',
+//                     	data: {boardNum: $(this).siblings()[0].value, check: check},
 //                     	success:(data)=>{
 //                     		console.log(data);
 //                     	},
@@ -301,7 +300,7 @@
 					const boardNum = $(this).children('input')[0].value;
 					const userNum = $(this).children('input')[1].value;
 					
-					location.href = '${contextPath}/updateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
+					location.href = '${contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});
                 
 				$('.title').on('click', function(){
@@ -309,7 +308,7 @@
 					const boardNum = $(this).parents().children('.blog__item__pic').children()[0].value;
 					const userNum = $(this).parents().children('.blog__item__pic').children()[1].value;
 					
-					location.href = '${contextPath}/updateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
+					location.href = '${contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});
             }
         </script>

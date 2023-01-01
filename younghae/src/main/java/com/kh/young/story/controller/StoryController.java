@@ -48,7 +48,7 @@ public class StoryController {
 			currentPage = page;
 		}
 
-		Member mem = sService.selectMember(8);
+		Member mem = sService.selectMember(26);
 		System.out.println(mem);
 
 		int listCount = stService.getStoryListCount();
@@ -78,7 +78,7 @@ public class StoryController {
 
 		System.out.println(b);
 
-		b.setUserNum(5);
+		b.setUserNum(26);
 
 		int result = stService.insertStory(b);
 		int attm = 0;
@@ -188,14 +188,75 @@ public class StoryController {
 	
 //======================관리자 페이지===============================================================================================================
 	
+	@RequestMapping("selectUpdateStory.st")
+	public ModelAndView selectUpdateStory(@RequestParam("boardNum") int boardNum, @RequestParam("userNum") int userNum,
+			@RequestParam(value = "page", required = false) Integer page, ModelAndView mv, HttpSession session) {
+		System.out.println(boardNum);
+
+		Story s = stService.selectStory(boardNum);
+
+//		System.out.println(b);
+
+		Member m = (Member) session.getAttribute("loginUser");
+		
+		System.out.println( s.getBoardTitle() );
+
+//		if (m.getUserNum() != userNum) {
+//			int result = stService.updateView(boardNum);
+//		}
+
+		mv.addObject("story", s);
+		mv.addObject("loginUser", m);
+		mv.addObject("page", page);
+		mv.setViewName("story_update");
+
+		return mv;
+	}
+	
 	@RequestMapping("updateStory.st")
-	public String updateStory(@ModelAttribute Story s,@RequestParam("check") String check) {
-		if(check.equals("U")) {
-			// 업데이트
-		}else {
-			// 삭제
+	public String updateStory(@ModelAttribute Story s, @RequestParam("check") String check, @RequestParam("thumbnail") String image) {
+		System.out.println("updateController 들어옴");
+		System.out.println(s);
+		
+		String select = stService.selectThumbnail(s.getBoardNum()).getAttachRename();
+		System.out.println(select);
+		
+		int attm = 0;
+		if(image != null) {
+			if(!select.contains(image)) {
+				System.out.println("새로운 썸네일");
+				if (!image.contains("<p")) {
+					Attachment att = new Attachment();
+					
+					att.setAttachName(image);
+					att.setAttachRename(image);
+					att.setAttachPath(image);
+					att.setBoardType(3);
+					att.setSerialNumber(s.getBoardNum());
+					
+					s.setAttachment(att);
+					
+					attm = stService.updateThumbnail(s);
+				}
+			}
 		}
-		return null;
+		
+		int result = 0;
+		if(check.equals("D")) {
+			System.out.println("D");
+			result = stService.DeleteStory(s.getBoardNum());
+		}else if(check.equals("U")) {
+			System.out.println("U");
+			result = stService.updateStory(s);
+		}
+		
+		if( result + attm >= 1) {
+			return null;
+//			return "redirect:AdminStoryList.st";
+		}else {
+			throw new StoryException("컬럼 쓰기 실패");
+		}
+		
 	}
 	
 	@RequestMapping("AdminStoryList.st")
@@ -206,7 +267,7 @@ public class StoryController {
 			currentPage = page;
 		}
 
-		Member mem = sService.selectMember(8);
+		Member mem = sService.selectMember(28);
 		System.out.println(mem);
 
 		int listCount = stService.getStoryListCount();
@@ -223,5 +284,20 @@ public class StoryController {
 
 		return "admin_StoryPage";
 
+	}
+	
+	@RequestMapping("trash.st")
+	public Integer trash(@RequestParam("boardNum") int boardNum, @RequestParam("check") String check) {
+		int result = 0;
+		// 보드로 설정
+		
+		System.out.println(check);
+
+		if (check.equals("N")) {
+			System.out.println("delete 들어옴");
+			result = stService.DeleteStory(boardNum);
+		}
+
+		return result;
 	}
 }

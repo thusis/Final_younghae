@@ -56,5 +56,17 @@ public class StoryService {
 		return stDAO.selectThumbnail(sqlSession, boardNum);
 	}
 
+	public int DeleteStory(int boardNum) {
+		return stDAO.deleteStory(sqlSession, boardNum);
+	}
+
+	public int updateStory(Story s) {
+		return stDAO.updateStory(sqlSession, s);
+	}
+
+	public int updateThumbnail(Story s) {
+		return stDAO.updateThumbnail(sqlSession, s);
+	}
+
 
 }

@@ -55,7 +55,7 @@
 		select board_num, board_title, board_content, board_createDate, board_modifyDate, board_view, board_status, user_num, attach_rename
 		from board 
 		join attachment on board_num = SERIALNUMBER
-		where board.board_type = 3
+		where board.board_type = 3 and board.board_status = 'Y'
 		order by board_num desc
 	</select>
 	
@@ -83,4 +83,27 @@
 		delete from clip
 		where board_num = #{boardNum} and user_num = #{userNum}
 	</delete>
+	
+	<!-- ========================== 관리자 =========================== -->
+	
+	<!-- 컬럼 삭제 -->
+	<update id="deleteStory">
+		update board
+		set board_status = 'N'
+		where board_num = #{ boardNum } and board_type = 3
+	</update>
+	
+	<!-- 컬럼 업데이트 -->
+	<update id="updateStory">
+		update board
+		set board_title = #{ boardTitle }, board_content = #{ boardContent }
+		where board_num = #{ boardNum } and board_type = 3
+	</update>
+	
+	<!-- 컬럼 썸네일 업데이트 -->
+	<update id="updateThumbnail">
+		update attachment
+		set ATTACH_RENAME = #{attachment.attachRename}, attach_name = #{attachment.attachName}, attach_path = #{attachment.attachPath}
+		where board_type= 3 and SERIALNUMBER = #{ boardNum }
+	</update>
 </mapper>

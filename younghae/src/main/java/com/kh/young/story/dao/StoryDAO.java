@@ -53,4 +53,16 @@ public class StoryDAO {
 		return sqlSession.selectOne("storyMapper.selectThunbnail", boardNum);
 	}
 
+	public int deleteStory(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.update("storyMapper.deleteStory", boardNum);
+	}
+
+	public int updateStory(SqlSessionTemplate sqlSession, Story s) {
+		return sqlSession.update("storyMapper.updateStory", s);
+	}
+
+	public int updateThumbnail(SqlSessionTemplate sqlSession, Story s) {
+		return sqlSession.update("storyMapper.updateThumbnail", s);
+	}
+
 }

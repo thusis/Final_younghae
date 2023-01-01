@@ -24,193 +24,112 @@
 <script
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
 
-<style>
-.bn_nav1 {
-	background-color: #24E082;
-}
-
-.yh_header__menu {
-	padding: 12px 0;
-}
-
-.yh_header__menu ul li {
-	color: white;
-	list-style: none;
-	display: inline-block;
-	margin-right: 50px;
-	position: relative;
-}
-
-.yh_header__menu ul li .yh_header__menu__dropdown {
-	position: absolute;
-	left: 0;
-	/* top: 50px; */
-	background: #222222;
-	width: max-content;
-	/* z-index: 9; */
-	padding: 5px 0;
-	-webkit-transition: all, 0.3s;
-	-moz-transition: all, 0.3s;
-	-ms-transition: all, 0.3s;
-	-o-transition: all, 0.3s;
-	transition: all, 0.3s;
-	opacity: 0;
-	visibility: hidden;
-}
-
-.yh_header__menu ul li .yh_header__menu__dropdown li {
-	margin-right: 0;
-	display: block;
-}
-
-.yh_header__menu ul li .yh_header__menu__dropdown li:hover>a {
-	color: #24E082;
-}
-
-.yh_header__menu ul li .yh_header__menu__dropdown li a {
-	text-transform: capitalize;
-	color: #ffffff;
-	font-weight: 400;
-	padding: 5px 15px;
-}
-
-.yh_header__menu ul li.active a {
-	color: #24E082;
-}
-
-.yh_header__menu ul li:hover .yh_header__menu__dropdown {
-	top: 30px;
-	opacity: 1;
-	visibility: visible;
-}
-
-.yh_header__menu ul li:hover>a {
-	color: #FD9F28;
-}
-
-.yh_header__menu ul li:last-child {
-	margin-right: 0;
-}
-
-.yh_header__menu ul li a {
-	font-size: 14px;
-	color: #252525;
-	text-transform: uppercase;
-	font-weight: 700;
-	letter-spacing: 2px;
-	-webkit-transition: all, 0.3s;
-	-moz-transition: all, 0.3s;
-	-ms-transition: all, 0.3s;
-	-o-transition: all, 0.3s;
-	transition: all, 0.3s;
-	padding: 5px 0;
-	display: block;
-}
-
-/* 검색창 */
-#bn_navbar-search-input {
-	border: 0;
-	background-color: rgb(242, 242, 242);
-	border-radius: 0px 20px 20px 0px;
-}
-
-.bn_navbar-select-input {
-	border: 0;
-	background-color: rgb(242, 242, 242);
-	cursor: pointer;
-	border-radius: 20px 0px 0px 20px;
-	padding-left: 10px;
-}
-
-.bn_navbar-select-input option:checked, .bn_navbar-select-input option:hover
-	{
-	color: FD9F28;
-}
-
-.bn_btn_search {
-	background-color: transparent;
-	border: none;
-	cursor: pointer;
-	position: absolute;
-	right: 5px;
-	top: 50%;
-	transform: translatey(-50%);
-}
-
-/* 첨부파일 관련 CSS*/
-.filebox .upload-name {
-	display: inline-block;
-	height: 40px;
-	padding: 0 10px;
-	vertical-align: middle;
-	border: 1px solid transparent;
-	width: 78%;
-	color: #999999;
-}
-
-.filebox label {
-	display: inline-block;
-	padding: 10px 20px;
-	color: #fff;
-	vertical-align: middle;
-	background-color: #24E082;
-	border-radius: 1em;
-	cursor: pointer;
-	/* height: 78%; */
-	margin-left: 10px;
-}
-
-.filebox input[type="file"] {
-	position: absolute;
-	width: 0;
-	height: 0;
-	padding: 0;
-	overflow: hidden;
-	border: 0;
-}
-
-#detail {
-	overflow: hidden;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-
-/* input 스타일  헤헤 */
-input {
-	border: none;
-	border-radius: 3px;
-	height: 30px;
-}
-
-input:focus {
-	outline: none !important;
-	border-color: rgb(106, 140, 153);
-	box-shadow: 0 0 10px rgb(180, 185, 187);
-}
-
-textarea:focus {
-	outline: none !important;
-	border-color: rgb(106, 140, 153);
-	box-shadow: 0 0 10px rgb(180, 185, 187);
-}
-
-/*목차*/
-.bn_index ul li {
-	list-style: none;
-	position: relative;
-	display: inline-block;
-}
-
-.bn_index a {
-	color: black;
-}
-
-.bn_index li:last-child a {
-	font-weight: 800;
-	color: #FD9F28;
-}
-</style>
-</head>
+	<style>
+	
+		/* 검색창 */
+		#bn_navbar-search-input {
+			border: 0;
+			background-color: rgb(242, 242, 242);
+			border-radius: 0px 20px 20px 0px;
+		}
+		
+		.bn_navbar-select-input {
+			border: 0;
+			background-color: rgb(242, 242, 242);
+			cursor: pointer;
+			border-radius: 20px 0px 0px 20px;
+			padding-left: 10px;
+		}
+		
+		.bn_navbar-select-input option:checked, .bn_navbar-select-input option:hover
+			{
+			color: FD9F28;
+		}
+		
+		.bn_btn_search {
+			background-color: transparent;
+			border: none;
+			cursor: pointer;
+			position: absolute;
+			right: 5px;
+			top: 50%;
+			transform: translatey(-50%);
+		}
+		
+		/* 첨부파일 관련 CSS*/
+		.filebox .upload-name {
+			display: inline-block;
+			height: 40px;
+			padding: 0 10px;
+			vertical-align: middle;
+			border: 1px solid transparent;
+			width: 78%;
+			color: #999999;
+		}
+		
+		.filebox label {
+			display: inline-block;
+			padding: 10px 20px;
+			color: #fff;
+			vertical-align: middle;
+			background-color: #24E082;
+			border-radius: 1em;
+			cursor: pointer;
+			/* height: 78%; */
+			margin-left: 10px;
+		}
+		
+		.filebox input[type="file"] {
+			position: absolute;
+			width: 0;
+			height: 0;
+			padding: 0;
+			overflow: hidden;
+			border: 0;
+		}
+		
+		#detail {
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		
+		/* input 스타일  헤헤 */
+		input {
+			border: none;
+			border-radius: 3px;
+			height: 30px;
+		}
+		
+		input:focus {
+			outline: none !important;
+			border-color: rgb(106, 140, 153);
+			box-shadow: 0 0 10px rgb(180, 185, 187);
+		}
+		
+		textarea:focus {
+			outline: none !important;
+			border-color: rgb(106, 140, 153);
+			box-shadow: 0 0 10px rgb(180, 185, 187);
+		}
+		
+		/*목차*/
+		.bn_index ul li {
+			list-style: none;
+			position: relative;
+			display: inline-block;
+		}
+		
+		.bn_index a {
+			color: black;
+		}
+		
+		.bn_index li:last-child a {
+			font-weight: 800;
+			color: #FD9F28;
+		}
+	</style>
+	</head>
 <body>
 
 	<div class="container">
@@ -234,29 +153,21 @@ textarea:focus {
 				<form action="${ contextPath }/updateStory.st" method="post" id="formmm">
 					<input type="hidden" id="thumbnail" name="thumbnail" value="">
 					<input type="hidden" name="userNum" value="${ loginUser.userNum }">
+					<input type="hidden" name="boardNum" value="${ story.boardNum }">
+					<input type="hidden" name="boardView" value="${ story.boardView }">
 					<div id="storyTitle">
 						<label
 							style="font-size: 25px; color: #24E082; font-weight: 700; padding-left: 1%; padding-top: 1.5%; padding-right: 1%; border: none;"
-							for="">제목</label> <input type="text" placeholder="제목을 입력하세요"
-							required style="width: 60%; padding: 0.5%;">
-					</div>
-					<div id="storyFile">
-						<label
-							style="font-size: 25px; color: #24E082; font-weight: 700; padding-left: 1%; padding-top: 1.5%; padding-right: 1%; border: none;"
-							for="">첨부파일</label> <input type="text" placeholder="파일 이름"
-							required style="width: 60%; padding: 0.5%;" readonly>
-						<div class="text-right float-right" id="fileBtn"
-							style="margin-top: 2%; margin-right: 20%;">
-							<button type="button"
-								style="height: 30px; width: 150%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">찾아보기</button>
-						</div>
+							for="">제목</label> <input name="boardTitle" type="text" required style="width: 60%; padding: 0.5%;" value="${ story.boardTitle }">
 					</div>
 					<div class="text-center" id="column">
 						<br>
-						<textarea id="summernote" name="editordata"></textarea>
+						<textarea id="summernote" name="boardContent">
+							${ story.boardContent }
+						</textarea>
 					</div>
 					<div class="text-center" id="Btn" style="margin-top: 2%;">
-						<input type="hidden" id="check" name="check" value="">S
+						<input type="hidden" id="check" name="check" value="">
 						<button type="button" id="updateBtn"
 							style="height: 40px; width: 13%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">수정</button>
 						&emsp;&emsp;&emsp;&emsp;&emsp;
@@ -358,21 +269,64 @@ textarea:focus {
 			            	sendFile(files[i], this);
 			            }
 			        }
-				}
+				},
+				focus : true,
+				lang : 'ko-KR'
 	      });
+			
+		function sendFile(file, el) {
+	  		var form_data = new FormData();
+	        	form_data.append('file', file);
+	        	$.ajax({
+		          	data: form_data,
+		          	type: "POST",
+		          	url: '${ contextPath }/summernoteImage.st',
+		          	cache: false,
+		          	contentType: false,
+		          	enctype: 'multipart/form-data',
+		          	processData: false,
+		          	success: function(img_name) {
+							$(".spinner-border").css("display","none");
+							
+							console.log(img_name);
+							
+							// 외부 경로 저장소 tomcat server.xml 에서 수정 후 /summerNote/로 경로 붙이기
+		            		$(el).summernote('editor.insertImage', "/summerNote/"+ img_name);
+		            		
+		          	}
+	       		});
+	      }
+		
 		
 		window.onload=()=>{
 			const form = document.getElementById("formmm");
+			
 			document.getElementById("deleteBtn").addEventListener('click', ()=>{
 				document.getElementById("check").value = "D";
+				//summernote 내용 가져오기
+				  const img = $('#summernote').summernote('code');
+				  
+				  var thumbnail = img.substring(img.indexOf('/summer'), img.indexOf('src="')+44);
+				  console.log("얍"+thumbnail);
+				  
+				  document.getElementById('thumbnail').value = thumbnail;
+				  console.log(document.getElementById('thumbnail').value);
 				
-// 				form.commit();
+				form.submit();
 			});
 			
 			document.getElementById("updateBtn").addEventListener('click', ()=>{
 				document.getElementById("check").value = "U";
+				//summernote 내용 가져오기
+				  const img = $('#summernote').summernote('code');
+				  
+				  var thumbnail = img.substring(img.indexOf('/summer'), img.indexOf('src="')+44);
+				  console.log("얍"+thumbnail);
+				  
+				  document.getElementById('thumbnail').value = thumbnail;
+				  console.log(document.getElementById('thumbnail').value);
 				
-// 				form.commit();
+				form.submit();
 			});
 		}
 		
