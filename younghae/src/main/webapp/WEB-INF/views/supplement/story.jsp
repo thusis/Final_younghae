@@ -311,6 +311,11 @@
 					
 					location.href = '${contextPath}/selectStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});
+				
+				$('#bn_navbar-search-input').on('keyup', ()=>{
+					
+				});
+				
             }
         </script>
     </body>
