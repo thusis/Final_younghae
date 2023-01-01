@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ChatMessage {
-	private int cathId;
+	private int chatId;
 	private String chatContent;
 	private Date chatTime;
 	private String chatRead;
