@@ -13,9 +13,11 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ChatPayment {
+public class ChatReserv {
+	private int reservId;
 	private int chatroomId;
-	private int chatpayPrice;
-	private Date chatpayTime;
-	private Date chatSchedule;
+	private int paymentId;
+	private Date reservSchedule;
+	private String isApproved;
+	private String isCompleted;
 }

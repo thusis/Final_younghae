@@ -16,8 +16,8 @@ import lombok.ToString;
 public class ChatMessage {
 	private int chatId;
 	private String chatContent;
-	private Date chatTime;
-	private String chatRead;
+	private Date sendTime;
+	private String isRead;
 	private int chatroomId;
 	private int userNum;
 }
