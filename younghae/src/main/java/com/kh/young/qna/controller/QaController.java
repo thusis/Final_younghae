@@ -56,7 +56,8 @@ public class QaController {
 	@GetMapping("home.qa")
 	public String goHome(HttpServletRequest request, Model model) {
 		
-		if(((Member)request.getSession().getServletContext().getAttribute("loginUser")) != null) {
+//		if(((Member)request.getSession().getServletContext().getAttribute("loginUser")) != null) {
+		if(((Member)request.getSession().getAttribute("loginUser")) != null) {
 			ArrayList<QuestionRespDto> myQuest = getMyQna(request);
 			model.addAttribute("myQuest", myQuest);
 			model.addAttribute("isRead",getIsRead(myQuest));
@@ -288,13 +289,6 @@ public class QaController {
 	public String selectHospital(@RequestParam("expertNum") int expertNum, Model model, HttpServletRequest request) {
 		model.addAttribute("expert", qService.selectExpertResp(expertNum).getExpert());
 		return "expertHospital";
-	}
-	
-	
-	/**채팅방**/
-	@GetMapping("open.ch")
-	public String openChat() {
-		return "chat";
 	}
 
 }
