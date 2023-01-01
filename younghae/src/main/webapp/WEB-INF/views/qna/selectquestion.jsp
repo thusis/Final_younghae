@@ -57,15 +57,15 @@ ${qresp }
                         <div class="row bn_txt_big">
                             <h3>${qresp.board.boardTitle}</h3>
                         </div>
-                        <div class="row bn_content">
-                        	${qresp.board.boardContent}
-							<c:if test="${ qresp.qattach.attachNum ne 0}">
-	                        <div class="row" style="padding:3rem;">
-								<img src="${contextPath}/resources/uploadFiles/${qresp.qattach.attachRename}" alt="" class="img-fluid">
-								<br>
-							</div>
-							</c:if>
-                        </div>
+                        <div class="row">
+                        <div class="bn_content">${qresp.board.boardContent}</div></div>
+						<c:if test="${ qresp.qattach.attachNum ne 0}">
+                        <div class="row" style="padding:3rem;">
+							<img src="${contextPath}/resources/uploadFiles/${qresp.qattach.attachRename}" alt="" class="img-fluid">
+							<br>
+						</div>
+						</c:if>
+                        
                        	
                         <div class="row">
                             <div class="col-2"><span>${qresp.writerInfo}</span></div>
@@ -228,13 +228,14 @@ ${qresp }
 		                           <div class="bn_pro-icon" id="goToChat" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover"><a style="text-decoration:none; color:white;" href="${contextPath}/open.ch?expertNum=${ans.eresp.member.userNum}"><i class="bi bi-send"></i></a></div>
 		                       </div>
 		                   </div>
-		                   
-		                   <div class="row bn_content">
-		                       ${ans.board.boardContent}
-		                   </div>
+						
+		                   <div class="row">
+		                   <div class="bn_content">${ans.board.boardContent}</div></div>
 		                   
 		                   <c:if test="${ ans.aattach.attachNum ne 0 }">
-								<img src="${contextPath }/resources/uploadFiles/${ans.aattach.attachRename}" alt="" class="img-fluid">
+		                   <div class="row" style="padding:3rem;">
+								<img src="${contextPath }/resources/uploadFiles/${ans.aattach.attachRename}" alt="" class="img-fluid"><br>
+							</div>
 		                   </c:if>
 		
 		                   <div class="row justify-content-end bn_board-meta">
