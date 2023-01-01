@@ -170,7 +170,7 @@
 			                            </c:if>
 	                                </ul>
 	                                <div class="title" style="font-size: 20px; font-weight: bold;">${ story.boardTitle }</div>
-	                                <>
+	                                
 	                                <div id="detail" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
 <%-- 	                                	${ fn:split(story.boardContent,'</span>')[0] } --%>
 	                                </div>
