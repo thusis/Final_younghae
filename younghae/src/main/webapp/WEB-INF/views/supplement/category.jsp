@@ -56,7 +56,7 @@
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
-                <li>성분 조회</li>
+                <li>영양 성분 조회</li>
             </ul>
         </div>
     </div>
@@ -67,7 +67,7 @@
 				<div class="col-lg-12">
 					<div class="section" style="padding-left: 25%;">
 						<input type="text" class="form-control"
-							id="bn_navbar-search-input" placeholder="궁금한 영양 성분 검색"
+							id="bn_navbar-search-input_1" placeholder="궁금한 영양 성분 검색"
 							aria-label="search" aria-describedby="search"
 							style="width: 70%; border-radius: 30px;">
 						<button class="btn"
@@ -240,5 +240,22 @@
                 location.href = '${contextPath}/selectCategory.su?cateName='+cateName+'&cateNum='+cateNum+'&page='+${pi.currentPage};
             });
         }
+        
+        $('#bn_navbar-search-input_1').on('keyup', ()=>{
+			console.log($('#bn_navbar-search-input_1').val());
+			$.ajax({
+				url:'${ contextPath }/searchCategory.su',
+				data: {search:$('#bn_navbar-search-input_1').val()},
+				success:(data)=>{
+					console.log(data);
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			});
+		});
+
+// 		console.log($('#bn_navbar-search-input_1'));
+		
 	</script>
 </html>

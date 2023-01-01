@@ -355,4 +355,8 @@ public class SupplementController {
 		return "review_More";
 	}
 	
+	@RequestMapping("searchCategory.su")
+	public void searchCategory(@RequestParam("search") String search) {
+		System.out.println(search);
+	}
 }
