@@ -834,7 +834,7 @@
     	btnBuy.addEventListener('click',function(){
     		const paymentTotal = ${ supplementDetail.proPrice } * quantity.value;
     		const proNum = ${supplementDetail.proNum};
-    		location.href='${ contextPath }/payment.sh?proNum='+proNum+'&quantity='+quantity.value;
+    		location.href='${ contextPath }/payment.sh?proNumList='+proNum+'&quantity='+quantity.value;
     	});
     	
     }

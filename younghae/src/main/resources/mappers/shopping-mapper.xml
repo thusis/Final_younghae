@@ -181,4 +181,9 @@
 		set cart_quantity = #{cartQuantity}
 		where user_num = #{userNum} and pro_num = #{proNum}
 	</update>
+	
+	<delete id="deleteSelectCart">
+		delete from cart
+		where pro_num = #{i}
+	</delete>
 </mapper>

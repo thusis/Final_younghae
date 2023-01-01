@@ -43,6 +43,8 @@ public interface ShoppingService {
 	
 	int updateCartQuantity(Cart c);
 	
+	void delectSelectCart(int i);
+	
 
 
 

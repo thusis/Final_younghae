@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -122,22 +123,24 @@ public class ShoppingController {
 	
 	// 결제페이지 가기
 	@RequestMapping("payment.sh")
-	public String paymentView(
-//			@RequestParam("proNum") int proNum, @RequestParam("quantity") int quantity, Model model, HttpSession session
-			@RequestParam("cartNumList") String[] cartNumList
-			) {
-//		System.out.println(proNum);
-//		System.out.println(quantity);
-//		
+	public String paymentView(@RequestParam(value="quantity", required=false) int quantity, 
+			Model model, HttpSession session, @RequestParam(value="proNumList",required=false) String[] proNumList) {
+		System.out.println(quantity);
+		
 //		Supplement paySupplement = shService.selectDetail(proNum);
 //		ArrayList<GeneralUser> gu = shService.selectGu(1);
 //		System.out.println(gu);
-//		
+		
 //		model.addAttribute("paySupplement", paySupplement);
 //		model.addAttribute("quantity", quantity);
 		
-		System.out.println(cartNumList);
-		System.out.println(Arrays.toString(cartNumList));
+		System.out.println(proNumList);
+		System.out.println(Arrays.toString(proNumList));
+		
+        for(String proNum : proNumList) {
+            int i = Integer.parseInt(proNum);
+            shService.delectSelectCart(i);
+        }
 		
 		return "paymentView";
 	}
@@ -319,5 +322,17 @@ public class ShoppingController {
 			result="NO";
 		}
 		return result;
+	}
+	
+	@ResponseBody
+	@RequestMapping("deleteSelectCart.sh")
+	public String deleteSelectCart(	@RequestParam("deleteSelectList[]") List<String> cartNumList) {
+		
+		System.out.println(cartNumList);
+        for(String cartNum : cartNumList) {
+            int i = Integer.parseInt(cartNum);
+            shService.delectSelectCart(i);
+        }
+        return "YES";
 	}
 }

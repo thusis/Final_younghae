@@ -108,4 +108,9 @@ public class ShoppingServiceImpl implements ShoppingService{
 	public int updateCartQuantity(Cart c) {
 		return shDAO.updateCartQuantity(sqlSession, c);
 	}
+	
+	@Override
+	public void delectSelectCart(int i) {
+		shDAO.deleteSelectCart(sqlSession, i);
+	}
 }

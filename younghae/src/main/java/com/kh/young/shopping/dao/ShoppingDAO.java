@@ -82,4 +82,8 @@ public class ShoppingDAO {
 		return sqlSession.update("shoppingMapper.updateCartQuantity", c);
 	}
 
+	public void deleteSelectCart(SqlSessionTemplate sqlSession, int i) {
+		sqlSession.delete("shoppingMapper.deleteSelectCart", i);
+	}
+
 }
