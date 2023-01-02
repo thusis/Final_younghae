@@ -200,10 +200,16 @@
                                         <input name="expertSort"  type="radio" value="C" required="required"><a style="color: black">약사</a>
                                     </div>
                                     </c:if>
-                                    <c:if test="${ExpertUser.expertSort ne 'D' }">
+                                    <c:if test="${ExpertUser.expertSort eq 'C' }">
                                     <div class="input-field col-lg-4" style="float: left; margin-right: 100px; border: none;">
                                         <input name="expertSort"  type="radio" value="D" required="required"><a style="color: black;margin-right:10px;">의사</a>
                                         <input name="expertSort"  type="radio" value="C" required="required" checked><a style="color: black">약사</a>
+                                    </div>
+                                    </c:if>
+                                    <c:if test="${ExpertUser.expertSort eq 'N' }">
+                                    <div class="input-field col-lg-4" style="float: left; margin-right: 100px; border: none;">
+                                        <input name="expertSort"  type="radio" value="D" required="required"><a style="color: black;margin-right:10px;">의사</a>
+                                        <input name="expertSort"  type="radio" value="C" required="required"><a style="color: black">약사</a>
                                     </div>
                                     </c:if>
                                 </div>

@@ -174,7 +174,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2" style="margin-top: 15px;">
-                                    <div>새 비밀번호*</div>
+                                    <div>새 비밀번호*(8자이상 하나이상의 문자/숫자/특수문자)</div>
                                     <div class="input-field" id="myPwd2">
                                         <input type="password" id="myPwd" name="myPwd" placeholder="비밀번호를 입력해주세요">
                                     </div>
@@ -295,7 +295,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2" style="margin-top: 15px;">
-                                    <div>새 비밀번호*</div>
+                                    <div>새 비밀번호*(8자이상 하나이상의 문자/숫자/특수문자)</div>
                                     <div class="input-field" id="myPwd2">
                                         <input type="password" id="myPwd" name="myPwd" placeholder="비밀번호를 입력해주세요">
                                     </div>
