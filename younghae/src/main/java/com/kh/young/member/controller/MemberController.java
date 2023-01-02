@@ -207,7 +207,6 @@ public class MemberController {
         map.put("userAddressDetail", req.getParameter("userAddressDetail"));
         map.put("userHealth", userHealth);
 
-
         int resultGenral = mService.insertMemberAddress(map);
 
         if (result > 0 && resultGenral > 0) {
@@ -374,7 +373,7 @@ public class MemberController {
         makeRandomNumber();
         String setFrom = "000zxzc123@gmail.com";
         String toMail = email;
-        String title = "YonunHae 인증 이메일입니다.";
+        String title = "YoungHae 인증 이메일입니다.";
         String content = "홈페이지를 방문해주셔서 감사합니다.<br><br> 인증번호는 " + authNumber + " 입니다.<br> 해당 인증번호를 인증번호 확인란에 기입하여주세요";
 
         mailSend(setFrom, toMail, title, content);

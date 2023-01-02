@@ -7,8 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Point;
 import com.kh.young.myPage.dao.MyPageDAO;
 
@@ -50,4 +52,33 @@ public class MyPageServiceImpl implements MyPageService{
 		return myDAO.selectAllPoint(sqlSession, id);
 	}
 
+	@Override
+	public int pointTotal(HashMap<String, Object> map) {
+		return myDAO.pointTotal(sqlSession, map);
+	}
+	
+	@Override
+	public int deleteMember(int userNum) {
+		return myDAO.deleteMember(sqlSession, userNum);
+	}
+	
+	@Override
+	public Member selectAllMember(int id) {
+		return myDAO.selectAllMember(sqlSession, id);
+	}
+	
+	@Override
+	public ArrayList<Coupon> selectAllCoupon(int id) {
+		return myDAO.selectAllCoupon(sqlSession, id);
+	}
+	
+	@Override
+	public ArrayList<Coupon> selectAdminCoupon(String str) {
+		return myDAO.selectAdminCoupon(sqlSession, str);
+	}
+	
+	@Override
+	public int couponInsert(Coupon c) {
+		return myDAO.couponInsert(sqlSession, c);
+	}
 }

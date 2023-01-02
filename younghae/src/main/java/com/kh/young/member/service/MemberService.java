@@ -30,7 +30,4 @@ public interface MemberService {
 
 	int updatePwd(HashMap<String, String> map);
 
-
-
-
 }

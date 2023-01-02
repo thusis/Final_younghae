@@ -1,6 +1,8 @@
 package com.kh.young.myPage.contoller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.young.member.exception.MemberException;
 import com.kh.young.member.service.MemberService;
+import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
@@ -28,6 +31,7 @@ public class MyPageController {
 
     @Autowired
     private MyPageService myService;
+ 
 
     //마이 페이지 이동.
     @RequestMapping("myPage.my")
@@ -48,17 +52,13 @@ public class MyPageController {
 
             model.addAttribute("ExpertUser", eu);
             
-            System.out.println(eu);
-            
             return "myInfo";
     	}else {
     		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
     		GeneralUser gu = myService.selectGeneral(id);
     		
     		model.addAttribute("GeneralUser", gu);
-    		
-    		System.out.println(gu);
-    		
+    			
     		return "myInfo";
     	}
     }
@@ -107,17 +107,96 @@ public class MyPageController {
     }
     // 내 쿠폰 이동.
     @RequestMapping("myCoupon.my")
-    public String myCoupon() {
+    public String myCoupon(HttpSession session, Model model, Coupon C) {
+    	
+    	int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+    	
+    	ArrayList < Coupon > CL = myService.selectAllCoupon(id);
+    	
+    	model.addAttribute("couponList",CL);
+    	
+    	
         return "myCoupon";
     }
-
+    
+    //쿠폰 등록
+    @RequestMapping("registCoupon.my")
+    @ResponseBody
+    public String registCoupon(HttpSession session, Model model, Coupon C, @RequestParam("couponRegist") String couponRegist ) {
+    	
+    	String str = "A";
+    	int result = 0;
+    	int result2 = 0;
+    	int result3 = 0;
+    	int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+    	long miliseconds = System.currentTimeMillis();
+    	Date now = new Date(miliseconds);
+    	
+    	//내 쿠폰
+    	ArrayList < Coupon > CLT = myService.selectAllCoupon(id);
+    	//등록할수있는쿠폰
+    	ArrayList < Coupon > CL = myService.selectAdminCoupon(str);
+    	
+    	// 쿠폰등록 동일한지, 유효기간
+    	for(int i=0;i<CL.size();i++) {
+    		if(CL.get(i).getCouRegister().equals(couponRegist)) {
+    				C = CL.get(i);
+    				result = 1;
+    			if(CL.get(i).getCouEndDate().after(now)) {
+        			result2 = 1;
+    			}
+    		}
+    	}
+    	// 쿠폰 중복여부
+    	if(CLT.size()==0) {
+    		result3=1;
+    	}else {
+        	for(int i=0;i<CLT.size();i++) {
+        		if(CLT.get(i).getCouRegister().equals(couponRegist)) {
+        			result3 = 0;
+        			break;
+        		}else {
+        			result3 = 1;
+        		}
+        	}
+    	}
+    	if(result >0 && result2>0 && result3>0) {
+    		C.setUserNum(id);
+    		int fResult = myService.couponInsert(C);
+    		return "YES";
+    	}else {
+    		if(result==0) {
+    			return "NOA";
+    		}else if(result2==0) {
+    			return "NOB";
+    		}else {
+    			return "NOC";
+    		}
+    	}
+    	
+        
+    }
     // 내 주문 이동.
     @RequestMapping("myOrder.my")
     public String myOrder() {
         return "myOrder";
     }
-
-
+    
+    
+    //회원탈퇴
+    @RequestMapping("deleteMember.my")
+	public String deleteMember(HttpSession session, Model model) {
+		int userNum = ((Member) session.getAttribute("loginUser")).getUserNum();
+		
+		int result = myService.deleteMember(userNum);
+		
+		if(result > 0) {
+			return "redirect:logout.me";
+		} else {
+			throw new MemberException("회원탈퇴에 실패하였습니다.");
+		}
+		
+	}
 
 
 
@@ -125,24 +204,30 @@ public class MyPageController {
 
     // 내 포인트 이동.
     @RequestMapping("myPointView.my")
-    public String myPointView(HttpSession session, Model model) {
+    public String myPointView(HttpSession session, Model model, Member m) {
         int choose = ((Member) session.getAttribute("loginUser")).getUserCNumber();
         if (choose == '2') {
             int id = ((Member) session.getAttribute("loginUser")).getUserNum();
 
             ExpertUser eu = myService.selectExpert(id);
+            ArrayList < Point > PL = myService.selectAllPoint(id);
+            
+            m = myService.selectAllMember(id);
 
             model.addAttribute("ExpertUser", eu);
+            model.addAttribute("PointList", PL);
+            model.addAttribute("Member", m);
         } else {
             int id = ((Member) session.getAttribute("loginUser")).getUserNum();
-
+            
             GeneralUser gu = myService.selectGeneral(id);
-            Point P = myService.selectPoint(id);
             ArrayList < Point > PL = myService.selectAllPoint(id);
+            
+            m = myService.selectAllMember(id);
 
             model.addAttribute("GeneralUser", gu);
-            model.addAttribute("Point", P);
             model.addAttribute("PointList", PL);
+            model.addAttribute("Member", m);
 
 
 
@@ -165,18 +250,23 @@ public class MyPageController {
         int id = ((Member) session.getAttribute("loginUser")).getUserNum();
 
         int total = Integer.parseInt(pointTotal) + Integer.parseInt(updatePoint);
+        
+        String updatePointMain = "+"+updatePoint;
 
         HashMap < String, Object > map = new HashMap < String, Object > ();
-        map.put("updatePoint", updatePoint);
+        map.put("updatePoint", updatePointMain);
         map.put("updateOrder", updateOrder);
         map.put("updateName", updateName);
-        map.put("updateTotal", total);
+        map.put("updatePointTotal", updatePoint);
         map.put("id", id);
-
+        
+        
+        int updateTotal = myService.pointTotal(map);
+        
         int result = myService.pointInsert(map);
 
 
-        if (result > 0) {
+        if (result > 0 && updateTotal >0) {
             return "myPointView";
         } else {
             throw new MyPageException("포인트 충전실패했습니다.");

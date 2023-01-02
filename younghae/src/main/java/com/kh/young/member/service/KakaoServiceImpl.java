@@ -131,7 +131,8 @@ public class KakaoServiceImpl implements KakaoService {
             //			response body : {"id":2553526835,"connected_at":"2022-11-28T07:43:38Z","properties":{"nickname":"강혜진"},
             //			"kakao_account":{"profile_nickname_needs_agreement":false,"profile":{"nickname":"강혜진"},"has_email":true,"email_needs_agreement":false,"is_email_valid":true,"is_email_verified":true,"email":"gpwls1178@naver.com"}}
 
-
+            String gender = null;
+            
             JsonElement element = JsonParser.parseString(result);
 
             JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
@@ -141,8 +142,13 @@ public class KakaoServiceImpl implements KakaoService {
             String nickname = properties.getAsJsonObject().get("nickname").getAsString();
             String email = kakao_account.getAsJsonObject().get("email").getAsString();
             String kakao_id = element.getAsJsonObject().get("id").getAsString();
-            String gender = kakao_account.getAsJsonObject().get("gender").getAsString();
-
+            if(kakao_account.getAsJsonObject().get("has_gender").getAsString().equals("false")) {
+            	gender="false";
+            }else {
+           	 gender = kakao_account.getAsJsonObject().get("gender").getAsString();
+           }
+	
+            
             userInfo.put("nickname", nickname);
             userInfo.put("email", email);
             userInfo.put("kakao_id", kakao_id);

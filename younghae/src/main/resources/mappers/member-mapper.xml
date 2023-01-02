@@ -86,7 +86,6 @@
       where USER_ID=#{memberId}
    </update>
    
-   
    <resultMap type="Member" id="loginResultMap">
       <id column="USER_NUM" property="userNum"/>
       <result column="USER_ID" property="userId"/>
