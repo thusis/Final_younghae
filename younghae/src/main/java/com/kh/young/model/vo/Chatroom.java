@@ -18,4 +18,5 @@ public class Chatroom {
 	private Date openTime;
 	private int expertNum;
 	private int userNum;
+	private String chatroomStatus;
 }

@@ -13,7 +13,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ReplyRespDto {
-
 	private Reply reply;
 	private String writerInfo;
 }

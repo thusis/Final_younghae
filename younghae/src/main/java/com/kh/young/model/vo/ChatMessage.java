@@ -16,8 +16,10 @@ import lombok.ToString;
 public class ChatMessage {
 	private int chatId;
 	private String chatContent;
-	private Date sendTime;
+	private String sendTime; //DB에는 date 인데 String 타입으로(TO_CHAR) 변환해서 받을 것
 	private String isRead;
 	private int chatroomId;
 	private int userNum;
+	
+	private int receivedId; //받을 사람 (DB에는 없음)
 }
