@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>나의 프로필</title>
+    <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 
     <!-- 부트스트랩 아이콘 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
@@ -158,9 +159,6 @@
 </head>
 
 <body>
-    <nav>
-        <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-    </nav>
     <div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
         <ul>
             <li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>

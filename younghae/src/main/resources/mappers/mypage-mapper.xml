@@ -22,7 +22,7 @@
 	
 	<insert id="pointInsert">
 		insert into point
-		values(seq_point.nextval, #{updateTotal}, #{updateName}, #{updatePoint}, SYSDATE,
+		values(seq_point.nextval,#{updateName}, +#{updatePoint}, SYSDATE,
 			 #{id})
 	</insert>
 	
@@ -39,6 +39,43 @@
 		ORDER BY point_num desc
 	</select>
 	
+	<update id="pointTotal">
+		update member
+		set user_point = user_point + #{updatePointTotal} 
+		where user_num=#{id}
+	</update>
+	
+	<update id="deleteMember">
+		update member
+		set user_status = 'N'
+		where user_num=#{userNum}
+	</update>
+	
+	<select id="selectAllMember" resultMap="loginResultMap">
+      select *
+      from member
+      where USER_num = #{id}
+   </select>
+   
+   
+   <resultMap type="Member" id="loginResultMap">
+      <id column="USER_NUM" property="userNum"/>
+      <result column="USER_ID" property="userId"/>
+      <result column="USER_PWD" property="userPwd"/>
+      <result column="USER_NAME" property="userName"/>
+      <result column="USER_NICKNAME" property="userNickname"/>
+      <result column="USER_EMAIL" property="email"/>
+      <result column="USER_GENDER" property="gender"/>
+      <result column="USER_BIRTH" property="userBirth"/>
+      <result column="USER_PHONE" property="userPhone"/>
+      <result column="USER_RECOMMEND" property="userRecommend"/>
+      <result column="USER_ENROLLDATE" property="userEnrollDate"/>
+      <result column="USER_CNUMBER" property="userCNumber"/>
+      <result column="USER_STATUS" property="userStatus"/>
+      <result column="USER_MODIFYDATE" property="userModifyDate"/>
+      <result column="USER_POINT" property="userPoint"/>
+   </resultMap>
+
 	<resultMap type="ExpertUser" id="ExpertResultMap">
 		<id column="USER_NUM" property="userNum"/>
 		<result column="EXPERT_POSTADD" property="expertPostAdd"/>

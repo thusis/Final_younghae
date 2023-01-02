@@ -158,7 +158,7 @@
                             <input class="btn btn-primary btn-block mt-3 " type="button" onclick="location.href='${contextPath}/login.me'" style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" value="로그인">
                         </c:if>
                         <c:if test="${ empty mem }">
-                            <input class="btn btn-primary btn-block mt-3 " type="button" onclick="location.href='${contextPath}/searchId.me'" style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" value="아이디찾기">
+                            <input class="btn btn-primary btn-block mt-3 " type="button" onclick="location.href='${contextPath}/searchIdView.me'" style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" value="아이디찾기">
                         </c:if>
                         <input class="btn btn-primary btn-block mt-3 " type="submit" onclick="location.href='${contextPath}/searchPwdView.me'" style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" value="비밀번호찾기">
                     </div>

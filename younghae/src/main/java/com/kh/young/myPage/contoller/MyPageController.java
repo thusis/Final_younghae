@@ -28,6 +28,7 @@ public class MyPageController {
 
     @Autowired
     private MyPageService myService;
+ 
 
     //마이 페이지 이동.
     @RequestMapping("myPage.my")
@@ -48,17 +49,13 @@ public class MyPageController {
 
             model.addAttribute("ExpertUser", eu);
             
-            System.out.println(eu);
-            
             return "myInfo";
     	}else {
     		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
     		GeneralUser gu = myService.selectGeneral(id);
     		
     		model.addAttribute("GeneralUser", gu);
-    		
-    		System.out.println(gu);
-    		
+    			
     		return "myInfo";
     	}
     }
@@ -116,8 +113,22 @@ public class MyPageController {
     public String myOrder() {
         return "myOrder";
     }
-
-
+    
+    
+    //회원탈퇴
+    @RequestMapping("deleteMember.my")
+	public String deleteMember(HttpSession session, Model model) {
+		int userNum = ((Member) session.getAttribute("loginUser")).getUserNum();
+		
+		int result = myService.deleteMember(userNum);
+		
+		if(result > 0) {
+			return "redirect:logout.me";
+		} else {
+			throw new MemberException("회원탈퇴에 실패하였습니다.");
+		}
+		
+	}
 
 
 
@@ -125,24 +136,30 @@ public class MyPageController {
 
     // 내 포인트 이동.
     @RequestMapping("myPointView.my")
-    public String myPointView(HttpSession session, Model model) {
+    public String myPointView(HttpSession session, Model model, Member m) {
         int choose = ((Member) session.getAttribute("loginUser")).getUserCNumber();
         if (choose == '2') {
             int id = ((Member) session.getAttribute("loginUser")).getUserNum();
 
             ExpertUser eu = myService.selectExpert(id);
+            ArrayList < Point > PL = myService.selectAllPoint(id);
+            
+            m = myService.selectAllMember(id);
 
             model.addAttribute("ExpertUser", eu);
+            model.addAttribute("PointList", PL);
+            model.addAttribute("Member", m);
         } else {
             int id = ((Member) session.getAttribute("loginUser")).getUserNum();
-
+            
             GeneralUser gu = myService.selectGeneral(id);
-            Point P = myService.selectPoint(id);
             ArrayList < Point > PL = myService.selectAllPoint(id);
+            
+            m = myService.selectAllMember(id);
 
             model.addAttribute("GeneralUser", gu);
-            model.addAttribute("Point", P);
             model.addAttribute("PointList", PL);
+            model.addAttribute("Member", m);
 
 
 
@@ -165,18 +182,23 @@ public class MyPageController {
         int id = ((Member) session.getAttribute("loginUser")).getUserNum();
 
         int total = Integer.parseInt(pointTotal) + Integer.parseInt(updatePoint);
+        
+        String updatePointMain = "+"+updatePoint;
 
         HashMap < String, Object > map = new HashMap < String, Object > ();
-        map.put("updatePoint", updatePoint);
+        map.put("updatePoint", updatePointMain);
         map.put("updateOrder", updateOrder);
         map.put("updateName", updateName);
-        map.put("updateTotal", total);
+        map.put("updatePointTotal", updatePoint);
         map.put("id", id);
-
+        
+        
+        int updateTotal = myService.pointTotal(map);
+        
         int result = myService.pointInsert(map);
 
 
-        if (result > 0) {
+        if (result > 0 && updateTotal >0) {
             return "myPointView";
         } else {
             throw new MyPageException("포인트 충전실패했습니다.");

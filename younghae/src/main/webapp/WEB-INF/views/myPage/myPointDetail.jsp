@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>나의포인트상세보기</title>
-
+<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
     <style>
         .bn_index ul li {
             list-style: none;
@@ -27,12 +27,29 @@
             font-weight: 800;
             color: #FD9F28;
         }
+                .product__details__tab .nav-tabs:after {
+   position: absolute;
+   right: 0;
+   top: 12px;
+   height: 0px;
+   width: 370px;
+   background: #ebebeb;
+   content: "";
+}
+.product__details__tab .nav-tabs:before {
+   position: absolute;
+   left: 0;
+   top: 12px;
+   height: 0px;
+   width: 370px;
+   background: #ebebeb;
+   content: "";
+}
         .dataTables_paginate {
   width: 100%;
   text-align: center;
 }
     </style>
-	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 
     <!-- dataTables GRID CDN -->
     <!-- css files for DataTables -->
@@ -76,7 +93,6 @@
                                             <th scope="col" class="col-lg-4">적립내용</th>
                                             <th scope="col" class="col-lg-2">관련주문번호</th>
                                             <th scope="col" class="col-lg-2">적립액</th>
-                                            <th scope="col" class="col-lg-2">보유금액</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -86,7 +102,6 @@
                                                 <td>${s.pointContent}</td>
                                                 <td>${s.pointContent}</td>
                                                 <td>${s.pointAmount}</td>
-                                                <td>${s.pointTotal}</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

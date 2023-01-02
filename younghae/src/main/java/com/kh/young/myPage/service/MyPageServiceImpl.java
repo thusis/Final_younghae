@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Point;
 import com.kh.young.myPage.dao.MyPageDAO;
 
@@ -50,4 +51,19 @@ public class MyPageServiceImpl implements MyPageService{
 		return myDAO.selectAllPoint(sqlSession, id);
 	}
 
+	@Override
+	public int pointTotal(HashMap<String, Object> map) {
+		return myDAO.pointTotal(sqlSession, map);
+	}
+	
+	@Override
+	public int deleteMember(int userNum) {
+		return myDAO.deleteMember(sqlSession, userNum);
+	}
+	
+	@Override
+	public Member selectAllMember(int id) {
+		return myDAO.selectAllMember(sqlSession, id);
+	}
+	
 }

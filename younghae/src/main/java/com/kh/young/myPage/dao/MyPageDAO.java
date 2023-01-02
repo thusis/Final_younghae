@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Point;
 
 @Repository("myDAO")
@@ -41,6 +42,21 @@ public class MyPageDAO {
 	public ArrayList<Point> selectAllPoint(SqlSessionTemplate sqlSession, int id) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("mypageMapper.selectAllPoint", id);
+	}
+
+	public int pointTotal(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("mypageMapper.pointTotal", map);
+	}
+
+	public int deleteMember(SqlSessionTemplate sqlSession, int userNum) {
+		// TODO Auto-generated method stub
+		return sqlSession.update("mypageMapper.deleteMember", userNum);
+	}
+	
+	public Member selectAllMember(SqlSessionTemplate sqlSession, int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mypageMapper.selectAllMember", id);
 	}
 
 }

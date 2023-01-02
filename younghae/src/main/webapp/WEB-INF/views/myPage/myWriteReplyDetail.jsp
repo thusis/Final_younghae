@@ -10,6 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>내가쓴 댓글 상세보기</title>
+<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 <style>
 .bn_index ul li {
 	list-style: none;
@@ -29,9 +30,6 @@
 </head>
 
 <body>
-	<nav>
-		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-	</nav>
 	<div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
 		<ul>
 			<li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>

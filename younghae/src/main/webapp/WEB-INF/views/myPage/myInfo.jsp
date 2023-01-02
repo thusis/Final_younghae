@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -11,6 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>내 정보</title>
+    <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
 
@@ -147,9 +148,6 @@
 </head>
 
 <body>
-    <nav>
-        <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-    </nav>
     <div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
         <ul>
             <li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>
@@ -207,14 +205,36 @@
                                 </div>
                                 <div class="form-group py-2">
                                     <div>성별*</div>
-                                    <div>
-                                        <input type="radio" name="gender" value="M" required="required">
-                                        <a style="margin-right: 80px;">남</a>
-                                        <input type="radio" name="gender" value="F" required="required">
-                                        <a style="margin-right: 80px;">여</a>
-                                        <input type="radio" name="gender" value="N" required="required">
-                                        <a>알리고싶지않음</a>
-                                    </div>
+                                    <c:if test="${ loginUser.gender eq 'M'}">
+	                                    <div>
+	                                        <input type="radio" name="gender" value="M" required="required" checked>
+	                                        <a style="margin-right: 80px;">남</a>
+	                                        <input type="radio" name="gender" value="F" required="required">
+	                                        <a style="margin-right: 80px;">여</a>
+	                                        <input type="radio" name="gender" value="N" required="required">
+	                                        <a>알리고싶지않음</a>
+	                                    </div>
+                                    </c:if>
+                                    <c:if test="${ loginUser.gender eq 'F'}">
+	                                    <div>
+	                                        <input type="radio" name="gender" value="M" required="required">
+	                                        <a style="margin-right: 80px;">남</a>
+	                                        <input type="radio" name="gender" value="F" required="required" checked>
+	                                        <a style="margin-right: 80px;">여</a>
+	                                        <input type="radio" name="gender" value="N" required="required">
+	                                        <a>알리고싶지않음</a>
+	                                    </div>
+                                    </c:if>
+                                    <c:if test="${ loginUser.gender eq 'N'}">
+	                                    <div>
+	                                        <input type="radio" name="gender" value="M" required="required">
+	                                        <a style="margin-right: 80px;">남</a>
+	                                        <input type="radio" name="gender" value="F" required="required">
+	                                        <a style="margin-right: 80px;">여</a>
+	                                        <input type="radio" name="gender" value="N" required="required" checked>
+	                                        <a>알리고싶지않음</a>
+	                                    </div>
+                                    </c:if>
                                 </div>
                                 <div class="form-group py-2">
                                     <div>고민부위</div>
@@ -237,19 +257,19 @@
                                 <div class="form-group py-2">
                                     <div>
                                         주소*
-                                        <button type="button" id="searchAddress" style="float: right; border: 0;">주소 검색</button>
+                                        <button type="button" id="searchAddress" style="float: right; border: 0; background-color: white;">주소 검색</button>
                                     </div>
                                     <div class="input-field" style="margin-bottom: 5px">
-                                        <input type="text" id="myAddress1" name="userZipcode" placeholder="우편번호" required readonly>
+                                        <input type="text" id="myAddress1" name="userZipcode" placeholder="우편번호" value="${ GeneralUser.userZipcode}" required readonly>
                                     </div>
                                     <div class="input-field">
-                                        <input type="text" id="myAddress2" name="userAddress" placeholder="주소를 입력해주세요" required readonly>
+                                        <input type="text" id="myAddress2" name="userAddress" placeholder="주소를 입력해주세요" value="${ GeneralUser.userAddress}" required readonly>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
                                     <div>상세주소</div>
                                     <div class="input-field">
-                                        <input type="text" id="myAddress3" name="userAddressDetail" placeholder="상세주소를 입력해주세요" required>
+                                        <input type="text" id="myAddress3" name="userAddressDetail" placeholder="상세주소를 입력해주세요" value="${ GeneralUser.userAddressDetail}" required>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -259,7 +279,7 @@
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-primary btn-block mt-3 " style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="editInfoBtn">정보수정</button>
-                                <button type="button" class="btn btn-primary btn-block mt-3 " style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="deleteBtn">회원탈퇴</button>
+                                <button type="button" class="btn btn-primary btn-block mt-3 " style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="deleteMemberBtn">회원탈퇴</button>
                             </div>
                         </form>
                     </c:if>
@@ -305,15 +325,37 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>성별*</div>
-                                    <div>
-                                        <input type="radio" name="gender" value="M" required="required">
-                                        <a style="margin-right: 80px;">남</a>
-                                        <input type="radio" name="gender" value="F" required="required">
-                                        <a style="margin-right: 80px;">여</a>
-                                        <input type="radio" name="gender" value="N" required="required">
-                                        <a>알리고싶지않음</a>
-                                    </div>
+                                     <div>성별*</div>
+                                    <c:if test="${loginUser.gender eq 'M'}">
+	                                    <div>
+	                                        <input type="radio" name="gender" value="M" required="required" checked>
+	                                        <a style="margin-right: 80px;">남</a>
+	                                        <input type="radio" name="gender" value="F" required="required">
+	                                        <a style="margin-right: 80px;">여</a>
+	                                        <input type="radio" name="gender" value="N" required="required">
+	                                        <a>알리고싶지않음</a>
+	                                    </div>
+                                    </c:if>
+                                    <c:if test="${loginUser.gender eq 'F'}">
+	                                    <div>
+	                                        <input type="radio" name="gender" value="M" required="required">
+	                                        <a style="margin-right: 80px;">남</a>
+	                                        <input type="radio" name="gender" value="F" required="required" checked>
+	                                        <a style="margin-right: 80px;">여</a>
+	                                        <input type="radio" name="gender" value="N" required="required">
+	                                        <a>알리고싶지않음</a>
+	                                    </div>
+                                    </c:if>
+                                    <c:if test="${loginUser.gender eq 'N'}">
+	                                    <div>
+	                                        <input type="radio" name="gender" value="M" required="required">
+	                                        <a style="margin-right: 80px;">남</a>
+	                                        <input type="radio" name="gender" value="F" required="required">
+	                                        <a style="margin-right: 80px;">여</a>
+	                                        <input type="radio" name="gender" value="N" required="required" checked>
+	                                        <a>알리고싶지않음</a>
+	                                    </div>
+                                    </c:if>
                                 </div>
                                 <div class="form-group py-2">
                                     <div>생년월일(주민등록번호 앞자리 6개를 입력해주세요)*</div>
@@ -374,7 +416,7 @@
                                     </div>
                                 </div>
                                 <button type="button" class="btn btn-primary btn-block mt-3 " style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="editInfoBtn">정보수정</button>
-                                <button type="button" class="btn btn-primary btn-block mt-3 " style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="deleteBtn">회원탈퇴</button>
+                                <button type="button" class="btn btn-primary btn-block mt-3 " style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="deleteMemberBtn">회원탈퇴</button>
                             </div>
                         </form>
                     </c:if>
@@ -518,6 +560,11 @@
 
             });
         }
+        document.getElementById('deleteMemberBtn').addEventListener('click', ()=>{
+			if(confirm('정말로 탈퇴하시겠습니까?')){
+				location.href= '${contextPath}/deleteMember.my';
+			}
+		});
     </script>
 </body>
 

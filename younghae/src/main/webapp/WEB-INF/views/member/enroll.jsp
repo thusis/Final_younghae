@@ -149,13 +149,13 @@
                             <input type="hidden" name="category" value="general">
                             <div class="panel-body p-3">
                                 <div class="form-group py-2">
-                                    <div>아이디*</div>
+                                    <div>아이디*(첫글자는 영어 5~11자리)</div>
                                     <div class="input-field" id="myId2">
                                         <input type="text" id="myId" name="userId" placeholder="아이디를 입력해주세요" required>
                                     </div>
                                 </div>
                                 <div class="form-group py-1 pb-2">
-                                    <div>비밀번호*</div>
+                                    <div>비밀번호*(8자이상 하나이상의 문자/숫자/특수문자)</div>
                                     <div class="input-field" id="myPwd2">
                                         <input type="password" id="myPwd" name="userPwd" placeholder="비밀번호을 입력해주세요" required>
                                     </div>
@@ -173,7 +173,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>닉네임*</div>
+                                    <div>닉네임*(첫글자는 영어/한글)</div>
                                     <div class="input-field" id="myNickName2">
                                         <input type="text" id="myNickName" name="userNickname" placeholder="닉네임을 입력해주세요" required>
                                     </div>
@@ -187,11 +187,11 @@
                                 <div class="form-group py-2">
                                     <div>
                                         이메일 인증번호*
-                                        <button type="button" id="mail-Check-Btn" style="float: right; border: 0;">인증번호전송</button>
+                                        <button type="button" id="mail-Check-Btn" style="float: right; border: 0; background-color:white;">인증번호전송</button>
                                     </div>
                                     <div class="input-field" id="myEmailChk2">
                                         <input type="text" id="myEmailChk" placeholder="인증번호를 입력해주세요" required>
-                                        <button type="button" id="checkCodeBtn" style="border: 0; width: 50px;">확인</button>
+                                        <button type="button" id="checkCodeBtn" style="border: 0; width: 50px; background-color:white;">확인</button>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -211,7 +211,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>생년월일*(주민등록앞 6자리를 입력해주세요.)</div>
+                                    <div>생년월일*(주민등록번호 앞 6자리를 입력해주세요.)</div>
                                     <div class="input-field">
                                         <input type="text" id="myBirth" name="userBirths" style="weigth: 100%;" required>
                                     </div>
@@ -225,7 +225,7 @@
                                 <div class="form-group py-2">
                                     <div>
                                         주소*
-                                        <button type="button" id="searchAddress" style="float: right; border: 0;">주소 검색</button>
+                                        <button type="button" id="searchAddress" style="float: right; border: 0; background-color:white;">주소 검색</button>
                                     </div>
                                     <div class="input-field" style="margin-bottom: 5px">
                                         <input type="text" id="myAddress1" name="userZipcode" placeholder="우편번호" required readonly>
@@ -263,14 +263,14 @@
                             <input type="hidden" name="category" value="export">
                             <div class="panel-body p-3">
                                 <div class="form-group py-2">
-                                    <div>아이디*</div>
+                                    <div>아이디*(첫글자는 영어 5~11자리)</div>
                                     <div class="input-field" id="myIdExport2">
                                         <input type="text" id="myIdExport" name="userId" placeholder="아이디를 입력해주세요" required>
                                     </div>
                                 </div>
 
                                 <div class="form-group py-1 pb-2">
-                                    <div>비밀번호*</div>
+                                    <div>비밀번호*(8자이상 하나이상의 문자/숫자/특수문자)</div>
                                     <div class="input-field" id="myPwdExport2">
                                         <input type="password" id="myPwdExport" name="userPwd" placeholder="비밀번호을 입력해주세요" required>
                                     </div>
@@ -288,7 +288,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>닉네임*</div>
+                                    <div>닉네임*(첫글자는 영어/한글)</div>
                                     <div class="input-field" id="myNickNameExport2">
                                         <input type="text" id="myNickNameExport" name="userNickname" placeholder="닉네임을 입력해주세요" required>
                                     </div>
@@ -302,22 +302,22 @@
                                 <div class="form-group py-2">
                                     <div>
                                         이메일 인증번호*
-                                        <button type="button" id="mail-Check-Btn-Export" style="float: right; border: 0;">인증번호전송</button>
+                                        <button type="button" id="mail-Check-Btn-Export" style="float: right; border: 0; background-color:white;">인증번호전송</button>
                                     </div>
                                     <div class="input-field" id="myEmailChkExport2">
                                         <input type="text" id="myEmailChkExport" placeholder="인증번호를 입력해주세요" required>
-                                        <button type="button" id="checkCodeBtnExport" style="border: 0; width: 50px;">확인</button>
+                                        <button type="button" id="checkCodeBtnExport" style="border: 0; width: 50px; background-color:white;">확인</button>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
                                     <div>성별*</div>
                                     <div>
-                                        <input type="radio" name="gender" value="M"><a style="margin-right: 80px;">남</a> <input type="radio" name="gender" value="F"><a style="margin-right: 80px;">여</a>
-                                        <input type="radio" name="gender" value="N"><a>알리고싶지않음</a>
+                                        <input type="radio" name="gender" value="M" required="required"><a style="margin-right: 80px;">남</a> <input type="radio" name="gender" value="F" required="required"><a style="margin-right: 80px;" >여</a>
+                                        <input type="radio" name="gender" value="N" required="required"><a>알리고싶지않음</a>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>생년월일*(주민등록앞 6자리를 입력해주세요.)</div>
+                                    <div>생년월일*(주민등록번호 앞 6자리를 입력해주세요.)</div>
                                     <div class="input-field">
                                         <input type="text" id="myBirth" name="userBirths" style="weigth: 100%;" required>
                                     </div>
@@ -331,7 +331,7 @@
                                 <div class="form-group py-2">
                                     <div>
                                         주소*
-                                        <button type="button" id="searchAddressExport" style="float: right; border: 0;">주소 검색</button>
+                                        <button type="button" id="searchAddressExport" style="float: right; border: 0; background-color:white;">주소 검색</button>
                                     </div>
                                     <div class="input-field" style="margin-bottom: 5px">
                                         <input type="text" id="myAddressExport1" name="userZipcode" placeholder="우편번호" required readonly>
@@ -371,13 +371,13 @@
 
 
             let isId, isPwd, isPwd2, isName, isNickName, isEmail, isEmailCheck = false;
-            let isIdExpert, isPwdExpert, isPwdExpert2, isNameExpert, isNickNameExpert, isEmailExpert, isEmailCheckExpert = false;
+            let isIdExpert, isPwdExpert, isPwdExpert2, isNameExpert, isNickNameExpert, isEmailExpert, isEmailCheckExpertm = false;
             // 아이디 중복 확인
             document.getElementById('myId').addEventListener('change', function() {
 
                 const checkId = document.getElementById('myId')
                 const checkId2 = document.getElementById('myId2')
-                const regExp1 = /^[a-zA-Z][a-zA-Z0-9]{5,11}$/;
+                const regExp1 = /^[a-zA-Z][a-zA-Z0-9]{4,11}$/;
                 $.ajax({
                     url: '${contextPath}/checkId.me',
                     data: {
@@ -591,14 +591,17 @@
                 const inputEmail = document.getElementById("myEmailChk").value;
                 const resultEmail = document.getElementById("myEmailChk");
                 const resultEmail2 = document.getElementById("myEmailChk2");
+                const resultEmail3 = document.getElementById("checkCodeBtn");
 
                 if (inputEmail == code) {
                     resultEmail.style.backgroundColor = '#24E082';
                     resultEmail2.style.backgroundColor = '#24E082';
+                    resultEmail3.style.backgroundColor = '#24E082';
                     isEmailCheck = true;
                 } else {
                     resultEmail.style.backgroundColor = '#FFCECE';
                     resultEmail2.style.backgroundColor = '#24E082';
+                    resultEmail3.style.backgroundColor = '#24E082';
                     isEmailCheck = false;
                 }
             });

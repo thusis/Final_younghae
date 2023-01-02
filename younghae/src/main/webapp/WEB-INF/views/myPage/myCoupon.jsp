@@ -9,6 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>나의 쿠폰</title>
+<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 <style>
 .bn_index ul li {
 	list-style: none;
@@ -24,13 +25,28 @@
 	font-weight: 800;
 	color: #FD9F28;
 }
+        .product__details__tab .nav-tabs:after {
+   position: absolute;
+   right: 0;
+   top: 12px;
+   height: 0px;
+   width: 370px;
+   background: #ebebeb;
+   content: "";
+}
+.product__details__tab .nav-tabs:before {
+   position: absolute;
+   left: 0;
+   top: 12px;
+   height: 0px;
+   width: 370px;
+   background: #ebebeb;
+   content: "";
+}
 </style>
 </head>
 
 <body>
-	<nav>
-		<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-	</nav>
 	<div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
 		<ul>
 			<li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>

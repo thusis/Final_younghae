@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Point;
 
 public interface MyPageService {
@@ -20,5 +21,11 @@ public interface MyPageService {
 	Point selectPoint(int id);
 
 	ArrayList<Point> selectAllPoint(int id);
+
+	int pointTotal(HashMap<String, Object> map);
+
+	int deleteMember(int userNum);
+
+	Member selectAllMember(int id);
 
 }
