@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +55,7 @@
             <div class="bn_boardlist mt-2">
                 <div class="col-lg-12" style="border: 1px solid #24E082; height: 90px; padding: 2%;">
                     <label style="font-size: 20px; font-weight: 600;">총 리뷰 수</label>
-                        <input type="text" value="1354" 
+                        <input type="text" value="${ reviewCount }" 
                         style="height: 40px; width: 150px; text-align:center; font-size: 30px;
                         border: none; padding-top: 1%;" readonly>
                     <label style="font-size: 20px; font-weight: 600;">개</label>
@@ -64,14 +65,14 @@
                     <thead>
                         <tr class="text-teal-100">
                             <td scope="col" colspan="12">
-                                <select id="selectBtn" style="width: 100px;" onchange="selectedopntion();">
+                                <select id="selectBtn" style="width: 150px;" onchange="selectedopntion();">
                                     <option value="productNumber">제품 번호 순</option>
                                     <option value="productName">제품 이름 순</option>
                                     <option value="productGood">추천 순</option>
                                 </select>
                             </td>
                         </tr>
-                        <tr class="text-teal-100">
+                        <tr class="text-teal-100" style="text-align: center;">
                             <th scope="col" class="col-lg-2">제품번호</th>
                             <th scope="col" class="col-lg-5">리뷰 내용</th>
                             <th scope="col" class="col-lg-2">작성자</th>
@@ -80,87 +81,45 @@
                         </tr>
                     </thead>
                     <tbody id="selectTbody">
-                        <!-- <tr>
-                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ product.productNum }</td>
-                            <td>${ review.content }</td>
-                            <td>${ review.writer }</td>
-                            <td>${ review.modifyDate }</td>
-                            <td>
-                                <c:if test="${ review.status eq 'N'} ">
-                                    <i class="bi bi-x-circle" style="color: red;"></i>
-                                </c:if>
-                                <c:if test="${ review.status eq 'Y'} ">
-                                    <i class="bi bi-circle" style="color: #24E082;"></i>
-                                </c:if>
-                            </td>
-                        </tr> -->
-                        <tr>
-                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">1</td>
-                            <td>비타비타</td>
-                            <td>yamyam</td>
-                            <td>2022-12-06</td>
-                            <td>
-                                <i class="bi bi-circle" style="color: #24E082;"></i>
-                            </td>
-                        </tr>
-                        <!-- <tr>
-                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">2</td>
-                            <td>하루종일 콜라겐</td>
-                            <td>allDay</td>
-                            <td>2022-12-06</td>
-                            <td>
-                                <i class="bi bi-x-circle" style="color: red;"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">3</td>
-                            <td>내 몸에 SOS</td>
-                            <td>Vita</td>
-                            <td>2022-12-06</td>
-                            <td>
-                                <i class="bi bi-x-circle" style="color: red;"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">4</td>
-                            <td>한미프로캅</td>
-                            <td>yummy</td>
-                            <td>2022-12-06</td>
-                            <td>
-                                <i class="bi bi-circle" style="color: #24E082;"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">5</td>
-                            <td>몸 튼튼 아연!</td>
-                            <td>ummmm</td>
-                            <td>2022-12-06</td>
-                            <td>
-                                <i class="bi bi-circle" style="color: #24E082;"></i>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">6</td>
-                            <td>고칼슘 튼튼</td>
-                            <td>wlqrkwk</td>
-                            <td>2022-12-06</td>
-                            <td>
-                                <i class="bi bi-circle" style="color: #24E082;"></i>
-                            </td>
-                        </tr> -->
+	                    <c:forEach items="${ review }" var="r">
+	                    	<tr>
+	                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ r.proNum }</td>
+	                            <td>${ r.rvContent }</td>
+	                            <td>${ r.member.userNickname }</td>
+	                            <td>${ r.rvMOdifyDate }</td>
+	                            <td>
+	                                <c:if test="${ r.rvStatus eq 'N' }">
+	                                    <i class="bi bi-x-circle" style="color: red;"></i>
+	                                </c:if>
+	                                <c:if test="${ r.rvStatus ne 'N'}">
+	                                    <i class="bi bi-circle" style="color: #24E082;"></i>
+	                                </c:if>
+	                            </td>
+	                        </tr>
+	                    </c:forEach>
                     </tbody>
                 </table>
             </div>
-            <div class="col-lg-12 text-center" style="margin-top: 3%;">
-                <div class="product__pagination blog__pagination">
-                    <a href="#"><i class="fa fa-long-arrow-left"></i></a>
-                    <a href="#">1</a>
-                    <a href="#">2</a>
-                    <a href="#">3</a>
-                    <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-                </div>
-                <br><br><br>
-            </div>
+            <!-- 페이징 -->
+			<div class="col-lg-12 text-center" style="margin-top: 8%;">
+				<div class="product__pagination blog__pagination">
+					<c:url var="goBack" value="${ loc }">
+						<c:param name="page" value="${pi.currentPage-1 }"></c:param>
+					</c:url>
+					<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a>
+					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+						<c:url var="goNum" value="${ loc}">
+							<c:param name="page" value="${p}"></c:param>
+						</c:url>
+						<a href="${goNum }">${ p }</a>
+					</c:forEach>
+					<c:url var="goNext" value="${ loc }">
+						<c:param name="page" value="${pi.currentPage+1}"></c:param>
+					</c:url>
+					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+				</div>
+			</div>
+			<br><br>
         </div>
 
 
@@ -259,6 +218,8 @@
                     //     });
                     // }
                 }
+                
+                	
             }
 
 

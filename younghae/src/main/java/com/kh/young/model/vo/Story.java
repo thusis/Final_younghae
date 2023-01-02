@@ -24,4 +24,5 @@ public class Story {
 	private int userNum;
 	private int boardType;
 	private Attachment attachment;
+	private Member member;
 }

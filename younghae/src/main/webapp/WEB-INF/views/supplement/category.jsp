@@ -56,7 +56,7 @@
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
-                <li>성분 조회</li>
+                <li>영양 성분 조회</li>
             </ul>
         </div>
     </div>
@@ -67,7 +67,7 @@
 				<div class="col-lg-12">
 					<div class="section" style="padding-left: 25%;">
 						<input type="text" class="form-control"
-							id="bn_navbar-search-input" placeholder="궁금한 영양 성분 검색"
+							id="bn_navbar-search-input_1" placeholder="궁금한 영양 성분 검색"
 							aria-label="search" aria-describedby="search"
 							style="width: 70%; border-radius: 30px;">
 						<button class="btn"
@@ -118,18 +118,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="row featured__filter">
+		<div class="row featured__filter" id="cate">
 			<c:forEach items="${ list }" var="c">
 				<div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
 					<div class="featured__item">
 						<div class="featured__item__pic set-bg">
 							<input type="hidden" value="${ c.cateNum }">
 							<p>${ c.cateName }</p>
-							<!-- <ul class="featured__item__pic__hover">
-	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                            </ul> -->
 						</div>
 					</div>
 				</div>
@@ -240,5 +235,38 @@
                 location.href = '${contextPath}/selectCategory.su?cateName='+cateName+'&cateNum='+cateNum+'&page='+${pi.currentPage};
             });
         }
+        
+        $('#bn_navbar-search-input_1').on('keyup', ()=>{
+			console.log($('#bn_navbar-search-input_1').val());
+			$.ajax({
+				url:'${ contextPath }/searchCategory.su',
+				data: {search:$('#bn_navbar-search-input_1').val()},
+				success:(data)=>{
+					console.log(data);
+					
+					const div = document.getElementById('cate');
+					
+					div.innerHTML = '';
+					
+					for(const d of data){
+						const content = document.createElement("div");
+						
+						content.setAttribute('class', 'col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables');
+						
+						content.innerHTML = '<div class="featured__item"><div class="featured__item__pic set-bg">'+
+											'<input type="hidden" value="'+ d.cateNum +'"><p>'+ d.cateName +'</p>'+
+											'</div></div>';
+											
+						div.append(content);
+					}
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			});
+		});
+
+// 		console.log($('#bn_navbar-search-input_1'));
+		
 	</script>
 </html>

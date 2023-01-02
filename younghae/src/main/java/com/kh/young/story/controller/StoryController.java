@@ -48,7 +48,7 @@ public class StoryController {
 			currentPage = page;
 		}
 
-		Member mem = sService.selectMember(26);
+		Member mem = sService.selectMember(61);
 		System.out.println(mem);
 
 		int listCount = stService.getStoryListCount();
@@ -251,8 +251,7 @@ public class StoryController {
 		}
 		
 		if( result + attm >= 1) {
-			return null;
-//			return "redirect:AdminStoryList.st";
+			return "redirect:AdminStoryList.st";
 		}else {
 			throw new StoryException("컬럼 쓰기 실패");
 		}
@@ -267,7 +266,8 @@ public class StoryController {
 			currentPage = page;
 		}
 
-		Member mem = sService.selectMember(28);
+		Member mem = sService.selectMember(61);
+		// 집에서는 28 학원 개인 디비 계정은 8 영해디비는 61
 		System.out.println(mem);
 
 		int listCount = stService.getStoryListCount();
@@ -287,17 +287,29 @@ public class StoryController {
 	}
 	
 	@RequestMapping("trash.st")
-	public Integer trash(@RequestParam("boardNum") int boardNum, @RequestParam("check") String check) {
+	public String trash(@RequestParam("boardNum") int boardNum, @RequestParam("check") String check) {
 		int result = 0;
 		// 보드로 설정
 		
 		System.out.println(check);
 
-		if (check.equals("N")) {
+		if (check.equals("Y")) {
 			System.out.println("delete 들어옴");
 			result = stService.DeleteStory(boardNum);
+		}else if(check.equals("N")) {
+			Story s = stService.selectStory(boardNum);
+			result = stService.updateStory(s);
 		}
+		
+//		int currentPage = 1;
+//
+//		int listCount = stService.getStoryListCount();
+//
+//		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
+//
+//		ArrayList<Story> list = stService.allStory(pi);
+		
+		return "admin_StoryPage";
 
-		return result;
 	}
 }

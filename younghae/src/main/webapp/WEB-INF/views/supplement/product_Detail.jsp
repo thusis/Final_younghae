@@ -406,8 +406,8 @@
 											style="margin-left: 3.5%; margin-bottom: 3%;">
 											<div style="border: 2px solid #24E082; border-radius: 1em;"
 												name="rvContent">
-												<textarea name="rvContent" id="urvContent"
-													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;"></textarea>
+												<textarea name="rvContent" id="rvContent"
+													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;">1</textarea>
 											</div>
 											<div>
 												<div name="writeReview"
@@ -437,7 +437,8 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="product__details__pic">
                             <div style="border: 2px solid #24E082; border-radius: 5em;">
-								<form action="${ contextPath }/updateReview.su" method="post" id="reviewFrom" enctype="multipart/form-data">
+								<form action="${ contextPath }/updateReview.su" method="post" id="updateReviewFrom" enctype="multipart/form-data">
+									<input type="hidden" id="check" name="check" value="">
 									<div class="row" style="margin-left: 5%; margin-top:3%; padding-right: 0px;  margin-bottom: -5%;">
 										<div class="d-inline" name="reviewImg" style="margin-right: -20%;">
 											<img src="${ product.proImage }"
@@ -489,9 +490,9 @@
 											<div>
 												<div name="writeReview"
 													style="margin-left: 1.5%; margin-top: 2%;">
-													<button type="button"  id="writeBtn"
+													<button type="button"  id="updateBtn"
 														style="text-align: center; height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">리뷰
-														작성</button>
+														수정</button>
 												</div>
 											</div>
 										</div>
@@ -616,10 +617,11 @@
                   			  					  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
 					                  			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
 					                  			  '<div id="reviewRank star" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
-					                  			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
-					                  			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
-					                  			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
-					                  			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+					                  			  '</p></div><c:if test="${ loginUser.userNum eq null}"><div class="product__details__rating" style="float: left; margin-top: 3.2%; margin-left: 5%;">'+ 
+					                  			  '<i name="reIcon" class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 150%;"></i>'+
+					                  			  '</div></c:if><c:if test="${ loginUser.userNum ne null}"><div class="product__details__rating 1" style="float: left; margin-top: 3.2%; margin-left: 5%;"><i name="reIcon" class="bi bi-hand-thumbs-up" style="color: rgb(0, 0, 0); font-size: 150%;"></i></div></c:if><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">'+ r.rv+'</p>'+
+					                  			  '</div><div id="reviewContent" class="text-left" style="margin-top: 9%;">'+ r.rvContent +'</div>'+'<input type="hidden" name="rvNum" value="'+r.rvNum+'"></div>'
+					                  			  +'</div><br><br>';
 		        			}else{
 		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
 		        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
@@ -628,12 +630,12 @@
 	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
 	                                			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
 	                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p id="rvstar" style="color: black; font-size: 130%;">'+ r.rvStar +
-	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
-	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
-	                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
-	                                			  '</div><div id="reviewImg" style="height: 85px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
-	                                			  '<img src="resources/uploadFiles/'+r.image+'" class=".img-fluid"></div>'+
-	                                			  '<div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+	                                			  '</p></div><c:if test="${ loginUser.userNum eq null}"><div class="product__details__rating" style="float: left; margin-top: 3.2%; margin-left: 5%;">'+ 
+	                                			  '<i name="reIcon" class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 150%;"></i>'+
+	                                			  '</div></c:if><c:if test="${ loginUser.userNum ne null}"><div class="product__details__rating 1" style="float: left; margin-top: 3.2%; margin-left: 5%;"><i name="reIcon" class="bi bi-hand-thumbs-up" style="color: rgb(0, 0, 0); font-size: 150%;"></i></div></c:if><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
+	                                			  '</div><div id="reviewContent" class="text-left" style="margin-top: 9%;">'+ r.rvContent +'</div></div>'+
+	                                			  '<div name="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 3%; margin-top: -20%;"><img style="height: 199px; width: 199px;" src="resources/uploadFiles/'+r.image+'" class=".img-fluid">'+
+	                                			  '<input type="hidden" name="rvNum" value="'+r.rvNum+'"></div>'+'<br><br>';
 		        				
 		        			}
                              div.append(form);
@@ -648,17 +650,29 @@
              		        		console.log(data);
              		        	}
              	            });
-                            
-				            const update  = document.getElementsByClassName('product__details__quantity_1');
 				            
-				            for(var up of update){
-				            	up.addEventListener('click' ,function(){
-				            		if( ${ loginUser.userNum } ==  r.userNum  ){
-				            			console.log(r.userNum);
-										console.log(r.rvStar);
+	        			}
+		        		const update  = document.getElementsByClassName('text-left');
+			            
+			            for(const up of update){
+			            	up.addEventListener('click' ,function(){
+			            		// 별점
+// 			            		console.log($(this).children().children()[4].innerText);
+			            		console.log($(this).parent().children().children()[4].innerText);
+			            		
+			            		// 유저넘버
+// 			            		console.log($(this).children().children()[0].value);
+			            		console.log($(this).parent().children().children()[0].value);
+			            		
+// 			            		리뷰 내용
+// 			            		console.log($(this).children().siblings()[6].innerText);
+			            		console.log($(this).parent().children().siblings()[6].innerText);
+			            		
+			            		if(${ loginUser ne null}){
+				            		if( ${ loginUser.userNum } == $(this).parent().children().children()[0].value ){
 			            				updateModal.style.display = "block";
 				            			
-// 				            			닫기 버튼
+	// 				            			닫기 버튼
 				            	        var upspan = document.getElementsByClassName("close")[1];
 				            	        
 				            	        upspan.onclick = function () {
@@ -672,23 +686,72 @@
 				            	            }
 				            	        }
 				            	        
-// 				            	        const rating = document.getElementById("updaterating");
-// 				            	        rating.innerText = $(this).find('#reviewRank').find('p').text();
-// 				            	        rating.innerText = r.rvStar;
+				            	        const rating = document.getElementById("updaterating");
+				            	        rating.innerText = $(this).parent().children().children()[4].innerText;
 				            	        
-// 				            	        document.querySelector('.star.update span').style.width = r.rvStar * 20 + '%';
+										const content = document.getElementById('urvContent');
+			            	        	content.value = $(this).parent().children().siblings()[6].innerText;
 				            		}
-				            		
-				            	});
-				            }
-				            
-	        			}
+			            		}
+			            		
+			            	});
+			            	
+			            }
+			            if(${loginUser ne null}){
+			            	const reco = document.getElementsByClassName('product__details__rating 1');
+			                for(var re of reco){
+			    	            re.addEventListener('click', function(){
+			    	            	console.log(this);
+			    	            	var check = '';
+			    	            	
+			    	            	if($(this).attr('class') != "bi bi-hand-thumbs-up-fill"){
+				    	            	$(this).attr('class', 'bi bi-hand-thumbs-up-fill');
+			    	            		check = 'R';
+			    	            		console.log("눌렀담");
+			    	            	}else{
+			    	            		$(this).attr('class','bi bi-hand-thumbs-up');
+			    	            		check = 'D';
+			    	            		console.log("취소했담");
+			    	            	}
+			    	            	
+// 			    	            	console.log(this);
+			    	            	// rvNum
+			    	            	console.log($(this).parent().children()[7].value);
+			    	            	$.ajax({
+			    	            		url: '${contextPath}/reco.su',
+			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: ${ loginUser.userNum },
+			    	            				check: check},
+			    	            		success:(data)=>{
+			    	            			
+			    	            		},
+			    	            		error:(data)=>{
+			    	            			console.log(data);
+			    	            		}
+			    	            	});
+			    	            });
+			                }
+			            }
 	        		}
 	        	},
 	        	error: (data)=>{
 	        		console.log(data);
 	        	}
  	    	});
+            
+            const upform = document.getElementById('updateReviewFrom');
+            document.getElementById('updateBtn').addEventListener('click', ()=>{
+				 const file = document.getElementById('file'); 
+				 console.log(file.value);
+				 
+				 var check = document.getElementById('check');
+				 if(file.value != null){
+					 check.value="N";
+				 }else{
+					 check.value="Y";
+				 }
+				 console.log(check);
+// 				 upform.submit();
+            });
             
             
             

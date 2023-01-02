@@ -38,4 +38,15 @@ public interface SupplementService {
 	ArrayList<Review> selectReview(int cateNum, PageInfo pi);
 
 	int getReviewListCount(int cateNum);
+
+	ArrayList<ProCategory> searchList(String search);
+
+	int insertReco(Review r);
+
+	int deleteReco(Review r);
+
+	ArrayList<Review> adminReviewList(PageInfo pi);
+
+	int adminReviewListCount();
+
 }

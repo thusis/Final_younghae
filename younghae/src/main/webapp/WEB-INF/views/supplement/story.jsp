@@ -311,6 +311,7 @@
 					
 					location.href = '${contextPath}/selectStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});
+				
             }
         </script>
     </body>

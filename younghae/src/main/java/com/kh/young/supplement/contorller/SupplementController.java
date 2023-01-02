@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -30,6 +31,7 @@ import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.story.service.StoryService;
 import com.kh.young.supplement.exception.SupplementException;
 import com.kh.young.supplement.service.SupplementService;
 
@@ -47,7 +49,7 @@ public class SupplementController {
 		if(page != null) {
 			currentPage = page;
 		}
-		Member mem = sService.selectMember(7);
+		Member mem = sService.selectMember(26);
 		// 집에서는 26
 		// 학원에서는 8
 	      
@@ -256,10 +258,10 @@ public class SupplementController {
 	
 	@RequestMapping("checkReview.su")
 	public void checkReview(@ModelAttribute Review r, HttpServletResponse response) {
-		System.out.println("조회 정보 " + r);
+//		System.out.println("조회 정보 " + r);
 		Review review = sService.checkReview(r);
 		
-		System.out.println("checkReview : " + review);
+//		System.out.println("checkReview : " + review);
 		
 		
 		response.setContentType("application/json; charset=UTF-8");
@@ -277,7 +279,7 @@ public class SupplementController {
 	
 	@RequestMapping("reviewList.su")
 	public void reviewList(@RequestParam("proNum") int proNum, HttpServletResponse response) {
-		System.out.println("조회 정보 " + proNum);
+//		System.out.println("조회 정보 " + proNum);
 		ArrayList<Review> review = sService.reviewList(proNum);
 		
 		for(int i =  0; i < review.size(); i++) {
@@ -292,7 +294,7 @@ public class SupplementController {
 			review.get(i).setUserNickname(m.getUserNickname());
 		}
 		
-		System.out.println("checkReview : " + review);
+//		System.out.println("checkReview : " + review);
 		
 		
 		
@@ -310,12 +312,7 @@ public class SupplementController {
 	
 	@RequestMapping("rateUpdate.su")
 	public void rateUpdate(@ModelAttribute Supplement product, HttpServletResponse response) {
-//		System.out.println(product);
-//		System.out.println(product.getProGrade());
-		
 		int result = sService.rateUpdate(product);
-		
-		System.out.println("별점 수정 완료 "+result);
 	}
 	
 	@RequestMapping("reviewMore.su")
@@ -355,4 +352,118 @@ public class SupplementController {
 		return "review_More";
 	}
 	
+	@RequestMapping("searchCategory.su")
+	public void searchCategory(@RequestParam("search") String search, HttpServletResponse response) {
+		System.out.println(search);
+		
+		ArrayList<ProCategory> list = sService.searchList(search);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		// 시간 형식 지정해주기 
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping("updateReview.su")
+	public String updateReview(@ModelAttribute Review r, @RequestParam(value="file", required=false) MultipartFile file, Model model,
+								HttpServletRequest request, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		System.out.println(file);
+		
+		String select = sService.imageSelect(r.getRvNum()).getAttachRename();
+		
+		int result = 0;
+		
+		System.out.println(select);
+		
+//		result = sService.insertReview(r);
+		
+		return null;
+//		if (file != null) {
+//			if(!select.contains(file.get)) {
+//				System.out.println(file.getOriginalFilename());
+//				if(!file.getOriginalFilename().equals("")) {
+//					String[] returnArr = saveFile(file, request);
+//					
+//					attm.setAttachName(file.getOriginalFilename());
+//					attm.setAttachRename(returnArr[1]);
+//					attm.setAttachPath(returnArr[0]);
+//					System.out.println(returnArr[1]);
+//					System.out.println(returnArr[0]);
+//					
+//					attmResult = sService.insertReviewAttm(attm);
+//				}
+//			}
+//		}else {
+//			r.setImage("없음");
+//		}
+//				
+//		Supplement product = sService.selectPro(r.getProNum());
+//
+//		if (result + attmResult > 0) {
+//			model.addAttribute("product", product);
+//			model.addAttribute("loginUser", m);
+//			return "product_Detail";
+//		} else {
+//			throw new SupplementException("updateReview 혹은 updateReviewAttm 오류");
+//		}
+	}
+	
+	@RequestMapping("reco.su")
+	public Integer reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
+		Review r = new Review();
+		System.out.println(check);
+		
+		r.setRvNum(rvnum);
+		r.setUserNum(usernum);
+		
+		System.out.println(r);
+		
+		int result = 0;
+		if(check.equals("R")) {
+			System.out.println("인서트");
+			result = sService.insertReco(r);
+		}else if(check.equals("D")) {
+			System.out.println("삭제");
+			result = sService.deleteReco(r);
+		}
+		
+		return result;
+	}
+	
+//	=============================================== 관리자 ==========================================================================
+	@RequestMapping("adminReviewList.su")
+	public String adminReviewList(@RequestParam(value="page", required=false) Integer page, Model model) {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = sService.getListCount();
+		
+		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 10);
+		
+		ArrayList<Review> r = sService.adminReviewList(pi);
+		
+		int reviewCount = sService.adminReviewListCount();
+		
+		if(r != null) {
+			
+			model.addAttribute("review", r);
+			model.addAttribute("pi", pi);
+			model.addAttribute("reviewCount", reviewCount);
+//			model.addAttribute("loginUser", mem);
+			
+			return "admin_ReviewPage";
+		}else {
+			throw new SupplementException("adminReviewList오류");
+		}
+	}
 }
