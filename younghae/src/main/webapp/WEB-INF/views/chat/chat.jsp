@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+x<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -7,30 +7,33 @@
 <meta charset="UTF-8">
 <title>질문게시판 - 질문하기</title>
 
-   <!--jQuery-->
-    <script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
-    
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="resources/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="resources/css/style.css" type="text/css">
-
+	<!--jQuery-->
+	<script src = "https://code.jquery.com/jquery-3.6.1.min.js"></script>
+	
+	<!-- Google Font : (1)오가니 (2)봉은추가 font-family: 'IBM Plex Sans KR', sans-serif; 추천 -->
+	<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;900&display=swap" rel="stylesheet">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans+KR:wght@100;200;300;400;500;600;700&family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
+	
+	<!-- Css Styles -->
+	<link rel="stylesheet" href="resources/css/bootstrap.min.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/font-awesome.min.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/elegant-icons.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/jquery-ui.min.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/owl.carousel.min.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/slicknav.min.css" type="text/css">
+	<link rel="stylesheet" href="resources/css/style.css" type="text/css">
+	
+	<!-- 부트스트랩 아이콘 -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+	
+	<!--fontawesome 아이콘-->
+	<script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
+	
     <!--내가만든 css-->
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
-
-    <!-- 부트스트랩 아이콘 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
-
-    <!--fontawesome 아이콘-->
-    <script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
     <style>
         .bd-placeholder-img {
@@ -83,6 +86,15 @@
           white-space: nowrap;
           -webkit-overflow-scrolling: touch;
         }
+        .bn_pro-badge{
+	        background-color: #24E082; 
+	        color: #ffffff; 
+	        padding-left: 0.35rem; 
+	        padding-right: 0.35rem;
+        }
+        .bn_hospital-badge{
+        	background-color: #8496AE; color: #ffffff; padding-left: 0.5rem; padding-right: 0.5rem;
+        }
       </style>
 </head>
 <body>
@@ -90,10 +102,8 @@
 	<main class="d-flex flex-nowrap chatpopup">
 
 		<!-- 첫번째 컬럼====================================================== -->
-		<div class="d-flex flex-column flex-shrink-0 bg-light"
-			style="width: 4.5rem; height: 750px; border-top: 0.2rem solid #24E082; border-left: 0.2rem solid #24E082; border-radius: 2rem 0 0 0; z-index: 8;">
-			<a href="/" class="d-block p-3 link-dark text-decoration-none"
-				title="Icon-only"> <img src="resources/img/logo.svg" alt="영해로고">
+		<div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem; height: 750px; border-top: 0.2rem solid #24E082; border-left: 0.2rem solid #24E082; border-radius: 2rem 0 0 0; z-index: 8;">
+			<a href="/" class="d-block p-3 link-dark text-decoration-none" title="Icon-only"> <img src="resources/img/logo.svg" alt="영해로고">
 			</a>
 			<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
 				<li class="nav-item nav-link py-3 border-bottom rounded-0">
@@ -110,72 +120,41 @@
 		</div>
 
 		<!-- 전문가목록============================================================= -->
-		<div id="chatProList"
-			class="flex-column align-items-stretch flex-shrink-0 bg-light"
-			style="overflow: auto; width: 300px; height: 750px; border-top: 0.2rem solid #24E082; z-index: 8;">
-			<div href="/"
-				class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+		<div id="chatProList" class="flex-column align-items-stretch flex-shrink-0 bg-light" style="overflow: auto; width: 300px; height: 750px; border-top: 0.2rem solid #24E082; z-index: 8;">
+			<div href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
 				<span class="fs-5 fw-semibold">전문가 목록</span>
 			</div>
+			
 			<div class="list-group list-group-flush border-bottom scrollarea">
-				<a href="#"
-					class="list-group-item list-group-item-action active py-3 lh-sm"
-					aria-current="true">
-					<div
-						class="d-flex w-100 align-items-center justify-content-between">
-						<strong class="mb-1 bn_pro-name position-relative">김가람</strong> <small>12분
-							전</small>
+			
+				<c:if test="${roomList.size()==0 }">
+					<div class="list-group-item list-group-item-action active py-3 lh-sm" aria-current="true">
+						<div class="d-flex w-100 align-items-center justify-content-between">
+						<strong class="mb-1 bn_pro-name position-relative">아직 시작한 채팅이 없습니다.</strong>
+						</div>
 					</div>
-					<div class="col-10 mb-1 small chat_lastmsg">마지막메세지를 보여줄 것임.
-						마지막메세지를 보여줄 것임. 마지막메세지를 보여줄 것임. 마지막메세지를 보여줄 것임.</div>
-					<div class="col-10">
-						<span class="badge">자리비움</span> <span
-							class="badge rounded-pill bg-success text-white">상담가능</span>
-					</div>
-				</a> <a href="#"
-					class="list-group-item list-group-item-action py-3 lh-sm"
-					aria-current="true">
-					<div
-						class="d-flex w-100 align-items-center justify-content-between">
-						<strong class="mb-1 bn_pro-name position-relative">남나눔<span
-							class="text-white position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">1</span></strong>
-						<small>58분 전</small>
-					</div>
-					<div class="col-10 mb-1 small chat_lastmsg">마지막메세지를 보여줄 것임.
-						마지막메세지를 보여줄 것임. 마지막메세지를 보여줄 것임. 마지막메세지를 보여줄 것임.</div>
-					<div class="col-10">
-						<span class="badge">자리비움</span> <span
-							class="badge rounded-pill bg-success text-white">상담가능</span>
-					</div>
-				</a> <a href="#"
-					class="list-group-item list-group-item-action py-3 lh-sm"
-					aria-current="true">
-					<div
-						class="d-flex w-100 align-items-center justify-content-between">
-						<strong class="mb-1 bn_pro-name">도대담<span
-							class="text-white position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">99+</span></strong>
-						<small>1시간 전 </small>
-					</div>
-					<div class="col-10 mb-1 small chat_lastmsg">마지막메세지를 보여줄 것임.
-						마지막메세지를 보여줄 것임. 마지막메세지를 보여줄 것임. 마지막메세지를 보여줄 것임.</div>
-					<div class="col-10">
-						<span class="badge rounded-pill bg-secondary text-white">자리비움</span>
-						<span class="badge">상담가능</span>
-					</div>
-				</a> <a href="#"
-					class="list-group-item list-group-item-action py-3 lh-sm"
-					aria-current="true">
-					<div
-						class="d-flex w-100 align-items-center justify-content-between">
-						<strong class="mb-1 bn_pro-name">문미미</strong> <small>1일 전</small>
-					</div>
-					<div class="col-10 mb-1 small chat_lastmsg">마지막메세지를 보여줄 것임.
-						마지막메세지를 보여줄 것임. 마지막메세지를 보여줄 것임. 마지막메세지를 보여줄 것임.</div>
-					<div class="col-10">
-						<span class="badge rounded-pill bg-secondary text-white">자리비움</span>
-						<span class="badge">상담가능</span>
-					</div>
-				</a>
+				</c:if>
+				<c:if test="${roomList.size()!=0 }">
+					<c:forEach items="${roomList}" var="cr">
+					<a href="#" class="list-group-item list-group-item-action active py-3 lh-sm chatting-item" 
+					aria-current="true" id="${cr.chatroom.chatroomId}-${cr.expert.member.userNum}">
+						<div class="d-flex w-100 align-items-center justify-content-between">
+							<strong class="mb-1 bn_pro-name position-relative">${cr.expert.member.userName }</strong>
+<%-- 							<small>${ cr.latestSendTime }</small> --%>
+						</div>
+						<div class="col-10 mb-1 small chat_lastmsg">
+<%-- 							${cr.lastMessage.chatContent} --%>
+						</div>
+						<div class="col-10">
+<%-- 							<c:if test="${ room.notReadCount>0 }"> --%>
+<%-- 								<span class="badge">${cr.notReadCount}</span> --%>
+<%-- 							</c:if> --%>
+							<span class="badge">자리비움</span>
+							<span class="badge rounded-pill bg-success text-white">상담가능</span>
+						</div>
+					</a>
+					</c:forEach>
+				</c:if>
 			</div>
 		</div>
 
@@ -186,27 +165,29 @@
 			style="width: 500px; height: 750px; border-left: 0.1rem solid rgba(20, 49, 82, 0.247); border-top: 0.2rem solid #24E082;">
 
 			<div id="chatMessageRoomTop" style="overflow: auto;">
-				<div class="row bn_pro-box m-1"
-					style="position: fixed; z-index: 10; width: 465px;">
+				<div class="row bn_pro-box m-1" style="position: fixed; z-index: 10; width: 465px;">
+					<span id="chatroomId" hidden>${nowChatroom.chatroom.chatroomId}</span>
 					<!--전문가-->
 					<div class="col-lg-7  align-self-center">
-						<h5 class="bn_pro-name">
-							김가람&nbsp;&nbsp;<span class="badge rounded-pill"
-								style="background-color: #24E082; color: #ffffff; padding-left: 0.35rem; padding-right: 0.35rem;">약사</span>
-						</h5>
-						<span style="display: inline-block; width: 3.5rem;">답변수 </span><span>:
-							493개</span><br> <span style="display: inline-block; width: 3.5rem;">전문과목
-						</span><span>: 약학</span><br> <span
-							style="display: inline-block; width: 3.5rem;">소속 </span><span>:
-							서울 중구 종로약국&nbsp;&nbsp;<span class="badge rounded-pill"
-							style="background-color: #8496AE; color: #ffffff; padding-left: 0.5rem; padding-right: 0.5rem;">병원
-								정보 보기</span>
-						</span><br>
+						<span id="expertNum" hidden>${expert.member.userNum }</span>
+	                    <h5 class="bn_pro-name">${expert.member.userName}&nbsp;&nbsp;
+	                    <span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+	                     <c:if test="${expert.expert.expertSort.trim() eq 'D' }">의사</c:if>
+	                     <c:if test="${expert.expert.expertSort.trim() eq 'C' }">약사</c:if>
+	                    </span></h5>
+	                    <span class="bn_pro-info">답변수 ${expert.answerListSize} 개</span><br>
+	                    <span class="bn_pro-info">전문과목 ${expert.expert.expertMedi}</span><br>
+	                    <span class="bn_pro-info">소속 : ${expert.expert.expertDept}&nbsp;&nbsp;
+	                     <span class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
+	                      <c:if test="${expert.expert.expertSort.trim() eq 'D' }">병원</c:if>
+	                      <c:if test="${expert.expert.expertSort.trim() eq 'C' }">약국</c:if>
+	                     정보 보기
+	                     </span>
+	                    </span><br>
 					</div>
 
 					<div class="col-3 align-self-center">
-						<img src="resources/img/pro_profile1.png" class="bn_pro-profile"
-							alt="..." style="width: 5rem; height: 5rem;">
+						<img src="resources/img/pro_profile1.png" class="bn_pro-profile" alt="..." style="width: 5rem; height: 5rem;">
 					</div>
 					<div class="col-2 align-self-center">
 						<div class="bn_pro-icon" style="width: 2.5rem; height: 2.5rem;">
@@ -217,24 +198,26 @@
 						</div>
 					</div>
 				</div>
-				<!--전문가 끝=================-->
+				<!--전문가 끝==================================-->
 
 				<div class="chat_wrap bg-light" style="margin-top: 170px;">
 					<!--채팅메세지-->
-					<div class="chat ch1">
+					<div class="chat ch1"><!-- ==========기본메세지============ -->
 						<div class="icon">
 							<i class="fa-solid fa-user"></i>
 						</div>
 						<div class="textbox">
-							안녕하세요. 반갑습니다.<span class="sendtime">오전 9:28</span>
+							안녕하세요. 반갑습니다.
+							<span class="sendtime">오전 9:28</span>
+							<!-- 기본메세지는 chatMsg데이터 받아서 처리X expert에서 출력  -->
 						</div>
-					</div>
+					</div><!-- ==========기본메세지============ -->
 
 					<div class="chat ch1">
 						<div class="icon">
 							<i class="fa-solid fa-user"></i>
 						</div>
-						<div class="textbox">
+						<div class="textbox"><!-- ==========견적서============ -->
 							<div class="row d-flex align-items-center ">
 								<div class="col-1">
 									<div class="d-flex align-items-center justify-content-center"
@@ -262,7 +245,7 @@
 									후 채팅 시작하기</button>
 							</div>
 							<span class="sendtime">오전 9:28</span>
-						</div>
+						</div><!-- ==========견적서============ -->
 					</div>
 
 					<div class="chat ch1mng">
@@ -274,59 +257,29 @@
 							시작됩니다.<span class="sendtime">오전 9:28</span>
 						</div>
 					</div>
-
-					<div class="chat ch2">
-						<!-- <div class="icon"><i class="fa-solid fa-user"></i></div> -->
-						<div class="textbox">
-							안녕하세요. 친절한효자손입니다. 그동안 잘 지내셨어요?<span class="sendtime">오전
-								9:28</span>
+					
+					<c:forEach items="${messageList}" var="chMsg">
+						<div class="chat 
+							<c:if test="${loginUser.userNum != chMsg.userNum  }">ch1</c:if>
+							<c:if test="${loginUser.userNum == chMsg.userNum  }">ch2</c:if>
+						">
+							<c:if test="${loginUser.userNum != chMsg.userNum  }">						
+								<div class="icon">
+									<i class="fa-solid fa-user"></i>
+								</div>
+							</c:if>
+							
+							<div class="textbox">
+								${ chMsg.chatContent }
+								<span class="sendtime">${ chMsg.sendTime }</span>
+							</div>
 						</div>
-					</div>
-					<div class="chat ch1">
-						<div class="icon">
-							<i class="fa-solid fa-user"></i>
-						</div>
-						<div class="textbox">
-							아유~ 너무요너무요! 요즘 어떻게 지내세요?<span class="sendtime">오전 9:28</span>
-						</div>
-					</div>
-					<div class="chat ch2">
-						<!-- <div class="icon"><i class="fa-solid fa-user"></i></div> -->
-						<div class="textbox">
-							뭐~ 늘 똑같은 하루 하루를 보내는 중이에요. 코로나가 다시 극성이어서 모이지도 못하구 있군요 ㅠㅠ 얼른 좀
-							잠잠해졌으면 좋겠습니다요!<span class="sendtime">오전 9:28</span>
-						</div>
-					</div>
-					<div class="chat ch1">
-						<div class="icon">
-							<i class="fa-solid fa-user"></i>
-						</div>
-						<div class="textbox">
-							안녕하세요. 반갑습니다.<span class="sendtime">오전 9:28</span>
-						</div>
-					</div>
-					<div class="chat ch2">
-						<!-- <div class="icon"><i class="fa-solid fa-user"></i></div> -->
-						<div class="textbox">
-							안녕하세요. 친절한효자손입니다. 그동안 잘 지내셨어요?<span class="sendtime">오전
-								9:28</span>
-						</div>
-					</div>
-					<div class="chat ch1">
-						<div class="icon">
-							<i class="fa-solid fa-user"></i>
-						</div>
-						<div class="textbox">
-							아유~ 너무요너무요! 요즘 어떻게 지내세요?<span class="sendtime">오전 9:28</span>
-						</div>
-					</div>
-					<div class="chat ch2">
-						<!-- <div class="icon"><i class="fa-solid fa-user"></i></div> -->
-						<div class="textbox">
-							뭐~ 늘 똑같은 하루 하루를 보내는 중이에요. 코로나가 다시 극성이어서 모이지도 못하구 있군요 ㅠㅠ 얼른 좀
-							잠잠해졌으면 좋겠습니다요!<span class="sendtime">오전 9:28</span>
-						</div>
-					</div>
+					</c:forEach>
+					
+					<div>위에까지 테스트</div>
+					
+					<div id="resultBox"></div>
+					
 				</div>
 				<!--채팅메세지 끝==================-->
 			</div>
@@ -338,7 +291,7 @@
 					</button>
 					<input type="text" class="form-control" id="bn_chat-input"
 						placeholder="메세지를 입력하세요">
-					<button class="btn bn_chat-inputbtn">
+					<button class="btn bn_chat-inputbtn" id="send">
 						<i class="fa-solid fa-paper-plane"></i>
 					</button>
 				</div>
@@ -347,34 +300,129 @@
 
 	</main>
 
+	<!-- Js Plugins -->
+	<script src="resources/js/jquery-ui.min.js"></script>	
+	<script src="resources/js/jquery.slicknav.js"></script>	
+	
+	<script src="resources/js/bootstrap.min.js"></script>	
 
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+	
+	<script src="resources/js/mixitup.min.js"></script>	
+	<script src="resources/js/owl.carousel.min.js"></script>	
 
+	<script src="resources/js/main.js"></script>
+	
 	<script>
 	
 		function minimize() {
 			document.getElementById('chatProList').style.display = 'none';
 		}
 
-		// document.getElementById('minimizeBtn').addEventListener('click',function(){
-		//     document.getElementById('chatProList').style.display = 'none';
-		// })
-
-		document
-				.getElementById('showProlistBtn')
-				.addEventListener(
-						'click',
-						function() {
-							document.getElementById('chatProList').style.display = 'block';
-						})
+		document.getElementById('showProlistBtn').addEventListener('click',function() {
+			document.getElementById('chatProList').style.display = 'block';
+		})
+		
 	</script>
 
-    <!-- JavaScript Bundle with Popper -->
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/jquery-ui.min.js"></script>
-    <script src="js/jquery.slicknav.js"></script>
-    <script src="js/mixitup.min.js"></script>
-    <script src="js/owl.carousel.min.js"></script>
-    <script src="js/main.js"></script>
+	<!-- https://github.com/sockjs/sockjs-client -->
+	<script>
+		// 로그인한 회원 번호
+		const sendBtn = document.getElementById("send");
 
+		const loginUserNum = "${loginUser.userNum}";
+		var expertNum = document.getElementById("expertNum").innerText;
+		var chatInput = document.getElementById("bn_chat-input");
+		var chatroomId = document.getElementById("chatroomId").innerText;
+		
+		//==================https://bbo-blog.tistory.com/39===========================
+			
+		var chattingSock;
+		connectSockJs();
+
+		chattingSock.onmessage = onMessage;
+		chattingSock.onclose = onClose;
+		chattingSock.onopen = onOpen;
+		
+		function connectSockJs(){
+			
+			chattingSock = new SockJS("/young/chattingSock");
+			
+			console.log("채팅쏙", chattingSock); 
+			console.log("채팅쏙 url", chattingSock.url); 
+			console.log("채팅 readyState", chattingSock.readyState);
+			
+		}
+		
+		sendBtn.addEventListener('click', function(){
+			sendMessage();
+		})
+		
+		function sendMessage(){
+			console.log(chatInput.value);
+			
+			if (chatInput.value.trim().length == 0) {
+				alert("채팅을 입력해주세요.");
+				chatInput.value = "";
+			} else {
+				var obj = {
+					"userNum": loginUserNum,
+					"receivedId": expertNum,
+					"chatroomId": chatroomId,
+					"chatContent": chatInput.value,
+				};
+// 				console.log(obj)
+
+				// JSON.stringify() : 자바스크립트 객체를 JSON 문자열로 변환
+				chattingSock.send(JSON.stringify(obj));
+				chatInput.value = "";
+			}
+		}
+		
+		function onMessage(msg){
+			var jsonData = JSON.parse(msg.data); // String 타입을 json 타입으로 반환
+			
+			var msgUserNum = jsonData['userNum']; //데이터를 보낸 사람
+			var msgChatContent = jsonData['chatContent'];
+			var msgChatroomId = jsonData['chatroomId'];
+			var msgSendTime = jsonData['sendTime'];
+			
+			console.log(msgUserNum+" 이 보낸 메세지 : "+ msgChatContent);
+			console.log(jsonData);
+			
+		    if(chatroomId == msgChatroomId){
+		    	const chat_wrap = document.getElementsByClassName('chat_wrap')[0];
+		    	const resultBox = document.getElementById("resultBox");
+		    	
+		    	if(msgUserNum ==loginUserNum){
+		    		str = '<div class="chat ch2"><div class="textbox">'
+			    		+ msgChatContent
+			    		+'<span class="sendtime">'
+			    		+ msgSendTime
+			    		+'</span></div></div>'
+		    	}else{
+		    		str = '<div class="chat ch1"><div class="icon"><i class="fa-solid fa-user"></i></div><div class="textbox">'
+		    				+ msgChatContent
+		    				+'<span class="sendtime">'
+		    				+ msgSendTime
+		    				+'</span></div></div>'
+		    	}
+		    	
+		    	resultBox.innerHTML += str;
+		    }
+		}
+		
+		
+	 	function onClose(){
+	 		
+	 	}
+		
+	 	function onOpen(){
+	 		
+	 	}
+		//=============================================
+
+	
+	</script>
 </body>
 </html>
