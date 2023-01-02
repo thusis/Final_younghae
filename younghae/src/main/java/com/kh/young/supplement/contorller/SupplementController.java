@@ -49,7 +49,7 @@ public class SupplementController {
 		if(page != null) {
 			currentPage = page;
 		}
-		Member mem = sService.selectMember(8);
+		Member mem = sService.selectMember(26);
 		// 집에서는 26
 		// 학원에서는 8
 	      
@@ -421,5 +421,15 @@ public class SupplementController {
 //		} else {
 //			throw new SupplementException("updateReview 혹은 updateReviewAttm 오류");
 //		}
+	}
+	
+	@RequestMapping("reco.su")
+	public void reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum) {
+		Review r = new Review();
+		r.setRvNum(rvnum);
+		r.setUserNum(usernum);
+		
+		int result = sService.insertReco(r);
+		
 	}
 }

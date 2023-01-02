@@ -41,4 +41,6 @@ public interface SupplementService {
 
 	ArrayList<ProCategory> searchList(String search);
 
+	int insertReco(Review r);
+
 }

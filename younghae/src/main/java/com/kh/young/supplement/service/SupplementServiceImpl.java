@@ -100,4 +100,9 @@ public class SupplementServiceImpl implements SupplementService {
 		return pcDAO.searchList(sqlSession, search);
 	}
 
+	@Override
+	public int insertReco(Review r) {
+		return pcDAO.insertReco(sqlSession, r);
+	}
+
 }

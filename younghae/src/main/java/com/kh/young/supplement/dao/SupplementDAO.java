@@ -81,4 +81,8 @@ public class SupplementDAO {
 	public ArrayList<ProCategory> searchList(SqlSessionTemplate sqlSession, String search) {
 		return (ArrayList)sqlSession.selectList("supplementMapper.searchList", search);
 	}
+
+	public int insertReco(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.insert("supplementMapper.insertReco", r);
+	}
 }

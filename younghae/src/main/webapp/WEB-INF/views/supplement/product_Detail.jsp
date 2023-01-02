@@ -617,10 +617,11 @@
                   			  					  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
 					                  			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
 					                  			  '<div id="reviewRank star" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
-					                  			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
-					                  			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
+					                  			  '</p></div><div class="product__details__rating 1" style="float: left; margin-top: 3.2%; margin-left: 5%;">'+ 
+					                  			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 150%;"></i>'+
 					                  			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">'+ r.rv+'</p>'+
-					                  			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+					                  			  '</div><div id="reviewContent" class="text-left" style="margin-top: 9%;">'+ r.rvContent +'</div>'+'<input type="hidden" name="rvNum" value="'+r.rvNum+'"></div>'
+					                  			  +'</div><br><br>';
 		        			}else{
 		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
 		        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
@@ -629,12 +630,12 @@
 	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
 	                                			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
 	                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p id="rvstar" style="color: black; font-size: 130%;">'+ r.rvStar +
-	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
-	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
+	                                			  '</p></div><div class="product__details__rating 1" style="float: left; margin-top: 3.2%; margin-left: 5%;">'+ 
+	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 150%;"></i>'+
 	                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
-	                                			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div>'+
-	                                			  '<div name="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 3%; margin-top: -20%;"><img style="height: 199px; width: 199px;" src="resources/uploadFiles/'+r.image+'" class=".img-fluid"></div>'+
-	                                			  '<br><br>';
+	                                			  '</div><div id="reviewContent" class="text-left" style="margin-top: 9%;">'+ r.rvContent +'</div></div>'+
+	                                			  '<div name="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 3%; margin-top: -20%;"><img style="height: 199px; width: 199px;" src="resources/uploadFiles/'+r.image+'" class=".img-fluid">'+
+	                                			  '<input type="hidden" name="rvNum" value="'+r.rvNum+'"></div>'+'<br><br>';
 		        				
 		        			}
                              div.append(form);
@@ -651,20 +652,23 @@
              	            });
 				            
 	        			}
-		        		const update  = document.getElementsByClassName('product__details__quantity_1');
+		        		const update  = document.getElementsByClassName('text-left');
 			            
 			            for(const up of update){
 			            	up.addEventListener('click' ,function(){
 			            		// 별점
 // 			            		console.log($(this).children().children()[4].innerText);
+			            		console.log($(this).parent().children().children()[4].innerText);
 			            		
 			            		// 유저넘버
 // 			            		console.log($(this).children().children()[0].value);
+			            		console.log($(this).parent().children().children()[0].value);
 			            		
-			            		// 리뷰 내용
+// 			            		리뷰 내용
 // 			            		console.log($(this).children().siblings()[6].innerText);
+			            		console.log($(this).parent().children().siblings()[6].innerText);
 			            		
-			            		if( ${ loginUser.userNum } ==  $(this).children().children()[0].value ){
+			            		if( ${ loginUser.userNum } == $(this).parent().children().children()[0].value ){
 		            				updateModal.style.display = "block";
 			            			
 // 				            			닫기 버튼
@@ -682,16 +686,35 @@
 			            	        }
 			            	        
 			            	        const rating = document.getElementById("updaterating");
-			            	        rating.innerText = $(this).children().children()[4].innerText;
+			            	        rating.innerText = $(this).parent().children().children()[4].innerText;
 			            	        
 									const content = document.getElementById('urvContent');
-		            	        	content.value = $(this).children().siblings()[6].innerText;
+		            	        	content.value = $(this).parent().children().siblings()[6].innerText;
 			            	        
 		            	        	
 			            		}
 			            		
 			            	});
+			            	
 			            }
+		            	const reco = document.getElementsByClassName('product__details__rating 1');
+		                for(var re of reco){
+		    	            re.addEventListener('click', function(){
+		    	            	console.log(this);
+		    	            	// rvNum
+// 		    	            	console.log($(this).parent().children()[7].value);
+		    	            	$.ajax({
+		    	            		url: '${contextPath}/reco.su',
+		    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: ${ loginUser.userNum }},
+		    	            		success:(data)=>{
+		    	            			
+		    	            		},
+		    	            		error:(data)=>{
+		    	            			console.log(data);
+		    	            		}
+		    	            	});
+		    	            });
+		                }
 	        		}
 	        	},
 	        	error: (data)=>{
@@ -713,6 +736,8 @@
 				 console.log(check);
 // 				 upform.submit();
             });
+            
+            
             
         }
         

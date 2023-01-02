@@ -120,6 +120,12 @@
 		where cate_name like '%'||#{search}||'%'
 	</select>
 	
+	<!-- 리뷰 추천 -->
+	<insert id="insertReco">
+		insert into REVIEW_RECOMMEND
+		values(#{rvNum}, #{userNum})
+	</insert>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>
