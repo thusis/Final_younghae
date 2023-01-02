@@ -119,7 +119,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 			</ul>
 		</div>
 
-		<!-- 전문가목록============================================================= -->
+		<!-- 두번째 컬럼 전문가목록============================================================= -->
 		<div id="chatProList" class="flex-column align-items-stretch flex-shrink-0 bg-light" style="overflow: auto; width: 300px; height: 750px; border-top: 0.2rem solid #24E082; z-index: 8;">
 		
 			<c:if test="${ loginUser.userCNumber eq 1 }"><!-- =======일반회원의경우======= -->
@@ -201,11 +201,11 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 				</c:if>
 			</div>
 			</c:if><!-- =======전문가회원의 경우 끝======= -->
-		</div>
+		</div><!--두번째열끝========================================================  -->
+
 
 		<!-- 세 번째 열 =======================================================================================  -->
-		<!-- 세 번째 열 =======================================================================================  -->
-		<div id="${cr.chatroom.chatroomId}_${cr.chatroom.expertNum}_${cr.chatroom.userNum}" 
+		<div id="${nowChatroom.chatroom.chatroomId}_${nowChatroom.chatroom.expertNum}_${nowChatroom.chatroom.userNum}" 
 			class="chatMessageRoom d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
 			style="width: 500px; height: 750px; border-left: 0.1rem solid rgba(20, 49, 82, 0.247); border-top: 0.2rem solid #24E082;">
 			<div id="chatMessageRoomTop" style="overflow: auto;">
@@ -387,12 +387,12 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 
 		const loginUserNum = "${loginUser.userNum}";
 		
-		var chatroomInfo = document.getElementsByClassName('chatMessageRoom')[0].id;
-		console.log(chatroomInfo);
+		var nowChatroomInfo = document.getElementsByClassName('chatMessageRoom')[0].id;
+		console.log(nowChatroomInfo);
 		
-		var chatroomId = chatroomInfo.split('_')[0];
-		var expertNum = chatroomInfo.split('_')[1];
-		var generalUserNum = chatroomInfo.split('_')[2];
+		var chatroomId = nowChatroomInfo.split('_')[0];
+		var expertNum = nowChatroomInfo.split('_')[1];
+		var generalUserNum = nowChatroomInfo.split('_')[2];
 		
 		var chatInput = document.getElementById("bn_chat-input");
 		
@@ -417,22 +417,54 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		
 		sendBtn.addEventListener('click', function(){
 			sendMessage();
-		})
+		})		
 		
+		const roomItems = document.getElementsByClassName('chatting-item');
+		for(const chattingItem of roomItems){
+			chattingItem.addEventListener('click', function(){
+				var selectChatroomInfo = chattingItem.id;
+				console.log(selectChatroomInfo);
+				console.log(selectChatroomInfo.split('-')[0]);
+				
+				location.href='${contextPath}/selectMessage.ch?chatroomId='+selectChatroomInfo.split('-')[0];
+				
+				$.ajax({
+					url: '${contextPath}/selectMessage.ch',
+					type: 'GET',
+					data: {
+						chatroomId : selectChatroomInfo.split('-')[0]
+					},
+					success: (data)=>{
+						console.log(data)
+					},
+					error: (data)=>{
+						alert("실패!");
+					}
+				})
+			})
+		}
+			
 		function sendMessage(){
-			console.log(chatInput.value);
+// 			console.log(chatInput.value);
 			
 			if (chatInput.value.trim().length == 0) {
 				alert("채팅을 입력해주세요.");
 				chatInput.value = "";
 			} else {
+				
+				if(loginUserNum == expertNum ){
+					receiverNum = generalUserNum ;
+				} else {
+					receiverNum = expertNum ; 
+				}
+				console.log(receiverNum);
 				var obj = {
 					"senderNum": loginUserNum,
-					"receiverNum": expertNum,
+					"receiverNum" : receiverNum,
 					"chatroomId": chatroomId,
-					"chatContent": chatInput.value,
+					"chatContent": chatInput.value
 				};
-// 				console.log(obj)
+				console.log(obj);
 
 				// JSON.stringify() : 자바스크립트 객체를 JSON 문자열로 변환
 				chattingSock.send(JSON.stringify(obj));
@@ -441,6 +473,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		}
 		
 		function onMessage(msg){
+			console.log(msg.data);
 			var jsonData = JSON.parse(msg.data); // String 타입을 json 타입으로 반환
 			
 			var msgUserNum = jsonData['senderNum']; //데이터를 보낸 사람
@@ -455,7 +488,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		    	const chat_wrap = document.getElementsByClassName('chat_wrap')[0];
 		    	const resultBox = document.getElementById("resultBox");
 		    	
-		    	if(msgUserNum ==loginUserNum){
+		    	if(msgUserNum ==loginUserNum){ // 내가 보낸 메세지면
 		    		str = '<div class="chat ch2"><div class="textbox">'
 			    		+ msgChatContent
 			    		+'<span class="sendtime">'
@@ -468,7 +501,6 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		    				+ msgSendTime
 		    				+'</span></div></div>'
 		    	}
-		    	
 		    	resultBox.innerHTML += str;
 		    }
 		}

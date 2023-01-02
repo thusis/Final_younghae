@@ -73,10 +73,10 @@ public class ChatDao {
 		int otherLatestChatId = sqlSession.selectOne("chatMapper.selectOtherLatestChatId", loginUserNum);
 		System.out.println(myLatestChatId+" "+ otherLatestChatId);
 		
-		ChatroomDto resultChatroom = null;
+		ChatroomDto resultChatroom;
 		
 		if(myLatestChatId==0 && otherLatestChatId==0) {
-			return resultChatroom;
+			return null;
 		} else {
 			int cnum = selectCnum(sqlSession, loginUserNum);
 			
