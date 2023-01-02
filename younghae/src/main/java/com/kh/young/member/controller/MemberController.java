@@ -207,7 +207,6 @@ public class MemberController {
         map.put("userAddressDetail", req.getParameter("userAddressDetail"));
         map.put("userHealth", userHealth);
 
-
         int resultGenral = mService.insertMemberAddress(map);
 
         if (result > 0 && resultGenral > 0) {

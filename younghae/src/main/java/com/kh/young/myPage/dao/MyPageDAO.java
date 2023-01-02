@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
@@ -57,6 +58,21 @@ public class MyPageDAO {
 	public Member selectAllMember(SqlSessionTemplate sqlSession, int id) {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("mypageMapper.selectAllMember", id);
+	}
+
+	public ArrayList<Coupon> selectAllCoupon(SqlSessionTemplate sqlSession, int id) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectAllCoupon", id);
+	}
+
+	public ArrayList<Coupon> selectAdminCoupon(SqlSessionTemplate sqlSession, String str) {
+		// TODO Auto-generated method stub
+		return (ArrayList)sqlSession.selectList("mypageMapper.selectAdminCoupon", str);
+	}
+
+	public int couponInsert(SqlSessionTemplate sqlSession, Coupon c) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mypageMapper.couponInsert", c);
 	}
 
 }

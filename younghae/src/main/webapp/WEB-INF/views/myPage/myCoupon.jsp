@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -44,6 +45,15 @@
    content: "";
 }
 </style>
+<!-- dataTables GRID CDN -->
+    <!-- css files for DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css"/>
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"/>
+   
+
+    <!-- javascript files for DataTables & Plugins -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 </head>
 
 <body>
@@ -59,8 +69,8 @@
 			style="padding: 30px 0 10px 0; margin-bottom: 0px;">
 			<h4>내 쿠폰 관리</h4>
 			<div style="margin-left: 900px; display: block;">
-				<input type="text">
-				<button type="button" style="border: 0;">등록</button>
+				<input type="text" id="couponNumber">
+				<button type="button" style="border: 0;" id="regist">등록</button>
 			</div>
 			<div style="display: block;">
 				<hr style="width: 50vw; background-color: #24E082;">
@@ -82,72 +92,29 @@
 						<div class="product__details__tab__desc">
 							<div class="bn_boardlist mt-2">
 								<button style="float: right; border: 0; margin-bottom: 5px;"
-									onclick="location.href='#'">이벤트</button>
-								<table class="table">
+									onclick="location.href='${contextPath}/event.ev'">이벤트</button>
+								<table class="table" id="applyCoupon">
 									<thead>
 										<tr class="text-teal-100">
-											<th scope="col" class="col-lg-1">쿠폰번호</th>
-											<th scope="col" class="col-lg-4">쿠폰명</th>
-											<th scope="col" class="col-lg-3">쿠폰혜택</th>
-											<th scope="col" class="col-lg-4">사용기간</th>
+											<th >쿠폰번호</th>
+											<th >쿠폰명</th>
+											<th >쿠폰혜택</th>
+											<th >사용기간</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Ot1to
-											</td>
-											<td>@mdo</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-												Thornton</td>
-											<td>@fat</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Larry
-												the Bird</td>
-											<td>@twitter</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Larry
-												the Bird</td>
-											<td>@twitter</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Larry
-												the Bird</td>
-											<td>@twitter</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>6</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">왜
-												border-bottom 생겨서 날 괴롭게 해?</td>
-											<td>@twitter</td>
-											<td>1</td>
-										</tr>
+										<c:forEach var="s" items="${couponList}">
+                                            <c:if test="${s.couUsed eq 'N' }">
+                                            <tr>
+                                                <td>${s.couRegister}</td>
+                                                <td>${s.couIntro}</td>
+                                                <td>${s.couDiscount}%</td>
+                                                <td>${s.couEndDate}</td>
+                                            </tr>
+                                            </c:if>
+                                        </c:forEach>
 									</tbody>
 								</table>
-							</div>
-							<div
-								class="product__pagination blog__pagination d-flex justify-content-center mt-3 ">
-								<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a
-									href="#"><i class="fa fa-long-arrow-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -155,72 +122,29 @@
 						<div class="product__details__tab__desc">
 							<div class="bn_boardlist mt-2">
 								<button style="float: right; border: 0; margin-bottom: 5px;"
-									onclick="location.href='#'">이벤트</button>
-								<table class="table">
+									onclick="location.href='${contextPath}/event.ev'">이벤트</button>
+								<table class="table" id="usedCoupon">
 									<thead>
 										<tr class="text-teal-100">
-											<th scope="col" class="col-lg-1">쿠폰번호</th>
-											<th scope="col" class="col-lg-4">쿠폰명</th>
-											<th scope="col" class="col-lg-3">쿠폰혜택</th>
-											<th scope="col" class="col-lg-4">사용기간</th>
+											<th >쿠폰번호</th>
+											<th >쿠폰명</th>
+											<th >쿠폰혜택</th>
+											<th >사용기간</th>
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
-											<td>1</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Ot2to
-											</td>
-											<td>@mdo</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
-												Thornton</td>
-											<td>@fat</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Larry
-												the Bird</td>
-											<td>@twitter</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Larry
-												the Bird</td>
-											<td>@twitter</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">Larry
-												the Bird</td>
-											<td>@twitter</td>
-											<td>1</td>
-										</tr>
-										<tr>
-											<td>6</td>
-											<td
-												style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">왜
-												border-bottom 생겨서 날 괴롭게 해?</td>
-											<td>@twitter</td>
-											<td>1</td>
-										</tr>
+										<c:forEach var="s" items="${couponList}">
+										   <c:if test="${s.couUsed eq 'Y' }">
+                                            <tr>
+                                                <td>${s.couRegister}</td>
+                                                <td>${s.couIntro}</td>
+                                                <td>${s.couDiscount}%</td>
+                                                <td>${s.couEndDate}</td>
+                                            </tr>
+                                            </c:if>
+                                        </c:forEach>
 									</tbody>
 								</table>
-							</div>
-							<div
-								class="product__pagination blog__pagination d-flex justify-content-center mt-3 ">
-								<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a
-									href="#"><i class="fa fa-long-arrow-right"></i></a>
 							</div>
 						</div>
 					</div>
@@ -228,6 +152,85 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	var lang_kor = {
+            decimal : "",
+            emptyTable : "데이터가 없습니다.",
+            info : "_START_ - _END_ (총 _TOTAL_ 명)",
+            infoEmpty : "0명",
+            infoFiltered : "(전체 _MAX_ 명 중 검색결과)",
+            infoPostFix : "",
+            thousands : ",",
+            lengthMenu : "_MENU_ 개씩 보기",
+            loadingRecords : "로딩중...",
+            processing : "처리중...",
+            search : "검색 : ",
+            zeroRecords : "검색된 데이터가 없습니다.",
+            paginate : {
+                first : "첫 페이지",
+                last : "마지막 페이지",
+                next : "다음",
+                previous : "이전"
+            },
+            aria : {
+                sortAscending : " :  오름차순 정렬",
+                sortDescending : " :  내림차순 정렬"
+            }
+        };
+    
+    
+    $(document).ready(function() {
+        $('#applyCoupon').DataTable({
+        	searching: false,
+        	ordering: true,
+        	pageLength: 10,
+        	paging: true, //페이징처리
+            language : lang_kor, //or lang_eng
+            info :false,
+            autoWidth: false
+    });
+        $('#usedCoupon').DataTable({
+        	searching: false,
+        	ordering: true,
+        	pageLength: 10,
+        	paging: true, //페이징처리
+            language : lang_kor, //or lang_eng
+            info :false,
+            autoWidth: false
+    	});
+    });
+    document.getElementById('regist').addEventListener('click', function() {
+    	var couponNumber = document.getElementById('couponNumber').value;
+        $.ajax({
+            type: 'get',
+            url: '${contextPath}/registCoupon.my',
+            data: {
+                couponRegist: couponNumber
+            },
+            success: (data) => {
+            	if(data=='NOA'){
+            		alert("잘못 입력된 쿠폰입니다.");
+            	}else if(data=='NOB'){
+            		alert("쿠폰의 유효기간이 경과하였습니다.");
+            	}else if(data=='NOC'){
+            		alert("쿠폰이 중복되여 등록에 실패했습니다.");
+            	}else{
+            		alert("쿠폰 등록에 성공하였습니다.")
+            	}
+            	(location || window.location || document.location).reload();
+            },
+            error: (data) => {
+            	alert(data);
+            	(location || window.location || document.location).reload();
+            }
+
+        })
+        
+    });
+    
+    
+    
+	</script>
 </body>
 
 </html>

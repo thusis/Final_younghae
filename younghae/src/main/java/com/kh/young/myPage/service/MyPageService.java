@@ -3,6 +3,7 @@ package com.kh.young.myPage.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
@@ -27,5 +28,11 @@ public interface MyPageService {
 	int deleteMember(int userNum);
 
 	Member selectAllMember(int id);
+
+	ArrayList<Coupon> selectAllCoupon(int id);
+
+	ArrayList<Coupon> selectAdminCoupon(String str);
+
+	int couponInsert(Coupon c);
 
 }

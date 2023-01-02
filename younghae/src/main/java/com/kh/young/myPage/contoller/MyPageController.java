@@ -1,6 +1,8 @@
 package com.kh.young.myPage.contoller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.young.member.exception.MemberException;
 import com.kh.young.member.service.MemberService;
+import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
@@ -104,10 +107,75 @@ public class MyPageController {
     }
     // 내 쿠폰 이동.
     @RequestMapping("myCoupon.my")
-    public String myCoupon() {
+    public String myCoupon(HttpSession session, Model model, Coupon C) {
+    	
+    	int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+    	
+    	ArrayList < Coupon > CL = myService.selectAllCoupon(id);
+    	
+    	model.addAttribute("couponList",CL);
+    	
+    	
         return "myCoupon";
     }
-
+    
+    //쿠폰 등록
+    @RequestMapping("registCoupon.my")
+    @ResponseBody
+    public String registCoupon(HttpSession session, Model model, Coupon C, @RequestParam("couponRegist") String couponRegist ) {
+    	
+    	String str = "A";
+    	int result = 0;
+    	int result2 = 0;
+    	int result3 = 0;
+    	int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+    	long miliseconds = System.currentTimeMillis();
+    	Date now = new Date(miliseconds);
+    	
+    	//내 쿠폰
+    	ArrayList < Coupon > CLT = myService.selectAllCoupon(id);
+    	//등록할수있는쿠폰
+    	ArrayList < Coupon > CL = myService.selectAdminCoupon(str);
+    	
+    	// 쿠폰등록 동일한지, 유효기간
+    	for(int i=0;i<CL.size();i++) {
+    		if(CL.get(i).getCouRegister().equals(couponRegist)) {
+    				C = CL.get(i);
+    				result = 1;
+    			if(CL.get(i).getCouEndDate().after(now)) {
+        			result2 = 1;
+    			}
+    		}
+    	}
+    	// 쿠폰 중복여부
+    	if(CLT.size()==0) {
+    		result3=1;
+    	}else {
+        	for(int i=0;i<CLT.size();i++) {
+        		if(CLT.get(i).getCouRegister().equals(couponRegist)) {
+        			result3 = 0;
+        			break;
+        		}else {
+        			result3 = 1;
+        		}
+        	}
+    	}
+    	if(result >0 && result2>0 && result3>0) {
+    		C.setUserNum(id);
+    		int fResult = myService.couponInsert(C);
+    		return "YES";
+    	}else {
+    		if(result==0) {
+    			return "NOA";
+    		}else if(result2==0) {
+    			return "NOB";
+    		}else {
+    			return "NOC";
+    		}
+    	}
+    	
+        
+    }
     // 내 주문 이동.
     @RequestMapping("myOrder.my")
     public String myOrder() {

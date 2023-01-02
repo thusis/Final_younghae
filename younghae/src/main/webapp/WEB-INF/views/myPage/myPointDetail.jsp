@@ -11,7 +11,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>나의포인트상세보기</title>
-<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
     <style>
         .bn_index ul li {
             list-style: none;
@@ -53,7 +53,6 @@
 
     <!-- dataTables GRID CDN -->
     <!-- css files for DataTables -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css"/>
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css"/>
    
@@ -62,8 +61,9 @@
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js"></script>
 </head>
-
+	
 <body>
+	
     <div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
         <ul>
             <li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>
