@@ -31,6 +31,7 @@ import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.story.service.StoryService;
 import com.kh.young.supplement.exception.SupplementException;
 import com.kh.young.supplement.service.SupplementService;
 
@@ -48,7 +49,7 @@ public class SupplementController {
 		if(page != null) {
 			currentPage = page;
 		}
-		Member mem = sService.selectMember(61);
+		Member mem = sService.selectMember(8);
 		// 집에서는 26
 		// 학원에서는 8
 	      
@@ -374,5 +375,51 @@ public class SupplementController {
 		} catch (JsonIOException | IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping("updateReview.su")
+	public String updateReview(@ModelAttribute Review r, @RequestParam(value="file", required=false) MultipartFile file, Model model,
+								HttpServletRequest request, HttpSession session) {
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		System.out.println(file);
+		
+		String select = sService.imageSelect(r.getRvNum()).getAttachRename();
+		
+		int result = 0;
+		
+		System.out.println(select);
+		
+//		result = sService.insertReview(r);
+		
+		return null;
+//		if (file != null) {
+//			if(!select.contains(file.get)) {
+//				System.out.println(file.getOriginalFilename());
+//				if(!file.getOriginalFilename().equals("")) {
+//					String[] returnArr = saveFile(file, request);
+//					
+//					attm.setAttachName(file.getOriginalFilename());
+//					attm.setAttachRename(returnArr[1]);
+//					attm.setAttachPath(returnArr[0]);
+//					System.out.println(returnArr[1]);
+//					System.out.println(returnArr[0]);
+//					
+//					attmResult = sService.insertReviewAttm(attm);
+//				}
+//			}
+//		}else {
+//			r.setImage("없음");
+//		}
+//				
+//		Supplement product = sService.selectPro(r.getProNum());
+//
+//		if (result + attmResult > 0) {
+//			model.addAttribute("product", product);
+//			model.addAttribute("loginUser", m);
+//			return "product_Detail";
+//		} else {
+//			throw new SupplementException("updateReview 혹은 updateReviewAttm 오류");
+//		}
 	}
 }

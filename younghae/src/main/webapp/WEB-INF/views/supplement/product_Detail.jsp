@@ -406,8 +406,8 @@
 											style="margin-left: 3.5%; margin-bottom: 3%;">
 											<div style="border: 2px solid #24E082; border-radius: 1em;"
 												name="rvContent">
-												<textarea name="rvContent" id="urvContent"
-													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;"></textarea>
+												<textarea name="rvContent" id="rvContent"
+													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;">1</textarea>
 											</div>
 											<div>
 												<div name="writeReview"
@@ -437,7 +437,8 @@
                     <div class="col-lg-12 col-md-12">
                         <div class="product__details__pic">
                             <div style="border: 2px solid #24E082; border-radius: 5em;">
-								<form action="${ contextPath }/updateReview.su" method="post" id="reviewFrom" enctype="multipart/form-data">
+								<form action="${ contextPath }/updateReview.su" method="post" id="updateReviewFrom" enctype="multipart/form-data">
+									<input type="hidden" id="check" name="check" value="">
 									<div class="row" style="margin-left: 5%; margin-top:3%; padding-right: 0px;  margin-bottom: -5%;">
 										<div class="d-inline" name="reviewImg" style="margin-right: -20%;">
 											<img src="${ product.proImage }"
@@ -489,9 +490,9 @@
 											<div>
 												<div name="writeReview"
 													style="margin-left: 1.5%; margin-top: 2%;">
-													<button type="button"  id="writeBtn"
+													<button type="button"  id="updateBtn"
 														style="text-align: center; height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">리뷰
-														작성</button>
+														수정</button>
 												</div>
 											</div>
 										</div>
@@ -618,7 +619,7 @@
 					                  			  '<div id="reviewRank star" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
 					                  			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
 					                  			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
-					                  			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
+					                  			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">'+ r.rv+'</p>'+
 					                  			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
 		        			}else{
 		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
@@ -631,9 +632,9 @@
 	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">'+ 
 	                                			  '<i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>'+
 	                                			  '</div><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
-	                                			  '</div><div id="reviewImg" style="height: 85px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">'+
-	                                			  '<img src="resources/uploadFiles/'+r.image+'" class=".img-fluid"></div>'+
-	                                			  '<div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div><br><br>';
+	                                			  '</div><div id="reviewContent" class="text-left" style="padding-top: 9%;">'+ r.rvContent +'</div></div>'+
+	                                			  '<div name="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 3%; margin-top: -20%;"><img style="height: 199px; width: 199px;" src="resources/uploadFiles/'+r.image+'" class=".img-fluid"></div>'+
+	                                			  '<br><br>';
 		        				
 		        			}
                              div.append(form);
@@ -648,41 +649,49 @@
              		        		console.log(data);
              		        	}
              	            });
-                            
-				            const update  = document.getElementsByClassName('product__details__quantity_1');
-				            
-				            for(var up of update){
-				            	up.addEventListener('click' ,function(){
-				            		if( ${ loginUser.userNum } ==  r.userNum  ){
-				            			console.log(r.userNum);
-										console.log(r.rvStar);
-			            				updateModal.style.display = "block";
-				            			
-// 				            			닫기 버튼
-				            	        var upspan = document.getElementsByClassName("close")[1];
-				            	        
-				            	        upspan.onclick = function () {
-				            	        	updateModal.style.display = "none";
-				            	        }
-				            	        
-				            	    	// modal 밖에 클릭했을 때 모달창 꺼지는 스크립트
-				            	        window.onclick = function (event) {
-				            	            if (event.target == modal) {
-				            	                updateModal.style.display = "none";
-				            	            }
-				            	        }
-				            	        
-// 				            	        const rating = document.getElementById("updaterating");
-// 				            	        rating.innerText = $(this).find('#reviewRank').find('p').text();
-// 				            	        rating.innerText = r.rvStar;
-				            	        
-// 				            	        document.querySelector('.star.update span').style.width = r.rvStar * 20 + '%';
-				            		}
-				            		
-				            	});
-				            }
 				            
 	        			}
+		        		const update  = document.getElementsByClassName('product__details__quantity_1');
+			            
+			            for(const up of update){
+			            	up.addEventListener('click' ,function(){
+			            		// 별점
+// 			            		console.log($(this).children().children()[4].innerText);
+			            		
+			            		// 유저넘버
+// 			            		console.log($(this).children().children()[0].value);
+			            		
+			            		// 리뷰 내용
+// 			            		console.log($(this).children().siblings()[6].innerText);
+			            		
+			            		if( ${ loginUser.userNum } ==  $(this).children().children()[0].value ){
+		            				updateModal.style.display = "block";
+			            			
+// 				            			닫기 버튼
+			            	        var upspan = document.getElementsByClassName("close")[1];
+			            	        
+			            	        upspan.onclick = function () {
+			            	        	updateModal.style.display = "none";
+			            	        }
+			            	        
+			            	    	// modal 밖에 클릭했을 때 모달창 꺼지는 스크립트
+			            	        window.onclick = function (event) {
+			            	            if (event.target == modal) {
+			            	                updateModal.style.display = "none";
+			            	            }
+			            	        }
+			            	        
+			            	        const rating = document.getElementById("updaterating");
+			            	        rating.innerText = $(this).children().children()[4].innerText;
+			            	        
+									const content = document.getElementById('urvContent');
+		            	        	content.value = $(this).children().siblings()[6].innerText;
+			            	        
+		            	        	
+			            		}
+			            		
+			            	});
+			            }
 	        		}
 	        	},
 	        	error: (data)=>{
@@ -690,7 +699,20 @@
 	        	}
  	    	});
             
-            
+            const upform = document.getElementById('updateReviewFrom');
+            document.getElementById('updateBtn').addEventListener('click', ()=>{
+				 const file = document.getElementById('file'); 
+				 console.log(file.value);
+				 
+				 var check = document.getElementById('check');
+				 if(file.value != null){
+					 check.value="N";
+				 }else{
+					 check.value="Y";
+				 }
+				 console.log(check);
+// 				 upform.submit();
+            });
             
         }
         

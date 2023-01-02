@@ -99,4 +99,5 @@ public class SupplementServiceImpl implements SupplementService {
 	public ArrayList<ProCategory> searchList(String search) {
 		return pcDAO.searchList(sqlSession, search);
 	}
+
 }

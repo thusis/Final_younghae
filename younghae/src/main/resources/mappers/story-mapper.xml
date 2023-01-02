@@ -12,7 +12,26 @@
 		<result column="BOARD_STATUS" property="boardStatus"/>
 		<result column="USER_NUM" property="userNum"/>
 		<result column="BOARD_TYPE" property="boardType"/>
-		<association property="attachment" javaType="Attachment" resultMap="AttmResultSet"></association>
+		<association property="attachment" javaType="Attachment" resultMap="AttmResultSet"/>
+		<association property="member" javaType="Member" resultMap="memberResultSet"/>
+	</resultMap>
+
+	<!-- member 폼 -->
+	<resultMap type="Member" id="memberResultSet">
+		<id column="USER_NUM" property="userNum" />
+		<result column="USER_ID" property="userId" />
+		<result column="USER_PWD" property="userPwd" />
+		<result column="USER_NAME" property="userName" />
+		<result column="USER_NICKNAME" property="userNickname" />
+		<result column="USER_EMAIL" property="email" />
+		<result column="USER_GENDER" property="gender" />
+		<result column="USER_BIRTH" property="userBirth" />
+		<result column="USER_PHONE" property="userPhone" />
+		<result column="USER_RECOMMEND" property="userRecommend" />
+		<result column="USER_ENROLLDATE" property="userEnrollDate" />
+		<result column="USER_CNUMBER" property="userCNumber" />
+		<result column="USER_STATUS" property="userStatus" />
+		<result column="USER_MODIFYDATE" property="userModifyDate" />
 	</resultMap>
 	
 	<!-- 첨부파일 폼 -->

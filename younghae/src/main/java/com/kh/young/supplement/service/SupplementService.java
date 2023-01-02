@@ -40,4 +40,5 @@ public interface SupplementService {
 	int getReviewListCount(int cateNum);
 
 	ArrayList<ProCategory> searchList(String search);
+
 }

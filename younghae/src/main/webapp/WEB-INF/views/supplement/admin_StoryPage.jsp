@@ -6,10 +6,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-    <meta name="description" content="Ogani Template">
-    <meta name="keywords" content="Ogani, unica, creative, html">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!--     <meta name="description" content="Ogani Template"> -->
+<!--     <meta name="keywords" content="Ogani, unica, creative, html"> -->
+<!--     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+<!--     <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
     <title>컬럼</title>
 
     <style>
@@ -162,12 +162,10 @@
 	                                <ul>
 	                                    <li><i class="fa fa-calendar-o"></i>${ story.boardModifyDate }</li>
 	                                    <li><i class="fa fa-comment-o"></i>${ story.boardView }</li>
-	                                    <c:if test="${ loginUser.userCNumber eq '3' }">
-				                            <div class="trashIcon" style="display: inline; float: right; font-size: 150%; color: #CC2525;">
-			                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
-				                                	<i class="bi bi-trash3"></i>
-				                            </div>
-			                            </c:if>
+			                            <div class="trashIcon" style="display: inline; float: right; font-size: 150%; color: #CC2525;">
+		                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
+			                                	<i class="bi bi-trash3"></i>
+			                            </div>
 	                                </ul>
 	                                <div class="title" style="font-size: 20px; font-weight: bold;">${ story.boardTitle }</div>
 	                                
@@ -301,8 +299,7 @@
 // 			                                		'</div></div></div></div>';
 //               					div.append(content);
 //                     		}
-                    		
-                    		
+                    		location.reload();
                     	},
                     	error:(data)=>{
                     		console.log(data);

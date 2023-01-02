@@ -25,4 +25,5 @@ public class Review {
 	private String rvBuy;
 	private String userNickname;
 	private String image;
+	private Member member;
 }

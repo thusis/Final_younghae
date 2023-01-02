@@ -100,6 +100,7 @@
 		select *
 		from review
 		join product using (pro_num)
+		join member using (user_num)
 		where cate_num = #{cateNum}
 		order by rv_num desc
 	</select>
@@ -168,6 +169,7 @@
 		<result column="RV_STATUS" property="rvStatus"/>
 		<result column="RV_STAR" property="rvStar"/>
 		<result column="RV_BUY" property="rvBuy"/>
+		<association property="member" javaType="Member" resultMap="memberResultSet"/>
 	</resultMap>
 	
    <select id="selemetMember" resultMap="memberResultSet">
