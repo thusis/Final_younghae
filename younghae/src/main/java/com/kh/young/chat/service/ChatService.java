@@ -15,20 +15,18 @@ import com.kh.young.model.vo.Chatroom;
 @Service
 public interface ChatService {
 
-	ChatroomDto openMyChat(HttpServletRequest request, Integer expertNum);
+	ChatroomDto selectNowChatroom(Integer expertNum, int loginUserNum);
 
 	int insertMessage(ChatMessage msg);
 
 	ArrayList<ChatroomDto> selectRoomList(int userNum);
 
-	ArrayList<ChatMessage> selectMessageList(Map<String, Object> paraMap);
-
 	int updateIsRead(Map<String, Object> paramMap);
 
-	ArrayList<ChatMessage> selectMessageList(int chatroomId, int userNum);
+	ArrayList<ChatMessage> selectMessageList(int chatroomId);
 
 	ArrayList<ChatroomDto> selectExpertsRoomList(int loginUserNum);
 
-	ArrayList<ChatReserv> selectReservList(int loginUserNum);
+//	ArrayList<ChatReserv> selectReservList(int loginUserNum);
 
 }

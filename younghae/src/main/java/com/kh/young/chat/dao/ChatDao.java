@@ -10,7 +10,6 @@ import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
-import com.kh.young.qna.dto.ExpertRespDto;
 
 @Repository("chDao")
 public class ChatDao {
@@ -31,8 +30,8 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectRoomList", userNum);
 	}
 	
-	public ArrayList<ChatMessage> selectMessageList(SqlSessionTemplate sqlSession, Map<String, Object> paraMap) {
-		return (ArrayList)sqlSession.selectList("chatMapper.selectMessageList", paraMap);
+	public ArrayList<ChatMessage> selectMessageList(SqlSessionTemplate sqlSession, int chatroomId) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectMessageList", chatroomId);
 	}
 
 	public int updateIsRead(SqlSessionTemplate sqlSession, Map<String, Object> paraMap) {
@@ -67,6 +66,32 @@ public class ChatDao {
 
 	public ArrayList<ChatReserv> selectReservList(SqlSessionTemplate sqlSession, int loginUserNum) {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectReservList",loginUserNum);
+	}
+
+	public ChatroomDto selectRecentChatroom(SqlSessionTemplate sqlSession, int loginUserNum){
+		int myLatestChatId = sqlSession.selectOne("chatMapper.selectMyLatestChatId", loginUserNum);
+		int otherLatestChatId = sqlSession.selectOne("chatMapper.selectOtherLatestChatId", loginUserNum);
+		System.out.println(myLatestChatId+" "+ otherLatestChatId);
+		
+		ChatroomDto resultChatroom = null;
+		
+		if(myLatestChatId==0 && otherLatestChatId==0) {
+			return resultChatroom;
+		} else {
+			int cnum = selectCnum(sqlSession, loginUserNum);
+			
+			if( cnum == 1 ) { //일반유저의 최신 채팅방 조회
+				resultChatroom = sqlSession.selectOne("chatMapper.selectGeneralRecentChatroom", Math.max(myLatestChatId, otherLatestChatId));
+			} else { // 전문가유저의 최신 채팅방 조회 
+				resultChatroom =  sqlSession.selectOne("chatMapper.selectExpertRecentChatroom", Math.max(myLatestChatId, otherLatestChatId));
+			}
+			System.out.println("ch다오88: "+ resultChatroom);
+			return resultChatroom;
+		}
+	}
+	
+	public int selectCnum(SqlSessionTemplate sqlSession, int loginUserNum) {
+		return sqlSession.selectOne("chatMapper.selectCnum", loginUserNum);
 	}
 
 	

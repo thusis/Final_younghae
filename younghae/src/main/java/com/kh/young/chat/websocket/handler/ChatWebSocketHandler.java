@@ -85,7 +85,7 @@ public class ChatWebSocketHandler extends TextWebSocketHandler  {
                 logger.debug("loginUserNum : " + loginUserNum);
                 
                 // 로그인 상태인 회원 중 receivedId나 userNum이 일티하는 회원에게 메세지 전달
-                if(loginUserNum == msg.getReceivedId() || loginUserNum == msg.getUserNum()) {
+                if(loginUserNum == msg.getReceiverNum() || loginUserNum == msg.getSenderNum()) {
                     logger.info(msg.toString());
                     
                     s.sendMessage(new TextMessage(new Gson().toJson(msg)));
