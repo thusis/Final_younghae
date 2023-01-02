@@ -149,7 +149,7 @@
     <section class="featured spad" style="margin-left: 20%; margin-right: 20%;">
         <div class="container">
             <div class="col-lg-12 col-md-12">
-                <div class="row" style="width: 100%; margin: 0; height: 60%;">
+                <div class="row" style="width: 100%; margin: 0; height: 60%;" id="ajaxdiv">
                 	<c:forEach items="${ list }" var="story">
 	                    <div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">
 	                        <div class="blog__item">
@@ -160,19 +160,18 @@
 	                            </div>
 	                            <div class="blog__item__text">
 	                                <ul>
-	                                    <li><i class="fa fa-calendar-o"></i>${ story.boardModifyDate }/${ story.boardNum }</li>
+	                                    <li><i class="fa fa-calendar-o"></i>${ story.boardModifyDate }</li>
 	                                    <li><i class="fa fa-comment-o"></i>${ story.boardView }</li>
-	                                    <c:if test="${ loginUser ne null }">
+	                                    <c:if test="${ loginUser.userCNumber eq '3' }">
 				                            <div class="trashIcon" style="display: inline; float: right; font-size: 150%; color: #CC2525;">
 			                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
-				                                <i class="bi bi-trash3"></i>
+				                                	<i class="bi bi-trash3"></i>
 				                            </div>
 			                            </c:if>
 	                                </ul>
 	                                <div class="title" style="font-size: 20px; font-weight: bold;">${ story.boardTitle }</div>
 	                                
 	                                <div id="detail" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">
-<%-- 	                                	${ fn:split(story.boardContent,'</span>')[0] } --%>
 	                                </div>
 	                            </div>
 	                        </div>
@@ -280,16 +279,35 @@
                         check = 'N';
                     }
 //                     console.log($(this).siblings()[0].value);
-//                     $.ajax({
-//                     	url:'${ contextPath }/trash.st',
-//                     	data: {boardNum: $(this).siblings()[0].value, check: check},
-//                     	success:(data)=>{
-//                     		console.log(data);
-//                     	},
-//                     	error:(data)=>{
-//                     		console.log(data);
-//                     	}
-//                     });
+                    
+                    $.ajax({
+                    	url:'${ contextPath }/trash.st',
+                    	data: {boardNum: $(this).siblings()[0].value, check: check},
+                    	success:(data)=>{
+                    		console.log(data);
+                    		
+//                     		const div = document.getElementById('ajaxdiv');
+//                     		div.innerHTML = "";
+                    		
+//                     		for(const s of data){
+// 	                    		const content = document.createElement('div');
+// 	                    		content.innerHTML = '<div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">'+
+// 	    	                        				'<div class="blog__item"><div class="blog__item__pic"><input type="hidden" name="boardNum" value="'+${ s.boardNum }'">'+
+// 	                               					'<input type="hidden" name="boardUserNum" value="'+${ s.userNum }'">'+'<img src="'+${ s.attachment.attachRename }+'" style="width: 100px; height: 300px; border-radius: 1.5em;" alt="">'+
+// 	                           	 					'</div><div class="blog__item__text"><ul><li><i class="fa fa-calendar-o"></i>'+${ s.boardModifyDate }+'</li>'+
+// 	                           	 					'<li><i class="fa fa-comment-o"></i>'+${ s.boardView }+'</li><c:if test="${ loginUser ne null }"><div class="trashIcon" style="display: inline; float: right; font-size: 150%; color: #CC2525;">'+
+// 			                                		'<input type="hidden" name="boardNum" value="'+${ s.boardNum }+'"><i class="bi bi-trash3"></i></div></c:if></ul>'+
+// 			                                		'<div class="title" style="font-size: 20px; font-weight: bold;">'+${ s.boardTitle }+'</div><div id="detail" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
+// 			                                		'</div></div></div></div>';
+//               					div.append(content);
+//                     		}
+                    		
+                    		
+                    	},
+                    	error:(data)=>{
+                    		console.log(data);
+                    	}
+                    });
 //                     console.log($(this).attr("class"));
                 }); // 클래스 이름으로 비교해서 ajax 실행...인데 ajax로 삭제 후 리스트도 뿌려야하나...?
                 
@@ -308,7 +326,7 @@
 					const boardNum = $(this).parents().children('.blog__item__pic').children()[0].value;
 					const userNum = $(this).parents().children('.blog__item__pic').children()[1].value;
 					
-					location.href = '${contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
+					location.href = '${	contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});
             }
         </script>

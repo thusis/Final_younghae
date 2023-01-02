@@ -96,7 +96,7 @@
 	<!-- 컬럼 업데이트 -->
 	<update id="updateStory">
 		update board
-		set board_title = #{ boardTitle }, board_content = #{ boardContent }
+		set board_title = #{ boardTitle }, board_content = #{ boardContent }, board_status = 'Y'
 		where board_num = #{ boardNum } and board_type = 3
 	</update>
 	

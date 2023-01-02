@@ -112,6 +112,13 @@
 		where cate_num = #{cateNum}
 	</select>
 	
+	<!-- 카테고리 검색 -->
+	<select id="searchList" resultMap="CategoryResultSet">
+		select  *
+		from product_category
+		where cate_name like '%'||#{search}||'%'
+	</select>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>

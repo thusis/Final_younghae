@@ -118,18 +118,13 @@
 				</div>
 			</div>
 		</div>
-		<div class="row featured__filter">
+		<div class="row featured__filter" id="cate">
 			<c:forEach items="${ list }" var="c">
 				<div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
 					<div class="featured__item">
 						<div class="featured__item__pic set-bg">
 							<input type="hidden" value="${ c.cateNum }">
 							<p>${ c.cateName }</p>
-							<!-- <ul class="featured__item__pic__hover">
-	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                            </ul> -->
 						</div>
 					</div>
 				</div>
@@ -248,6 +243,22 @@
 				data: {search:$('#bn_navbar-search-input_1').val()},
 				success:(data)=>{
 					console.log(data);
+					
+					const div = document.getElementById('cate');
+					
+					div.innerHTML = '';
+					
+					for(const d of data){
+						const content = document.createElement("div");
+						
+						content.setAttribute('class', 'col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables');
+						
+						content.innerHTML = '<div class="featured__item"><div class="featured__item__pic set-bg">'+
+											'<input type="hidden" value="'+ d.cateNum +'"><p>'+ d.cateName +'</p>'+
+											'</div></div>';
+											
+						div.append(content);
+					}
 				},
 				error: (data)=>{
 					console.log(data);

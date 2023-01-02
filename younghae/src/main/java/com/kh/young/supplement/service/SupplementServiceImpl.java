@@ -94,4 +94,9 @@ public class SupplementServiceImpl implements SupplementService {
 	public int getReviewListCount(int cateNum) {
 		return pcDAO.getReviewListCount(sqlSession, cateNum);
 	}
+
+	@Override
+	public ArrayList<ProCategory> searchList(String search) {
+		return pcDAO.searchList(sqlSession, search);
+	}
 }

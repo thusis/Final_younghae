@@ -77,4 +77,8 @@ public class SupplementDAO {
 	public int getReviewListCount(SqlSessionTemplate sqlSession,  int cateNum) {
 		return sqlSession.selectOne("supplementMapper.getReviewListCount", cateNum);
 	}
+
+	public ArrayList<ProCategory> searchList(SqlSessionTemplate sqlSession, String search) {
+		return (ArrayList)sqlSession.selectList("supplementMapper.searchList", search);
+	}
 }

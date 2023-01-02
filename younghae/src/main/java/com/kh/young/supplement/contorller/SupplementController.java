@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,7 +48,7 @@ public class SupplementController {
 		if(page != null) {
 			currentPage = page;
 		}
-		Member mem = sService.selectMember(7);
+		Member mem = sService.selectMember(61);
 		// 집에서는 26
 		// 학원에서는 8
 	      
@@ -356,7 +357,22 @@ public class SupplementController {
 	}
 	
 	@RequestMapping("searchCategory.su")
-	public void searchCategory(@RequestParam("search") String search) {
+	public void searchCategory(@RequestParam("search") String search, HttpServletResponse response) {
 		System.out.println(search);
+		
+		ArrayList<ProCategory> list = sService.searchList(search);
+		
+		System.out.println(list);
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		// 시간 형식 지정해주기 
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
 	}
 }
