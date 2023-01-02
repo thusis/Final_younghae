@@ -85,4 +85,18 @@ public class SupplementDAO {
 	public int insertReco(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.insert("supplementMapper.insertReco", r);
 	}
+
+	public int deleteReco(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.delete("supplementMapper.deleteReco", r);
+	}
+
+	public ArrayList<Review> adminReviewList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("supplementMapper.adminReviewList", 0, rowBounds);
+	}
+
+	public int adminREviewListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("supplementMapper.adminReviewListCount");
+	}
 }

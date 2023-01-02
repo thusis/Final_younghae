@@ -43,4 +43,10 @@ public interface SupplementService {
 
 	int insertReco(Review r);
 
+	int deleteReco(Review r);
+
+	ArrayList<Review> adminReviewList(PageInfo pi);
+
+	int adminReviewListCount();
+
 }

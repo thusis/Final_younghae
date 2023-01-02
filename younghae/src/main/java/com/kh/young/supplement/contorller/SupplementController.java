@@ -258,10 +258,10 @@ public class SupplementController {
 	
 	@RequestMapping("checkReview.su")
 	public void checkReview(@ModelAttribute Review r, HttpServletResponse response) {
-		System.out.println("조회 정보 " + r);
+//		System.out.println("조회 정보 " + r);
 		Review review = sService.checkReview(r);
 		
-		System.out.println("checkReview : " + review);
+//		System.out.println("checkReview : " + review);
 		
 		
 		response.setContentType("application/json; charset=UTF-8");
@@ -279,7 +279,7 @@ public class SupplementController {
 	
 	@RequestMapping("reviewList.su")
 	public void reviewList(@RequestParam("proNum") int proNum, HttpServletResponse response) {
-		System.out.println("조회 정보 " + proNum);
+//		System.out.println("조회 정보 " + proNum);
 		ArrayList<Review> review = sService.reviewList(proNum);
 		
 		for(int i =  0; i < review.size(); i++) {
@@ -294,7 +294,7 @@ public class SupplementController {
 			review.get(i).setUserNickname(m.getUserNickname());
 		}
 		
-		System.out.println("checkReview : " + review);
+//		System.out.println("checkReview : " + review);
 		
 		
 		
@@ -312,12 +312,7 @@ public class SupplementController {
 	
 	@RequestMapping("rateUpdate.su")
 	public void rateUpdate(@ModelAttribute Supplement product, HttpServletResponse response) {
-//		System.out.println(product);
-//		System.out.println(product.getProGrade());
-		
 		int result = sService.rateUpdate(product);
-		
-		System.out.println("별점 수정 완료 "+result);
 	}
 	
 	@RequestMapping("reviewMore.su")
@@ -362,8 +357,6 @@ public class SupplementController {
 		System.out.println(search);
 		
 		ArrayList<ProCategory> list = sService.searchList(search);
-		
-		System.out.println(list);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		GsonBuilder gb = new GsonBuilder();
@@ -424,12 +417,53 @@ public class SupplementController {
 	}
 	
 	@RequestMapping("reco.su")
-	public void reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum) {
+	public Integer reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
 		Review r = new Review();
+		System.out.println(check);
+		
 		r.setRvNum(rvnum);
 		r.setUserNum(usernum);
 		
-		int result = sService.insertReco(r);
+		System.out.println(r);
 		
+		int result = 0;
+		if(check.equals("R")) {
+			System.out.println("인서트");
+			result = sService.insertReco(r);
+		}else if(check.equals("D")) {
+			System.out.println("삭제");
+			result = sService.deleteReco(r);
+		}
+		
+		return result;
+	}
+	
+//	=============================================== 관리자 ==========================================================================
+	@RequestMapping("adminReviewList.su")
+	public String adminReviewList(@RequestParam(value="page", required=false) Integer page, Model model) {
+		int currentPage = 1;
+		
+		if(page != null) {
+			currentPage = page;
+		}
+		int listCount = sService.getListCount();
+		
+		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 10);
+		
+		ArrayList<Review> r = sService.adminReviewList(pi);
+		
+		int reviewCount = sService.adminReviewListCount();
+		
+		if(r != null) {
+			
+			model.addAttribute("review", r);
+			model.addAttribute("pi", pi);
+			model.addAttribute("reviewCount", reviewCount);
+//			model.addAttribute("loginUser", mem);
+			
+			return "admin_ReviewPage";
+		}else {
+			throw new SupplementException("adminReviewList오류");
+		}
 	}
 }

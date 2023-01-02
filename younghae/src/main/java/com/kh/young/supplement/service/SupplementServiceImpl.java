@@ -105,4 +105,19 @@ public class SupplementServiceImpl implements SupplementService {
 		return pcDAO.insertReco(sqlSession, r);
 	}
 
+	@Override
+	public int deleteReco(Review r) {
+		return pcDAO.deleteReco(sqlSession, r);
+	}
+
+	@Override
+	public ArrayList<Review> adminReviewList(PageInfo pi) {
+		return pcDAO.adminReviewList(sqlSession, pi);
+	}
+
+	@Override
+	public int adminReviewListCount() {
+		return pcDAO.adminREviewListCount(sqlSession);
+	}
+
 }
