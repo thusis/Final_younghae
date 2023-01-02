@@ -270,10 +270,19 @@ public class QaServiceImpl implements QaService {
 	@Override
 	public ArrayList<ReplyRespDto> getReplyList(int boardNum) {
 		ArrayList<Reply> rList = qdao.getReplyList(sqlSession, boardNum);
+		
+		
 		ArrayList<ReplyRespDto> replyList = new ArrayList<>();
 		
 		for(int i=0; i<rList.size();i++) {
-			replyList.add(new ReplyRespDto( rList.get(i), writerInfoToString(getWriterInfoMap(rList.get(i).getUserNum())) ));
+			replyList.add(new ReplyRespDto( 
+					rList.get(i), 
+					writerInfoToString(
+							getWriterInfoMap(
+									rList.get(i).getUserNum()
+									)
+							) 
+					));
 		}
 		
 		System.out.println("서비스"+replyList);
