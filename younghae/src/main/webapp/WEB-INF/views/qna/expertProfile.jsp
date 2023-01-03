@@ -92,7 +92,11 @@
                 <div class="bn_pro-box" style="padding:1.5rem; background: linear-gradient(to bottom, white 80%, #24E082 20%);">
                     <div class="row">
                         <div class="col-lg-8 align-self-center">
-                            <h5 class="bn_pro-name">${eresp.member.userName}&nbsp;&nbsp;<span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">약사</span></h5>
+                            <h5 class="bn_pro-name">${eresp.member.userName}&nbsp;&nbsp;
+                            <span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+                            <c:if test="${eresp.expert.expertSort.trim() eq 'D' }">의사</c:if>
+		                    <c:if test="${eresp.expert.expertSort.trim() eq 'C' }">약사</c:if>
+                            </span></h5>
                             <span style="display: inline-block; width: 3.5rem;">답변수 </span><span>: ${ eresp.answerListSize }개</span><br>
                             <span style="display: inline-block; width: 3.5rem;">전문과목 </span><span>: ${ eresp.expert.expertMedi}</span><br>
                             <span style="display: inline-block; width: 3.5rem;">소속 </span><span>: ${ eresp.expert.expertDept}</span>&nbsp;&nbsp;
@@ -119,12 +123,28 @@
 
                     <div class="row" style="padding: 1.5rem;">
                     	<span>
-                    	${ eresp.expert.expertProfile }
+                    	
+                    	<c:if test="${ eresp.expert.expertProfile.trim() eq 'N' }">
+                    	친절과 정성으로 대답하는 ${ eresp.member.userName } 입니다.
+                    	</c:if>
+                    	<c:if test="${ eresp.expert.expertProfile.trim() ne 'N' }">
+                    	${eresp.expert.expertProfile }
+                    	</c:if>
+
                     	</span>
                    	</div>
                     
                     <div class="row justify-content-center">
-                        <button class="btn" style="color:white;" onclick="location.href='${contextPath}/open.ch?expertNum=${eresp.member.userNum}'"><h3 class="bn_txt_strong">채팅하러가기</h3></button>
+                        <c:if test="${loginUser.userNum != eresp.member.userNum }">
+                        <button class="btn" style="color:white;" onclick="location.href='${contextPath}/open.ch?expertNum=${eresp.member.userNum}'">
+                        	<h3 class="bn_txt_strong">채팅하러가기</h3>
+                        </button>
+                       	</c:if>
+                        <c:if test="${loginUser.userNum == eresp.member.userNum }">
+                        <button class="btn" style="color:white;">
+                        	<h3 class="bn_txt_strong">본인과 채팅할 수 없습니다</h3>
+                        </button>
+                       	</c:if>
                     </div>
                 </div>
             </div>

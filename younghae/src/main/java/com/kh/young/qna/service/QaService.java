@@ -50,6 +50,10 @@ public interface QaService {
 	int updateQuestion(QuestionInsertDto quest, HttpServletRequest request);
 	int deleteQuestion(QuestionInsertDto quest, HttpServletRequest request);
 
+	int getExpertsListCount();
+	ArrayList<ExpertRespDto> selectExpertList(Integer page, int listCount);
+
+
 
 
 }

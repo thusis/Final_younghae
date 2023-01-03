@@ -31,7 +31,7 @@
                 <li><a href="#">게시글 상세보기</a></li>
             </ul>
         </div>
-${qresp }
+        
         <div class="row">
             <div class="col-lg-10">
                 <div class="row justify-content-end ">
@@ -160,7 +160,7 @@ ${qresp }
 					<c:if test="${ empty qresp.sresp }"> </c:if>
 					<c:if test="${ !empty qresp.sresp }">
 						<h4 style="font-family:'IBM Plex Sans KR', sans-serif; font-weight:800;">관련 영양제</h4>
-						<a href="#">
+						<a href="${contextPath}/supplementDetail.sh?proNum=${qresp.sresp.proNum }">
 							<img src="${qresp.sresp.proImage}" alt="${qresp.sresp.proName}">
 							<span hidden="hidden">${qresp.sresp.proNum}</span>
 							<h6>${qresp.sresp.proName}</h6>
@@ -210,7 +210,7 @@ ${qresp }
 			                           </span>
 		                           </span><br>
 		                       </div>
-		
+
 								<div class="col-3 align-self-center">
 									<c:if test="${ans.eresp.eattach != null }">
 									<div class="bn_pro-profile">
@@ -313,7 +313,7 @@ ${qresp }
 						<c:if test="${ empty ans.sresp }"> </c:if>
 						<c:if test="${ !empty ans.sresp }">
 							<h4 style="font-family:'IBM Plex Sans KR', sans-serif;">이런 영양제는 어떠세요?</h4>
-							<a href="#">
+							<a href="${contextPath}/supplementDetail.sh?proNum=${ans.sresp.proNum }">
 								<img src="${ans.sresp.proImage}" alt="${ans.sresp.proName}">
 								<span hidden="hidden">${ans.sresp.proNum}</span>
 								<h6>${ans.sresp.proName}</h6>

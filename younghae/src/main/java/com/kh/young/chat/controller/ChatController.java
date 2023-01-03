@@ -55,13 +55,17 @@ public class ChatController {
 
     	int loginUserNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
     	int cNum = ((Member)request.getSession().getAttribute("loginUser")).getUserCNumber();
+    	if(expertNum == null) {
+    		expertNum = 0;
+    	}
     	
+    	System.out.println(loginUserNum+","+ cNum);
     	ChatroomDto nowChatroom = chService.selectNowChatroom(expertNum, loginUserNum);
     	ArrayList<ChatMessage> messageList = new ArrayList<ChatMessage>();
 
     	if(nowChatroom == null) {
     		System.out.println("ch컨트롤러63 채팅가능한 방이 없나봄 ");
-    		model.addAttribute("msg", "채팅 가능한 방이 없습니다.");
+    		model.addAttribute("chatErrorMsg", "채팅 가능한 방이 없습니다.");
     	} else {
     		System.out.println("ch컨트롤러 nowChatroom 64: "+ nowChatroom);
     		model.addAttribute("nowChatroom",nowChatroom);

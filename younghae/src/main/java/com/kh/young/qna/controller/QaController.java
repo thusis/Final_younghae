@@ -267,11 +267,15 @@ public class QaController {
 	/*******************************************************************/
 	/**전문가찾기**/
 	@GetMapping("expertfind.qa")
-	public String findExpertList() {
-
+	public String findExpertList( @RequestParam(value="page", required=false) Integer page, Model model) {
+		int listCount = qService.getExpertsListCount();
+		ArrayList<ExpertRespDto> erespList = qService.selectExpertList(page, listCount);
+		
+		model.addAttribute("erespList", erespList);
 		return "expertFind";
 	}
-	
+
+
 	/*******************************************************************/
 	@GetMapping("expertprofile.qa")
 	public String selectExpert(@RequestParam("expertNum") int expertNum, Model model, HttpServletRequest request) {

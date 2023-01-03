@@ -105,7 +105,7 @@
             
         </div>
 		
-		${qresp }
+<%-- 		${qresp } --%>
         <div class="col-lg-10 ">
             <div class="bn_txt_big" style="padding: 30px 0 10px 0;">
                 <h3>답변하기</h3>
