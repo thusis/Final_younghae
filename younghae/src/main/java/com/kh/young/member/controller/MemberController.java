@@ -74,7 +74,7 @@ public class MemberController {
         String day = "1999-01-01"; // 형식을 지켜야 함
         java.sql.Date d = java.sql.Date.valueOf(day);
         mem.setUserBirth(d);
-        mem.setUserPhone("임시");
+        mem.setUserPhone("01012341234");
         mem.setUserRecommend(generatedString);
         mem.setUserCNumber(1);
 

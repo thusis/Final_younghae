@@ -129,8 +129,8 @@
                                     </tbody>
                                     <tbody>
                                         <c:if test="${ empty BoardList }">
-                                            <tr style="height: 300px;" style="text-align; center">
-                                                <td colspan="6" style="text-align; center">작성한 게시물이 없습니다.</td>
+                                            <tr style="height: 300px;">
+                                                <td colspan="6" style="text-align:center; vertical-align: middle;">작성한 게시물이 없습니다.</td>
                                             </tr>
                                         </c:if>
                                     </tbody>
@@ -193,8 +193,8 @@
                                                 </tbody>
                                                 <tbody>
                                                     <c:if test="${ empty ReviewList }">
-                                                        <tr style="height: 300px;" style="text-align; center">
-                                                            <td colspan="5" style="text-align; center">작성한 리뷰가 없습니다.</td>
+                                                        <tr style="height: 300px;">
+                                                            <td colspan="5" style="text-align:center; vertical-align: middle;">작성한 리뷰가 없습니다.</td>
                                                         </tr>
                                                     </c:if>
                                                 </tbody>
@@ -261,8 +261,8 @@
                                                 </tbody>
                                                 <tbody>
                                                     <c:if test="${ empty ReplyList }">
-                                                        <tr style="height: 300px;" style="text-align; center">
-                                                            <td colspan="5" style="text-align; center">작성한 댓글이 없습니다.</td>
+                                                        <tr style="height: 300px;">
+                                                            <td colspan="5" style="text-align:center; vertical-align: middle;">작성한 댓글이 없습니다.</td>
                                                         </tr>
                                                     </c:if>
                                                 </tbody>

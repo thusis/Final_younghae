@@ -250,7 +250,7 @@
                             </div>
                             <div class="mx-3 my-2 py-2 bordert">
                                 <div class="text-center py-3">
-                                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=6ca1f8428b3e4b30036e0a07884586be&redirect_uri=http://localhost:8081/young/kakaoLogin.me&response_type=code"><img src="resources/img/kakao_login_medium_narrow.png"></a>
+                                    <a href="https://kauth.kakao.com/oauth/authorize?client_id=6ca1f8428b3e4b30036e0a07884586be&redirect_uri=http://localhost:8888/young/kakaoLogin.me&response_type=code"><img src="resources/img/kakao_login_medium_narrow.png"></a>
                                 </div>
                             </div>
                         </form>
@@ -353,7 +353,7 @@
                                     </div>
                                     <div class="form-group py-2">
                                         <div>
-                                            전문가 인증* <label class="input-file-button" for="input-file" style="float: right;">사진첨부</label> <input type="file" id="input-file" style="display: none;">
+                                            전문가 인증* <label class="input-file-button" for="input-file" style="float: right;">사진첨부</label> <input type="file" id="input-file" style="display: none;" required>
                                         </div>
                                     </div>
                                     <button class="btn btn-primary btn-block mt-3 " style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="enrollBtnExport">회원가입</button>

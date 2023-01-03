@@ -12,10 +12,13 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Review;
+import com.kh.young.model.vo.Supplement;
 import com.kh.young.myPage.dao.MyPageDAO;
+import com.kh.young.myPage.dto.ScrapDto;
 
 @Service("myService")
 public class MyPageServiceImpl implements MyPageService{
@@ -100,6 +103,24 @@ public class MyPageServiceImpl implements MyPageService{
 		return myDAO.selectAllReview(sqlSession, id);
 	}
 	
+	@Override
+	public ArrayList<Supplement> seletAllzzim(PageInfo pi, int id) {
+		return myDAO.seletAllzzim(sqlSession, pi,id);
+	}
 	
+	@Override
+	public int getListCountZZim(int id) {
+		return myDAO.getListCountZZim(sqlSession, id);
+	}
+	
+	@Override
+	public int getListCountScrap(int id) {
+		return myDAO.getListCountScrap(sqlSession, id);
+	}
+	
+	@Override
+	public ArrayList<ScrapDto> seletAllScrap(PageInfo pi, int id) {
+		return myDAO.seletAllScrap(sqlSession, pi,id);
+	}
 	
 }

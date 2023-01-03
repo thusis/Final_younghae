@@ -3,6 +3,7 @@ package com.kh.young.myPage.dao;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -11,9 +12,12 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Review;
+import com.kh.young.model.vo.Supplement;
+import com.kh.young.myPage.dto.ScrapDto;
 
 @Repository("myDAO")
 public class MyPageDAO {
@@ -91,6 +95,29 @@ public class MyPageDAO {
 	public ArrayList<Review> selectAllReview(SqlSessionTemplate sqlSession, int id) {
 		// TODO Auto-generated method stub
 		return (ArrayList)sqlSession.selectList("mypageMapper.selectAllReview", id);
+	}
+
+	public ArrayList<Supplement> seletAllzzim(SqlSessionTemplate sqlSession, PageInfo pi, int id) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("mypageMapper.seletAllzzim", id, rowBounds);
+	}
+
+	public int getListCountZZim(SqlSessionTemplate sqlSession, int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mypageMapper.getListCountZZim", id);
+	}
+
+	public int getListCountScrap(SqlSessionTemplate sqlSession, int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mypageMapper.getListCountScrap", id);
+	}
+
+	public ArrayList<ScrapDto> seletAllScrap(SqlSessionTemplate sqlSession, PageInfo pi, int id) {
+		// TODO Auto-generated method stub
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("mypageMapper.seletAllScrap", id, rowBounds);
 	}
 
 }

@@ -75,24 +75,27 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tbody">
-                                        <c:forEach begin="0" end="4" var="i">
+                                        <c:forEach var="i" items="${ ReplyList }">
                                             <tr>
-                                                <td>${ ReplyList[i].replyNum }</td>
-                                                <c:if test="${ ReplyList[i].boardType eq 1 }">
+                                                <td>${ i.replyNum }</td>
+                                                <c:if test="${ i.boardType eq 1 }">
                                                     <td>자유게시판</td>
                                                 </c:if>
-                                                <c:if test="${ ReplyList[i].boardType eq 2 }">
+                                                <c:if test="${ i.boardType eq 2 }">
                                                     <td>건강해지는 이야기</td>
                                                 </c:if>
-                                                <c:if test="${ ReplyList[i].boardType eq 3 }">
+                                                <c:if test="${ i.boardType eq 3 }">
                                                     <td>질문게시판</td>
                                                 </c:if>
-                                                <c:if test="${ ReplyList[i].boardType eq 8 }">
+                                                <c:if test="${ i.boardType eq 8 }">
                                                     <td>답변</td>
                                                 </c:if>
-                                                <td>${ ReplyList[i].boardNum }</td>
-                                                <td>${ ReplyList[i].replyContent }</td>
-                                                <td>${ ReplyList[i].replyDate }</td>
+                                                <c:if test="${ i.boardType eq null }">
+                                                	<td>게시판</td>
+                                                </c:if>
+                                                <td>${ i.boardNum }</td>
+                                                <td>${ i.replyContent }</td>
+                                                <td>${ i.replyDate }</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

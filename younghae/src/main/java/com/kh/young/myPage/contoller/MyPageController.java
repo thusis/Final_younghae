@@ -15,15 +15,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.kh.young.common.Pagination;
 import com.kh.young.member.exception.MemberException;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Review;
+import com.kh.young.model.vo.Supplement;
+import com.kh.young.myPage.dto.ScrapDto;
 import com.kh.young.myPage.exception.MyPageException;
 import com.kh.young.myPage.service.MyPageService;
 
@@ -65,7 +69,25 @@ public class MyPageController {
     }
     // 내 스크랩 이동.
     @RequestMapping("myScrap.my")
-    public String myScrap() {
+    public String myScrap(HttpSession session, Model model,@RequestParam(value="page", required=false) Integer page) {
+    	
+    	int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+    	int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+    	
+	    int listCount = myService.getListCountScrap(id);
+	    
+	    PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 10);
+    	
+    	ArrayList<ScrapDto> clip =  myService.seletAllScrap(pi,id); 
+    	
+    	
+    	model.addAttribute("pi", pi);
+        model.addAttribute("myClip", clip);
+    	
+    	
         return "myScrap";
     }
     // 내 프로필 이동.
@@ -98,7 +120,24 @@ public class MyPageController {
     }
     // 내 찜하기 이동.
     @RequestMapping("myWishList.my")
-    public String myWishList() {
+    public String myWishList(HttpSession session, Model model, @RequestParam(value="page", required=false) Integer page) {
+    	
+    	int currentPage = 1;
+		if(page != null) {
+			currentPage = page;
+		}
+    	int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+    	
+	    int listCount = myService.getListCountZZim(id);
+	    
+	    PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 12);
+    	
+    	ArrayList<Supplement> zzim =  myService.seletAllzzim(pi,id); 
+    	
+    	
+    	model.addAttribute("pi", pi);
+        model.addAttribute("myWishList", zzim);
+    	
         return "myWishList";
     }
     // 내 장바구니 이동.
@@ -249,8 +288,6 @@ public class MyPageController {
         }
 
         int id = ((Member) session.getAttribute("loginUser")).getUserNum();
-
-        int total = Integer.parseInt(pointTotal) + Integer.parseInt(updatePoint);
         
         String updatePointMain = "+"+updatePoint;
 
