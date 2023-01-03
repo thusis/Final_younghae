@@ -8,9 +8,12 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Review;
+import com.kh.young.model.vo.Supplement;
+import com.kh.young.myPage.dto.ScrapDto;
 
 public interface MyPageService {
 
@@ -43,5 +46,13 @@ public interface MyPageService {
 	ArrayList<Reply> selectAllReply(int id);
 
 	ArrayList<Review> selectAllReview(int id);
+
+	ArrayList<Supplement> seletAllzzim(PageInfo pi, int id);
+
+	int getListCountZZim(int id);
+
+	int getListCountScrap(int id);
+
+	ArrayList<ScrapDto> seletAllScrap(PageInfo pi, int id);
 
 }

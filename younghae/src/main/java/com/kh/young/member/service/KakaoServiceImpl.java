@@ -55,7 +55,7 @@ public class KakaoServiceImpl implements KakaoService {
 
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=6ca1f8428b3e4b30036e0a07884586be"); // '='이후 REST_KEY값 넣기
-            sb.append("&redirect_uri=http://localhost:8081/young/kakaoLogin.me"); //	카카오 developer에서 설정해준 redirect주소값 넣어주기
+            sb.append("&redirect_uri=http://localhost:8888/young/kakaoLogin.me"); //	카카오 developer에서 설정해준 redirect주소값 넣어주기
             sb.append("&code=" + code);
 
             bw.write(sb.toString());

@@ -75,25 +75,28 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach begin="0" end="4" var="i">
+                                        <c:forEach var="i" items="${ BoardList }">
                                             <tr>
-                                                <td>${ BoardList[i].boardNum }</td>
-                                                <c:if test="${ BoardList[i].boardType eq 1 }">
+                                                <td>${ i.boardNum }</td>
+                                                <c:if test="${ i.boardType eq 1 }">
                                                     <td>자유게시판</td>
                                                 </c:if>
-                                                <c:if test="${ BoardList[i].boardType eq 3 }">
+                                                <c:if test="${ i.boardType eq 3 }">
                                                     <td>건강해지는 이야기</td>
                                                 </c:if>
-                                                <c:if test="${ BoardList[i].boardType eq 5 }">
+                                                <c:if test="${ i.boardType eq 5 }">
                                                     <td>질문게시판</td>
                                                 </c:if>
-                                                <c:if test="${ BoardList[i].boardType eq 8 }">
+                                                <c:if test="${ i.boardType eq 8 }">
                                                     <td>답변</td>
                                                 </c:if>
-                                                <td>${ BoardList[i].boardTitle }</td>
-                                                <td>${ BoardList[i].boardCreateDate }</td>
-                                                <td>${ BoardList[i].boardModifyDate }</td>
-                                                <td>${ BoardList[i].boardView }</td>
+                                                <c:if test="${ i.boardType eq null }">
+                                                	<td style="height: 300px; text-align:center; vertical-align: middle;">게시판</td>
+                                                </c:if>
+                                                <td>${ i.boardTitle }</td>
+                                                <td>${ i.boardCreateDate }</td>
+                                                <td>${ i.boardModifyDate }</td>
+                                                <td>${ i.boardView }</td>
                                             </tr>
                                         </c:forEach>
                                     </tbody>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -26,6 +27,11 @@
 	font-weight: 800;
 	color: #FD9F28;
 }
+.product__item__pic {
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+}
 </style>
 </head>
 
@@ -39,7 +45,6 @@
 	</div>
 	<section class="product spad" style="margin-top: -2%;">
 		<div class="container">
-			<!-- 실시간트렌드 섹션 -->
 			<div class="section-title"
 				style="padding: 30px 0 10px 0; margin-bottom: 0px;">
 				<h4>내 스크랩 관리</h4>
@@ -48,241 +53,48 @@
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 40px;">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 40px;">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/blb/blb01012/v/29.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 40px;">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 40px;">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/car/car01733/v/16.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-			<div class="row">
-				<div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 40px;">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 40px;">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/blb/blb01012/v/29.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 40px;">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 40px;">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nor/nor03770/l/43.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-				<div class="col-lg-2 col-md-4 col-sm-6">
-					<div class="product__item">
-						<div class="product__item__pic set-bg">
-							<img
-								src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/car/car01733/v/16.jpg"
-								style="margin-top: 30px;">
-						</div>
-						<div class="product__item__text" style="text-align: left;">
-							<span style="float: right; font-size: 18px; margin-top: -1%;"><i
-								class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32</span>
-							<h6 style="display: inline-block;">
-								나우푸드</a>
-							</h6>
-							<h5>울트라 오메가3</h5>
-							<h5>35,600</h5>
-							<br> <span
-								style="float: right; font-size: 13px; margin-top: -1%; color: #1a19197e;">몸에
-								좋은 오메가3입니다. 츄라이츄라이해보세요</span>
-						</div>
-
-					</div>
-				</div>
-
-			</div>
-			<br>
-			<br>
-			<div class="product__pagination" style="text-align: center;">
-				<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a href="#"><i
-					class="fa fa-long-arrow-right"></i></a>
-			</div>
-
-
-		</div>
-	</section>
+                <c:forEach items="${myClip}" var="i">
+                    <div class="col-lg-2 col-md-1 col-sm-1" style="margin-left: 30px; ">
+                        <div class="product__item">
+                            <div class="product__item__pic set-bg">
+                                <img src="${i.attachName }" style="margin-top: 30px; ">
+                            </div>
+                            <div class="product__item__text" style="text-align: left;">
+                                <h6 style="display: inline-block;">
+                                    <a style="font-size:20pt;">${i.boardNum}</a>
+                                </h6>
+                                <h5>${i.boardTitle }</h5>
+                            </div>
+                        </div>
+                    </div>
+                </c:forEach>
+            </div>
+            <c:if test="${ myClip.size() !=0 }">
+                <div class="col-lg-12 text-center" style="margin-top: 1%;">
+            <div class="product__pagination blog__pagination">
+               <c:url var="goBack" value="${ loc }">
+                  <c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+               </c:url>
+               <c:if test="${ pi.currentPage > 1 }">
+                  <a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a>
+               </c:if>
+               <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+                  <c:url var="goNum" value="${ loc }">
+                     <c:param name="page" value="${p}"></c:param>
+                  </c:url>
+                  <a href="${ goNum }">${ p }</a>
+               </c:forEach>
+               <c:url var="goNext" value="${ loc }">
+                  <c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+               </c:url>
+               <c:if test="${ pi.currentPage <= 1 }">
+               <a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+               </c:if>
+            </div>
+         </div>
+         </c:if>
+         </div>
+    </section>
 
 </body>
 

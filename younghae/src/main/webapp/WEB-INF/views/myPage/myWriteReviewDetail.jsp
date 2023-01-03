@@ -74,16 +74,14 @@
                                         </tr>
                                     </thead>
                                     <tbody id="tbody">
-                                        <c:forEach begin="0" end="4" var="i">
-                                            <c:if test="${ !empty ReviewList[i] }">
+                                        <c:forEach var="i" items="${ ReviewList }">
                                                 <tr>
-                                                    <td>${ ReviewList[i].rvNum }</td>
-                                                    <td>${ ReviewList[i].rvContent }</td>
-                                                    <td>${ ReviewList[i].rvCreateDate }</td>
-                                                    <td>${ ReviewList[i].rvMOdifyDate }</td>
-                                                    <td>${ ReviewList[i].rvStar }</td>
+                                                    <td>${ i.rvNum }</td>
+                                                    <td>${ i.rvContent }</td>
+                                                    <td>${ i.rvCreateDate }</td>
+                                                    <td>${ i.rvMOdifyDate }</td>
+                                                    <td>${ i.rvStar }</td>
                                                 </tr>
-                                            </c:if>
                                         </c:forEach>
                                     </tbody>
                                 </table>

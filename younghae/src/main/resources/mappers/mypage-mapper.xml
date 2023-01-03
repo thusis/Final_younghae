@@ -60,7 +60,7 @@
    <select id="selectAllCoupon" parameterType="map" resultMap="couponResultMap">
       select *
       from Coupon
-      where USER_num = #{id}
+      where USER_num = #{id} and TO_DATE(COU_ENDDATE) >= SYSDATE
    </select>
    
    <select id="selectAdminCoupon" parameterType="map" resultMap="couponResultMap">
@@ -95,7 +95,51 @@
       order by RV_NUM desc
    </select>
    
+   <select id="seletAllzzim" parameterType="map" resultMap="SupplementResultSet">
+   select *
+from zzim join product using(pro_num)
+where user_num = #{id}
+   </select>
    
+   <select id="getListCountZZim" parameterType="map" resultType="_int">
+   		select count(*)
+   		from zzim join product using(pro_num)
+		where user_num = #{id}
+   </select>
+   
+   <select id="getListCountScrap" parameterType="map" resultType="_int">
+select count(*)
+from clip c join board using(board_num)
+where c.user_num = #{id}
+   </select>
+   
+   <select id="seletAllScrap" parameterType="map" resultMap="Scrap">
+select board_title, ATTACH_NAME, b.board_num 
+from clip c join board b on c.board_num = b.board_num join attachment on serialnumber = b.board_num
+where c.user_num = #{id}
+   </select>
+   
+   <resultMap type="ScrapDto" id="Scrap">
+		<id column="board_num" property="boardNum"/>
+  		<result column="board_title" property="boardTitle"/>
+  		<result column="ATTACH_NAME" property="attachName"/>
+	</resultMap>
+   
+   
+   
+	
+	<resultMap type="Attachment" id="Attachment">
+		<id column="ATTACH_NUM" property="attachNum"/>
+  		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
+  		<result column="ATTACH_NAME" property="attachName"/>
+  		<result column="ATTACH_RENAME" property="attachRename"/>
+  		<result column="ATTACH_PATH" property="attachPath"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="SERIALNUMBER" property="serialNumber"/>
+  		<result column="ATTACH_STATUS" property="attachStatus"/>
+	</resultMap>
+	
+	
    <resultMap type="Member" id="loginResultMap">
       <id column="USER_NUM" property="userNum"/>
       <result column="USER_ID" property="userId"/>
@@ -191,4 +235,22 @@
       <result column="RV_BUY" property="rvBuy"/>
       <result column="RV_RECOMMEND" property="userNickname"/>
    </resultMap>
+   
+   	<!-- 영양제 폼 -->
+	<resultMap type="Supplement" id="SupplementResultSet">
+		<id column="PRO_NUM" property="proNum"/>
+		<result column="PRO_IMAGE" property="proImage"/>
+		<result column="PRO_NAME" property="proName"/>
+		<result column="PRO_COMPANY" property="proCompany"/>
+		<result column="PRO_INGREDIENT" property="proIngredient"/>
+		<result column="PRO_PRICE" property="proPrice"/>
+		<result column="PRO_EFFECT" property="proEffect"/>
+		<result column="PRO_INTAKE" property="proIntake"/>
+		<result column="PRO_SALE_STATUS" property="proSaleStatus"/>
+		<result column="PRO_CREATEDATE" property="proCreateDate"/>
+		<result column="PRO_MODIFYDATE" property="proModifyDate"/>
+		<result column="PRO_GRADE" property="proGrade"/>
+		<result column="PRO_STATUS" property="proStatus"/>
+		<result column="CATE_NUM" property="cateNum"/>
+	</resultMap>
 </mapper>

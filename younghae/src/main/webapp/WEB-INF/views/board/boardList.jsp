@@ -307,22 +307,32 @@
                 <i class="fas fa-long-arrow-left"></i>
               </a>
           </li>
-          
-          <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-              <c:url var="goNum" value="${ loc }">
-                  <c:if test="${ boardNum != null }">
-                      <c:param name="boardNum" value="${ boardNum }"/>
+          <c:if test="${ list.size() !=0 }">
+      <div class="page">
+         <ul class="pagination">
+            <li class="page-item"><c:url var="goBack" value="${ loc }">
+                  <c:if test="${pi.currentPage>1 }">
+                     <c:param name="page" value="${ pi.currentPage-1 }"></c:param>
                   </c:if>
-                  <c:if test="${ searchValue != null }">
-                      <c:param name="searchValue" value="${ searchValue }"/>
-                  </c:if>
-                  <c:if test="${boardType != null}">
-                  	<c:param name="boardType" value="${boardType}"/>
-                  </c:if>
-                  <c:param name="page" value="${ p }"/>
-              </c:url>
+               </c:url> <a class="page-link" href="${ goBack }" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+            </a></li>
+            <c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
+               <c:url var="goNum" value="${ loc }">
+                  <c:param name="page" value="${ p }"></c:param>
+               </c:url>
                <li class="page-item"><a class="page-link" href="${ goNum }">${ p }</a></li>
-          </c:forEach>
+            </c:forEach>
+            <li class="page-item"><c:url var="goNext" value="${ loc }">
+                  <c:if test="${pi.endPage > pi.currentPage }">
+                     <c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+                  </c:if>
+               </c:url> <a class="page-link" href="${ goNext }" aria-label="Next"> <span
+                  aria-hidden="true">&raquo;</span>
+            </a></li>
+         </ul>
+      </div>
+   </c:if>
           
           <li>
               <c:url var="goNext" value="${ loc }">
