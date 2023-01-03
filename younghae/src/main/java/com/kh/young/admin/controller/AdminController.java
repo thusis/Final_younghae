@@ -35,4 +35,18 @@ public class AdminController {
     	
         return "adminMember";
     }
+    
+    @RequestMapping("adminCoupon.ad")
+    public String adminCoupon(Model model) {
+    	
+    	
+        return "adminCoupon";
+    }
+    
+    @RequestMapping("adminPoint.ad")
+    public String adminPoint(Model model) {
+    	
+    	
+        return "adminPoint";
+    }
 }

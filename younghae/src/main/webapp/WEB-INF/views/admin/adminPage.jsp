@@ -26,8 +26,9 @@
                             <li><a href="#">상품관리</a></li>
                             <li><a href="#">주문관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/adminMember.ad'">회원관리</a></li>
+                            <li><a href="#" onclick="location.href='${contextPath}/adminCoupon.ad'">쿠폰관리</a></li>
                             <li><a href="#">게시판관리</a></li>
-                            <li><a href="#">포인트관리</a></li>
+                            <li><a href="#" onclick="location.href='${contextPath}/adminPoint.ad'">포인트관리</a></li>
                             <li><a href="#">리뷰관리</a></li>
                             <li><a href="#">신고관리</a></li>
                             <li><a href="#">통계분석</a></li>

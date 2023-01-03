@@ -73,6 +73,27 @@
 		insert into Coupon
 		values(seq_cou.nextval,#{couPublishDate}, #{couEndDate}, 'N',#{couDiscount},#{couIntro},#{userNum},#{couRegister})
 	</insert>
+	
+	<select id="selectAllBoard" parameterType="map" resultMap="boardResultMap">
+      select *
+      from Board
+      where USER_NUM = #{id} and BOARD_STATUS = 'Y'
+      order by board_num desc
+   </select>
+   
+   <select id="selectAllReply" parameterType="map" resultMap="replyResultMap">
+      select *
+      from Reply
+      where USER_NUM = #{id} and REPLY_STATUS = 'Y'
+      order by REPLY_NUM desc
+   </select>
+   
+   <select id="selectAllReview" parameterType="map" resultMap="reviewResultMap">
+      select *
+      from Review
+      where USER_NUM = #{id} and RV_STATUS = 'Y'
+      order by RV_NUM desc
+   </select>
    
    
    <resultMap type="Member" id="loginResultMap">
@@ -135,4 +156,39 @@
 		<result column="USER_NUM" property="userNum"/>
 		<result column="COU_REGISTER" property="couRegister"/>
 	</resultMap>
+	
+	<resultMap type="Board" id="boardResultMap">
+      <id column="BOARD_NUM" property="boardNum"/>
+      <result column="BOARD_TITLE" property="boardTitle"/>
+      <result column="BOARD_CONTENT" property="boardContent"/>
+      <result column="BOARD_CREATEDATE" property="boardCreateDate"/>
+      <result column="BOARD_MODIFYDATE" property="boardModifyDate"/>
+      <result column="BOARD_VIEW" property="boardView"/>
+      <result column="BOARD_STATUS" property="boardStatus"/>
+      <result column="USER_NUM" property="userNum"/>
+      <result column="BOARD_TYPE" property="boardType"/>
+   </resultMap>
+   
+   <resultMap type="Reply" id="replyResultMap">
+      <id column="REPLY_NUM" property="replyNum"/>
+      <result column="REPLY_CONTENT" property="replyContent"/>
+      <result column="REPLY_DATE" property="replyDate"/>
+      <result column="REPLY_STATUS" property="replyStatus"/>
+      <result column="BOARD_TYPE" property="boardType"/>
+      <result column="BOARD_NUM" property="boardNum"/>
+      <result column="USER_NUM" property="userNum"/>
+   </resultMap>
+   
+   <resultMap type="Review" id="reviewResultMap">
+      <id column="RV_NUM" property="rvNum"/>
+      <result column="PRO_NUM" property="proNum"/>
+      <result column="USER_NUM" property="userNum"/>
+      <result column="RV_CONTENT" property="rvContent"/>
+      <result column="RV_CREATEDATE" property="rvCreateDate"/>
+      <result column="RV_MODIFYDATE" property="rvMOdifyDate"/>
+      <result column="RV_STATUS" property="rvStatus"/>
+      <result column="RV_STAR" property="rvStar"/>
+      <result column="RV_BUY" property="rvBuy"/>
+      <result column="RV_RECOMMEND" property="userNickname"/>
+   </resultMap>
 </mapper>

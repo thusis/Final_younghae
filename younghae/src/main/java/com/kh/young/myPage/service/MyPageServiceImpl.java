@@ -7,11 +7,14 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Point;
+import com.kh.young.model.vo.Reply;
+import com.kh.young.model.vo.Review;
 import com.kh.young.myPage.dao.MyPageDAO;
 
 @Service("myService")
@@ -81,4 +84,22 @@ public class MyPageServiceImpl implements MyPageService{
 	public int couponInsert(Coupon c) {
 		return myDAO.couponInsert(sqlSession, c);
 	}
+	
+	@Override
+	public ArrayList<Board> selectAllBoard(int id) {
+		return myDAO.selectAllBoard(sqlSession, id);
+	}
+	
+	@Override
+	public ArrayList<Reply> selectAllReply(int id) {
+		return myDAO.selectAllReply(sqlSession, id);
+	}
+	
+	@Override
+	public ArrayList<Review> selectAllReview(int id) {
+		return myDAO.selectAllReview(sqlSession, id);
+	}
+	
+	
+	
 }
