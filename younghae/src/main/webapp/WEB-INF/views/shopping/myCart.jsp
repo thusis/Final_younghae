@@ -133,7 +133,7 @@
 						                        <div class="product__details__quantity" style="display: inline; margin-right: 2%;">
 													<div class="btn-group" role="group" aria-label="Basic example">
 														<div class="selectInputDivs">
-															<input type="hidden" name="quantity" value="0">
+<!-- 															<input type="hidden" id="cartQuantity" name="quantity" > -->
 															<select class="selectDivs" style="border-color: #24E082; border-radius: 0.3em; text-align: center; width:3rem; ">
 																<c:forEach begin="1" end="9" var="i">
 																	<c:if test="${ c.cartQuantity == i}">
@@ -150,7 +150,7 @@
 															</select>
 														</div>
 														<input type="hidden" value="${ c.proNum }">
-														<input type="hidden" name="changeQuantity" value="${ c.cartQuantity }">
+														<input type="hidden" name="quantity" value="${ c.cartQuantity }">
 													</div>
 						                        </div><br>
 						                        
@@ -376,10 +376,10 @@
 		const selectInputs = document.getElementsByClassName("selectInputDivs");
 		for(const selectInput of selectInputs){
 			selectInput.addEventListener('change',function(){
-				let changeQuantity = 0;
+				let quantity = 0;
 				let changeProNum = ($(this).siblings()[0].value);
 				if(Number($(this).children()[0].value) < 10){
-					changeQuantity = $(this).children()[0].value;
+					quantity = $(this).children()[0].value;
 				}else{
 					if($(this).children()[0].value =='10+'){
 						const tenInput = document.createElement("div");
@@ -388,15 +388,15 @@
 											'style="width:3rem; height: 2.1rem;border: 1px solid #24E082; border-radius: 0.3em; text-align: center; font-size: 1rem;" placeholder="입력";>';
 						selectInput.append(tenInput);
 					}else{
-						changeQuantity = $(this).children().children()[0].value;
+						quantity = $(this).children().children()[0].value;
 					}
 				}
-				$(this).siblings()[1].value = changeQuantity;
+				$(this).siblings()[1].value = quantity;
 				
-				if(changeQuantity !=''){
+				if(quantity !=''){
 					$.ajax({
 						url:'${contextPath}/updateCartQuantity.sh',
-						data:{cartQuantity: changeQuantity,
+						data:{cartQuantity: quantity,
 							proNum: changeProNum},
 						success:(data)=>{
 							selectOne();

@@ -380,7 +380,7 @@
 	                        <div class="product__details__quantity" style="display: inline; float: right; margin-right: 2%;">
 								<div class="btn-group" role="group" aria-label="Basic example">
 								  <button type="button" id="minus" class="btn" style="width: 2.5rem; border-bottom-left-radius: 2em; border-top-left-radius: 2em; background-color: #24E082; border: none;">-</button>
-								  <input type="text" id="quantity" value="1" style="width: 3rem; text-align: center; border: 1px solid #24E082; font-size: 1rem; font-weight: 400;" readonly>
+								  <input type="text" id="quantity" name="cartQuantity" value="1" style="width: 3rem; text-align: center; border: 1px solid #24E082; font-size: 1rem; font-weight: 400;" readonly>
 								  <button type="button" id="plus" class="btn" style="width: 2.5rem; border-bottom-right-radius: 2em; border-top-right-radius: 2em; background-color: #24E082; border: none;">+</button>
 								</div>
 	                        </div><br><br>
@@ -762,7 +762,7 @@
 								$('.cart_product').on('click', function(){
 									const cartProNum = $(this).children().children()[4].value;
 									console.log(cartProNum);
-// 									location.href ='${contextPath}/supplementDetail.sh?proNum=' + cartProNum;
+									location.href ='${contextPath}/supplementDetail.sh?proNum=' + cartProNum;
 								});
 								$('.cart_product').on('mouseover', function(){
 									$(this).css({'cursor':'pointer', 'border':'2px solid #FD9F28'});

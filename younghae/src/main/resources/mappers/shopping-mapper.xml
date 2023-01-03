@@ -82,10 +82,42 @@
 		<result column="USER_NUM" property="userNum"/>
 	</resultMap>
 	
+	<resultMap type="Orders" id="ordersResultSet">
+		<id column="ORDER_NUM" property="orderNum"/>
+		<result column="ORDER_CODE" property="orderCode"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="ORDER_DATE" property="orderDate"/>
+		<result column="ORDER_STATUS" property="orderStatus"/>
+		<result column="ORDER_PAYAMOUNT" property="orderPayAmount"/>
+		<result column="ORDER_TOTALPRICE" property="orderTotalPrice"/>
+		<result column="ORDER_USERNAME" property="orderUserName"/>
+		<result column="ORDER_PAYMETHOD" property="orderPaymethod"/>
+		<result column="ORDER_COUPONPRICE" property="orderCouponPrice"/>
+		<result column="ORDER_IMPCODE" property="orderImpCode"/>
+		<result column="ORDER_PHONE" property="orderPhone"/>
+		<result column="ADDRESS_NUM" property="addressNum"/>
+		<result column="ORDER_REQUEST" property="orderRequest"/>
+	</resultMap>
+	
+	<resultMap type="OrderDetails" id="orderDetailsResultSet">
+		<id column="ORDER_CODE" property="orderCode"/>
+		<result column="PRO_NUM" property="proNum"/>
+		<result column="PRO_NAME" property="proName"/>
+		<result column="ORDER_QUANTITY" property="orderQuantity"/>
+	</resultMap>
+	
+	
+	<resultMap type="OrderListDTO" id="orderListResultSet">
+		<association property="orders" javaType="Orders" resultMap="ordersResultSet"/>
+		<association property="orderDetails" javaType="OrderDetails" resultMap="orderDetailsResultSet"/>
+	</resultMap>
+	
 	<select id="selectSupplementList" resultMap="supplementResultSet">
 		select *
 		from product
 		where pro_sale_status = 'Y'
+		order by pro_num asc
 	</select>
 	
 	
@@ -231,11 +263,11 @@
 <!-- 		    full outer join cart c on(a.user_num = c.user_num) -->
 <!-- 		    right outer join (select * from product where pro_num = #{proNum}) p on(c.pro_num = p.pro_num) -->
 <!-- 		where a.user_num = #{userNum} and a.address_basic = 'Y' -->
-			select  c.cart_num, c.pro_num, c.cart_quantity, p.pro_num, p.pro_image, p.pro_name, p.pro_company, p.pro_ingredient,
+			select  c.cart_num, c.cart_quantity, p.pro_num, p.pro_image, p.pro_name, p.pro_company, p.pro_ingredient,
 			        p.pro_price, p.pro_effect, p.pro_intake, p.pro_sale_status, p.pro_createdate, p.pro_modifydate, p.pro_grade,
 			        p.pro_status, p.cate_num
 			from cart c
-			    right outer join product p on(c.pro_num = p.pro_num)
+			    full outer join product p on(c.pro_num = p.pro_num)
 			where p.pro_num = #{proNum}
 	</select>
 	
@@ -243,6 +275,28 @@
 		select *
 		from coupon
 		where user_num = #{userNum} and cou_used = 'N' and cou_enddate >= sysdate 
+	</select>
+	
+	<insert id="insertOrders">
+		insert into orders
+		values (seq_order.nextval, #{orderCode}, #{userNum}, #{userId}, #{orderDate},#{orderStatus},
+				#{orderPayAmount},#{orderTotalPrice},#{orderUserName},#{orderPaymethod},#{orderCouponPrice},#{orderImpCode},#{orderPhone},#{addressNum},#{orderRequest})
+	</insert>
+	
+	<delete id="deleteCart">
+		delete from cart where pro_num = #{proNum}
+	</delete>
+	
+	<insert id="insertOrderDetails">
+		insert into order_details
+		values (#{orderCode}, #{proNum}, #{proName}, #{orderQuantity})
+	</insert>
+	
+	<select id="selectOrderList" resultMap="orderListResultSet">
+		select *
+	    from orders
+	        right outer join order_details using(order_code)
+	    where order_code = #{orderCode}
 	</select>
 
 </mapper>

@@ -8,8 +8,11 @@ import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.OrderDetails;
+import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
+import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
 
 public interface ShoppingService {
@@ -52,6 +55,14 @@ public interface ShoppingService {
 	PaymentDTO selectPayList(GetPayInfoDTO getPayInfoDTO);
 	
 	ArrayList<Coupon> selectCouponList(int userNum);
+	
+	int insertOrders(Orders orders);
+	
+	int deleteCart(int proNum);
+	
+	int insertOrderDetails(OrderDetails od);
+	
+	ArrayList<OrderListDTO> selectOrderList(String orderCode);
 	
 	
 
