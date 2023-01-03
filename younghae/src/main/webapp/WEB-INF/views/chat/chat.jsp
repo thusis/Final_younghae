@@ -36,6 +36,11 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
     <style>
+    
+    	h1,h2,h3,h4,h5,h6,p,span{
+    		font-family: 'IBM Plex Sans KR', sans-serif;
+    	}
+
         .bd-placeholder-img {
           font-size: 1.125rem;
           text-anchor: middle;
@@ -121,7 +126,12 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 
 		<!-- 두번째 컬럼 전문가목록============================================================= -->
 		<div class="flex-column align-items-stretch flex-shrink-0 bg-light" style="overflow: auto; width: 300px; height: 750px; border-top: 0.2rem solid #24E082; z-index: 8;">
-		
+			<c:if test="${ !empty chatErrorMsg }">
+			<div style="margin-top:350px; vertical-align: middle; text-align: center;">
+			참여 중인 채팅방이 없습니다
+			</div>
+			</c:if>
+			<c:if test="${ empty chatErrorMsg }">
 			<c:if test="${ loginUser.userCNumber eq 1 }"><!-- =======일반회원의경우======= -->
 			<div href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
 				<span class="fs-5 fw-semibold">전문가 목록</span>
@@ -355,6 +365,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 				</div>
 			</div>
 		</div>
+		</c:if>
 
 	</main>
 

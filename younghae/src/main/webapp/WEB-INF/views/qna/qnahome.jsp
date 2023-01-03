@@ -15,7 +15,7 @@
 </head>
 <body style="background-color: #f8f8fa;">
 
-${ qlist}
+<%-- ${ qlist} --%>
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
@@ -63,7 +63,7 @@ ${ qlist}
                 <c:if test="${myQuest.size()!=0 }">
                 <c:forEach items="${myQuest}" var="mq" end="2">
 				<div class="bn_homebox_3 row">
-                    <div class="col-lg-10">
+                    <div class="col-lg-10" onclick="location.href='${contextPath}/question.qa?boardNum=${mq.board.boardNum}'">
                         <h5>${mq.board.boardTitle}</h5>
                         <h6>
                             <i class="fa-solid fa-arrow-right-long" style="color: rgb(212, 212, 212);"></i>

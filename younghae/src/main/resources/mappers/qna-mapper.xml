@@ -99,7 +99,7 @@
   		<id column="USER_NUM" property="member.userNum"/>
 		<association property="member" javaType="Member" resultMap="Member"/>
 		<association property="expert" javaType="ExpertUser" resultMap="ExpertUser"/>
-		<association property="eattach" javaType="Attachment" resultMap="Attachment"/>
+		<association property="eattach" column="USER_NUM" javaType="Attachment" select="selectEattach"/>
 <!-- 		<collection column="USER_NUM" property="answerList" javaType="java.util.ArrayList" ofType="AnswerRespDto" select="selectAnswerListByUserNum"/> -->
   	</resultMap>
 
@@ -248,8 +248,15 @@
 		SELECT * 
 		FROM MEMBER
 		JOIN EXPERT_USER USING (USER_NUM)
-		LEFT JOIN ATTACHMENT ON (USER_NUM = SERIALNUMBER)
 		WHERE USER_NUM = #{userNum}
+	</select>
+	
+	<select id="selectEattach" resultMap="Attachment" >
+		SELECT * 
+		FROM ATTACHMENT
+		WHERE 
+		ATTACHMENT.BOARD_TYPE = 5 AND
+		SERIALNUMBER = #{userNum}
 	</select>
 	
 	<select id="selectAnswerListSize" resultType="_int">
@@ -301,5 +308,11 @@
 	
 	<insert id="insertScrap">INSERT INTO CLIP VALUES (#{boardNum}, #{userNum})</insert>
 	<delete id="deleteScrap">DELETE FROM CLIP WHERE BOARD_NUM = #{boardNum} AND USER_NUM = #{userNum}</delete>
+	
+	<!-- 전문가찾기 -->
+	<!-- 전문가의 총 수(LISTCOUNT) 반환 -->
+	<select id="getExpertsListCount" resultType="int">SELECT COUNT(*) FROM EXPERT_USER</select>
+	<select id="selectExpertList" resultMap="ExpertRespDto">	SELECT * FROM MEMBER JOIN EXPERT_USER USING (USER_NUM) </select>
+	
 	
 </mapper>

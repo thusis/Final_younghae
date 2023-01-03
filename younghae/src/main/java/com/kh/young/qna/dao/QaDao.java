@@ -140,4 +140,20 @@ public class QaDao {
 		return sqlSession.delete("qnaMapper.deleteScrap",clip);
 	}
 
+	public int getExpertsListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("qnaMapper.getExpertsListCount");
+	}
+
+	public ArrayList<ExpertRespDto> selectExpertList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		ArrayList<ExpertRespDto> erespList = (ArrayList)sqlSession.selectList("qnaMapper.selectExpertList", null, rowBounds);
+		for(ExpertRespDto eresp : erespList) {
+			eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, eresp.getMember().getUserNum()));
+		}
+		return erespList;
+	}
+
 }

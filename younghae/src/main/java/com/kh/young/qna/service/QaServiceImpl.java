@@ -320,5 +320,23 @@ public class QaServiceImpl implements QaService {
 		return 0;
 	}
 
+	@Override
+	public ArrayList<ExpertRespDto> selectExpertList(Integer page, int listCount) {
+		int currentPage = 1;
+		if(page!=null) {
+			currentPage=page;
+		}
+		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 10);
+		
+		ArrayList<ExpertRespDto> erespList = qdao.selectExpertList(sqlSession, pi);
+		System.out.println("q서비스 332: "+erespList);
+		return erespList;
+	}
+
+	@Override
+	public int getExpertsListCount() {
+		return qdao.getExpertsListCount(sqlSession);
+	}
+
 
 }

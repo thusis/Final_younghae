@@ -26,10 +26,11 @@ public class ChatServiceImpl implements ChatService {
 	public ChatroomDto selectNowChatroom(Integer expertNum, int loginUserNum) {
 		 
 		if( expertNum == loginUserNum ) {
-			if( selectExpertsRoomList(loginUserNum).size() > 0) {
-				return selectRecentChatroom(loginUserNum); //채팅방은 있는데 보낸 메세지가 없으면 null 만 
+			ArrayList<ChatroomDto> rl = selectExpertsRoomList(loginUserNum);
+			if( rl != null ) {
+				return selectRecentChatroom(loginUserNum); 
 			} else {
-				return null; // 전문가회원은 자기가 새로운 채팅방 못 만들어
+				return null; // 채팅방은 있는데 보낸 메세지가 없으면 null 만! 전문가회원은 자기가 새로운 채팅방 못 만들어
 			}
 		} else {
 			Chatroom paraChatroom = new Chatroom();
@@ -93,6 +94,7 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public ArrayList<ChatroomDto> selectRoomList(int userNum) {
 		ArrayList<ChatroomDto> roomList = chDao.selectRoomList(sqlSession, userNum);
+		System.out.println("ch서비스 97:" + roomList);
 //		roomList = setRoomList(roomList);
 		return roomList;
 	}
