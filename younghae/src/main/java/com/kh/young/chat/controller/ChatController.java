@@ -77,9 +77,9 @@ public class ChatController {
 //    		ArrayList<ChatReserv> reservList = chService.selectReservList(loginUserNum); //결제 구현되기 전까진 막아놓기
     	}
     	
-    	System.out.println(roomList);
-    	System.out.println(nowChatroom);
-    	System.out.println(messageList);
+//    	System.out.println(roomList);
+//    	System.out.println(nowChatroom);
+//    	System.out.println(messageList);
         
         return "chat";
     }
