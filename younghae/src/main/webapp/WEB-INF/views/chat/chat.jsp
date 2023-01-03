@@ -127,8 +127,14 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		<!-- 두번째 컬럼 전문가목록============================================================= -->
 		<div class="flex-column align-items-stretch flex-shrink-0 bg-light" style="overflow: auto; width: 300px; height: 750px; border-top: 0.2rem solid #24E082; z-index: 8;">
 			<c:if test="${ !empty chatErrorMsg }">
-			<div style="margin-top:350px; vertical-align: middle; text-align: center;">
-			참여 중인 채팅방이 없습니다
+			    <div class="section-title contact" style="margin-top:3rem; padding: 1.5rem; vertical-align: middle; text-align: center;">
+				<h5 style="color:red;">${ chatErrorMsg }</h5>
+<!-- 				<h5>참여 중인 채팅방이 없습니다</h5> -->
+		        <a href="${contextPath}/expertfind.qa">
+	            영해의 다양한 전문가를 통해<br> 
+	            나에게 맞춤화된 상담을 받아보세요<br>
+	            <img src="resources/img/logo_pill_white.svg" alt="흰로고">
+	            </a>
 			</div>
 			</c:if>
 			<c:if test="${ empty chatErrorMsg }">
@@ -316,9 +322,9 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 							<hr>
 							<span>견적금액에 대해 궁금한 점을 채팅으로 물어보세요</span>
 							<div class="row mt-2 justify-content-center">
-								<button class="col-10 btn bn_txt_strong p-3"
-									style="display: inline-block; background-color: black; color: white;">
-									결제 후 채팅 시작하기</button>
+								<button class="col-10 btn bn_txt_strong p-3" style="display: inline-block; background-color: black; color: white;" onclick="goToChatPayment()">
+								결제 후 채팅 시작하기
+								</button>
 							</div>
 							<span class="sendtime">오전 9:28</span>
 						</div><!-- ==========견적서============ -->
@@ -335,6 +341,13 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 					</div>
 					
 					<div id="chatMsgListDiv">
+					<c:if test="${ messageList eq null }">
+						<div id="chatMsgDiv">
+							채팅을 시작해보세요
+						</div>
+					</c:if>
+					
+					<c:if test="${ messageList ne null }">
 					<c:forEach items="${messageList}" var="chMsg">
 						<div id="chatMsgDiv" class="chat
 							<c:if test="${loginUser.userNum != chMsg.senderNum  }">ch1</c:if>
@@ -352,6 +365,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 							</div>
 						</div>
 					</c:forEach>
+					</c:if>
 					</div>
 					
 					<div id="resultBox"></div>
@@ -442,7 +456,10 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 			sendMessage();
 		})		
 		
-		//목록에서 채팅방 선택 -> nowChatroom&messageList반환 -> 상대프로필&메세지변경
+		//목록에서 채팅방 선택 
+		// -> 해당 채팅방의 ArrayList<ChatMessage>를 isRead로 update 해야한다
+		// -> nowChatroom&messageList반환
+		// -> 상대프로필&메세지변경
 		const roomItems = document.getElementsByClassName('chatting-item');
 		for(const chattingItem of roomItems){
 			chattingItem.addEventListener('click', function(){
@@ -458,6 +475,18 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 				var roomHTMLId = chatroomId + "-" + expertNum + "-" + generalUserNum;
 				
 				$.ajax({
+					url: '${contextPath}/updateRead.ch',
+					type: 'GET',
+					data: {
+						chatroomId : chatroomId,
+						userNum : loginUserNum
+					},
+					success: (data)=>{
+						console.log(chatroomId+"방의 isRead를 업데이트 완료");
+					}
+				})
+				
+				$.ajax({ //==메세지리스트 선택==
 					url: '${contextPath}/selectMessage.ch',
 					type: 'POST',
 					data: {
@@ -483,21 +512,36 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 							document.getElementById('chatTopChatroomId').innerText = chatroomId;
 							document.getElementById('chatTopExpertNum').innerText = expertNum;
 							document.getElementById('chatTopExpertName').innerText = jsonData.nowChatroom.expert.member.userName;
-						
+							
+							var chatTopGoToExpertHospital = '<a style="text-decoration:none; color:white;" href="${contextPath}/experthospital.qa?expertNum='+expertNum+'">';
+							console.log(chatTopGoToExpertHospital);
+							
 							if(jsonData.nowChatroom.expert.expert.expertSort.trim() == 'D'){
 								console.log("의사");
 								document.getElementById('chatTopExpertSort').innerText = "의사";
-								document.getElementById('chatTopExpertSortPlace').innerText = '병원';
-							}else{
+								document.getElementById('chatTopExpertSortPlace').innerHTML = chatTopGoToExpertHospital+'병원정보 보기</a>';
+								
+							}else if(jsonData.nowChatroom.expert.expert.expertSort.trim() == 'C'){
 								console.log("약사");
 								document.getElementById('chatTopExpertSort').innerText = "약사";
-								document.getElementById('chatTopExpertSort').innerText = '약사';
-								document.getElementById('chatTopExpertSortPlace').innerText = '약국';
+								document.getElementById('chatTopExpertSortPlace').innerHTML = chatTopGoToExpertHospital+'약국정보 보기</a>';
+								
+							}else if(jsonData.nowChatroom.expert.expert.expertSort.trim() == 'N'){
+								document.getElementById('chatTopExpertSort').innerText = "선택안함";
+								document.getElementById('chatTopExpertSortPlace').innerHTML = chatTopGoToExpertHospital+'선택안함 정보 보기</a>';
 							}
+							
 							
 							document.getElementsByClassName('bn_pro-info')[0].innertText = "답변수" + jsonData.nowChatroom.expert.answerListSize ;
 							document.getElementsByClassName('bn_pro-info')[1].innertText = "전문과목" + jsonData.nowChatroom.expert.expert.expertMedi ;
-							document.getElementById('chatTopExpertDept').innerText = "소속 : " + jsonData.nowChatroom.expert.expert.expertDept ;
+							
+							if(jsonData.nowChatroom.expert.expert.expertDept.trim() == 'N'){
+								document.getElementById('chatTopExpertDept').innerText = "소속 : 선택안함 ";
+							}else{
+								document.getElementById('chatTopExpertDept').innerText = "소속 : " + jsonData.nowChatroom.expert.expert.expertDept ;
+							}
+							
+							
 							document.getElementById('chatTopgoToProfile').onclick = () =>{
 								location.href='${contextPath}/expertprofile.qa?expertNum='+jsonData.nowChatroom.expert.expert.userNum;
 							}
@@ -570,7 +614,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 					error: (data)=>{
 						alert("실패!");
 					}
-				})
+				})//==메세지리스트 선택 끝==
 			})
 		}
 			
@@ -645,6 +689,17 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 	 	function onOpen(){
 	 		
 	 	}
+	 	
+	 	function goToChatPayment(){
+	 		console.log(loginUserNum, chatroomId, expertNum, generalUserNum);
+	 		if(loginUserNum == expertNum){
+	 			alert("일반회원만 접근 가능합니다!");
+	 		}else{
+	 			window.location.href="${contextPath}/goToChatPayment.qa?info="+nowChatroomInfo;
+	 		}
+			
+	 	}
+	 	
 		//=============================================
 
 	

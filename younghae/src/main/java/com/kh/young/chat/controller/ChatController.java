@@ -18,10 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.chat.service.ChatService;
 import com.kh.young.model.vo.ChatMessage;
+import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Member;
+import com.kh.young.qna.common.Qexception;
 import com.kh.young.qna.service.QaService;
 
 @Controller
@@ -55,36 +58,51 @@ public class ChatController {
 
     	int loginUserNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
     	int cNum = ((Member)request.getSession().getAttribute("loginUser")).getUserCNumber();
-    	if(expertNum == null) {
-    		expertNum = 0;
-    	}
     	
-    	System.out.println(loginUserNum+","+ cNum);
-    	ChatroomDto nowChatroom = chService.selectNowChatroom(expertNum, loginUserNum);
-    	ArrayList<ChatMessage> messageList = new ArrayList<ChatMessage>();
-
-    	if(nowChatroom == null) {
-    		System.out.println("ch컨트롤러63 채팅가능한 방이 없나봄 ");
-    		model.addAttribute("chatErrorMsg", "채팅 가능한 방이 없습니다.");
-    	} else {
-    		System.out.println("ch컨트롤러 nowChatroom 64: "+ nowChatroom);
-    		model.addAttribute("nowChatroom",nowChatroom);
-    		messageList = chService.selectMessageList(nowChatroom.getChatroom().getChatroomId());
-    		model.addAttribute("messageList",messageList);
-    	}
-    	ArrayList<ChatroomDto> roomList = new ArrayList<ChatroomDto>(); //expert 나 general 둘 중 하나만 가짐
-    	
-    	if(cNum==1) {
+    	if(cNum==1 && expertNum == null) {
+    		ArrayList<ChatroomDto> roomList = chService.selectRoomList(loginUserNum);
+    		System.out.println("ch컨트롤62"+roomList);
+    		if ( roomList.size() == 0 ) {
+    			model.addAttribute("chatErrorMsg", "채팅 가능한 방이 없습니다.");
+    		} else {
+    			ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
+    			model.addAttribute("nowChatroom", nowChatroom);
+    			model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
+    			model.addAttribute("roomList", roomList);
+    		}
+    	} else if (cNum==1 && expertNum != null ) {
+			Chatroom paraChatroom = new Chatroom();
+			paraChatroom.setExpertNum(expertNum);
+			paraChatroom.setUserNum(loginUserNum);
+    		ChatroomDto nowChatroom = chService.getExpertChatroom(paraChatroom);
+    		if( nowChatroom == null ) {
+    			nowChatroom = chService.createChatroom(paraChatroom);
+    		}
+			model.addAttribute("nowChatroom", nowChatroom);
+			model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
 			model.addAttribute("roomList", chService.selectRoomList(loginUserNum)); // 일반 -> 상대는 expert 객체 보유
-    	}else if(cNum==2) {
-    		model.addAttribute("roomList", chService.selectExpertsRoomList(loginUserNum)); // 전문가 -> 상대는 member 객체 보유
-//    		ArrayList<ChatReserv> reservList = chService.selectReservList(loginUserNum); //결제 구현되기 전까진 막아놓기
+    	} else if ( cNum == 2 
+    			&& ((expertNum != null && expertNum == loginUserNum) || expertNum == null ) ) {
+    		//전문회원이면서 내 이름의 채팅방 조회한 경우
+    		//전문회원이면서 그냥 채팅방 조회한 경우
+    		ArrayList<ChatroomDto> roomList = chService.selectExpertsRoomList(loginUserNum);
+    		if( roomList == null || roomList.size() == 0 ) {
+    			model.addAttribute("chatErrorMsg", "채팅 가능한 방이 없습니다. 열심히 활동해서 인지도를 쌓아보세요");
+    		} else {
+    			int msgCount = chService.fullMessageListCount(loginUserNum);
+    			if(msgCount>0) {
+    				ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
+    				model.addAttribute("nowChatroom", nowChatroom);
+    				model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
+    			}else {
+    				model.addAttribute("nowChatroom", roomList.get(0));
+    				model.addAttribute("messageList",null);
+    			}
+    			model.addAttribute("roomList", roomList);
+    		}
+    	} else if ( cNum == 2 && (expertNum != null && expertNum != loginUserNum) ) {
+    		model.addAttribute("chatErrorMsg", "잘못된 접근입니다");
     	}
-    	
-//    	System.out.println(roomList);
-//    	System.out.println(nowChatroom);
-//    	System.out.println(messageList);
-        
         return "chat";
     }
     
@@ -132,9 +150,11 @@ public class ChatController {
     // 읽음 비동기 처리
     @GetMapping("updateRead.ch")
     @ResponseBody
-    public int updateRead(@RequestParam Map<String, Object> paramMap) { // "chatroomId" ,"userNum"
-        return chService.updateIsRead(paramMap);
+    public int updateRead(@RequestParam Map<String, Object> paraMap) { // "chatroomId" ,"userNum"
+    	System.out.println("ch컨트롤러136: " + paraMap);
+        return chService.updateIsRead(paraMap);
     }
 
 	
 }
+

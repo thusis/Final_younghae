@@ -10,6 +10,8 @@ import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
+import com.kh.young.model.vo.Member;
+import com.kh.young.qna.dto.ExpertRespDto;
 
 @Repository("chDao")
 public class ChatDao {
@@ -68,10 +70,11 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectReservList",loginUserNum);
 	}
 
+	 // 메세지가 존재하는 경우에만 사용 가능하다
 	public ChatroomDto selectRecentChatroom(SqlSessionTemplate sqlSession, int loginUserNum){
 		int myLatestChatId = sqlSession.selectOne("chatMapper.selectMyLatestChatId", loginUserNum);
 		int otherLatestChatId = sqlSession.selectOne("chatMapper.selectOtherLatestChatId", loginUserNum);
-		System.out.println(myLatestChatId+" "+ otherLatestChatId);
+		System.out.println(myLatestChatId+"최신채팅메세지조회중"+ otherLatestChatId);
 		
 		ChatroomDto resultChatroom;
 		
@@ -104,6 +107,11 @@ public class ChatDao {
 	public ChatroomDto selectGeneralChatroomByChatroomId(SqlSessionTemplate sqlSession, int chatroomId) {
 		return sqlSession.selectOne("chatMapper.selectGeneralChatroomByChatroomId", chatroomId);
 	}
+
+	public int fullMessageListCount(SqlSessionTemplate sqlSession, int loginUserNum) {
+		return sqlSession.selectOne("chatMapper.fullMessageListCount", loginUserNum);
+	}
+
 	
 	
 	
