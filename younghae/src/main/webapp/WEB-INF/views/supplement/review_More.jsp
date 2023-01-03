@@ -110,7 +110,7 @@
 				<div class="product__pagination blog__pagination">
 					<c:url var="goBack" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
-						<c:param name="cateNum" value="${ cateNum }"/>
+						<c:param name="cateNum" value="${ proNum }"/>
 						<c:param name="cateName" value="${ cateName }"/>
 					</c:url>
 					<c:if test="${ pi.currentPage > 1 }">

@@ -50,7 +50,7 @@
             </div>
             <br>
             <div class="reviewTable">
-                <label for="" style="color: #24E082; font-weight: 700;">리뷰 관리</label>
+                <label for="" style="color: #24E082; font-weight: 700; font-size: 23px;">리뷰 관리</label>
             </div>
             <div class="bn_boardlist mt-2">
                 <div class="col-lg-12" style="border: 1px solid #24E082; height: 90px; padding: 2%;">
@@ -61,6 +61,7 @@
                     <label style="font-size: 20px; font-weight: 600;">개</label>
                 </div>
                 <br>
+               	<input type="hidden" id="check" name="check" value="">
                 <table class="table">
                     <thead>
                         <tr class="text-teal-100">
@@ -81,42 +82,51 @@
                         </tr>
                     </thead>
                     <tbody id="selectTbody">
-	                    <c:forEach items="${ review }" var="r">
-	                    	<tr>
-	                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ r.proNum }</td>
-	                            <td>${ r.rvContent }</td>
-	                            <td>${ r.member.userNickname }</td>
-	                            <td>${ r.rvMOdifyDate }</td>
-	                            <td>
-	                                <c:if test="${ r.rvStatus eq 'N' }">
-	                                    <i class="bi bi-x-circle" style="color: red;"></i>
-	                                </c:if>
-	                                <c:if test="${ r.rvStatus ne 'N'}">
-	                                    <i class="bi bi-circle" style="color: #24E082;"></i>
-	                                </c:if>
-	                            </td>
-	                        </tr>
-	                    </c:forEach>
+<%-- 	                    <c:forEach items="${ review }" var="r"> --%>
+<!-- 	                    	<tr> -->
+<%-- 	                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ r.proNum }</td> --%>
+<%-- 	                            <td>${ r.rvContent }</td> --%>
+<%-- 	                            <td>${ r.member.userNickname }</td> --%>
+<%-- 	                            <td>${ r.rvMOdifyDate }</td> --%>
+<!-- 	                            <td> -->
+<%-- 	                                <c:if test="${ r.rvStatus eq 'N' }"> --%>
+<!-- 	                                    <i class="bi bi-x-circle" style="color: red;"></i> -->
+<%-- 	                                </c:if> --%>
+<%-- 	                                <c:if test="${ r.rvStatus ne 'N'}"> --%>
+<!-- 	                                    <i class="bi bi-circle" style="color: #24E082;"></i> -->
+<%-- 	                                </c:if> --%>
+<!-- 	                            </td> -->
+<!-- 	                        </tr> -->
+<%-- 	                    </c:forEach> --%>
                     </tbody>
                 </table>
             </div>
             <!-- 페이징 -->
+			
 			<div class="col-lg-12 text-center" style="margin-top: 8%;">
 				<div class="product__pagination blog__pagination">
-					<c:url var="goBack" value="${ loc }">
-						<c:param name="page" value="${pi.currentPage-1 }"></c:param>
-					</c:url>
-					<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a>
-					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-						<c:url var="goNum" value="${ loc}">
-							<c:param name="page" value="${p}"></c:param>
-						</c:url>
-						<a href="${goNum }">${ p }</a>
-					</c:forEach>
-					<c:url var="goNext" value="${ loc }">
-						<c:param name="page" value="${pi.currentPage+1}"></c:param>
-					</c:url>
-					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+<%-- 					<c:url var="goBack" value="${ loc }"> --%>
+<%-- 						<c:param name="page" value="${ pi.currentPage-1 }"></c:param> --%>
+<%-- 					</c:url> --%>
+<%-- 					<c:if test="${ pi.currentPage > 1 }"> --%>
+<%-- 						<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a> --%>
+<%-- 					</c:if> --%>
+<%-- 					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p"> --%>
+<%-- 						<c:url var="goNum" value="${ loc }"> --%>
+<%-- 							<c:param name="page" value="${p}"></c:param> --%>
+<%-- 						</c:url> --%>
+<%-- 						<a href="${ goNum }">${ p }</a> --%>
+<%-- 					</c:forEach> --%>
+<%-- 					<c:url var="goNext" value="${ loc }"> --%>
+<%-- 						<c:param name="page" value="${ pi.currentPage+1 }"></c:param> --%>
+<%-- 					</c:url> --%>
+<%-- 					<c:if test="${ pi.currentPage <= 1 }"> --%>
+<%-- 					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a> --%>
+<%-- 					</c:if> --%>
+						<div class="pagination-wrapper clearfix">
+							<ul class="pagination float--right" id="pages">
+							</ul>
+						</div>
 				</div>
 			</div>
 			<br><br>
@@ -229,6 +239,7 @@
 //                 console.log(span.innerText);
 
 				const selectValue = document.getElementById('selectBtn').value;
+				
 				if(selectValue == "productName"){
 					console.log("제품 이름 순");
 				}else if(selectValue == "productNumber"){
@@ -236,7 +247,66 @@
 				}else{
 					console.log("추천 순");
 				}
-				console.log(selectValue);
+				
+				var checkCon = document.getElementById('check');
+				checkCon.value =  selectValue;
+				console.log(checkCon.value);
+				
+				$.ajax({
+					url: '${contextPath}/adminReviewList.su',
+					data:{check: checkCon.value},
+					success:(data, pi)=>{
+						const tbody = document.querySelector('tbody');
+// 						console.log(tbody);
+// 						console.log(pi.currentPage);
+						console.log(data.length);
+						tbody.innerHTML  = '';
+						
+						for(const d of data){
+							const tr = document.createElement('tr');
+							
+							const pronum = document.createElement('td');
+							pronum.setAttribute("style", "overflow:hidden;white-space:nowrap;text-overflow:ellipsis;");
+							pronum.innerText = d.proNum;
+							
+							const content = document.createElement('td');
+							content.innerText = d.rvContent;
+							
+							const nickname = document.createElement('td');
+							nickname.innerText = d.member.userNickname;
+							
+							const modifyDate = document.createElement('td');
+							modifyDate.innerText = d.rvMOdifyDate;
+							
+							const status = document.createElement('td');
+							
+							if(d.rvStatus == 'N'){
+								status.innerHTML = '<i class="bi bi-x-circle" style="color: red;"></i>';
+							}else if(d.rvStatus == 'Y'){
+								status.innerHTML  = '<i class="bi bi-circle" style="color: #24E082;"></i>'; 
+							}
+							
+							tr.append(pronum);
+							tr.append(content);
+							tr.append(nickname);
+							tr.append(modifyDate);
+							tr.append(status);
+							
+							tbody.append(tr);
+						}
+						
+// 						const divs = document.getElementsByClassName("product__pagination blog__pagination")[0];
+// 						divs.innerHTML = '';
+						
+// 						for(const p of pi){
+							
+							
+// 						}
+					},
+					error:(data)=>{
+						console.log(data);
+					}
+				});
             }
 
             

@@ -24,7 +24,7 @@ public class SupplementServiceImpl implements SupplementService {
 	private SupplementDAO pcDAO;
 
 	@Override
-	public int getListCount() {
+	public int getListCount(int i) {
 		int result = pcDAO.getListCount(sqlSession);
 		System.out.println(result);
 		return pcDAO.getListCount(sqlSession);
@@ -111,13 +111,24 @@ public class SupplementServiceImpl implements SupplementService {
 	}
 
 	@Override
-	public ArrayList<Review> adminReviewList(PageInfo pi) {
-		return pcDAO.adminReviewList(sqlSession, pi);
+	public ArrayList<Review> adminReviewListN(PageInfo pi, int i) {
+		return pcDAO.adminReviewListN(sqlSession, pi, i);
 	}
 
 	@Override
-	public int adminReviewListCount() {
-		return pcDAO.adminREviewListCount(sqlSession);
+	public ArrayList<Review> adminReviewListNa(PageInfo pi, int i) {
+		return pcDAO.adminReviewListNa(sqlSession, pi, i);
 	}
+	
+	@Override
+	public ArrayList<Review> adminReviewListG(PageInfo pi, int i) {
+		return pcDAO.adminReviewListG(sqlSession, pi, i);
+	}
+	
+	@Override
+	public int adminReviewListCount() {
+		return pcDAO.adminReviewListCount(sqlSession);
+	}
+
 
 }

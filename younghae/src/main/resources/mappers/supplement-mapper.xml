@@ -45,7 +45,7 @@
 	<!-- 리뷰 작성하기 -->
 	<insert id="insertReview">
 		INSERT INTO REVIEW 
-		VALUES(SEQ_RV.NEXTVAL, #{proNum}, #{userNum}, #{rvContent}, SYSDATE, SYSDATE, 'Y',  #{rvStar}, 'Y')
+		VALUES(SEQ_RV.NEXTVAL, #{proNum}, #{userNum}, #{rvContent}, SYSDATE, SYSDATE, 'Y',  #{rvStar}, 'Y', 0)
 	</insert>
 	
 	<!-- 리뷰 수정하기 -->
@@ -133,10 +133,26 @@
 	</delete>
 	
 	<!-- 관리자 리뷰 리스트 가져오기 -->
-	<select id="adminReviewList" resultMap="ReviewResultSet">
+	<!-- 1. 제품 번호 순 -->
+	<select id="adminReviewListN" resultMap="ReviewResultSet">
 		select * from review
 		join member using (user_num)
-        order by rv_num desc
+        order by pro_num asc
+	</select>
+	
+	<!-- 2. 제품 이름 순 -->
+	<select id="adminReviewListNa" resultMap="ReviewResultSet">
+		select * from review
+		join member using (user_num)
+        join product using (pro_num)
+        order by pro_name asc
+	</select>
+	
+	<!-- 3. 제품 추천 순 -->
+	<select id="adminReviewListG" resultMap="ReviewResultSet">
+		select * from review
+		join member using (user_num)
+        order by rv_recommend desc
 	</select>
 	
 	<!-- 관리자 리뷰 리스트 수 -->
