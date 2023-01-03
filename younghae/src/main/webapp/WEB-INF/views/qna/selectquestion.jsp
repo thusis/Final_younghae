@@ -208,7 +208,7 @@
 					                    <c:if test="${ans.eresp.expert.expertDept.trim() eq 'N' }">선택안함</c:if>
 					                    <c:if test="${ans.eresp.expert.expertDept.trim() ne 'N' }">${ans.eresp.expert.expertDept}&nbsp;&nbsp;</c:if>
 					                    </span>
-			                           <span id="goToExpertHospital" class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
+			                           <span class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
 				                           <a style="text-decoration:none; color:white;" href="${contextPath}/experthospital.qa?expertNum=${ans.eresp.member.userNum}">
 				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
 				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'D' }">병원</c:if>

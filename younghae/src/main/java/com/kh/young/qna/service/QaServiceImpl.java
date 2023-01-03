@@ -15,8 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
@@ -112,6 +114,9 @@ public class QaServiceImpl implements QaService {
 		ArrayList<QuestionRespDto> topTwo = qdao.getTopTwo(sqlSession);
 		
 		for(QuestionRespDto q : topTwo) {
+			q.setScrapListSize(
+					getScrapCount(q.getBoard().getBoardNum())
+					);
 			q.setWriterInfo(
 					writerInfoToString(getWriterInfoMap(q.getBoard().getUserNum()))
 					);
@@ -363,5 +368,27 @@ public class QaServiceImpl implements QaService {
 		return qdao.getExpertsListCount(sqlSession);
 	}
 
+	@Override
+	public ChatPaymentRespDto getChatPaymentResp(String info) {
+		
+		ChatPaymentRespDto chatResp = new ChatPaymentRespDto();
+		int chatroomId = Integer.parseInt(info.split("_")[0]);
+		int expertNum = Integer.parseInt(info.split("_")[1]);
+		int generalUserNum = Integer.parseInt(info.split("_")[2]);
+		
+		chatResp.setChatroom(getChatroom(chatroomId));
+		chatResp.setGeneralUser(getGeneralUser(generalUserNum));
+		chatResp.setExpertUser(selectExpertResp(expertNum));
+		
+		return chatResp;
+	}
 
+	private Chatroom getChatroom(int chatroomId) {
+		return qdao.getChatroom(sqlSession, chatroomId);
+	}
+	
+	private Member getGeneralUser(int generalUserNum) {
+		return qdao.getGeneralUser(sqlSession, generalUserNum);
+	}
+	
 }

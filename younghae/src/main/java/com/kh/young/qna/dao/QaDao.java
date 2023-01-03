@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
@@ -21,6 +22,8 @@ import com.kh.young.qna.dto.SupplementRespDto;
 @Repository("QaDAO")
 public class QaDao {
 
+	// 컨트롤러에서 reqDto ㅡ> 서비스에서 reqDtoㅡ>entity ㅡ> entity를 DAO에 넣고 반환값을 다시 서비스로 ㅡ> 그 반환값을 resDto 컨트롤러
+	
 	public Member setLoginUser(SqlSessionTemplate sqlSession, Integer userNum) {
 		return sqlSession.selectOne("qnaMapper.login", userNum);
 	}
@@ -154,6 +157,14 @@ public class QaDao {
 			eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, eresp.getMember().getUserNum()));
 		}
 		return erespList;
+	}
+
+	public Chatroom getChatroom(SqlSessionTemplate sqlSession, int chatroomId) {
+		return sqlSession.selectOne("chatMapper.getChatroom", chatroomId);
+	}
+
+	public Member getGeneralUser(SqlSessionTemplate sqlSession, int generalUserNum) {
+		return sqlSession.selectOne("chatMapper.getGeneralUser", generalUserNum);
 	}
 
 }

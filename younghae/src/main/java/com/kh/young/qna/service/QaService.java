@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.qna.dto.ExpertRespDto;
@@ -52,6 +53,8 @@ public interface QaService {
 
 	int getExpertsListCount();
 	ArrayList<ExpertRespDto> selectExpertList(Integer page, int listCount);
+
+	ChatPaymentRespDto getChatPaymentResp(String info);
 
 
 

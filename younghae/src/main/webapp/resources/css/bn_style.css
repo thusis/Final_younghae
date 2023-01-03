@@ -591,3 +591,21 @@
 	.bn_homebox:hover{
 	    cursor: pointer;
 	}
+
+     h1, h2, h3, h4, h5{
+       font-family: 'IBM Plex Sans KR', sans-serif;
+    }
+    .contact a {
+       font-family: 'IBM Plex Sans KR', sans-serif;
+       font-size: 18px;
+       text-decoration: none;
+       text-transform: uppercase;
+       background: #18e06f;
+       display: inline-block;
+       padding: 15px 30px;
+       border-radius: 5px;
+       font-weight: 500;
+       color: #fff;
+       margin-top: 20px;
+    }
+	
