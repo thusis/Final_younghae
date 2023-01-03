@@ -11,6 +11,7 @@ import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
+import com.kh.young.model.vo.ReviewAjax;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.supplement.dao.SupplementDAO;
 

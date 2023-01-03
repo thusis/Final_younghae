@@ -55,7 +55,7 @@
             <div class="bn_boardlist mt-2">
                 <div class="col-lg-12" style="border: 1px solid #24E082; height: 90px; padding: 2%;">
                     <label style="font-size: 20px; font-weight: 600;">총 리뷰 수</label>
-                        <input type="text" value="${ reviewCount }" 
+                        <input type="text" value="${ reviewCount }" id="listCount"
                         style="height: 40px; width: 150px; text-align:center; font-size: 30px;
                         border: none; padding-top: 1%;" readonly>
                     <label style="font-size: 20px; font-weight: 600;">개</label>
@@ -74,39 +74,43 @@
                             </td>
                         </tr>
                         <tr class="text-teal-100" style="text-align: center;">
-                            <th scope="col" class="col-lg-2">제품번호</th>
-                            <th scope="col" class="col-lg-5">리뷰 내용</th>
-                            <th scope="col" class="col-lg-2">작성자</th>
-                            <th scope="col" class="col-lg-2">작성일</th>
+                            <th scope="col" class="col-lg-1">제품 번호</th>
+                            <th scope="col" class="col-lg-1">제품 이름</th>
+                            <th scope="col" class="col-lg-2">리뷰 내용</th>
+                            <th scope="col" class="col-lg-1">작성자</th>
+                            <th scope="col" class="col-lg-1">작성일</th>
+                            <th scope="col" class="col-lg-1">추천수</th>
                             <th scope="col" class="col-lg-1">상태</th>
                         </tr>
                     </thead>
                     <tbody id="selectTbody">
-<%-- 	                    <c:forEach items="${ review }" var="r"> --%>
-<!-- 	                    	<tr> -->
-<%-- 	                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ r.proNum }</td> --%>
-<%-- 	                            <td>${ r.rvContent }</td> --%>
-<%-- 	                            <td>${ r.member.userNickname }</td> --%>
-<%-- 	                            <td>${ r.rvMOdifyDate }</td> --%>
-<!-- 	                            <td> -->
-<%-- 	                                <c:if test="${ r.rvStatus eq 'N' }"> --%>
-<!-- 	                                    <i class="bi bi-x-circle" style="color: red;"></i> -->
-<%-- 	                                </c:if> --%>
-<%-- 	                                <c:if test="${ r.rvStatus ne 'N'}"> --%>
-<!-- 	                                    <i class="bi bi-circle" style="color: #24E082;"></i> -->
-<%-- 	                                </c:if> --%>
-<!-- 	                            </td> -->
-<!-- 	                        </tr> -->
-<%-- 	                    </c:forEach> --%>
+	                    <c:forEach items="${ review }" var="r">
+	                    	<tr>
+	                            <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ r.proNum }</td>
+	                            <td>${ r.rvContent }</td>
+	                            <td>${ r.member.userNickname }</td>
+	                            <td>${ r.rvMOdifyDate }</td>
+	                            <td>
+	                                <c:if test="${ r.rvStatus eq 'N' }">
+	                                    <i class="bi bi-x-circle" style="color: red;"></i>
+	                                </c:if>
+	                                <c:if test="${ r.rvStatus ne 'N'}">
+	                                    <i class="bi bi-circle" style="color: #24E082;"></i>
+	                                </c:if>
+	                            </td>
+	                        </tr>
+	                    </c:forEach>
                     </tbody>
                 </table>
             </div>
+            
+            
             <!-- 페이징 -->
-			
 			<div class="col-lg-12 text-center" style="margin-top: 8%;">
-				<div class="product__pagination blog__pagination">
+				<div class="product__pagination blog__pagination" id="pagination">
 <%-- 					<c:url var="goBack" value="${ loc }"> --%>
 <%-- 						<c:param name="page" value="${ pi.currentPage-1 }"></c:param> --%>
+<%-- 						<c:param name="check" value="${ check }"/> --%>
 <%-- 					</c:url> --%>
 <%-- 					<c:if test="${ pi.currentPage > 1 }"> --%>
 <%-- 						<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a> --%>
@@ -114,19 +118,24 @@
 <%-- 					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p"> --%>
 <%-- 						<c:url var="goNum" value="${ loc }"> --%>
 <%-- 							<c:param name="page" value="${p}"></c:param> --%>
+<%-- 							<c:param name="check" value="${ check }"/> --%>
 <%-- 						</c:url> --%>
 <%-- 						<a href="${ goNum }">${ p }</a> --%>
 <%-- 					</c:forEach> --%>
 <%-- 					<c:url var="goNext" value="${ loc }"> --%>
 <%-- 						<c:param name="page" value="${ pi.currentPage+1 }"></c:param> --%>
+<%-- 						<c:param name="check" value="${ check }"/> --%>
 <%-- 					</c:url> --%>
 <%-- 					<c:if test="${ pi.currentPage <= 1 }"> --%>
 <%-- 					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a> --%>
 <%-- 					</c:if> --%>
-						<div class="pagination-wrapper clearfix">
-							<ul class="pagination float--right" id="pages">
-							</ul>
-						</div>
+<!-- 					<div class="pagination-wrapper clearfix"> -->
+<!-- 						<ul class="pagination float--right"  id="pages"> -->
+<!-- 						</ul> -->
+<!-- 					</div> -->
+					<div class="pagination-wrapper clearfix">
+						<ul class="pagination float--right" id="pages"></ul>
+					</div>
 				</div>
 			</div>
 			<br><br>
@@ -232,6 +241,10 @@
                 	
             }
 
+// 			$(document).on("focusout", "#selectBtn", function(){
+// // 				console.log(this.value);
+// 				location.href="${ contextPath }/adminReviewList.su?check="+this.value;
+// 			});
 
             function selectedopntion(){
                 // 카테고리에 따라 정렬
@@ -239,6 +252,7 @@
 //                 console.log(span.innerText);
 
 				const selectValue = document.getElementById('selectBtn').value;
+				console.log(selectValue);
 				
 				if(selectValue == "productName"){
 					console.log("제품 이름 순");
@@ -248,26 +262,26 @@
 					console.log("추천 순");
 				}
 				
-				var checkCon = document.getElementById('check');
-				checkCon.value =  selectValue;
-				console.log(checkCon.value);
-				
 				$.ajax({
 					url: '${contextPath}/adminReviewList.su',
-					data:{check: checkCon.value},
-					success:(data, pi)=>{
+					data:{check: selectValue},
+					success:(data)=>{
 						const tbody = document.querySelector('tbody');
-// 						console.log(tbody);
-// 						console.log(pi.currentPage);
-						console.log(data.length);
+						console.log(data.r);
 						tbody.innerHTML  = '';
 						
-						for(const d of data){
+						const listCount = document.getElementById('listCount');
+						listCount.value = data.listCount;
+						
+						for(const d of data.r){
 							const tr = document.createElement('tr');
 							
 							const pronum = document.createElement('td');
 							pronum.setAttribute("style", "overflow:hidden;white-space:nowrap;text-overflow:ellipsis;");
 							pronum.innerText = d.proNum;
+							
+							const proname = document.createElement('td');
+							proname.innerText = d.supplement.proName;
 							
 							const content = document.createElement('td');
 							content.innerText = d.rvContent;
@@ -276,38 +290,92 @@
 							nickname.innerText = d.member.userNickname;
 							
 							const modifyDate = document.createElement('td');
-							modifyDate.innerText = d.rvMOdifyDate;
+							
+							var date = new Date(d.strMOdifyDate);
+// 							var ymd  = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+							modifyDate.innerText = d.strMOdifyDate;
+							
+							const good = document.createElement('td');
+							good.innerText = d.rvRecommend;
 							
 							const status = document.createElement('td');
 							
-							if(d.rvStatus == 'N'){
+							if(d.rvStatus ==  'Y'){
 								status.innerHTML = '<i class="bi bi-x-circle" style="color: red;"></i>';
-							}else if(d.rvStatus == 'Y'){
-								status.innerHTML  = '<i class="bi bi-circle" style="color: #24E082;"></i>'; 
+							}else{
+								status.innerHTML = '<i class="bi bi-circle" style="color: #24E082;"></i>';
 							}
 							
 							tr.append(pronum);
+							tr.append(proname);
 							tr.append(content);
 							tr.append(nickname);
 							tr.append(modifyDate);
+							tr.append(good);
 							tr.append(status);
 							
 							tbody.append(tr);
 						}
 						
-// 						const divs = document.getElementsByClassName("product__pagination blog__pagination")[0];
-// 						divs.innerHTML = '';
+// 						const page = document.getElementById('pagination');
+// 						page.innerHTML = '';
 						
-// 						for(const p of pi){
-							
-							
-// 						}
+						console.log(data.pi.currentPage-1);
+						
+			            function paging(totalData, currentPage){
+			            	const dataPerPage = 10;
+			            	const pageCount = 5;
+			            	
+			            	const totalPage = Math.ceil(data.listCount/dataPerpage);
+			            	const pageGroup = Math.ceil(data.pi.currentPage/pageCount);
+			            	
+			            	const last = pageGroup * pageCount;
+			            	
+			            	if(last > totalPage){
+			            		last = totalPage;
+			            	}
+			            	
+			            	let first = last - (pageCount - 1);
+			            	
+			            	const prev = data.pi.startPage - 1;
+			            	const next = data.pi.endPage + 1;
+			            	
+			            	if(totalPage < 1){
+			            		first = last;
+			            	}
+			            	
+			            	const pages = $('#pagination');
+			            	pages.empty();
+			            	
+			            	// < 그려줌
+			            	if (first > 5) { 
+			            		pages.append('<li class="pagination-item">' + '<a onclick="GetTarget('+ (prev) + ');" style="margin-left: 2px">prev</a></li>');
+			            	} 
+			            	// 그려주는 페이지
+			            	for(var j = first; j <= last; j++){
+			            		if (currentPage === (j)){
+			            			pages.append('<li class="pagination-item">' + '<a class="active" onclick="GetTarget(' + (j) + ');" style="margin-left: 2px">' + (j) + '</a></li>');
+			            		}else if(j > 0){
+		            				pages.append('<li class="pagination-item">' + '<a onclick="GetTarget(' + (j) + ');" style="margin-left: 2px">' + (j) + '</a></li>'); 
+			            		}
+			            	}
+			            	
+			            	// > 그려줌
+		            		if (next > 5 && next < totalPage){
+        					pages.append('<li class="pagination-item">' + '<a onclick="GetTarget(' + (next) + ');" style="margin-left: 2px">next</a></li>');
+		            		}
+			            	
+			            	
+
+
+			            }
 					},
 					error:(data)=>{
 						console.log(data);
 					}
 				});
             }
+            
 
             
         </script>

@@ -13,7 +13,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Review {
+public class ReviewAjax {
 	private int rvNum;
 	private int proNum;
 	private int userNum;
@@ -24,11 +24,6 @@ public class Review {
 	private double rvStar;
 	private String rvBuy;
 	private String userNickname;
-	private int rvRecommend;
 	private String image;
-	private Member member;
-	private Supplement supplement;
-	
-	private String strCreateDate;
-	private String strMOdifyDate;
+	private PageInfo pageinfo;
 }
