@@ -179,29 +179,33 @@
 	                    </div>
 	                    
                 	</c:forEach>
-
+                	
 					<!-- 페이징 -->
 					<div class="col-lg-12 text-center" style="margin-top: 8%;">
 						<div class="product__pagination blog__pagination">
 							<c:url var="goBack" value="${ loc }">
 								<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+								<c:param name="cateNum" value="${ cateNum }"/>
+								<c:param name="cateName" value="${ cateName }"/>
 							</c:url>
 							<c:if test="${ pi.currentPage > 1 }">
-								<a href="${ goBack }" aria-label="Previous"><i
-									class="fa fa-long-arrow-left"></i></a>
+								<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a>
 							</c:if>
-							<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }"
-								var="p">
+							<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
 								<c:url var="goNum" value="${ loc }">
 									<c:param name="page" value="${p}"></c:param>
+									<c:param name="cateNum" value="${ cateNum }"/>
+									<c:param name="cateName" value="${ cateName }"/>
 								</c:url>
 								<a href="${ goNum }">${ p }</a>
 							</c:forEach>
 							<c:url var="goNext" value="${ loc }">
 								<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+								<c:param name="cateNum" value="${ cateNum }"/>
+								<c:param name="cateName" value="${ cateName }"/>
 							</c:url>
 							<c:if test="${ pi.currentPage <= 1 }">
-								<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+							<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
 							</c:if>
 						</div>
 					</div>

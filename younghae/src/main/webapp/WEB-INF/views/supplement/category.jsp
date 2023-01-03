@@ -134,19 +134,29 @@
 			<div class="col-lg-12 text-center" style="margin-top: 8%;">
 				<div class="product__pagination blog__pagination">
 					<c:url var="goBack" value="${ loc }">
-						<c:param name="page" value="${pi.currentPage-1 }"></c:param>
+						<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
+						<c:param name="cateNum" value="${ cateNum }"/>
+						<c:param name="cateName" value="${ cateName }"/>
 					</c:url>
-					<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a>
+					<c:if test="${ pi.currentPage > 1 }">
+						<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a>
+					</c:if>
 					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p">
-						<c:url var="goNum" value="${ loc}">
+						<c:url var="goNum" value="${ loc }">
 							<c:param name="page" value="${p}"></c:param>
+							<c:param name="cateNum" value="${ cateNum }"/>
+							<c:param name="cateName" value="${ cateName }"/>
 						</c:url>
-						<a href="${goNum }">${ p }</a>
+						<a href="${ goNum }">${ p }</a>
 					</c:forEach>
 					<c:url var="goNext" value="${ loc }">
-						<c:param name="page" value="${pi.currentPage+1}"></c:param>
+						<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
+						<c:param name="cateNum" value="${ cateNum }"/>
+						<c:param name="cateName" value="${ cateName }"/>
 					</c:url>
+					<c:if test="${ pi.currentPage <= 1 }">
 					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+					</c:if>
 				</div>
 			</div>
 		</div>
@@ -223,19 +233,6 @@
 
 </body>
 	<script>
-		const Allcategory = document.getElementsByClassName("featured__item__pic set-bg");
-        for(const cate of Allcategory){
-            cate.addEventListener('click', function(){
-                console.log(this);
-                const cateNum = this.childNodes[1].value;
-                const cateName = this.childNodes[3].innerText;
-                console.log(cateNum);
-                console.log(cateName);
-                
-                location.href = '${contextPath}/selectCategory.su?cateName='+cateName+'&cateNum='+cateNum+'&page='+${pi.currentPage};
-            });
-        }
-        
         $('#bn_navbar-search-input_1').on('keyup', ()=>{
 			console.log($('#bn_navbar-search-input_1').val());
 			$.ajax({
@@ -265,8 +262,19 @@
 				}
 			});
 		});
+        
+        const Allcategory = document.getElementsByClassName("featured__item__pic set-bg");
+        
+        $(document).on("click", ".featured__item__pic.set-bg", function(){
+                console.log(this);
+                const cateNum = this.children[0].value;
+                const cateName = this.children[1].innerText;
+                console.log(cateNum);
+                console.log(cateName);
+                
+                location.href = '${contextPath}/selectCategory.su?cateName='+cateName+'&cateNum='+cateNum+'&page='+${pi.currentPage};
+        });
 
-// 		console.log($('#bn_navbar-search-input_1'));
 		
 	</script>
 </html>

@@ -49,11 +49,11 @@ public class SupplementController {
 		if(page != null) {
 			currentPage = page;
 		}
-		Member mem = sService.selectMember(26);
+		Member mem = sService.selectMember(8);
 		// 집에서는 26
 		// 학원에서는 8
 	      
-		int listCount = sService.getListCount();
+		int listCount = sService.getListCount(1);
 		
 		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 12);
 		ArrayList<ProCategory> all = sService.allCategory(pi);
@@ -440,30 +440,51 @@ public class SupplementController {
 	
 //	=============================================== 관리자 ==========================================================================
 	@RequestMapping("adminReviewList.su")
-	public String adminReviewList(@RequestParam(value="page", required=false) Integer page, Model model) {
+	public void adminReviewList(@RequestParam(value="page", required=false) Integer page,  HttpServletResponse response,
+									@RequestParam(value="check", required=false) String check, Model model) {
+		System.out.println("check : " + check);
+		
 		int currentPage = 1;
 		
 		if(page != null) {
 			currentPage = page;
 		}
-		int listCount = sService.getListCount();
-		
-		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 10);
-		
-		ArrayList<Review> r = sService.adminReviewList(pi);
 		
 		int reviewCount = sService.adminReviewListCount();
 		
-		if(r != null) {
-			
-			model.addAttribute("review", r);
-			model.addAttribute("pi", pi);
-			model.addAttribute("reviewCount", reviewCount);
-//			model.addAttribute("loginUser", mem);
-			
-			return "admin_ReviewPage";
+		PageInfo pi =  Pagination.getPageInfo(currentPage, reviewCount, 10);
+		
+		ArrayList<Review> r = new ArrayList<Review>();
+		if(check.contains("Name")) {
+			r = sService.adminReviewListNa(pi, 1);
+		}else if(check.contains("Number")){
+			r = sService.adminReviewListN(pi, 1);
 		}else {
-			throw new SupplementException("adminReviewList오류");
+			r = sService.adminReviewListG(pi, 1);
 		}
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		// 시간 형식 지정해주기 
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(r, response.getWriter());
+			gson.toJson(pi, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+//		
+//		if(r != null) {
+//			
+//			model.addAttribute("review", r);
+//			model.addAttribute("pi", pi);
+//			model.addAttribute("reviewCount", reviewCount);
+////			model.addAttribute("loginUser", mem);
+//			
+//			return "admin_ReviewPage";
+//		}else {
+//			throw new SupplementException("adminReviewList오류");
+//		}
 	}
 }

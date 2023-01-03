@@ -90,13 +90,26 @@ public class SupplementDAO {
 		return sqlSession.delete("supplementMapper.deleteReco", r);
 	}
 
-	public ArrayList<Review> adminReviewList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Review> adminReviewListN(SqlSessionTemplate sqlSession, PageInfo pi, int i) {
 		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
-		return (ArrayList)sqlSession.selectList("supplementMapper.adminReviewList", 0, rowBounds);
+		return (ArrayList)sqlSession.selectList("supplementMapper.adminReviewListN", i, rowBounds);
 	}
 
-	public int adminREviewListCount(SqlSessionTemplate sqlSession) {
+	public ArrayList<Review> adminReviewListNa(SqlSessionTemplate sqlSession, PageInfo pi, int i) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("supplementMapper.adminReviewListNa", i, rowBounds);
+	}
+	
+	public ArrayList<Review> adminReviewListG(SqlSessionTemplate sqlSession, PageInfo pi, int i){
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("supplementMapper.adminReviewListG", i, rowBounds);
+	}
+	
+	public int adminReviewListCount(SqlSessionTemplate sqlSession) {
 		return sqlSession.selectOne("supplementMapper.adminReviewListCount");
 	}
+
 }

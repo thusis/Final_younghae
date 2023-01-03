@@ -11,7 +11,7 @@ import com.kh.young.model.vo.Supplement;
 
 public interface SupplementService {
 
-	int getListCount();
+	int getListCount(int i);
 
 	ArrayList<ProCategory> allCategory(PageInfo pi);
 
@@ -45,7 +45,11 @@ public interface SupplementService {
 
 	int deleteReco(Review r);
 
-	ArrayList<Review> adminReviewList(PageInfo pi);
+	ArrayList<Review> adminReviewListN(PageInfo pi, int i);
+
+	ArrayList<Review> adminReviewListNa(PageInfo pi, int i);
+	
+	ArrayList<Review> adminReviewListG(PageInfo pi, int i);
 
 	int adminReviewListCount();
 
