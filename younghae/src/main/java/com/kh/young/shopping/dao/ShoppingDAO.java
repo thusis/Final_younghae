@@ -10,8 +10,11 @@ import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.OrderDetails;
+import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
+import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
 
 @Repository
@@ -95,6 +98,22 @@ public class ShoppingDAO {
 
 	public ArrayList<Coupon> selectCouponList(SqlSessionTemplate sqlSession, int userNum) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectCouponList", userNum);
+	}
+
+	public int insertOrders(SqlSessionTemplate sqlSession, Orders orders) {
+		return sqlSession.insert("shoppingMapper.insertOrders", orders);
+	}
+
+	public int deleteCart(SqlSessionTemplate sqlSession, int proNum) {
+		return sqlSession.delete("shoppingMapper.deleteCart", proNum);
+	}
+
+	public int insertOrderDetails(SqlSessionTemplate sqlSession, OrderDetails od) {
+		return sqlSession.insert("shoppingMapper.insertOrderDetails", od);
+	}
+
+	public ArrayList<OrderListDTO> selectOrderList(SqlSessionTemplate sqlSession, String orderCode) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectOrderList", orderCode);
 	}
 
 

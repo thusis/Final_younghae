@@ -11,9 +11,12 @@ import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.OrderDetails;
+import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dao.ShoppingDAO;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
+import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
 
 @Service("shService")
@@ -125,6 +128,26 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Override
 	public ArrayList<Coupon>  selectCouponList(int userNum) {
 		return shDAO.selectCouponList(sqlSession, userNum);
+	}
+	
+	@Override
+	public int insertOrders(Orders orders) {
+		return shDAO.insertOrders(sqlSession, orders);
+	}
+	
+	@Override
+	public int deleteCart(int proNum) {
+		return shDAO.deleteCart(sqlSession, proNum);
+	}
+	
+	@Override
+	public int insertOrderDetails(OrderDetails od) {
+		return shDAO.insertOrderDetails(sqlSession, od);
+	}
+	
+	@Override
+	public ArrayList<OrderListDTO> selectOrderList(String orderCode) {
+		return shDAO.selectOrderList(sqlSession, orderCode);
 	}
 
 }

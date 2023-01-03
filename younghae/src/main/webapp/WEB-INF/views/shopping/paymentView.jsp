@@ -146,7 +146,13 @@
 			<div class="checkout__form mt-5">
 				<h3 class="mb-5">주문/결제</h3>
 				<form id="paymentForm" action="${ contextPath }/successPay.sh">
-					<input type="hidden" name="testValue" value="이게되면 쉽겠지">
+					<input type="hidden" id="orderCode" name="orderCode">
+					<input type="hidden" id="orderDate" name="orderDate">
+					<input type="hidden" id="orderPayAmount" name="orderPayAmount">
+					<input type="hidden" id="orderPaymethod" name="orderPaymethod">
+					<input type="hidden" id="orderCouponPrice" name="orderCouponPrice" value="0">
+					<input type="hidden" id="orderImpCode" name="orderImpCode">
+					<input type="hidden" id="orderStatus" name="orderStatus">
 					<div class="row">
 						<div class="col-lg-8 col-md-6">
 							<div class="row" style="margin: -1rem;">
@@ -161,17 +167,19 @@
 							<div class="checkout__input" style="margin-bottom: 5rem;">
 								<c:forEach items="${ basicAddress }" var="b">
 								 <c:if test="${ b.addressBasic =='Y' }">
-									<div id="order_addressName" name="userZipcode" style="font-weight: bold; font-size: 1.3rem; margin-bottom:0.3rem;">
+								 	<input type="hidden" name="addressNum" value="${ b.addressNum }">
+									<div id="order_addressName" style="font-weight: bold; font-size: 1.3rem; margin-bottom:0.3rem;">
 										${ b.addressName }
 									</div>
-									<div id="order_address" name="userAddress" style="margin-bottom:0.3rem;"><span>${ b.addressBuilding }</span>, <span>${ b.addressDetail }</span></div>
+									<div id="order_address" style="margin-bottom:0.3rem;"><span>${ b.addressBuilding }</span>, <span>${ b.addressDetail }</span></div>
 									<div id="order_addressee" style="color: #828282; margin-bottom:1rem;">
-										${ b.addressAddressee }<div id="order_addressPhone" style="display: inline;">${ b.addressPhone }</div>
+										${ b.addressAddressee }
+										<div id="order_addressPhone" style="display: inline;">${ b.addressPhone }</div>
 									</div>
 										<input type="hidden" id="order_zipcode" value="${ b.addressZipcode }">
 								 </c:if>
 								</c:forEach>
-								<select class="inputBox" style="width:50%; padding-left: 5px;">
+								<select class="inputBox" name="orderRequest" style="width:50%; padding-left: 5px;">
 									<option>배송시 요청사항을 선택해주세요</option>
 									<option>부재시 문앞에 놓아주세요</option>
 									<option>배송전에 미리 연락주세요</option>
@@ -189,9 +197,11 @@
 							<hr>
 							
 							<div>
+								<input type="hidden" name="userNum" value="${ loginUser.userNum }">
+								<input type="hidden" name="userId" value="${ loginUser.userId }">
 								<div class="mb-3">
 									<label for="orderName" style="margin-right: 3rem">이름</label> 
-									<input id = "orderName" class="inputBox" name="orderName" value="${ loginUser.userName }">
+									<input id ="orderName" class="inputBox" name="orderUserName" value="${ loginUser.userName }">
 								</div>
 	
 	<!-- 							<div class="mb-3"> -->
@@ -202,7 +212,7 @@
 	
 								<div style="margin-bottom: 5em;">
 									<label for="oderPhone" style="margin-right: 1rem">휴대전화</label> 
-									<input type="tel" id="oderPhone" class="inputBox" name="oderPhone" value="${ loginUser.userPhone }">
+									<input type="tel" id="oderPhone" class="inputBox" name="orderPhone" value="${ loginUser.userPhone }">
 								</div>
 							</div>
 							<!-- /주문자 -->
@@ -217,6 +227,13 @@
 
 							<c:forEach items="${ infoList }" var="i">
 								<div class="container mb-4 supplementDiv"	style="border: 1px solid #e5e3e3; border-radius: 0.5em;">
+									<input type="text" name="proNumList" value="${ i.cart.supplement.proNum }">
+<%-- 									<c:if test="${ empty i.cart.cartQuantity }"> --%>
+<!-- 										<input type="hidden" name="quantityList" value="0"> -->
+<%-- 									</c:if> --%>
+<%-- 									<c:if test="${ !empty i.cart.cartQuantity }"> --%>
+										<input type="hidden" name="quantityList" value="${ i.cart.cartQuantity }">
+<%-- 									</c:if> --%>
 									<div class="row" style="height: 2rem; background-color: #DCFFE9;; border-top-left-radius: 0.5em; border-top-right-radius: 0.5em; padding-top:0.3rem;">
 										<div class="col-6">
 											<span> ${ i.cart.supplement.proCompany } </span>
@@ -241,6 +258,7 @@
 										<div class="col" style="padding-top: 1rem;">
 											<div style="color: gray; font-weight: bold; font-size: 15px;">
 											${ i.cart.supplement.proName }</div>
+											<input type="hidden" name="proName" value="${ i.cart.supplement.proName }">
 											<div style="font-weight: bold; font-size: 15px;">
 												<div style="color: black; font-weight: bold; font-size: 15px;">수량 &nbsp;
 													<span>${ i.cart.cartQuantity }</span><span>&nbsp;개</span>
@@ -282,6 +300,7 @@
 									</c:forEach>
 								</c:if>
 							</select>
+							<input type="hidden" name="couNum">
 							<!-- /쿠폰 -->
 							${ loginUser }
 							<!-- 포인트 -->
@@ -316,7 +335,7 @@
 							<div class="checkout__order" style="height: 37rem;">
 								<h4 style="margin-top:-5px;">결제 금액</h4>
 								<ul style="margin-top:-10px;">
-									<li>총 상품 금액 <span><fmt:formatNumber value="${ totalPrice }" type="number"/> 원</span></li>
+									<li>총 상품 금액 <span name=""><fmt:formatNumber value="${ totalPrice }" type="number"/> 원</span></li>
 									<li>배송비
 										<c:if test="${ totalPrice > 50000 }">
 											<span>0 원</span>
@@ -336,6 +355,9 @@
 										<fmt:formatNumber value="${ totalPrice * 0.01}" type="number"/>
 									</span>
 								</div>
+								<input type="hidden" name="orderTotalPrice" value="${ totalPrice }">
+								<input type="hidden" id="orderPayAmount" name="orderPayAmount">
+								
 
 								<div>
 									<input type="checkbox" id="allAgree" class="cartSelectAll" onclick="selectAll();" required>
@@ -788,7 +810,9 @@
 //		결제 금액 영역
 		var useCoupon = document.getElementById("useCoupon");
 		useCoupon.addEventListener('change',function(){
-			var useCouponPrice = this.value * ${ totalPrice }/100;
+			var useCouponPrice = Math.round(this.value * ${ totalPrice }/100);
+			const orderCouponPrice = document.getElementById('orderCouponPrice');
+			orderCouponPrice.value = useCouponPrice;
 			var totalPayPrice = ${ totalPrice } - useCouponPrice; 
 			var savePoint = Math.round(totalPayPrice / 100);
 			document.getElementById('useCouponPrice').innerText = useCouponPrice.toLocaleString();
@@ -818,8 +842,6 @@
 // 			document.getElementById('savePoint').innerText = savePoint2.toLocaleString();
 // 		});
 		
-// 		pointUse.addEventListener("change", function () {
-// 		});
 
 //      주소찾기API
 		let width = 400;
@@ -907,6 +929,14 @@
     console.log(orderAddress.innerText);
     console.log(oderZipcode.value);
     
+    const orderCode = document.getElementById('orderCode');
+    const orderDate = document.getElementById('orderDate');
+    const orderPayAmount = document.getElementById('orderPayAmount');
+    const orderPaymethod = document.getElementById('orderPaymethod');
+    const orderImpCode = document.getElementById('orderImpCode');
+    const orderStatus = document.getElementById('orderStatus');
+    orderDate.value = today.toLocaleString();
+    
     function requestPay() {
  	      IMP.request_pay({ // param
  	          pg: "html5_inicis",
@@ -922,6 +952,12 @@
  	          if (rsp.success) {
 				console.log("성공");
 				console.log(rsp);
+				
+				orderCode.value = rsp.merchant_uid;
+				orderPayAmount.value = rsp.paid_amount;
+				orderPaymethod.value = rsp.pay_method;
+				orderImpCode.value = rsp.imp_uid;
+				orderStatus.value = '결제완료';
 				
 //                 $.ajax({
 //                     type: 'post',

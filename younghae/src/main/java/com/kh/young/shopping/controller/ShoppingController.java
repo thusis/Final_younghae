@@ -29,10 +29,11 @@ import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
+import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
 import com.kh.young.shopping.service.ShoppingService;
 
-@SessionAttributes("loginUser")
+//@SessionAttributes("loginUser")
 @Controller
 public class ShoppingController {
 	
@@ -52,8 +53,8 @@ public class ShoppingController {
 		}
 		model.addAttribute("supplementList", list);
 		
-		Member mem = shService.selectMember(1);
-		model.addAttribute("loginUser", mem);
+//		Member mem = shService.selectMember(1);
+//		model.addAttribute("loginUser", mem);
 		
 		return "shoppingMain";
 	}
@@ -128,11 +129,11 @@ public class ShoppingController {
 	
 	// 결제페이지 가기
 	@RequestMapping("payment.sh")
-	public String paymentView(@RequestParam(value="quantity", required=false) int quantity,
+	public String paymentView(@RequestParam(value="quantity", required=false) String[] quantity,
 			Model model, HttpSession session, @RequestParam(value="proNumList",required=false) String[] proNumList) {
 
 		System.out.println(Arrays.toString(proNumList));
-		System.out.println(quantity);
+		System.out.println(Arrays.toString(quantity));
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		
@@ -149,9 +150,9 @@ public class ShoppingController {
             System.out.println(getPayInfoDTO);
             PaymentDTO paymentList = shService.selectPayList(getPayInfoDTO);
             System.out.println(paymentList);
-            if(quantity != 0) {
-            	paymentList.getCart().setCartQuantity(quantity);
-            	totalPrice += (paymentList.getCart().getSupplement().getProPrice() * quantity);
+            if(quantity[i] != null) {
+            	paymentList.getCart().setCartQuantity(Integer.parseInt(quantity[i]));
+            	totalPrice += (paymentList.getCart().getSupplement().getProPrice() * Integer.parseInt(quantity[i]));
             }else {
             	totalPrice += (paymentList.getCart().getSupplement().getProPrice()) * (paymentList.getCart().getCartQuantity());
             }
@@ -365,8 +366,53 @@ public class ShoppingController {
 	}
 	
 	@RequestMapping("successPay.sh")
-	public String successPay(@RequestParam("testValue") String test) {
-		System.out.println(test);
+	public String successPay(@ModelAttribute Orders orders, @RequestParam(value="proNumList",required=false) String[] proNumList, 
+			@RequestParam(value="quantityList",required=false) String[] quantityList, @RequestParam(value="proName",required=false) String[] proNames,
+			Model model) {
+		System.out.println(orders);
+		System.out.println(Arrays.toString(proNumList));
+		System.out.println(Arrays.toString(quantityList));
+		
+//		주문 테이블 insert
+		int insertOrder = shService.insertOrders(orders);
+		if(insertOrder > 0) {
+			System.out.println("주문 인서트 성공");
+		}else {
+			System.out.println("주문 인서트 실패");
+		}
+		
+		OrderDetails od = new OrderDetails();
+		String orderCode = orders.getOrderCode();
+		for(int i = 0; i < proNumList.length; i++) {
+			int proNum = Integer.parseInt(proNumList[i]);
+			String proName = proNames[i];
+			int orderQuantity = Integer.parseInt(quantityList[i]);
+			od.setOrderCode(orderCode);
+			od.setProNum(proNum);
+			od.setProName(proName);
+			od.setOrderQuantity(orderQuantity);
+			
+			System.out.println(od);
+			
+			int insertOrderDetails = shService.insertOrderDetails(od);
+			if(insertOrderDetails > 0) {
+				System.out.println("주문상세 insert 성공");
+			}else {
+				System.out.println("주문상세 insert 실패");
+			}
+			
+			int deleteCart = shService.deleteCart(proNum);
+			if(deleteCart>0) {
+				System.out.println("카트 삭제 성공");
+			}else {
+				System.out.println("카트 삭제 실패");
+			}
+			
+		}
+		ArrayList<OrderListDTO> orderList = shService.selectOrderList(orderCode);
+		System.out.println(orderList);
+		
+		model.addAttribute("orderList", orderList);
 		
 		return "successPay";
 	}

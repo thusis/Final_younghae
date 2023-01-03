@@ -1,4 +1,7 @@
-package com.kh.young.model.vo;
+package com.kh.young.shopping.dto;
+
+import com.kh.young.model.vo.OrderDetails;
+import com.kh.young.model.vo.Orders;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,9 +14,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class OrderDetails {
-	private String orderCode;
-	private int proNum;
-	private String proName;
-	private int orderQuantity;
+public class OrderListDTO {
+	private Orders orders;
+	private OrderDetails orderDetails;
 }
