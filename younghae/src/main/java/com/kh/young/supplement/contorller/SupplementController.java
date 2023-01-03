@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,7 +32,6 @@ import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
-import com.kh.young.story.service.StoryService;
 import com.kh.young.supplement.exception.SupplementException;
 import com.kh.young.supplement.service.SupplementService;
 
@@ -439,10 +439,12 @@ public class SupplementController {
 	}
 	
 //	=============================================== 관리자 ==========================================================================
+	@ResponseBody
 	@RequestMapping("adminReviewList.su")
-	public void adminReviewList(@RequestParam(value="page", required=false) Integer page,  HttpServletResponse response,
+	public HashMap<String, Object> adminReviewList(@RequestParam(value="page", required=false) Integer page,  HttpServletResponse response,
 									@RequestParam(value="check", required=false) String check, Model model) {
 		System.out.println("check : " + check);
+		
 		
 		int currentPage = 1;
 		
@@ -463,22 +465,33 @@ public class SupplementController {
 			r = sService.adminReviewListG(pi, 1);
 		}
 		
-		response.setContentType("application/json; charset=UTF-8");
-		GsonBuilder gb = new GsonBuilder();
-		// 시간 형식 지정해주기 
-		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
-		Gson gson = gb2.create();
-		try {
-			gson.toJson(r, response.getWriter());
-//			gson.toJson(pi, response.getWriter());
-		} catch (JsonIOException | IOException e) {
-			e.printStackTrace();
-		}
+		System.out.println(r);
+		
+		HashMap<String, Object> map = new HashMap<>();
+		
+		map.put("r", r);
+		map.put("pi",  pi);
+		map.put("listCount", reviewCount);
+		
+		return map;
+		
+//		response.setContentType("application/json; charset=UTF-8");
+//		GsonBuilder gb = new GsonBuilder();
+//		// 시간 형식 지정해주기 
+//		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+//		Gson gson = gb2.create();
+//		try {
+//			gson.toJson(r, response.getWriter());
+////			gson.toJson(pi, response.getWriter());
+//		} catch (JsonIOException | IOException e) {
+//			e.printStackTrace();
+//		}
 //		
 //		if(r != null) {
 //			
 //			model.addAttribute("review", r);
 //			model.addAttribute("pi", pi);
+//			model.addAttribute("check", check);
 //			model.addAttribute("reviewCount", reviewCount);
 ////			model.addAttribute("loginUser", mem);
 //			

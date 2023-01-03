@@ -135,8 +135,12 @@
 	<!-- 관리자 리뷰 리스트 가져오기 -->
 	<!-- 1. 제품 번호 순 -->
 	<select id="adminReviewListN" resultMap="ReviewResultSet">
-		select * from review
+        select 
+        PRO_NUM, USER_NUM, RV_NUM, RV_CONTENT, TO_CHAR(RV_CREAETEDATE, 'YYYY-MM-DD') STR_CREATEDATE, TO_CHAR(RV_MODIFYDATE, 'YYYY-MM-DD') STR_MODIFYDATE, RV_STATUS, RV_STAR, RV_BUY, RV_RECOMMEND, USER_ID, USER_PWD, USER_NAME,
+        USER_NICKNAME, USER_GENDER, USER_BIRTH, USER_PHONE, USER_RECOMMEND, USER_ENROLLDATE, USER_CNUMBER, USER_STATUS, USER_MODIFYDATE, PRO_IMAGE,PRO_NAME, PRO_COMPANY, PRO_INGREDIENT, PRO_PRICE, PRO_EFFECT, PRO_INTAKE, PRO_SALE_STATUS, PRO_CREATEdATE, PRO_MODIFYDATE, PRO_GRADE,
+        PRO_STATUS, CATE_NUM from review
 		join member using (user_num)
+        join product using (pro_num)
         order by pro_num asc
 	</select>
 	
@@ -152,6 +156,7 @@
 	<select id="adminReviewListG" resultMap="ReviewResultSet">
 		select * from review
 		join member using (user_num)
+        join product using (pro_num)
         order by rv_recommend desc
 	</select>
 	
@@ -159,6 +164,7 @@
 	<select id="adminReviewListCount" resultType="_int">
 		select count(*) from review
 		join member using (user_num)
+        join product using (pro_num)
         order by rv_num desc
 	</select>
 	
@@ -208,10 +214,14 @@
 		<result column="RV_CONTENT" property="rvContent"/>
 		<result column="RV_CREAETEDATE" property="rvCreateDate"/>
 		<result column="RV_MODIFYDATE" property="rvMOdifyDate"/>
+		<result column="STR_CREAETEDATE" property="strCreateDate"/>
+		<result column="STR_MODIFYDATE" property="strMOdifyDate"/>
 		<result column="RV_STATUS" property="rvStatus"/>
 		<result column="RV_STAR" property="rvStar"/>
 		<result column="RV_BUY" property="rvBuy"/>
+		<result column="RV_RECOMMEND" property="rvRecommend"/>
 		<association property="member" javaType="Member" resultMap="memberResultSet"/>
+		<association property="supplement" javaType="Supplement" resultMap="SupplementResultSet"/>
 	</resultMap>
 	
    <select id="selemetMember" resultMap="memberResultSet">
