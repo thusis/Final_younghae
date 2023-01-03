@@ -365,8 +365,8 @@ public class ShoppingController {
 	}
 	
 	@RequestMapping("successPay.sh")
-	public String successPay(@ModelAttribute Orders oders, @ModelAttribute OrderDetails od) {
-		
+	public String successPay(@RequestParam("testValue") String test) {
+		System.out.println(test);
 		
 		return "successPay";
 	}

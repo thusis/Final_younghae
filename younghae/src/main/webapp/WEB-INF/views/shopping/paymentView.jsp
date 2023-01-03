@@ -145,7 +145,8 @@
 			${ basicAddress }
 			<div class="checkout__form mt-5">
 				<h3 class="mb-5">주문/결제</h3>
-				<form action="#">
+				<form id="paymentForm" action="${ contextPath }/successPay.sh">
+					<input type="hidden" name="testValue" value="이게되면 쉽겠지">
 					<div class="row">
 						<div class="col-lg-8 col-md-6">
 							<div class="row" style="margin: -1rem;">
@@ -201,7 +202,7 @@
 	
 								<div style="margin-bottom: 5em;">
 									<label for="oderPhone" style="margin-right: 1rem">휴대전화</label> 
-									<input id="oderPhone" class="inputBox" name="oderPhone" value="${ loginUser.userPhone }">
+									<input type="tel" id="oderPhone" class="inputBox" name="oderPhone" value="${ loginUser.userPhone }">
 								</div>
 							</div>
 							<!-- /주문자 -->
@@ -295,17 +296,18 @@
 
 							<div class="row">
 								<div class="col" style="margin-right: -5rem;">
-									<input class="inputBox" style="width: 80%; padding: 10px;"
-										placeholder="0">
+									<input id="pointUse" class="inputBox" style="width: 80%; padding: 10px;" placeholder="0" >
 								</div>
 								<div class="col">
-									<button class="btn_pointAll">전액사용</button>
+									<button id="allPointUse" class="btn_pointAll">전액사용</button>
 								</div>
 							</div>
 							<div class="container">
 								<div class="row">
 									<div style="margin-top: 0.5rem;">
-										사용 가능 포인트 <span style="color: #24E082;">${ loginUser.userPoint }</span>P
+										사용 가능 포인트 
+										<span style="color: #24E082;"><fmt:formatNumber value="${ loginUser.userPoint }" type="number"/>
+										</span>P
 									</div>
 								</div>
 							</div>
@@ -324,13 +326,13 @@
 										</c:if>
 									</li>
 									<li>쿠폰 사용<span><span>&nbsp;원</span><span id="useCouponPrice">0</span></span></li>
-									<li>포인트 사용<span>0 원</span></li>
+									<li>포인트 사용<span>&nbsp;원</span><span id="totalUsePoint">0</span></li>
 								</ul>
 								<div class="checkout__order__subtotal" style="height: 5rem;">최종 결제 금액 
 									<span><span>&nbsp;원</span><span id="totalPayPrice" style="color: #24E082;">
 										<fmt:formatNumber value="${ totalPrice }" type="number"/></span></span><br>
-									<span style="font-size: 0.6rem;">P적립 예정</span>
-									<span id="savePoint" style="font-size: 0.6rem;">
+									<span style="font-size: 0.6rem;">P적립 예정&nbsp;</span>
+									<span id="savePoint" style="font-size: 0.6rem; color: #24E082; font-weight: 500;">
 										<fmt:formatNumber value="${ totalPrice * 0.01}" type="number"/>
 									</span>
 								</div>
@@ -793,8 +795,32 @@
 			document.getElementById('totalPayPrice').innerText = totalPayPrice.toLocaleString();
 			document.getElementById('savePoint').innerText = savePoint.toLocaleString();
 		})
-                   
-                   
+		
+// 		var allPointBtn = document.getElementById('allPointUse');
+// 		var pointUse = document.getElementById('pointUse');
+// 		var userPoint =  ${loginUser.userPoint};
+// 		var totalUsePoint = document.getElementById('totalUsePoint');
+// 		allPointBtn.addEventListener('click', function(){
+// 			pointUse.value = userPoint.toLocaleString();
+// 			totalUsePoint.innerText = pointUse.value;
+// 		})
+		
+// 		pointUse.addEventListener("keyup", function (e) {
+//     		$(this).val($(this).val().replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+// 		});
+// 		pointUse.addEventListener("change", function (e) {
+// 			totalUsePoint.innerText = $(this).val();
+// 			var numberTotalUse = Number(($(this).val()).replace(/\D/g, ''));
+// 			var totalPointPrice = ${ totalPrice } - numberTotalUse; 
+// 			console.log(totalPointPrice);
+// 			var savePoint2 = Math.round(totalPointPrice / 100);
+// 			document.getElementById('totalPayPrice').innerText = totalPointPrice.toLocaleString();
+// 			document.getElementById('savePoint').innerText = savePoint2.toLocaleString();
+// 		});
+		
+// 		pointUse.addEventListener("change", function () {
+// 		});
+
 //      주소찾기API
 		let width = 400;
 		let height = 500;
@@ -897,23 +923,23 @@
 				console.log("성공");
 				console.log(rsp);
 				
-                $.ajax({
-                    type: 'post',
-                    url: '${contextPath}/successPay.sh',
-                    data: {
-                        orderCode : rsp.merchant_uid,
-                        userNum : ${ loginUser.userNum },
-                        userId : ${ loginUser.userId },
-                        orderDate : today.toLocaleString(),
-                        orderStaus : rsp.status,
-                        orderPayAmount : rsp.paid_amount,
-                        orderUserName : rsp.buyer_name,
-                        orderPaymethod : rsp.pay_method,
-                        orderImpCode : rsp.imp_uid,
-                        orderPhone : res.buyer_tel,
-                    }
-                });
-                form.submit();
+//                 $.ajax({
+//                     type: 'post',
+//                     url: '${contextPath}/successPay.sh',
+//                     data: {
+//                         orderCode : rsp.merchant_uid,
+//                         userNum : ${ loginUser.userNum },
+//                         userId : ${ loginUser.userId },
+//                         orderDate : today.toLocaleString(),
+//                         orderStaus : rsp.status,
+//                         orderPayAmount : rsp.paid_amount,
+//                         orderUserName : rsp.buyer_name,
+//                         orderPaymethod : rsp.pay_method,
+//                         orderImpCode : rsp.imp_uid,
+//                         orderPhone : res.buyer_tel,
+//                     }
+//                 });
+                $('#paymentForm').submit();
 				
  	          } else {
  	        	alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);

@@ -103,4 +103,10 @@
       <result column="USER_MODIFYDATE" property="userModifyDate"/>
       <result column="USER_POINT" property="userPoint"/>
    </resultMap>
+   
+   <insert id="insertBasicAddress">
+	insert into address
+	values (seq_address.nextval,#{userName}, #{addressAddressee}, #{addressPhone},
+			 #{addressZipcode}, #{addressBuilding}, #{addressDetail}, 'Y' ,#{userNum}, default)
+   </insert>
 </mapper>
