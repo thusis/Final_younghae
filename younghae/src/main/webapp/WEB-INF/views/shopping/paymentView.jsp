@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -95,12 +97,31 @@
 		border-radius: 0.2em;
 		height: 2.2rem;
 		width: 17rem;
+		padding-left : 5px;
 	}
 	
+	.cartSelectAll{
+		accent-color: #24E082; 
+		color: white; 
+		width: 15px; 
+		height: 15px; 
+		cursor: pointer;
+	}	
 	
+	.cartSelectEach{
+		accent-color: #24E082; 
+		color: white; 
+		width: 15px; 
+		height: 15px; 
+		cursor: pointer;
+		margin-top: -10px;
+	}
 </style>
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	<link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">
+	
+<!-- 결제 API -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
 </head>
 
 <body>
@@ -118,6 +139,10 @@
 				</ul>
 			</div>
 
+
+			${ infoList }
+			<br><br>
+			${ basicAddress }
 			<div class="checkout__form mt-5">
 				<h3 class="mb-5">주문/결제</h3>
 				<form action="#">
@@ -133,15 +158,19 @@
 							</div>
 							<hr>
 							<div class="checkout__input" style="margin-bottom: 5rem;">
-								<div id="order_addressName" name="userZipcode" style="font-weight: bold; font-size: 1.3rem; margin-bottom:0.3rem;">
-									KH종로지원
-								</div>
-								<div id="order_address" name="userAddress" style="margin-bottom:0.3rem;"><span>서울 중구 남대문로 120</span>, <span>그레이츠 청계</span></div>
-								<div id="order_addressee" style="color: #828282; margin-bottom:1rem;">
-									영양단<div id="order_addressPhone" style="display: inline;"> 010-2775-1170</div>
-								</div>
-
-								<select class="testSelect">
+								<c:forEach items="${ basicAddress }" var="b">
+								 <c:if test="${ b.addressBasic =='Y' }">
+									<div id="order_addressName" name="userZipcode" style="font-weight: bold; font-size: 1.3rem; margin-bottom:0.3rem;">
+										${ b.addressName }
+									</div>
+									<div id="order_address" name="userAddress" style="margin-bottom:0.3rem;"><span>${ b.addressBuilding }</span>, <span>${ b.addressDetail }</span></div>
+									<div id="order_addressee" style="color: #828282; margin-bottom:1rem;">
+										${ b.addressAddressee }<div id="order_addressPhone" style="display: inline;">${ b.addressPhone }</div>
+									</div>
+										<input type="hidden" id="order_zipcode" value="${ b.addressZipcode }">
+								 </c:if>
+								</c:forEach>
+								<select class="inputBox" style="width:50%; padding-left: 5px;">
 									<option>배송시 요청사항을 선택해주세요</option>
 									<option>부재시 문앞에 놓아주세요</option>
 									<option>배송전에 미리 연락주세요</option>
@@ -161,7 +190,7 @@
 							<div>
 								<div class="mb-3">
 									<label for="orderName" style="margin-right: 3rem">이름</label> 
-									<input class="inputBox" name="orderName" value="${ loginUser.userName }">
+									<input id = "orderName" class="inputBox" name="orderName" value="${ loginUser.userName }">
 								</div>
 	
 	<!-- 							<div class="mb-3"> -->
@@ -172,7 +201,7 @@
 	
 								<div style="margin-bottom: 5em;">
 									<label for="oderPhone" style="margin-right: 1rem">휴대전화</label> 
-									<input class="inputBox" name="oderPhone" value="${ loginUser.userPhone }">
+									<input id="oderPhone" class="inputBox" name="oderPhone" value="${ loginUser.userPhone }">
 								</div>
 							</div>
 							<!-- /주문자 -->
@@ -185,85 +214,80 @@
 							</div>
 							<hr>
 
-							<div class="container mb-4"	style="border: 1px solid #e5e3e3; border-radius: 0.5em;">
-								<div class="row" style="height: 1.8rem; background-color: #F5F5F5; border-top-left-radius: 0.5em; border-top-right-radius: 0.5em;">
-									<div class="col-6">
-										<span> 나우푸드 </span>
-									</div>
-									<div class="col-6" style="text-align: right;">
-										<span> 배송비 <span>0원</span>
-										</span>
-
-									</div>
-								</div>
-								<div class="row mt-3 mb-3">
-									<div class="col-auto">
-										<img style="width: 5rem;"
-											src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/now/now01841/v/26.jpg">
-									</div>
-									<div class="col" style="padding-top: 1rem;">
-										<div style="color: gray; font-weight: bold; font-size: 15px;">울트라
-											오메가3</div>
-										<div style="font-weight: bold; font-size: 15px;">
-											35,600 &nbsp;&nbsp;<span
-												style="color: gray; font-size: 14px; font-weight: bold;">3개</span>
+							<c:forEach items="${ infoList }" var="i">
+								<div class="container mb-4 supplementDiv"	style="border: 1px solid #e5e3e3; border-radius: 0.5em;">
+									<div class="row" style="height: 2rem; background-color: #DCFFE9;; border-top-left-radius: 0.5em; border-top-right-radius: 0.5em; padding-top:0.3rem;">
+										<div class="col-6">
+											<span> ${ i.cart.supplement.proCompany } </span>
+										</div>
+										<div class="col-6" style="text-align: right;">
+											<span> 배송비</span> 
+											<span>
+												<c:if test="${ i.cart.supplement.proPrice * i.cart.cartQuantity >= 50000}">
+													0 원
+												</c:if>
+												<c:if test="${ i.cart.supplement.proPrice * i.cart.cartQuantity < 50000}">
+													2,500 원
+												</c:if>
+											</span>
 										</div>
 									</div>
-								</div>
-							</div>
-							<div class="container mb-4"
-								style="border: 1px solid #e5e3e3; border-radius: 0.5em;">
-								<div class="row"
-									style="height: 1.8rem; background-color: #F5F5F5; border-top-left-radius: 0.5em; border-top-right-radius: 0.5em;">
-									<div class="col-6">
-										<span> 나우푸드 </span>
-									</div>
-									<div class="col-6" style="text-align: right;">
-										<span> 배송비 <span>2,500원</span>
-										</span>
-
-									</div>
-								</div>
-								<div class="row mt-3 mb-3">
-									<div class="col-auto">
-										<img style="width: 5rem;"
-											src="https://cloudinary.images-iherb.com/image/upload/f_auto,q_auto:eco/images/nrt/nrt10151/y/53.jpg">
-									</div>
-									<div class="col" style="padding-top: 1rem;">
-										<div style="color: gray; font-weight: bold; font-size: 15px;">슈퍼
-											울트라 오메가3</div>
-										<div style="font-weight: bold; font-size: 15px;">
-											30,600 &nbsp;&nbsp;<span
-												style="color: gray; font-size: 14px; font-weight: bold;">3개</span>
+									<div class="row mt-3 mb-3">
+										<div class="col-auto">
+											<img style="width: 5rem;"
+												src="${ i.cart.supplement.proImage }">
+										</div>
+										<div class="col" style="padding-top: 1rem;">
+											<div style="color: gray; font-weight: bold; font-size: 15px;">
+											${ i.cart.supplement.proName }</div>
+											<div style="font-weight: bold; font-size: 15px;">
+												<div style="color: black; font-weight: bold; font-size: 15px;">수량 &nbsp;
+													<span>${ i.cart.cartQuantity }</span><span>&nbsp;개</span>
+												</div>
+												<div class = "eachPrice" style="font-size: 15px; color: gray; display:inline;">
+													<fmt:formatNumber value="${ i.cart.supplement.proPrice }" type="number"/>
+												</div><span style="font-size: 15px; color: gray;">원</span>
+												
+												<span style="font-weight: bold; font-size: 20px;float:right;">원</span>
+												<div class="eachTotalPrice" style="font-weight: bold; font-size: 20px;float:right; display:inline;">
+													<fmt:formatNumber value="${ i.cart.supplement.proPrice * i.cart.cartQuantity }" type="number"/>
+												</div>
+											</div>
 										</div>
 									</div>
+	
 								</div>
-							</div>
+							</c:forEach>
 							<!-- /주문 상품 -->
 
 							<!-- 쿠폰 -->
 							<div class="row" style="margin-top: 5rem;">
-								<div class="col">
-									<p
-										style="font-weight: bold; font-size: 1.5rem; margin-bottom: -10px;">
-										쿠폰<span style="float: right; font-size: 0.8rem;">사용 가능한
-											쿠폰이 없습니다.</span>
+								<div class="col-lg-6">
+									<p style="font-weight: bold; font-size: 1.5rem; margin-bottom: -10px;">
+										쿠폰
 									</p>
 								</div>
 							</div>
 							<hr>
 
-							<input class="inputBox" style="width: 100%; padding: 10px;"
-								placeholder="쿠폰 선택">
+							<select id="useCoupon" class="inputBox" style="width: 100%; padding-left: 5px;">
+								<c:if test="${ empty couponList }">
+									<option value="0">사용가능한 쿠폰이 없습니다.</option>
+								</c:if>
+								<c:if test="${ !empty couponList }">
+									<option value="0">쿠폰을 선택해주세요</option>
+									<c:forEach items="${ couponList }" var="c">
+										<option value=${ c.couDiscount }>${ c.couIntro }</option>
+									</c:forEach>
+								</c:if>
+							</select>
 							<!-- /쿠폰 -->
-
+							${ loginUser }
 							<!-- 포인트 -->
 							<div class="row" style="margin-top: 5rem;">
 								<div class="col">
-									<p
-										style="font-weight: bold; font-size: 1.5rem; margin-bottom: -10px;">
-										포인트<span style="float: right; font-size: 0.8rem;">3만원
-											이상 구매시 사용 가능 (배송비 제외)</span>
+									<p style="font-weight: bold; font-size: 1.5rem; margin-bottom: -10px;">
+										포인트
 									</p>
 								</div>
 							</div>
@@ -280,46 +304,53 @@
 							</div>
 							<div class="container">
 								<div class="row">
-									<div>
-										사용 가능 포인트 <span style="color: #24E082;">46P</span>
+									<div style="margin-top: 0.5rem;">
+										사용 가능 포인트 <span style="color: #24E082;">${ loginUser.userPoint }</span>P
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto;">
-							<div class="checkout__order">
-								<h4>결제 금액</h4>
-								<ul>
-									<li>총 상품 금액 <span>68,600원</span></li>
-									<li>배송비<span>2,500원</span></li>
-									<li>쿠폰 사용<span>0원</span></li>
-									<li>포인트 사용<span>0원</span></li>
+						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto; ">
+							<div class="checkout__order" style="height: 37rem;">
+								<h4 style="margin-top:-5px;">결제 금액</h4>
+								<ul style="margin-top:-10px;">
+									<li>총 상품 금액 <span><fmt:formatNumber value="${ totalPrice }" type="number"/> 원</span></li>
+									<li>배송비
+										<c:if test="${ totalPrice > 50000 }">
+											<span>0 원</span>
+										</c:if>
+										<c:if test="${ totalPrice <= 50000 }">
+											<span>2,500 원</span>
+										</c:if>
+									</li>
+									<li>쿠폰 사용<span><span>&nbsp;원</span><span id="useCouponPrice">0</span></span></li>
+									<li>포인트 사용<span>0 원</span></li>
 								</ul>
-								<div class="checkout__order__subtotal">
-									최종 결제 금액 <span style="color: #24E082;">71,100 원</span> <br>
-									<span style="font-size: 0.6rem;">P적립 예정</span><span
-										style="font-size: 0.6rem;">80</span>
+								<div class="checkout__order__subtotal" style="height: 5rem;">최종 결제 금액 
+									<span><span>&nbsp;원</span><span id="totalPayPrice" style="color: #24E082;">
+										<fmt:formatNumber value="${ totalPrice }" type="number"/></span></span><br>
+									<span style="font-size: 0.6rem;">P적립 예정</span>
+									<span id="savePoint" style="font-size: 0.6rem;">
+										<fmt:formatNumber value="${ totalPrice * 0.01}" type="number"/>
+									</span>
 								</div>
 
-								<div class="checkout__input__checkbox">
-									<label for="acc-or"> 아래 내용에 모두 동의합니다.(필수) <input
-										type="checkbox" id="acc-or"> <span class="checkmark"></span>
-									</label>
+								<div>
+									<input type="checkbox" id="allAgree" class="cartSelectAll" onclick="selectAll();" required>
+									<label for="allAgree" style="color:#828282; font-size: 1rem; display: inline; margin-left:5px; cursor: pointer;">아래 내용에 모두 동의합니다.(필수) </label>
 								</div>
 								<div class="container">
 									<p>본인은 만 14세 이상이며, 주문 내용을 확인하였습니다.</p>
-									<div class="checkout__input__checkbox">
-										<label for="payment"> 개인정보 수집 이용 및 제 3자 제공 동의(필수) <input
-											type="checkbox" id="payment"> <span class="checkmark"></span>
-										</label>
-									</div>
-									<div class="checkout__input__checkbox">
-										<label for="paypal"> 결제대행 서비스 이용약관 동의(필수) 
-										<input type="checkbox" id="paypal"> <span class="checkmark"></span>
-										</label>
+									<div >
+										<input type="checkbox" id="eachAgree1" class="cartSelectEach" onclick="selectOne();" required>
+										<label for="eachAgree1" style="margin-top: -10px; color:#828282; cursor: pointer;"> 개인정보 수집 이용 및 제 3자 제공 동의(필수)</label>
+									</div>										
+									<div>
+										<input type="checkbox" id="eachAgree2" class="cartSelectEach" onclick="selectOne();" required>
+										<label for="eachAgree2" style="margin-top: -10px; color:#828282; cursor: pointer;"> 결제대행 서비스 이용약관 동의(필수) </label>
 									</div>
 								</div>
-								<button type="submit" class="site-btn">
+								<button type="button" class="site-btn" onclick="requestPay()">
 									<span>71,100</span>원 결제하기
 								</button>
 							</div>
@@ -752,6 +783,17 @@
 		});
 	});
                    
+//		결제 금액 영역
+		var useCoupon = document.getElementById("useCoupon");
+		useCoupon.addEventListener('change',function(){
+			var useCouponPrice = this.value * ${ totalPrice }/100;
+			var totalPayPrice = ${ totalPrice } - useCouponPrice; 
+			var savePoint = Math.round(totalPayPrice / 100);
+			document.getElementById('useCouponPrice').innerText = useCouponPrice.toLocaleString();
+			document.getElementById('totalPayPrice').innerText = totalPayPrice.toLocaleString();
+			document.getElementById('savePoint').innerText = savePoint.toLocaleString();
+		})
+                   
                    
 //      주소찾기API
 		let width = 400;
@@ -787,11 +829,104 @@
 		});
 	}
 	
+//	전체선택 체크박스 (.checked)
+	const cartSelectAll = document.getElementById("allAgree");
+	const cartSelectEach = document.getElementsByClassName("cartSelectEach");
 
-    </script>
+	function selectAll(){
+		for(var i = 0; i < cartSelectEach.length; i++){
+			if(cartSelectAll.checked){
+				cartSelectEach[i].checked = true;
+			}else{
+				cartSelectEach[i].checked = false;
+			}
+		}
+	}
 
+	function selectOne(){
+		let count = 0;
+		for(var i = 0; i < cartSelectEach.length; i++){
+			if(cartSelectEach[i].checked){
+				count++;
+			}
+			if(count != cartSelectEach.length){
+				cartSelectAll.checked = false;
+			}else{
+				cartSelectAll.checked = true;
+			}
+		}
+	}
+	
+//  결제 API ----------------------------------------------------------------------------
+	var key = "imp73521438";
+	const IMP = window.IMP;
+    IMP.init(key); 
+    
+    const products = document.getElementsByClassName("supplementDiv");
+    const productLength = products.length - 1;
+    if(productLength == 0){
+    	overProduct = '';
+    }else{
+    	overProduct = ' 외 ' + productLength + '개';
+    }
+    
+    const orderName = document.getElementById('orderName');
+    const oderPhone = document.getElementById('oderPhone');
+    const orderAddress = document.getElementById('order_address');
+    const oderZipcode = document.getElementById('order_zipcode');
+    let today = new Date(); 
+    
+    console.log(orderName.value);
+    console.log(oderPhone.value);
+    console.log(orderAddress.innerText);
+    console.log(oderZipcode.value);
+    
+    function requestPay() {
+ 	      IMP.request_pay({ // param
+ 	          pg: "html5_inicis",
+ 	          merchant_uid: 'YOUNG_' + new Date().getTime(),
+ 	          name: "${ infoList[0].cart.supplement.proName }" + overProduct,
+ 	          amount: 100,
+ 	          buyer_email: "${loginUser.email}" ,
+ 	          buyer_name: orderName.value ,
+ 	          buyer_tel: oderPhone.value ,
+ 	          buyer_addr: orderAddress.value,
+ 	          buyer_postcode: oderZipcode.value
+ 	      }, function (rsp) { // callback
+ 	          if (rsp.success) {
+				console.log("성공");
+				console.log(rsp);
+				
+                $.ajax({
+                    type: 'post',
+                    url: '${contextPath}/successPay.sh',
+                    data: {
+                        orderCode : rsp.merchant_uid,
+                        userNum : ${ loginUser.userNum },
+                        userId : ${ loginUser.userId },
+                        orderDate : today.toLocaleString(),
+                        orderStaus : rsp.status,
+                        orderPayAmount : rsp.paid_amount,
+                        orderUserName : rsp.buyer_name,
+                        orderPaymethod : rsp.pay_method,
+                        orderImpCode : rsp.imp_uid,
+                        orderPhone : res.buyer_tel,
+                    }
+                });
+                form.submit();
+				
+ 	          } else {
+ 	        	alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+				console.log(rsp);
+				console.log("실패");
+//  	              ...,
+ 	              // 결제 실패 시 로직,
+//  	              ...
+ 	          }
+ 	      });
+    }
 
-
+	</script>
 
 </body>
 

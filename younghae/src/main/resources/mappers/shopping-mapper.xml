@@ -2,12 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="shoppingMapper">
 
-	<select id="selectSupplementList" resultMap="supplementResultSet">
-		select *
-		from product
-		where pro_sale_status = 'Y'
-	</select>
-	
 	<resultMap type="Supplement" id="supplementResultSet">
 		<id column="PRO_NUM" property="proNum"/>
 		<result column="PRO_IMAGE" property="proImage"/>
@@ -24,35 +18,33 @@
 		<result column="PRO_STATUS" property="proStatus"/>
 		<result column="CATE_NUM" property="cateNum"/>
 	</resultMap>
+
+	<resultMap type="Address" id="addressListResultMap">
+		<id column="ADDRESS_NUM" property="addressNum"/>
+		<result column="ADDRESS_NAME" property="addressName"/>
+		<result column="ADDRESS_ADDRESSEE" property="addressAddressee"/>
+		<result column="ADDRESS_PHONE" property="addressPhone"/>
+		<result column="ADDRESS_ZIPCODE" property="addressZipcode"/>
+		<result column="ADDRESS_BUILDING" property="addressBuilding"/>
+		<result column="ADDRESS_DETAIL" property="addressDetail"/>
+		<result column="ADDRESS_BASIC" property="addressBasic"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="ADDRESS_STATUS" property="addressStatus"/>
+	</resultMap>	
 	
-	<select id="selectTrendList" resultMap="supplementResultSet">
-		select *
-		from product
-			left outer join sale_product using(pro_num)
-		where pro_sale_status = 'Y'
-		order by pro_viewcount desc
-	</select>
+	<resultMap type="Cart" id="cartListResultSet">
+		<id column="CART_NUM" property="cartNum"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="PRO_NUM" property="proNum"/>
+		<result column="CART_QUANTITY" property="cartQuantity"/>
+<!-- 		<collection property="cartSupplementList" column="USER_NUM" select="selectCartViewList"></collection> -->
+		<association property="supplement" resultMap="supplementResultSet" javaType="Supplement"/>
+	</resultMap>
 	
-	<select id="selectBestsellerList" resultMap="supplementResultSet">
-		select *
-		from product
-			left outer join sale_product using(pro_num)
-		where pro_sale_status = 'Y'
-		order by pro_grade desc	
-	</select>
-	
-	<select id="selectDetail" resultMap="supplementResultSet">
-		select *
-		from product
-			left outer join sale_product using(pro_num)
-		where pro_sale_status = 'Y' and pro_status = 'Y' and pro_num = #{proNum}
-	</select>
-	
-	<select id="selemetMember" resultMap="memberResultSet">
-		select *
-		from member
-		where user_status='Y' and user_num=#{i}
-	</select>
+	<resultMap type="PaymentDTO" id="paymentDTOResultSet">
+		<association property="cart" resultMap="cartListResultSet" javaType="Cart"/>
+		<association property="address" resultMap="addressListResultMap" javaType="Address"/>
+	</resultMap>
 	
 	<resultMap type="Member" id="memberResultSet">
 		<id column="USER_NUM" property="userNum"/>
@@ -71,12 +63,6 @@
 		<result column="USER_MODIFYDATE" property="userModifyDate"/>
 	</resultMap>
 	
-	<select id="selectGu" resultMap="generalUserResultSet">
-		select * 
-		from general_user
-		where user_num=#{i}
-	</select>
-	
 	<resultMap type="GeneralUser" id="generalUserResultSet">
 		<id column="USER_NUM" property="userNum"/>
 		<result column="USER_ZIPCODE" property="userZipcode"/>
@@ -84,12 +70,70 @@
 		<result column="USER_ADDRESS_DETAIL" property="userAddressDetail"/>
 		<result column="USER_HEALTH" property="userHealth"/>
 	</resultMap>
+		
+	<resultMap type="Coupon" id="couponResultSet">
+		<id column="COU_NUMBER" property="couNumber"/>
+		<result column="COU_PUBLISHDATE" property="couPublishDate"/>
+		<result column="COU_ENDDATE" property="couEndDate"/>
+		<result column="COU_USED" property="couUsed"/>
+		<result column="COU_DISCOUNT" property="couDiscount"/>
+		<result column="COU_INTRO" property="couIntro"/>
+		<result column="USER_NUM" property="userNum"/>
+	</resultMap>
+	
+	<select id="selectSupplementList" resultMap="supplementResultSet">
+		select *
+		from product
+		where pro_sale_status = 'Y'
+	</select>
+	
+	
+	<select id="selectTrendList" resultMap="supplementResultSet">
+		select *
+		from product
+			left outer join sale_product using(pro_num)
+		where pro_sale_status = 'Y'
+		order by pro_viewcount desc
+	</select>
+	
+	
+	<select id="selectBestsellerList" resultMap="supplementResultSet">
+		select *
+		from product
+			left outer join sale_product using(pro_num)
+		where pro_sale_status = 'Y'
+		order by pro_grade desc	
+	</select>
+	
+	
+	<select id="selectDetail" resultMap="supplementResultSet">
+		select *
+		from product
+			left outer join sale_product using(pro_num)
+		where pro_sale_status = 'Y' and pro_status = 'Y' and pro_num = #{proNum}
+	</select>
+	
+	
+	<select id="selemetMember" resultMap="memberResultSet">
+		select *
+		from member
+		where user_status='Y' and user_num=#{i}
+	</select>
+	
+	
+	<select id="selectGu" resultMap="generalUserResultSet">
+		select * 
+		from general_user
+		where user_num=#{i}
+	</select>
+	
 	
 	<insert id="insertAddress">
 		insert into address
 		values (seq_address.nextval,#{addressName}, #{addressAddressee}, #{addressPhone},
 				 #{addressZipcode}, #{addressBuilding}, #{addressDetail}, #{addressBasic},#{userNum}, default)
 	</insert>
+	
 	
 	<select id="selectAddressList" resultMap="addressListResultMap">
 		select *
@@ -98,18 +142,6 @@
 		order by address_num desc
 	</select>
 	
-	<resultMap type="Address" id="addressListResultMap">
-		<id column="ADDRESS_NUM" property="addressNum"/>
-		<result column="ADDRESS_NAME" property="addressName"/>
-		<result column="ADDRESS_ADDRESSEE" property="addressAddressee"/>
-		<result column="ADDRESS_PHONE" property="addressPhone"/>
-		<result column="ADDRESS_ZIPCODE" property="addressZipcode"/>
-		<result column="ADDRESS_BUILDING" property="addressBuilding"/>
-		<result column="ADDRESS_DETAIL" property="addressDetail"/>
-		<result column="ADDRESS_BASIC" property="addressBasic"/>
-		<result column="USER_NUM" property="userNum"/>
-		<result column="ADDRESS_STATUS" property="addressStatus"/>
-	</resultMap>
 	
 	<update id="updateAddress">
 		update address
@@ -123,11 +155,13 @@
 		where address_num = #{addressNum} and address_status='Y'
 	</update>
 	
+	
 	<update id="updateBasicAll">
 		update address
 		set address_basic = 'N'
 		where user_num = #{userNum}
 	</update>
+	
 	
 	<update id="deleteAddress">
 		update address
@@ -135,10 +169,12 @@
 		where address_num = #{addressNum}
 	</update>
 	
+	
 	<insert id="insertCart">
 		insert into cart
 		values (seq_cart.nextval, #{userNum}, #{proNum}, #{cartQuantity})
 	</insert>
+	
 	
 	<select id="selectCartList" resultMap="cartListResultSet">
 		select *
@@ -147,14 +183,6 @@
 		order by cart_num desc
 	</select>
 
-	<resultMap type="Cart" id="cartListResultSet">
-		<id column="CART_NUM" property="cartNum"/>
-		<result column="USER_NUM" property="userNum"/>
-		<result column="PRO_NUM" property="proNum"/>
-		<result column="CART_QUANTITY" property="cartQuantity"/>
-<!-- 		<collection property="cartSupplementList" column="USER_NUM" select="selectCartViewList"></collection> -->
-		<association property="supplement" resultMap="supplementResultSet" javaType="Supplement"/>
-	</resultMap>
 	
 	<select id="checkCart" resultType="_int">
 		select count(*)
@@ -162,11 +190,13 @@
 		where user_num = #{userNum} and pro_num = #{proNum}
 	</select>
 	
+	
 	<update id="addCartCount">
 		update cart
 		set cart_quantity = cart_quantity + #{cartQuantity}
 		where user_num = #{userNum} and pro_num = #{proNum}
 	</update>
+	
 	
 	<select id="selectCartViewList" resultMap="cartListResultSet">
 		select *
@@ -176,14 +206,42 @@
         order by cart_num desc
 	</select>	
 	
+	
 	<update id="updateCartQuantity">
 		update cart
 		set cart_quantity = #{cartQuantity}
 		where user_num = #{userNum} and pro_num = #{proNum}
 	</update>
 	
+	
 	<delete id="deleteSelectCart">
 		delete from cart
 		where pro_num = #{i}
 	</delete>
+	
+	
+	<select id="selectPayList" resultMap="paymentDTOResultSet">
+<!-- 		select a.address_num, a.address_name, a.address_addressee, a.address_phone, -->
+<!-- 		        a.address_zipcode, a.address_building, a.address_detail, address_basic, a.user_num, a.address_status, -->
+<!-- 		        c.cart_num, c.pro_num, c.cart_quantity, p.pro_num, p.pro_image, p.pro_name, p.pro_company, p.pro_ingredient, -->
+<!-- 		        p.pro_price, p.pro_effect, p.pro_intake, p.pro_sale_status, p.pro_createdate, p.pro_modifydate, p.pro_grade, -->
+<!-- 		        p.pro_status, p.cate_num -->
+<!-- 		from address a -->
+<!-- 		    full outer join cart c on(a.user_num = c.user_num) -->
+<!-- 		    right outer join (select * from product where pro_num = #{proNum}) p on(c.pro_num = p.pro_num) -->
+<!-- 		where a.user_num = #{userNum} and a.address_basic = 'Y' -->
+			select  c.cart_num, c.pro_num, c.cart_quantity, p.pro_num, p.pro_image, p.pro_name, p.pro_company, p.pro_ingredient,
+			        p.pro_price, p.pro_effect, p.pro_intake, p.pro_sale_status, p.pro_createdate, p.pro_modifydate, p.pro_grade,
+			        p.pro_status, p.cate_num
+			from cart c
+			    right outer join product p on(c.pro_num = p.pro_num)
+			where p.pro_num = #{proNum}
+	</select>
+	
+	<select id="selectCouponList" resultMap="couponResultSet">
+		select *
+		from coupon
+		where user_num = #{userNum} and cou_used = 'N' and cou_enddate >= sysdate 
+	</select>
+
 </mapper>

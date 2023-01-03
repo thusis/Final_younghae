@@ -23,8 +23,13 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.young.model.vo.Address;
 import com.kh.young.model.vo.Cart;
+import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.OrderDetails;
+import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.shopping.dto.GetPayInfoDTO;
+import com.kh.young.shopping.dto.PaymentDTO;
 import com.kh.young.shopping.service.ShoppingService;
 
 @SessionAttributes("loginUser")
@@ -123,24 +128,47 @@ public class ShoppingController {
 	
 	// 결제페이지 가기
 	@RequestMapping("payment.sh")
-	public String paymentView(@RequestParam(value="quantity", required=false) int quantity, 
+	public String paymentView(@RequestParam(value="quantity", required=false) int quantity,
 			Model model, HttpSession session, @RequestParam(value="proNumList",required=false) String[] proNumList) {
+
+		System.out.println(Arrays.toString(proNumList));
 		System.out.println(quantity);
 		
-//		Supplement paySupplement = shService.selectDetail(proNum);
-//		ArrayList<GeneralUser> gu = shService.selectGu(1);
-//		System.out.println(gu);
+		Member m = (Member)session.getAttribute("loginUser");
 		
-//		model.addAttribute("paySupplement", paySupplement);
-//		model.addAttribute("quantity", quantity);
+		ArrayList<Address> basicAddress = shService.selectAddressList(m.getUserNum());
 		
-		System.out.println(proNumList);
-		System.out.println(Arrays.toString(proNumList));
-		
-        for(String proNum : proNumList) {
-            int i = Integer.parseInt(proNum);
-            shService.delectSelectCart(i);
+//		상품리스트
+		GetPayInfoDTO getPayInfoDTO = new GetPayInfoDTO();
+		ArrayList<PaymentDTO> infoList = new ArrayList<PaymentDTO>();
+		int totalPrice = 0;
+        for(int i = 0; i < proNumList.length; i++) {
+            int proNum = Integer.parseInt(proNumList[i]);
+            getPayInfoDTO.setProNum(proNum);
+            getPayInfoDTO.setUserNum(m.getUserNum());
+            System.out.println(getPayInfoDTO);
+            PaymentDTO paymentList = shService.selectPayList(getPayInfoDTO);
+            System.out.println(paymentList);
+            if(quantity != 0) {
+            	paymentList.getCart().setCartQuantity(quantity);
+            	totalPrice += (paymentList.getCart().getSupplement().getProPrice() * quantity);
+            }else {
+            	totalPrice += (paymentList.getCart().getSupplement().getProPrice()) * (paymentList.getCart().getCartQuantity());
+            }
+            System.out.println(paymentList);
+            infoList.add(paymentList);
         }
+        System.out.println(infoList);
+        System.out.println(totalPrice);
+		
+//      이벤트 포인트 조회
+        
+        ArrayList<Coupon> couponList = shService.selectCouponList(m.getUserNum());
+        
+		model.addAttribute("infoList", infoList);
+		model.addAttribute("couponList", couponList);
+		model.addAttribute("totalPrice", totalPrice);
+		model.addAttribute("basicAddress", basicAddress);
 		
 		return "paymentView";
 	}
@@ -334,5 +362,12 @@ public class ShoppingController {
             shService.delectSelectCart(i);
         }
         return "YES";
+	}
+	
+	@RequestMapping("successPay.sh")
+	public String successPay(@ModelAttribute Orders oders, @ModelAttribute OrderDetails od) {
+		
+		
+		return "successPay";
 	}
 }

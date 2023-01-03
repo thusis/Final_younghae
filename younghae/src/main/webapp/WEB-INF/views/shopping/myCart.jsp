@@ -133,7 +133,8 @@
 						                        <div class="product__details__quantity" style="display: inline; margin-right: 2%;">
 													<div class="btn-group" role="group" aria-label="Basic example">
 														<div class="selectInputDivs">
-															<select class="selectDivs" name="quantity" style="border-color: #24E082; border-radius: 0.3em; text-align: center; width:3rem; ">
+															<input type="hidden" name="quantity" value="0">
+															<select class="selectDivs" style="border-color: #24E082; border-radius: 0.3em; text-align: center; width:3rem; ">
 																<c:forEach begin="1" end="9" var="i">
 																	<c:if test="${ c.cartQuantity == i}">
 																		<option selected>${ i }</option>
@@ -179,21 +180,21 @@
 							<div class="checkout__order" style="width: 80%">
 								<h4>결제 금액</h4>
 								<ul>
-									<li>총 상품 금액 <span>&nbsp;원</span><span id="cartTotalPrice">68,600</span></li>
-									<li>배송비<span>&nbsp;원</span><span id="deliveryPrice">2,500</span></li>
+									<li>총 상품 금액 <span>&nbsp;원</span><span id="cartTotalPrice">0</span></li>
+									<li>배송비<span>&nbsp;원</span><span id="deliveryPrice">0</span></li>
 								</ul>
 								<div class="checkout__order__subtotal" style="height: 5rem;">
 									최종 결제 금액
-									<span>&nbsp;원</span><span id="payTotalPrice" style="color: #24E082;">71,100</span>
+									<span>&nbsp;원</span><span id="payTotalPrice" style="color: #24E082;">0</span>
 									<div style="margin-top: 0.5rem;">
 										<span style="font-size: 0.6rem;margin-left:0.2rem;">적립 예정</span>
 										<span style="font-size: 0.6rem; color:#24E082;">P</span>
-										<span id="point" style="font-size: 0.6rem; color:#24E082;">80</span>
+										<span id="point" style="font-size: 0.6rem; color:#24E082;">0</span>
 									</div>
 								</div>
 
 								<button type="submit" class="site-btn" onclick="goToPay();">
-									<span id="payPriceBtn">71,100</span><span>원</span> 결제하기
+									<span id="payPriceBtn">0</span><span>원</span> 결제하기
 								</button>
 							</div>
 						</div>
@@ -280,7 +281,7 @@
 					}
 							
 // 					포인트 설정
-					point = Math.round(allTotalPrice * 0.005);
+					point = Math.round(allTotalPrice * 0.01);
 	
 // 					최종 결제금액
 					payTotal = allTotalPrice + deliveryPrice;
