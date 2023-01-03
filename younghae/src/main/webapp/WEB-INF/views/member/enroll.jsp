@@ -173,7 +173,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>닉네임*(첫글자는 영어/한글)</div>
+                                    <div>닉네임*(첫글자는 영어/한글 숫자금지)</div>
                                     <div class="input-field" id="myNickName2">
                                         <input type="text" id="myNickName" name="userNickname" placeholder="닉네임을 입력해주세요" required>
                                     </div>
@@ -288,7 +288,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>닉네임*(첫글자는 영어/한글)</div>
+                                    <div>닉네임*(첫글자는 영어/한글 숫자금지)</div>
                                     <div class="input-field" id="myNickNameExport2">
                                         <input type="text" id="myNickNameExport" name="userNickname" placeholder="닉네임을 입력해주세요" required>
                                     </div>
@@ -330,7 +330,7 @@
                                 </div>
                                 <div class="form-group py-2">
                                     <div>
-                                        주소*
+                                        병/약국주소*
                                         <button type="button" id="searchAddressExport" style="float: right; border: 0; background-color:white;">주소 검색</button>
                                     </div>
                                     <div class="input-field" style="margin-bottom: 5px">

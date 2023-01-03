@@ -1,6 +1,5 @@
 package com.kh.young.myPage.contoller;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -17,12 +16,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.young.member.exception.MemberException;
-import com.kh.young.member.service.MemberService;
+import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Point;
+import com.kh.young.model.vo.Reply;
+import com.kh.young.model.vo.Review;
 import com.kh.young.myPage.exception.MyPageException;
 import com.kh.young.myPage.service.MyPageService;
 
@@ -288,24 +289,78 @@ public class MyPageController {
     // ------------------------ 내가 쓴 글 내용 보기 -----------------------------------------
     // 내가쓴 글 이동.
     @RequestMapping("myWriteView.my")
-    public String myWriteView() {
+    public String myWriteView(HttpSession session, Model model) {
+    	
+    	int id=((Member) session.getAttribute("loginUser")).getUserNum();
+    	//게시글
+    	ArrayList<Board> BL = myService.selectAllBoard(id);
+    	//답변
+    	ArrayList<Reply> RL = myService.selectAllReply(id);
+    	//리뷰
+    	ArrayList<Review> VL = myService.selectAllReview(id);
+    	
+    	for(int i=0;i<BL.size();i++) {
+    		if(BL.get(i).getBoardType()==11 || BL.get(i).getBoardType()==12 || BL.get(i).getBoardType()==13 || BL.get(i).getBoardType()==14) {
+    			BL.get(i).setBoardType(1);
+    		}
+    	}
+    	for(int i=0;i<RL.size();i++) {
+    		if(RL.get(i).getBoardType()==11 || RL.get(i).getBoardType()==12 || RL.get(i).getBoardType()==13 || RL.get(i).getBoardType()==14) {
+    			RL.get(i).setBoardType(1);
+    		}
+    	}
+
+    	model.addAttribute("BoardList",BL);
+    	model.addAttribute("ReplyList",RL);
+    	model.addAttribute("ReviewList",VL);
+    	
         return "myWriteView";
     }
+    
+    
+    
     // 내가쓴글 상세보기이동
     @RequestMapping("myWriteBoardDetail.my")
-    public String myWriteBoardDetail() {
+    public String myWriteBoardDetail(HttpSession session, Model model) {
+    	int id=((Member) session.getAttribute("loginUser")).getUserNum();
+    	ArrayList<Board> BL = myService.selectAllBoard(id);
+    	for(int i=0;i<BL.size();i++) {
+    		if(BL.get(i).getBoardType()==11 || BL.get(i).getBoardType()==12 || BL.get(i).getBoardType()==13 || BL.get(i).getBoardType()==14) {
+    			BL.get(i).setBoardType(1);
+    		}
+    	}
+    	model.addAttribute("BoardList",BL);
         return "myWriteBoardDetail";
     }
+    
+    
+    
     // 내가쓴 답글 상세이동.
     @RequestMapping("myWriteReplyDetail.my")
-    public String myWriteReplyDetail() {
+    public String myWriteReplyDetail(HttpSession session, Model model) {
+    	int id=((Member) session.getAttribute("loginUser")).getUserNum();
+    	ArrayList<Reply> RL = myService.selectAllReply(id);
+    	for(int i=0;i<RL.size();i++) {
+    		if(RL.get(i).getBoardType()==11 || RL.get(i).getBoardType()==12 || RL.get(i).getBoardType()==13 || RL.get(i).getBoardType()==14) {
+    			RL.get(i).setBoardType(1);
+    		}
+    	}
+    	model.addAttribute("ReplyList",RL);
         return "myWriteReplyDetail";
     }
+    
+    
+    
     // 내가쓴 후기 상세이동.
     @RequestMapping("myWriteReviewDetail.my")
-    public String myWriteReviewDetail() {
+    public String myWriteReviewDetail(HttpSession session, Model model) {
+    	int id=((Member) session.getAttribute("loginUser")).getUserNum();
+    	ArrayList<Review> VL = myService.selectAllReview(id);
+    	model.addAttribute("ReviewList",VL);
         return "myWriteReviewDetail";
     }
+    
+    
 
     //-------------------------------관리자 페이지 --------------------------------------------
     // 관리자페이지 이동.
