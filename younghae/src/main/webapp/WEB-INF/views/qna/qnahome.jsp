@@ -179,16 +179,19 @@
 					${t.board.boardContent}
 				</div>
 				<hr style="border: 1px solid darkgrey; width: 5rem; text-align:left; margin-left: 0;">
-				<div class="row">
-					<span style="line-height:1.5rem; font-size: 1rem; font-weight: 600; color:#24E082;">약사</span>
-					<span style="line-height:1.5rem; font-size: 1.25rem; font-weight: 600; color:#24E082;">김가람</span>
-				</div>
-                <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">안녕하세요. 네이버 지식iN 상담 약사 강병구 입니다.
-                    오랜시간 앉아서 공부를 해야 하는 수험생의 경우 필요한 영양제에 대해서 문의하신 것으로 보입니다.
-                    우선 말씀하신 비타민B 군의 경우 에너지 생성에 도움을 줄 수 있어 매일 오전에 섭취하는 것이 좋습니다.
-                    그리고 활발한 두뇌활동을 위해 고함량의 오메가3가 권장되는데 중요한 점은 DHA 함량이 뛰어난 식물성오메가3를 섭취하는 것이 권장됩니다.
-                    추가로 햇빛을 많이 보지 못하는 경우 5000IU 단위의 비타민D 의 섭취도 면역력 및 지구력 강화에 도움이 될 수 있습니다.
-                    식물성오메가3에 대한 자세한 내용은 아래를 참고하세요.</div>
+				
+				<c:if test="${t.answerList.size() eq 0}">
+					<div class="row">
+						<span style="line-height:1.5rem; font-size: 1rem; font-weight: 600; color:#24E082;">
+							아직 작성된 답변이 없습니다
+						</span>
+					</div>
+				</c:if>
+				
+				<c:if test="${t.answerList.size() ne 0}">
+                <div style="overflow: hidden; line-height:1.2rem; height:3.6rem; text-overflow: ellipsis; margin-right: 1.5rem;">
+                	${t.answerList[0].board.boardContent }</div>
+                </c:if>
                 <div class="row  justify-content-end" style="margin-right: 1.5rem;">
                     <i class="view fa-solid fa-eye m-2"></i><span class="m-1">${t.board.boardView}</span>
                     <i class="save fa-regular fa-bookmark m-2"></i><span class="m-1">10</span>

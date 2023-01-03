@@ -46,7 +46,7 @@
           <div class="row">
               <div class="col-lg-1">
                   <div class="header__logo">
-                      <a href="#"><img src="resources/img/logo.svg" alt=""></a>
+                      <a href="${contextPath}"><img src="resources/img/logo.svg" alt=""></a>
                   </div>
               </div>
               <div class="col-lg-2"></div>

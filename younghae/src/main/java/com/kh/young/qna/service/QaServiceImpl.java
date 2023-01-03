@@ -115,8 +115,24 @@ public class QaServiceImpl implements QaService {
 			q.setWriterInfo(
 					writerInfoToString(getWriterInfoMap(q.getBoard().getUserNum()))
 					);
+			
+			q.getBoard().setBoardContent(
+					boardContentToString(q.getBoard().getBoardContent())
+					);
+			
+			q.getAnswerList().get(0).getBoard().setBoardContent(
+					boardContentToString(q.getAnswerList().get(0).getBoard().getBoardContent())
+					);
 		}
 		return topTwo;
+	}
+
+	private String boardContentToString(String boardContent) {
+		String str = boardContent;
+//		String newStr2 = str.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+		String newStr = str.replaceAll("<[^>]*>", " ");
+		
+		return newStr;
 	}
 
 	@Override
@@ -254,7 +270,16 @@ public class QaServiceImpl implements QaService {
 		String str2 = expertResp.getExpert().getExpertEstimate().split(",")[1];
 		String str = str2 + " 원 (" + str1 + "분당)";
 		expertResp.getExpert().setExpertEstimate(str);
+		expertResp.getExpert().setExpertProfile(
+				expertProfileAddEnter(expertResp.getExpert().getExpertProfile())
+				);
 		return expertResp;
+	}
+
+	private String expertProfileAddEnter(String expertProfile) {
+		String newStr = expertProfile.replaceAll("/", "<br>");
+		System.out.println(newStr);
+		return newStr;
 	}
 
 	@Override

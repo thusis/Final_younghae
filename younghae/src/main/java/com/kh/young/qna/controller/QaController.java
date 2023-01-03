@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
+import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.qna.common.Qexception;
 import com.kh.young.qna.dto.ExpertRespDto;
@@ -269,12 +271,21 @@ public class QaController {
 	@GetMapping("expertfind.qa")
 	public String findExpertList( @RequestParam(value="page", required=false) Integer page, Model model) {
 		int listCount = qService.getExpertsListCount();
-		ArrayList<ExpertRespDto> erespList = qService.selectExpertList(page, listCount);
+
+		model.addAttribute("pi", getPageInfo(page, listCount, 10));
+		model.addAttribute("erespList", qService.selectExpertList(page, listCount));
 		
-		model.addAttribute("erespList", erespList);
 		return "expertFind";
 	}
 
+
+	private PageInfo getPageInfo(Integer page, int listCount, int i) {
+		int currentPage = 1;
+		if(page!=null) {
+			currentPage=page;
+		}
+		return Pagination.getPageInfo(currentPage, listCount, i);
+	}
 
 	/*******************************************************************/
 	@GetMapping("expertprofile.qa")

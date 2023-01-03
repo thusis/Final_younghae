@@ -197,8 +197,8 @@
 		                       <div class="col-lg-7  align-self-center">
 		                           <h5 class="bn_pro-name">${ans.eresp.member.userName}&nbsp;&nbsp;
 		                           <span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
-			                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'D' }">의사</c:if>
-			                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'C' }">약사</c:if>
+				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'D' }">의사</c:if>
+				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'C' }">약사</c:if>
 		                           </span></h5>
 		                           <span class="bn_pro-info">답변수 ${ans.eresp.answerListSize} 개</span><br>
 		                           <span class="bn_pro-info">전문과목 ${ans.eresp.expert.expertMedi}</span><br>
