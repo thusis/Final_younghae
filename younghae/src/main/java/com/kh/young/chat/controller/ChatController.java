@@ -6,20 +6,22 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.google.gson.Gson;
 import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.chat.service.ChatService;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.Member;
-import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.service.QaService;
 
 @Controller
@@ -55,12 +57,13 @@ public class ChatController {
     	int cNum = ((Member)request.getSession().getAttribute("loginUser")).getUserCNumber();
     	
     	ChatroomDto nowChatroom = chService.selectNowChatroom(expertNum, loginUserNum);
-    	System.out.println("ch컨트롤러 nowChatroom 58: "+ nowChatroom);
     	ArrayList<ChatMessage> messageList = new ArrayList<ChatMessage>();
 
     	if(nowChatroom == null) {
+    		System.out.println("ch컨트롤러63 채팅가능한 방이 없나봄 ");
     		model.addAttribute("msg", "채팅 가능한 방이 없습니다.");
     	} else {
+    		System.out.println("ch컨트롤러 nowChatroom 64: "+ nowChatroom);
     		model.addAttribute("nowChatroom",nowChatroom);
     		messageList = chService.selectMessageList(nowChatroom.getChatroom().getChatroomId());
     		model.addAttribute("messageList",messageList);
@@ -74,7 +77,6 @@ public class ChatController {
 //    		ArrayList<ChatReserv> reservList = chService.selectReservList(loginUserNum); //결제 구현되기 전까진 막아놓기
     	}
     	
-    	
     	System.out.println(roomList);
     	System.out.println(nowChatroom);
     	System.out.println(messageList);
@@ -83,11 +85,29 @@ public class ChatController {
     }
     
 	// 비동기로 메세지 목록을 조회하는 함수
-    @GetMapping("selectMessage.ch")
     @ResponseBody
-    public String selectMessageList(@RequestParam int chatroomId) {
-        ArrayList<ChatMessage> messageList = chService.selectMessageList(chatroomId);
-        return new Gson().toJson(messageList);
+    @RequestMapping(value="selectMessage.ch", method=RequestMethod.POST, produces="text/plain;charset=UTF-8")
+    public String selectMessageList(
+    		HttpServletRequest request, 
+    		@RequestParam int chatroomId, 
+    		@RequestParam int expertNum, 
+    		@RequestParam int generalUserNum) {
+    	
+//    	response.setContentType("application/json; charset=UTF-8");
+    	int loginUserNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
+    	ChatroomDto nowChatroom;
+    	if ( loginUserNum == expertNum	) {
+    		nowChatroom = chService.selectExpertChatroomByChatroomId(chatroomId);
+    	} else {
+    		nowChatroom = chService.selectGeneralChatroomByChatroomId(chatroomId);
+    	}
+    	ArrayList<ChatMessage> messageList = chService.selectMessageList(chatroomId);
+    	
+    	Map<String, Object> resultMap = new HashMap<>();
+    	resultMap.put("nowChatroom", nowChatroom);
+    	resultMap.put("messageList", messageList);
+        
+        return new Gson().toJson(resultMap);
     }
 
     // 채팅방 목록을 비동기 조회

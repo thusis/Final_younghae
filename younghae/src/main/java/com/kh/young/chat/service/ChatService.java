@@ -27,6 +27,11 @@ public interface ChatService {
 
 	ArrayList<ChatroomDto> selectExpertsRoomList(int loginUserNum);
 
+	ChatroomDto getExpertChatroom(Chatroom paraChatroom);
+
+	ChatroomDto selectExpertChatroomByChatroomId(int chatroomId);
+	ChatroomDto selectGeneralChatroomByChatroomId(int chatroomId);
+
 //	ArrayList<ChatReserv> selectReservList(int loginUserNum);
 
 }

@@ -93,7 +93,19 @@ public class ChatDao {
 	public int selectCnum(SqlSessionTemplate sqlSession, int loginUserNum) {
 		return sqlSession.selectOne("chatMapper.selectCnum", loginUserNum);
 	}
+	
+	/**=================================================================== */
+	/** -----내가 일반회원이면 상대는 >>EXPERT<< ----- **/
+	public ChatroomDto selectExpertChatroomByChatroomId(SqlSessionTemplate sqlSession, int chatroomId) {
+		return sqlSession.selectOne("chatMapper.selectExpertChatroomByChatroomId", chatroomId);
+	}
 
+	/** -----내가 전문가면 상대는 >>GENERAL<< ----- **/
+	public ChatroomDto selectGeneralChatroomByChatroomId(SqlSessionTemplate sqlSession, int chatroomId) {
+		return sqlSession.selectOne("chatMapper.selectGeneralChatroomByChatroomId", chatroomId);
+	}
+	
+	
 	
 
 }

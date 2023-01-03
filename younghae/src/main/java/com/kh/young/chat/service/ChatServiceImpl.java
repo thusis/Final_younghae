@@ -3,6 +3,7 @@ package com.kh.young.chat.service;
 import java.util.ArrayList;
 import java.util.Map;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,20 +37,24 @@ public class ChatServiceImpl implements ChatService {
 			paraChatroom.setUserNum(loginUserNum);
 			ChatroomDto expertChatroom = getExpertChatroom(paraChatroom); //나와 전문가 유저와의 챗 목록 확인
 			
-			System.out.println("c서비스46"+expertChatroom);
+			System.out.println("c서비스39"+paraChatroom);
+			System.out.println("c서비스40"+expertChatroom);
 			
 			if (expertChatroom == null || expertChatroom.getChatroom().getChatroomId() == 0) {
 				ChatroomDto newChatroom = createChatroom(paraChatroom);
-
+				System.out.println("c서비스45: 새로운챗룸생성"+newChatroom);
+				
+				/*
 				String defaultMsg = newChatroom.getExpert().getExpert().getExpertProfile();
 				if(defaultMsg.trim().equals("") || defaultMsg.trim() == null) {
 					defaultMsg = "설정된 기본 메세지가 없습니다.";
 				}
 				sendBotMessage(paraChatroom, defaultMsg); //전문가 프로필 = 기본메세지
-				
+				*/
 				return newChatroom;
+			} else {
+				return expertChatroom;
 			}
-			return expertChatroom;
 		}
 	}
 	
@@ -58,7 +63,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	// 전문가와 채팅방 조회 / 없으면 []
-	private ChatroomDto getExpertChatroom(Chatroom paraChatroom) {
+	@Override
+	public ChatroomDto getExpertChatroom(Chatroom paraChatroom) {
 		return chDao.getExpertChatroom(sqlSession, paraChatroom);
 	}
 
@@ -138,6 +144,14 @@ public class ChatServiceImpl implements ChatService {
 		return chDao.updateIsRead(sqlSession, paraMap);
 	}
 
-	
-	
+	@Override
+	public ChatroomDto selectExpertChatroomByChatroomId(int chatroomId) {
+		return chDao.selectExpertChatroomByChatroomId(sqlSession, chatroomId);
+	}
+
+	@Override
+	public ChatroomDto selectGeneralChatroomByChatroomId(int chatroomId) {
+		return chDao.selectGeneralChatroomByChatroomId(sqlSession, chatroomId);
+	}
+
 }

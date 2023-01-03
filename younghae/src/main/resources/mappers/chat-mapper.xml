@@ -39,7 +39,7 @@
   	</resultMap>
 
   	<resultMap type="ExpertRespDto" id="ExpertRespDto">
-  		<id column="USER_NUM" property="member.userNum"/>
+  		<id column="EXPERT_NUM" property="member.userNum"/>
 		<association property="member" javaType="Member" resultMap="Member"/>
 		<association property="expert" javaType="ExpertUser" resultMap="ExpertUser"/>
 		<association property="eattach" javaType="Attachment" resultMap="Attachment"/>
@@ -63,7 +63,7 @@
   	</resultMap>
   	
   	<resultMap type="ExpertUser" id="ExpertUser">
-  	  	<id column="USER_NUM" property="userNum"/>
+  	  	<id column="EXPERT_NUM" property="userNum"/>
   		<result column="EXPERT_POSTADD" property="expertPostAdd"/>
   		<result column="EXPERT_ADDRESS" property="expertAddress"/>
   		<result column="EXPERT_ADD_DETAIL" property="expertAddDetail"/>
@@ -97,15 +97,6 @@
 			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
 			LEFT JOIN ATTACHMENT ON (MEMBER.USER_NUM = SERIALNUMBER)
 		WHERE CHATROOM.EXPERT_NUM = #{expertNum} AND CHATROOM.USER_NUM = #{userNum} AND CHATROOM_STATUS = 'Y'
-	</select>
-
-	<!-- 전문가회원정보조회(userNum) -->
-	<select id="selectExpertResp" resultMap="ExpertRespDto">
-		SELECT * 
-		FROM MEMBER
-		JOIN EXPERT_USER USING (USER_NUM)
-		LEFT JOIN ATTACHMENT ON (USER_NUM = SERIALNUMBER)
-		WHERE USER_NUM = #{userNum}
 	</select>
 	
 	<!-- 새로운 챗룸 생성(Chatroom) -->
@@ -246,6 +237,7 @@
 		)
 	</select>
 	
+	<!-- 내가 일반유저면 상대는 >>전문가<< -->
 	<select id="selectGeneralRecentChatroom" resultMap="GeneralChatroomDto">
 		SELECT * FROM CHATROOM 
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
@@ -256,7 +248,8 @@
 			SELECT CHATROOM_ID FROM CHATMESSAGE WHERE CHAT_ID = #{chatId}
 			)
 	</select>
-
+	
+	<!-- 내가 전문가면 상대는 >>GENERAL<< -->
 	<select id="selectExpertRecentChatroom" resultMap="ExpertsChatroomDto">
 		SELECT * FROM CHATROOM 
 			LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
@@ -264,6 +257,22 @@
 			(
 			SELECT CHATROOM_ID FROM CHATMESSAGE WHERE CHAT_ID = #{chatId}
 			)
+	</select>
+	
+	<!-- 내가 일반유저면 상대는 >>전문가<< -->
+	<select id="selectGeneralChatroomByChatroomId" resultMap="GeneralChatroomDto">
+		SELECT * FROM CHATROOM 
+	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
+			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
+			LEFT JOIN ATTACHMENT ON (MEMBER.USER_NUM = SERIALNUMBER)
+		WHERE CHATROOM_ID = #{chatroomId}
+	</select>
+
+	<!-- 내가 전문가면 상대는 >>GENERAL<< -->
+	<select id="selectExpertChatroomByChatroomId" resultMap="ExpertsChatroomDto">
+		SELECT * FROM CHATROOM 
+			LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
+		WHERE CHATROOM_ID = #{chatroomId}
 	</select>
 	
 	<select id="selectCnum" resultType="int">

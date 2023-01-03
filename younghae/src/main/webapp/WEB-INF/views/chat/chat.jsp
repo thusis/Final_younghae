@@ -120,46 +120,45 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		</div>
 
 		<!-- 두번째 컬럼 전문가목록============================================================= -->
-		<div id="chatProList" class="flex-column align-items-stretch flex-shrink-0 bg-light" style="overflow: auto; width: 300px; height: 750px; border-top: 0.2rem solid #24E082; z-index: 8;">
+		<div class="flex-column align-items-stretch flex-shrink-0 bg-light" style="overflow: auto; width: 300px; height: 750px; border-top: 0.2rem solid #24E082; z-index: 8;">
 		
 			<c:if test="${ loginUser.userCNumber eq 1 }"><!-- =======일반회원의경우======= -->
 			<div href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
 				<span class="fs-5 fw-semibold">전문가 목록</span>
 			</div>
-			
-			<div class="list-group list-group-flush border-bottom scrollarea">
-			
-				<c:if test="${roomList.size()==0 }">
-				<div class="list-group-item list-group-item-action active py-3 lh-sm" aria-current="true">
-					<div class="d-flex w-100 align-items-center justify-content-between">
-					<strong class="mb-1 bn_pro-name position-relative">아직 시작한 채팅이 없습니다.</strong>
-					</div>
-				</div>
-				</c:if>
+			<div id="chatProList" class="list-group list-group-flush border-bottom scrollarea" >
 				
-				<c:if test="${roomList.size()!=0 }">
-					<c:forEach items="${roomList}" var="cr">
-					<a href="#" 
-					class="list-group-item list-group-item-action active py-3 lh-sm chatting-item" 
-					id="${cr.chatroom.chatroomId}-${cr.chatroom.expertNum}-${cr.chatroom.userNum}" 
-					aria-current="true">
+					<c:if test="${roomList.size()==0 }">
+					<div class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
 						<div class="d-flex w-100 align-items-center justify-content-between">
-							<strong class="mb-1 bn_pro-name position-relative">${cr.expert.member.userName }</strong>
-<%-- 							<small>${ cr.latestSendTime }</small> --%>
+						<strong class="mb-1 bn_pro-name position-relative">아직 시작한 채팅이 없습니다.</strong>
 						</div>
-						<div class="col-10 mb-1 small chat_lastmsg">
-<%-- 							${cr.lastMessage.chatContent} --%>
-						</div>
-						<div class="col-10">
-<%-- 							<c:if test="${ room.notReadCount>0 }"> --%>
-<%-- 								<span class="badge">${cr.notReadCount}</span> --%>
-<%-- 							</c:if> --%>
-							<span class="badge">자리비움</span>
-							<span class="badge rounded-pill bg-success text-white">상담가능</span>
-						</div>
-					</a>
-					</c:forEach>
-				</c:if>
+					</div>
+					</c:if>
+					
+					<c:if test="${roomList.size()!=0 }">
+						<c:forEach items="${roomList}" var="cr">
+						<a href="#" 
+						class="list-group-item list-group-item-action py-3 lh-sm chatting-item" 
+						id="${cr.chatroom.chatroomId}-${cr.chatroom.expertNum}-${cr.chatroom.userNum}" 
+						aria-current="true">
+							<div class="d-flex w-100 align-items-center justify-content-between">
+								<strong class="mb-1 bn_pro-name position-relative">${cr.expert.member.userName }</strong>
+	<%-- 							<small>${ cr.latestSendTime }</small> --%>
+							</div>
+							<div class="col-10 mb-1 small chat_lastmsg">
+	<%-- 							${cr.lastMessage.chatContent} --%>
+							</div>
+							<div class="col-10">
+	<%-- 							<c:if test="${ room.notReadCount>0 }"> --%>
+	<%-- 								<span class="badge">${cr.notReadCount}</span> --%>
+	<%-- 							</c:if> --%>
+								<span class="badge">자리비움</span>
+								<span class="badge rounded-pill bg-success text-white">상담가능</span>
+							</div>
+						</a>
+						</c:forEach>
+					</c:if>
 			</div>
 			</c:if><!-- =======일반회원의경우 끝======= -->
 			
@@ -168,37 +167,37 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 				<span class="fs-5 fw-semibold">상담 회원 목록</span>
 			</div>
 			
-			<div class="list-group list-group-flush border-bottom scrollarea">
-			
-				<c:if test="${roomList.size()==0 }">
-					<div class="list-group-item list-group-item-action active py-3 lh-sm" aria-current="true">
-						<div class="d-flex w-100 align-items-center justify-content-between">
-						<strong class="mb-1 bn_pro-name position-relative">아직 시작한 채팅이 없습니다.</strong>
+			<div id="chatProList" class="list-group list-group-flush border-bottom scrollarea">
+				
+					<c:if test="${roomList.size()==0 }">
+						<div class="list-group-item list-group-item-action py-3 lh-sm" aria-current="true">
+							<div class="d-flex w-100 align-items-center justify-content-between">
+							<strong class="mb-1 bn_pro-name position-relative">아직 시작한 채팅이 없습니다.</strong>
+							</div>
 						</div>
-					</div>
-				</c:if>
-				<c:if test="${roomList.size()!=0 }">
-					<c:forEach items="${roomList}" var="cr">
-					<a href="#" 
-					class="list-group-item list-group-item-action active py-3 lh-sm chatting-item" 
-					id="${cr.chatroom.chatroomId}-${cr.chatroom.expertNum}-${cr.chatroom.userNum}" 
-					aria-current="true">
-						<div class="d-flex w-100 align-items-center justify-content-between">
-							<strong class="mb-1 bn_pro-name position-relative">${cr.general.userName }</strong>
-<%-- 							<small>${ cr.latestSendTime }</small> --%>
-						</div>
-						<div class="col-10 mb-1 small chat_lastmsg">
-<%-- 							${cr.lastMessage.chatContent} --%>
-						</div>
-						<div class="col-10">
-<%-- 							<c:if test="${ room.notReadCount>0 }"> --%>
-<%-- 								<span class="badge">${cr.notReadCount}</span> --%>
-<%-- 							</c:if> --%>
-<%-- 							<span class="badge">${cr.isPaid}</span> --%>
-						</div>
-					</a>
-					</c:forEach>
-				</c:if>
+					</c:if>
+					<c:if test="${roomList.size()!=0 }">
+						<c:forEach items="${roomList}" var="cr">
+						<a href="#" 
+						class="list-group-item list-group-item-action py-3 lh-sm chatting-item" 
+						id="${cr.chatroom.chatroomId}-${cr.chatroom.expertNum}-${cr.chatroom.userNum}" 
+						aria-current="true">
+							<div class="d-flex w-100 align-items-center justify-content-between">
+								<strong class="mb-1 bn_pro-name position-relative">${cr.general.userName }</strong>
+	<%-- 							<small>${ cr.latestSendTime }</small> --%>
+							</div>
+							<div class="col-10 mb-1 small chat_lastmsg">
+	<%-- 							${cr.lastMessage.chatContent} --%>
+							</div>
+							<div class="col-10">
+	<%-- 							<c:if test="${ room.notReadCount>0 }"> --%>
+	<%-- 								<span class="badge">${cr.notReadCount}</span> --%>
+	<%-- 							</c:if> --%>
+	<%-- 							<span class="badge">${cr.isPaid}</span> --%>
+							</div>
+						</a>
+						</c:forEach>
+					</c:if>
 			</div>
 			</c:if><!-- =======전문가회원의 경우 끝======= -->
 		</div><!--두번째열끝========================================================  -->
@@ -212,22 +211,25 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 				<!--전문가-->
 				<c:if test="${ loginUser.userCNumber eq 1 }">
 				<div class="row bn_pro-box m-1" style="position: fixed; z-index: 10; width: 465px;">
-					<span id="chatroomId" hidden>${nowChatroom.chatroom.chatroomId}</span>
+					<span id="chatTopChatroomId" hidden="hidden">${nowChatroom.chatroom.chatroomId}</span>
 					<div class="col-lg-7  align-self-center">
-						<span id="expertNum" hidden>${nowChatroom.expert.member.userNum }</span>
-	                    <h5 class="bn_pro-name">${nowChatroom.expert.member.userName}&nbsp;&nbsp;
-	                    <span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
-	                     <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'D' }">의사</c:if>
-	                     <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'C' }">약사</c:if>
-	                    </span></h5>
+						<span id="chatTopExpertNum" hidden="hidden">${nowChatroom.expert.expert.userNum }</span>
+	                    <h5 class="bn_pro-name">
+		                    <span id="chatTopExpertName">${nowChatroom.expert.member.userName}&nbsp;&nbsp;</span>
+		                    <span id="chatTopExpertSort" class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+		                    <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'D' }">의사</c:if>
+		                    <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'C' }">약사</c:if>
+		                    </span>
+	                    </h5>
 	                    <span class="bn_pro-info">답변수 ${nowChatroom.expert.answerListSize} 개</span><br>
 	                    <span class="bn_pro-info">전문과목 ${nowChatroom.expert.expert.expertMedi}</span><br>
-	                    <span class="bn_pro-info">소속 : ${nowChatroom.expert.expert.expertDept}&nbsp;&nbsp;
-	                     <span class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
-	                      <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'D' }">병원</c:if>
-	                      <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'C' }">약국</c:if>
-	                     정보 보기
-	                     </span>
+	                    <span class="bn_pro-info">
+		                    <span id="chatTopExpertDept">소속 : ${nowChatroom.expert.expert.expertDept}&nbsp;&nbsp;</span>
+		                    <span class="badge rounded-pill" id="chatTopExpertSortPlace" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
+		                      <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'D' }">병원</c:if>
+		                      <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'C' }">약국</c:if>
+		                     정보 보기
+		                    </span>
 	                    </span><br>
 					</div>
 					<div class="col-3 align-self-center">
@@ -235,10 +237,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 					</div>
 					<div class="col-2 align-self-center">
 						<div class="bn_pro-icon" style="width: 2.5rem; height: 2.5rem;">
-							<i class="bi bi-list-ul" style="font-size: 1.5rem;"></i>
-						</div>
-						<div class="bn_pro-icon" style="width: 2.5rem; height: 2.5rem;">
-							<i class="bi bi-send" style="font-size: 1.5rem;"></i>
+							<span style="font-size: 0.8rem;" id="chatTopgoToProfile" onclick="location.href='${contextPath}/expertprofile.qa?expertNum='+${nowChatroom.expert.expert.userNum}">프로필 방문</span>
 						</div>
 					</div>
 				</div>
@@ -251,10 +250,11 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 					<span id="chatroomId" hidden>${nowChatroom.chatroom.chatroomId}</span>
 					<div class="col-lg-7  align-self-center">
 						<span id="generalUserNum" hidden>${nowChatroom.general.userNum }</span>
-	                    <h5 class="bn_pro-name">${nowChatroom.general.userName} 님&nbsp;&nbsp;</h5>
+	                    <h5 class="bn_pro-name">${nowChatroom.general.userName} 님&nbsp;과 채팅 중입니다 😉 &nbsp;</h5>
 					</div>
 				</div>
 				</c:if>
+				<!--일반회원 끝==================================-->
 
 				<div class="chat_wrap bg-light" style="margin-top: 170px;">
 					<!--채팅메세지-->
@@ -262,10 +262,13 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 						<div class="icon">
 							<i class="fa-solid fa-user"></i>
 						</div>
-						<div class="textbox">
-							안녕하세요. 반갑습니다.
-							<span class="sendtime">오전 9:28</span>
-							<!-- 기본메세지는 chatMsg데이터 받아서 처리X expert에서 출력  -->
+						<div class="textbox" id="chatDefaultMsg1">
+							<c:if test="${nowChatroom.expert.expert.expertProfile eq null}">
+							안녕하세요. 반갑습니다😉
+							</c:if>
+							<c:if test="${nowChatroom.expert.expert.expertProfile ne null}">
+							${nowChatroom.expert.expert.expertProfile}
+							</c:if>
 						</div>
 					</div><!-- ==========기본메세지============ -->
 
@@ -304,7 +307,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 						</div><!-- ==========견적서============ -->
 					</div>
 
-					<div class="chat ch1mng">
+					<div class="chat ch1mng chatDefaultBoxFromYH">
 						<div class="icon">
 							<img src="resources/img/logo_pill_white.svg" alt="흰로고">
 						</div>
@@ -314,8 +317,9 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 						</div>
 					</div>
 					
+					<div id="chatMsgListDiv">
 					<c:forEach items="${messageList}" var="chMsg">
-						<div class="chat 
+						<div id="chatMsgDiv" class="chat
 							<c:if test="${loginUser.userNum != chMsg.senderNum  }">ch1</c:if>
 							<c:if test="${loginUser.userNum == chMsg.senderNum  }">ch2</c:if>
 						">
@@ -331,8 +335,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 							</div>
 						</div>
 					</c:forEach>
-					
-					<div>위에까지 테스트</div>
+					</div>
 					
 					<div id="resultBox"></div>
 					
@@ -383,10 +386,10 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 	<!-- https://github.com/sockjs/sockjs-client -->
 	<script>
 		// 로그인한 회원 번호
-		const sendBtn = document.getElementById("send");
-
 		const loginUserNum = "${loginUser.userNum}";
-		
+
+		//세번째 열 상단의 nowChatroomInfo의 아이디에서 chatroomId,expertNum, generalUserNum을 가져옴
+		//	두 번째 열의 방 선택하면 chatroomId, expertNum, generalUserNum이 바뀜	
 		var nowChatroomInfo = document.getElementsByClassName('chatMessageRoom')[0].id;
 		console.log(nowChatroomInfo);
 		
@@ -394,10 +397,12 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		var expertNum = nowChatroomInfo.split('_')[1];
 		var generalUserNum = nowChatroomInfo.split('_')[2];
 		
+		//채팅 보내는 란
+		const sendBtn = document.getElementById("send");
 		var chatInput = document.getElementById("bn_chat-input");
 		
-		//==================https://bbo-blog.tistory.com/39===========================
-			
+		
+		//참고==================https://bbo-blog.tistory.com/39===========================
 		var chattingSock;
 		connectSockJs();
 
@@ -419,23 +424,130 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 			sendMessage();
 		})		
 		
+		//목록에서 채팅방 선택 -> nowChatroom&messageList반환 -> 상대프로필&메세지변경
 		const roomItems = document.getElementsByClassName('chatting-item');
 		for(const chattingItem of roomItems){
 			chattingItem.addEventListener('click', function(){
+				
+				//두번째 열의 <목록> 에 있는 아이디로 채팅방정보 얻기
 				var selectChatroomInfo = chattingItem.id;
 				console.log(selectChatroomInfo);
-				console.log(selectChatroomInfo.split('-')[0]);
 				
-				location.href='${contextPath}/selectMessage.ch?chatroomId='+selectChatroomInfo.split('-')[0];
+				chatroomId = selectChatroomInfo.split('-')[0];
+				expertNum = selectChatroomInfo.split('-')[1];
+				generalUserNum =selectChatroomInfo.split('-')[2];
+				
+				var roomHTMLId = chatroomId + "-" + expertNum + "-" + generalUserNum;
 				
 				$.ajax({
 					url: '${contextPath}/selectMessage.ch',
-					type: 'GET',
+					type: 'POST',
 					data: {
-						chatroomId : selectChatroomInfo.split('-')[0]
+						chatroomId : chatroomId,
+						expertNum :expertNum,
+						generalUserNum :generalUserNum
 					},
 					success: (data)=>{
-						console.log(data)
+						var jsonData = JSON.parse(data);
+						console.log(jsonData.messageList);
+						console.log(jsonData.nowChatroom);
+						
+						// 1. 두번째 열 선택처리==========================================================================
+						for(const others of roomItems){
+							others.classList.remove("active");
+						}
+						document.getElementById(roomHTMLId).classList.add("active");
+						
+						//==일반유저의 경우============================================================================
+						if(loginUserNum==generalUserNum){
+
+						// 2-1(일반) 세번째 열의 의사프로필 변경
+							document.getElementById('chatTopChatroomId').innerText = chatroomId;
+							document.getElementById('chatTopExpertNum').innerText = expertNum;
+							document.getElementById('chatTopExpertName').innerText = jsonData.nowChatroom.expert.member.userName;
+						
+							if(jsonData.nowChatroom.expert.expert.expertSort.trim() == 'D'){
+								console.log("의사");
+								document.getElementById('chatTopExpertSort').innerText = "의사";
+								document.getElementById('chatTopExpertSortPlace').innerText = '병원';
+							}else{
+								console.log("약사");
+								document.getElementById('chatTopExpertSort').innerText = "약사";
+								document.getElementById('chatTopExpertSort').innerText = '약사';
+								document.getElementById('chatTopExpertSortPlace').innerText = '약국';
+							}
+							
+							document.getElementsByClassName('bn_pro-info')[0].innertText = "답변수" + jsonData.nowChatroom.expert.answerListSize ;
+							document.getElementsByClassName('bn_pro-info')[1].innertText = "전문과목" + jsonData.nowChatroom.expert.expert.expertMedi ;
+							document.getElementById('chatTopExpertDept').innerText = "소속 : " + jsonData.nowChatroom.expert.expert.expertDept ;
+							document.getElementById('chatTopgoToProfile').onclick = () =>{
+								location.href='${contextPath}/expertprofile.qa?expertNum='+jsonData.nowChatroom.expert.expert.userNum;
+							}
+							
+							if( jsonData.nowChatroom.expert.expert.expertProfile != undefined ){
+								document.getElementById('chatDefaultMsg1').innerText = jsonData.nowChatroom.expert.expert.expertProfile;
+							}else{
+								document.getElementById('chatDefaultMsg1').innerText = "안녕하세요. 반갑습니다 😉";
+							}
+							
+						} else {
+						//==전문가유저의 경우============================================================================
+							
+						}
+						
+						//세번째 열 상단의 nowChatroomInfo의 아이디에서 chatroomId,expertNum, generalUserNum을 가져오므로 id 변경해야 한다.
+						nowChatroomInfo = jsonData.nowChatroom.chatroom.chatroomId + "_" + jsonData.nowChatroom.chatroom.expertNum + "_" + jsonData.nowChatroom.chatroom.userNum;
+						console.log("현재 선택된 방의 정보(세번쨰열):" + nowChatroomInfo);
+						chatroomId = nowChatroomInfo.split('_')[0];
+						expertNum = nowChatroomInfo.split('_')[1];
+						generalUserNum = nowChatroomInfo.split('_')[2];
+						
+						//메세지리스트 변경 ==========================================================================
+						// 3-(1) 만약 이미 chatMsgListDiv 있으면 삭제
+						if(	document.getElementById('chatMsgListDiv') != null ){
+							document.getElementById('chatMsgListDiv').remove();
+						}
+						// 3-(2) 메세지요소 하나하나 추가
+						if(jsonData.messageList.length==0){
+							const chatMsgListDiv = document.createElement('div');
+					    	chatMsgListDiv.innerHTML == '첫 메세지를 작성해보세요';
+						}else{
+							var msgList = jsonData.messageList;
+
+							const chatMsgListDiv = document.createElement('div');
+					    	chatMsgListDiv.innerHTML == '';
+							chatMsgListDiv.id = "chatMsgListDiv";
+					    	
+							for(const msg of msgList){
+
+								var msgUserNum = msg['senderNum']; //데이터를 보낸 사람
+								var msgChatContent = msg['chatContent'];
+								var msgSendTime = msg['sendTime'];
+								
+								const chatMsgDiv = document.createElement('div');
+								var str = '';
+								
+						    	chatMsgDiv.innerHTML = '';
+						    	
+						    	if(msgUserNum ==loginUserNum){ // 내가 보낸 메세지면
+						    		str = '<div class="chat ch2"><div class="textbox">'
+							    		+ msgChatContent
+							    		+'<span class="sendtime">'
+							    		+ msgSendTime
+							    		+'</span></div></div>';
+						    	}else{
+						    		str = '<div class="chat ch1"><div class="icon"><i class="fa-solid fa-user"></i></div><div class="textbox">'
+						    				+ msgChatContent
+						    				+'<span class="sendtime">'
+						    				+ msgSendTime
+						    				+'</span></div></div>';
+						    	}
+						    	chatMsgDiv.innerHTML += str;
+						    	chatMsgListDiv.append(chatMsgDiv);
+							}
+							document.getElementsByClassName('chat_wrap')[0].append(chatMsgListDiv);
+						}
+						
 					},
 					error: (data)=>{
 						alert("실패!");
@@ -502,6 +614,8 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		    				+'</span></div></div>'
 		    	}
 		    	resultBox.innerHTML += str;
+		    } else {
+		    	
 		    }
 		}
 		
