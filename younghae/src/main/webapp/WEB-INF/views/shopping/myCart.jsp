@@ -101,7 +101,7 @@
 									<label for="cartSelectAll" style="color:#828282; font-weight: bold; font-size: 1.5rem; display: inline;">&nbsp;모두선택</label>
 								</div>
 								<div class="col-lg-6">
-									<button type="button" id="deleteSelectCart" class="deleteSelectCartBtn" style="margin-top: 10px;">선택삭제</button>
+									<button type="button" id="deleteSelectCart" class="deleteSelectCartBtn" style="margin-top: 10px;" onclick="deleteCart();" onclick="goToPay();">선택삭제</button>
 								</div>
 							</div>
 							<hr><br>
@@ -109,18 +109,17 @@
 							<!-- 장바구니 상품 -->
 							<c:forEach items="${cartViewList}" var="c">
 							<div class="row" style="margin-bottom: 1.5rem;">
-								<div class="col-lg-1" style="margin-right: -1rem;">
-									<input type="checkbox" class="cartSelectEach" onclick="selectOne();" value=${c.cartNum }>
-									<input type="hidden" class="cartProPrices" name="cartProPrice" value="${ c.supplement.proPrice }" />
+								<div class="col-lg-1" style="margin-right: -1rem; margin-top:-5px;">
+									<input type="checkbox" name="cartSelectEach" class="cartSelectEach" value=${c.proNum } onclick="selectOne();">
 								</div>
 								<div class="col-lg-11" style="margin-left: -1rem; width: 15rem;">
 									<div class="container mb-4 carts" style="border: 1px solid #e5e3e3; border-radius: 0.5em; width: 45rem;">
-										<div class="row cartHeader">
+										<div class="row cartHeader" style="height: 2rem;">
 											<div class="col-6">
 												<span style="font-weight: bold; color: #5B5B5B;">${ c.supplement.proCompany}</span>
 											</div>
 											<div class="col-6" style="text-align: right; color:#5B5B5B;">
-												<span>배송비 <span>2,500원</span>
+												<span>배송비 <span class="eachDeliveryPrice">2,500원</span>
 												</span>
 											</div>
 										</div>
@@ -134,7 +133,8 @@
 						                        <div class="product__details__quantity" style="display: inline; margin-right: 2%;">
 													<div class="btn-group" role="group" aria-label="Basic example">
 														<div class="selectInputDivs">
-															<select class="selectDivs" name="quantity" style="border-color: #24E082; border-radius: 0.3em; text-align: center; width:3rem; ">
+															<input type="hidden" name="quantity" value="0">
+															<select class="selectDivs" style="border-color: #24E082; border-radius: 0.3em; text-align: center; width:3rem; ">
 																<c:forEach begin="1" end="9" var="i">
 																	<c:if test="${ c.cartQuantity == i}">
 																		<option selected>${ i }</option>
@@ -149,13 +149,17 @@
 																	</c:if>
 															</select>
 														</div>
-														<input type="hidden" name="proNummm" value="${ c.proNum }">
+														<input type="hidden" value="${ c.proNum }">
 														<input type="hidden" name="changeQuantity" value="${ c.cartQuantity }">
 													</div>
 						                        </div><br>
+						                        
+						                        
 												<div class = "eachPrice" style="font-size: 18px; color: gray; display:inline;">
 													${ c.supplement.proPrice }
-												</div>
+												</div><span style="font-size: 18px; color: gray;">원</span>
+												
+												<span style="font-weight: bold; font-size: 20px;float:right;">원</span>
 												<div class="eachTotalPrice" style="font-weight: bold; font-size: 20px;float:right; display:inline;">
 													${ c.supplement.proPrice }
 												</div>
@@ -171,21 +175,26 @@
 							<!-- /주문 상품 -->
 						
 							
-						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto;">
+<!-- 						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto;"> -->
+						<div>
 							<div class="checkout__order" style="width: 80%">
 								<h4>결제 금액</h4>
 								<ul>
-									<li>총 상품 금액 <span id="cartTotalPrice">68,600원</span>원</li>
-									<li>배송비<span id="deliveryPrice">2,500원</span></li>
+									<li>총 상품 금액 <span>&nbsp;원</span><span id="cartTotalPrice">0</span></li>
+									<li>배송비<span>&nbsp;원</span><span id="deliveryPrice">0</span></li>
 								</ul>
-								<div class="checkout__order__subtotal">
-									최종 결제 금액 <span id="payTotalPrice" style="color: #24E082;">71,100 원</span> <br>
-									<span style="font-size: 0.6rem;">P적립 예정</span><span
-										style="font-size: 0.6rem;">80</span>
+								<div class="checkout__order__subtotal" style="height: 5rem;">
+									최종 결제 금액
+									<span>&nbsp;원</span><span id="payTotalPrice" style="color: #24E082;">0</span>
+									<div style="margin-top: 0.5rem;">
+										<span style="font-size: 0.6rem;margin-left:0.2rem;">적립 예정</span>
+										<span style="font-size: 0.6rem; color:#24E082;">P</span>
+										<span id="point" style="font-size: 0.6rem; color:#24E082;">0</span>
+									</div>
 								</div>
 
 								<button type="submit" class="site-btn" onclick="goToPay();">
-									<span>71,100</span>원 결제하기
+									<span id="payPriceBtn">0</span><span>원</span> 결제하기
 								</button>
 							</div>
 						</div>
@@ -197,68 +206,162 @@
 	</section>
 	
 	<script>
+		
+// 		전체선택 체크박스 (.checked)
 		const cartSelectAll = document.getElementById("cartSelectAll");
+// 		개별 선택 체크박스 배열 (.checked value는 카트넘)
 		const cartSelectEach = document.getElementsByClassName("cartSelectEach");
-		const cartProPrices = document.getElementsByClassName("cartProPrices");
+
+// 		총 상품금액
 		const cartTotalPrice = document.getElementById('cartTotalPrice');
-		let allTotalPrice = 0;
-		var payTotal = document.getElementById('cartTotalPrice');
-		var pt = 0;
+// 		최종 배송비		
+		var cartDeliveryPrice = document.getElementById('deliveryPrice');
+// 		적립 포인트
+		var pointSpan = document.getElementById('point');
+// 		최종 결제 금액
 		var payTotalPrice = document.getElementById('payTotalPrice');
 		
-		function loadView(){
-			var tq = document.getElementsByClassName('selectDivs');
-			var ep = document.getElementsByClassName('eachPrice');
-			var tp = document.getElementsByClassName('eachTotalPrice');
+// 		개별 배송비 배열
+		var ed = document.getElementsByClassName('eachDeliveryPrice');
+// 		수량 배열 (.value 값)
+		var tq = document.getElementsByClassName('selectDivs');
+// 		개별 가격 배열 (.innerText 값)
+		var ep = document.getElementsByClassName('eachPrice');
+		
+// 		개별 토탈 가격 (.innerText 값)
+		var tp = document.getElementsByClassName('eachTotalPrice');
+// 		버튼 가격
+		var payPriceBtn = document.getElementById('payPriceBtn');
+	
+		function selectAll(){
+// 			개별상품 가격
+			var eachPrice = [];
+// 			개별 상품 총액 배열
+			var eachTotalPrice = [];
+// 			상품 총액 변수 
+			var allTotalPrice = 0;
+// 			배송비 변수
+			var deliveryPrice = 0;
+			var eachDeliveryPrice = [];
+// 			포인트 변수
+			var point = 0;
+// 			최종결제 금액 변수
+			var payTotal = 0;
 			
 			for(var i = 0; i < tq.length; i++){
-				tp[i].innerText = (Number(ep[i].innerText) * Number(tq[i].value)).toLocaleString() ;
-				pt += Number(ep[i].innerText) * Number(tq[i].value);
-				ep[i].innerText = (Number(ep[i].innerText)).toLocaleString();
-			}
-			payTotal.innerText = pt.toLocaleString();
-		}
-		
-		function selectAll(){
- 			if(cartSelectAll.checked){
-				for(const cartEach of cartSelectEach){
-					cartEach.checked=true;
-				}
-				for(const cartProPrice of cartProPrices){
-					allTotalPrice += Number(cartProPrice.value);
-					cartTotalPrice.innerText = allTotalPrice.toLocaleString();
-				}
+// 				개별 가격 출력
+				eachPrice[i] = Number((ep[i].innerText).replace(/\D/g, ''));
+				ep[i].innerText = eachPrice[i].toLocaleString();
+	
+// 				개별 가격 총합 계산
+				eachTotalPrice[i] = Number(tq[i].value) * Number((ep[i].innerText).replace(/\D/g, ''));
+				tp[i].innerText = eachTotalPrice[i].toLocaleString(); 
 				
-			}else{
-				for(const cartEach of cartSelectEach){
-					cartEach.checked=false;
-					allTotalPrice = 0;
-					cartTotalPrice.innerText = allTotalPrice;
+// 				개별 배송비 계산
+	 			eachDeliveryPrice[i] = Number((ed[i].innerText).replace(/\D/g, ''));
+				if(eachTotalPrice[i] > 50000){
+					eachDeliveryPrice[i] = 0;
+				}else{
+					eachDeliveryPrice[i] = 2500;
 				}
+				ed[i].innerText = (Number(eachDeliveryPrice[i])).toLocaleString();
+				
+// 				전체선택 YN-------------------------------------------
+				if(cartSelectAll.checked){
+					cartSelectEach[i].checked = true;
+					
+// 		 			가격 토탈 계산					
+					allTotalPrice += eachTotalPrice[i];
+					
+// 		 			배송비 설정
+					if(allTotalPrice > 50000){
+						deliveryPrice = 0;
+					}else{
+						deliveryPrice = 2500;
+					}
+							
+// 					포인트 설정
+					point = Math.round(allTotalPrice * 0.01);
+	
+// 					최종 결제금액
+					payTotal = allTotalPrice + deliveryPrice;
+						
+				}else{
+					cartSelectEach[i].checked = false;
+					allTotalPrice = 0;
+					deliveryPrice = 0;
+					point = 0;
+					payTotal = 0;
+				}
+	
+				cartDeliveryPrice.innerText = (Number(deliveryPrice)).toLocaleString();
+				cartTotalPrice.innerText = (Number(allTotalPrice)).toLocaleString();
+				pointSpan.innerText = (Number(point)).toLocaleString();
+				payTotalPrice.innerText = (Number(payTotal)).toLocaleString();
+				payPriceBtn.innerText = (Number(payTotal)).toLocaleString();
+			}
+		}
+	
+	function selectOne(){
+		var eachPrice = [];
+		var eachTotalPrice = [];
+		var allTotalPrice = 0;
+		var deliveryPrice = 0;
+		var eachDeliveryPrice = [];
+		var point = 0;
+		var payTotal = 0;
 
-			}	
+		let count = 0;
+		for(var i = 0; i < cartSelectEach.length; i++){
+			eachPrice[i] = Number((ep[i].innerText).replace(/\D/g, ''));
+			ep[i].innerText = eachPrice[i].toLocaleString();
+
+			eachTotalPrice[i] = Number(tq[i].value) * Number((ep[i].innerText).replace(/\D/g, ''));
+			tp[i].innerText = eachTotalPrice[i].toLocaleString(); 
+			
+ 			eachDeliveryPrice[i] = Number((ed[i].innerText).replace(/\D/g, ''));
+			if(eachTotalPrice[i] > 50000){
+				eachDeliveryPrice[i] = 0;
+			}else{
+				eachDeliveryPrice[i] = 2500;
+			}
+			ed[i].innerText = (Number(eachDeliveryPrice[i])).toLocaleString();
+			
+			if(cartSelectEach[i].checked){
+				count++;
+				allTotalPrice += eachTotalPrice[i];
+				
+				if(allTotalPrice > 50000){
+					deliveryPrice = 0;
+				}else{
+					deliveryPrice = 2500;
+				}
+						
+				point = Math.round(allTotalPrice * 0.005);
+
+				payTotal = allTotalPrice + deliveryPrice;
+			}
 		}
 		
-		function selectOne(){
-			let count = 0;
-			for(const cartEach of cartSelectEach){
-				if(cartEach.checked){
-					count++;
-				}
-			}
-			if(count != cartSelectEach.length){
-				cartSelectAll.checked = false;
-			}else{
-				cartSelectAll.checked = true;
-			}
+		cartDeliveryPrice.innerText = (Number(deliveryPrice)).toLocaleString();
+		cartTotalPrice.innerText = (Number(allTotalPrice)).toLocaleString();
+		pointSpan.innerText = (Number(point)).toLocaleString();
+		payTotalPrice.innerText = (Number(payTotal)).toLocaleString();
+		payPriceBtn.innerText = (Number(payTotal)).toLocaleString();
+		
+		if(count != cartSelectEach.length){
+			cartSelectAll.checked = false;
+		}else{
+			cartSelectAll.checked = true;
 		}
+	}
 		
 		function goToPay(){
 			var cartNumDiv = document.getElementsByClassName('cartNumListDivs');
 			for(var i = 0; i < cartSelectEach.length; i++){
 				if(cartSelectEach[i].checked){
 					const cartDiv= document.createElement("div");
-					cartDiv.innerHTML = '<input type="hidden" name="cartNumList" value='+cartSelectEach[i].value+'>'+
+					cartDiv.innerHTML = '<input type="hidden" name="proNumList" value='+cartSelectEach[i].value+'>'+
 					cartNumDiv[i].append(cartDiv);
 				}else{
 					cartNumDiv[i]='';
@@ -266,71 +369,61 @@
 			}
 		}
 		
+	window.onload=function(){
+		cartSelectAll.checked = true;
+		selectAll();
 
-		
-		
-		window.onload=function(){
-			cartSelectAll.checked = true;
-			selectAll();
-			loadView();
-
-			const selectInputs = document.getElementsByClassName("selectInputDivs");
-			for(const selectInput of selectInputs){
-				selectInput.addEventListener('change',function(){
-					let changeQuantity = 0;
-					let changeProNum = ($(this).siblings()[0].value);
-					if(Number($(this).children()[0].value) < 10){
-						changeQuantity = $(this).children()[0].value;
+		const selectInputs = document.getElementsByClassName("selectInputDivs");
+		for(const selectInput of selectInputs){
+			selectInput.addEventListener('change',function(){
+				let changeQuantity = 0;
+				let changeProNum = ($(this).siblings()[0].value);
+				if(Number($(this).children()[0].value) < 10){
+					changeQuantity = $(this).children()[0].value;
+				}else{
+					if($(this).children()[0].value =='10+'){
+						const tenInput = document.createElement("div");
+						selectInput.innerHTML = '';
+						tenInput.innerHTML = '<input type="text" name="cartQuantity"'+ 
+											'style="width:3rem; height: 2.1rem;border: 1px solid #24E082; border-radius: 0.3em; text-align: center; font-size: 1rem;" placeholder="입력";>';
+						selectInput.append(tenInput);
 					}else{
-						if($(this).children()[0].value =='10+'){
-							const tenInput = document.createElement("div");
-							selectInput.innerHTML = '';
-							tenInput.innerHTML = '<input type="text" name="cartQuantity"'+ 
-												'style="width:3rem; height: 2.1rem;border: 1px solid #24E082; border-radius: 0.3em; text-align: center; font-size: 1rem;" placeholder="입력";>';
-							selectInput.append(tenInput);
-						}else{
-							changeQuantity = $(this).children().children()[0].value;
+						changeQuantity = $(this).children().children()[0].value;
+					}
+				}
+				$(this).siblings()[1].value = changeQuantity;
+				
+				if(changeQuantity !=''){
+					$.ajax({
+						url:'${contextPath}/updateCartQuantity.sh',
+						data:{cartQuantity: changeQuantity,
+							proNum: changeProNum},
+						success:(data)=>{
+							selectOne();
 						}
-					}
-					$(this).siblings()[1].value = changeQuantity;
-					
-					if(changeQuantity !=''){
-						$.ajax({
-							url:'${contextPath}/updateCartQuantity.sh',
-							data:{cartQuantity: changeQuantity,
-								proNum: changeProNum},
-							success:(data)=>{
-							}
-						})
-					}
-				})
-			}
-			
-			let totalPrice = 0;
-			for(const cartEach of cartSelectEach){
-				cartEach.addEventListener('click',function(){
-					let totalQuantity = Number($(this).parent().siblings().children().find('input')[1].value);
-					console.log(totalQuantity);
-					
-					if(cartEach.checked){
-						totalPrice += (Number($(this).siblings().val()) * totalQuantity);
-						cartTotalPrice.innerText = totalPrice.toLocaleString();
-					}else{
-						totalPrice -= (Number($(this).siblings().val()) * totalQuantity);
-						cartTotalPrice.innerText = totalPrice.toLocaleString();
-					}
-				})
-			}
-			
-			var deliveryPrice = document.getElementById('deliveryPrice');
-			console.log(pt);
-			if(pt > 50000){
-				deliveryPrice.innerText = '0 원';
-			}else{
-				deliveryPrice.innerText = '2,500 원';
-			}
-			
+					})
+				}
+			})
 		}
+		
+		document.getElementById('deleteSelectCart').addEventListener('click',function(){			
+            var deleteSelectList = [];
+            
+            $('input[name="cartSelectEach"]:checked').each(function(i){//체크된 리스트 저장
+            	deleteSelectList.push($(this).val());
+            });
+			console.log(deleteSelectList);
+			
+			$.ajax({
+				url : '${contextPath}/deleteSelectCart.sh',
+				data: {"deleteSelectList" : deleteSelectList},
+				success : (data)=>{
+					console.log(data);
+					location.reload();
+				}
+			})
+		})
+	}
     </script>
 </body>
 </html>

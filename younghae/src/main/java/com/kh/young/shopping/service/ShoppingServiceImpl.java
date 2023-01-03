@@ -8,10 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.kh.young.model.vo.Address;
 import com.kh.young.model.vo.Cart;
+import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dao.ShoppingDAO;
+import com.kh.young.shopping.dto.GetPayInfoDTO;
+import com.kh.young.shopping.dto.PaymentDTO;
 
 @Service("shService")
 public class ShoppingServiceImpl implements ShoppingService{
@@ -108,4 +111,20 @@ public class ShoppingServiceImpl implements ShoppingService{
 	public int updateCartQuantity(Cart c) {
 		return shDAO.updateCartQuantity(sqlSession, c);
 	}
+	
+	@Override
+	public void delectSelectCart(int i) {
+		shDAO.deleteSelectCart(sqlSession, i);
+	}
+	
+	@Override
+	public PaymentDTO selectPayList(GetPayInfoDTO getPayInfoDTO) {
+		return shDAO.selectPayList(sqlSession, getPayInfoDTO);
+	}
+	
+	@Override
+	public ArrayList<Coupon>  selectCouponList(int userNum) {
+		return shDAO.selectCouponList(sqlSession, userNum);
+	}
+
 }

@@ -7,9 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.Address;
 import com.kh.young.model.vo.Cart;
+import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.shopping.dto.GetPayInfoDTO;
+import com.kh.young.shopping.dto.PaymentDTO;
 
 @Repository
 public class ShoppingDAO {
@@ -81,5 +84,18 @@ public class ShoppingDAO {
 	public int updateCartQuantity(SqlSessionTemplate sqlSession, Cart c) {
 		return sqlSession.update("shoppingMapper.updateCartQuantity", c);
 	}
+
+	public void deleteSelectCart(SqlSessionTemplate sqlSession, int i) {
+		sqlSession.delete("shoppingMapper.deleteSelectCart", i);
+	}
+
+	public PaymentDTO selectPayList(SqlSessionTemplate sqlSession, GetPayInfoDTO getPayInfoDTO) {
+		return sqlSession.selectOne("shoppingMapper.selectPayList", getPayInfoDTO);
+	}
+
+	public ArrayList<Coupon> selectCouponList(SqlSessionTemplate sqlSession, int userNum) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectCouponList", userNum);
+	}
+
 
 }

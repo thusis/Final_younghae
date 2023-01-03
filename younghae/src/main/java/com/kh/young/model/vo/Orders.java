@@ -1,6 +1,5 @@
 package com.kh.young.model.vo;
 
-import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,17 +14,21 @@ import lombok.ToString;
 @ToString
 public class Orders {
 	private int orderNum;
-	private Date orderDate;
-	private String userName;
-	private String userZipcode;
-	private String userAddress;
-	private String userAddressDetail;
-	private String userPhone;
-	private int orderAmount;
-	private String orderStatus;
-	private String orderRefund;
-	private String orderPayment;
-	private int proNum;
+//	-이거
+	private String orderCode;
 	private int userNum;
-	
+	private int userId;
+	private String orderDate;
+	private String orderStatus;
+	private int orderPayAmount;
+	private int orderTotalPrice;
+//	-이거
+	private String orderUserName;
+	private String orderPaymethod;
+	private int orderCouponPrice;
+//	-이거
+	private String orderImpCode;
+	private String orderPhone;
+	private int addressNum;
+//	-이거
 }
