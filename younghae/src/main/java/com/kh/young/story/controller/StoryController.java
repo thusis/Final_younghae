@@ -41,14 +41,14 @@ public class StoryController {
 	private SupplementService sService;
 
 	@RequestMapping("storyList.st")
-	public String AllStoryList(@RequestParam(value = "page", required = false) Integer page, Model model) {
+	public String AllStoryList(@RequestParam(value = "page", required = false) Integer page, HttpSession session,Model model) {
 		int currentPage = 1;
 
 		if (page != null) {
 			currentPage = page;
 		}
 
-		Member mem = sService.selectMember(61);
+		Member mem = (Member)session.getAttribute("loginUser");
 		System.out.println(mem);
 
 		int listCount = stService.getStoryListCount();
@@ -70,15 +70,14 @@ public class StoryController {
 	// 스토리 작성하기
 	@RequestMapping("insertStory.st")
 	public String insertStory(@ModelAttribute Story b, @RequestParam("thumbnail") String image, HttpSession session) {
-//		String nickName = ((Member) session.getAttribute("loginUser")).getUserNickname();
-		String nickName = "ss";
-//		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+		String nickName = ((Member) session.getAttribute("loginUser")).getUserNickname();
+		int id = ((Member) session.getAttribute("loginUser")).getUserNum();
 
 		System.out.println("controller" + image);
 
 		System.out.println(b);
-
-		b.setUserNum(26);
+		
+		b.setUserNum(id);
 
 		int result = stService.insertStory(b);
 		int attm = 0;
@@ -167,8 +166,10 @@ public class StoryController {
 	public Integer bookmark(@RequestParam("boardNum") int boardNum, @RequestParam("userNum") int userNum,
 			@RequestParam("check") String check) {
 		int result = 0;
+		
 		// 보드로 설정
 		Story b = new Story();
+		
 		// 여기서 userNum은 보드를 쓴 사람이 아님(=로그인 유저), 그냥 담을 곳이 없어서 넣어서 보낸거임
 		b.setUserNum(userNum);
 		b.setBoardNum(boardNum);
@@ -195,15 +196,9 @@ public class StoryController {
 
 		Story s = stService.selectStory(boardNum);
 
-//		System.out.println(b);
-
 		Member m = (Member) session.getAttribute("loginUser");
 		
 		System.out.println( s.getBoardTitle() );
-
-//		if (m.getUserNum() != userNum) {
-//			int result = stService.updateView(boardNum);
-//		}
 
 		mv.addObject("story", s);
 		mv.addObject("loginUser", m);
@@ -259,15 +254,14 @@ public class StoryController {
 	}
 	
 	@RequestMapping("AdminStoryList.st")
-	public String AdminAllStoryList(@RequestParam(value = "page", required = false) Integer page, Model model) {
+	public String AdminAllStoryList(@RequestParam(value = "page", required = false) Integer page, HttpSession session, Model model) {
 		int currentPage = 1;
 
 		if (page != null) {
 			currentPage = page;
 		}
 
-		Member mem = sService.selectMember(61);
-		// 집에서는 28 학원 개인 디비 계정은 8 영해디비는 61
+		Member mem = (Member)session.getAttribute("loginUser");
 		System.out.println(mem);
 
 		int listCount = stService.getStoryListCount();
@@ -275,8 +269,6 @@ public class StoryController {
 		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
 
 		ArrayList<Story> allList = stService.allStory(pi);
-		
-//		System.out.println(allList);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", allList);
@@ -300,14 +292,6 @@ public class StoryController {
 			Story s = stService.selectStory(boardNum);
 			result = stService.updateStory(s);
 		}
-		
-//		int currentPage = 1;
-//
-//		int listCount = stService.getStoryListCount();
-//
-//		PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 4);
-//
-//		ArrayList<Story> list = stService.allStory(pi);
 		
 		return "admin_StoryPage";
 
