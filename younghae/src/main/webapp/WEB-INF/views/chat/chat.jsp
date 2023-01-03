@@ -227,6 +227,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 	                    <h5 class="bn_pro-name">
 		                    <span id="chatTopExpertName">${nowChatroom.expert.member.userName}&nbsp;&nbsp;</span>
 		                    <span id="chatTopExpertSort" class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+		                    <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
 		                    <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'D' }">의사</c:if>
 		                    <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'C' }">약사</c:if>
 		                    </span>
@@ -234,11 +235,17 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 	                    <span class="bn_pro-info">답변수 ${nowChatroom.expert.answerListSize} 개</span><br>
 	                    <span class="bn_pro-info">전문과목 ${nowChatroom.expert.expert.expertMedi}</span><br>
 	                    <span class="bn_pro-info">
-		                    <span id="chatTopExpertDept">소속 : ${nowChatroom.expert.expert.expertDept}&nbsp;&nbsp;</span>
+		                    <span id="chatTopExpertDept">
+		                    소속 : 
+		                    <c:if test="${nowChatroom.expert.expert.expertDept.trim() eq 'N' }">선택안함</c:if>
+					        <c:if test="${nowChatroom.expert.expert.expertDept.trim() ne 'N' }">${nowChatroom.expert.expert.expertDept}&nbsp;&nbsp;</c:if>
+		                    </span>
 		                    <span class="badge rounded-pill" id="chatTopExpertSortPlace" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
+		                    <a style="text-decoration:none; color:white;" href="${contextPath}/experthospital.qa?expertNum=${nowChatroom.expert.expert.userNum}">
+		                      <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
 		                      <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'D' }">병원</c:if>
 		                      <c:if test="${nowChatroom.expert.expert.expertSort.trim() eq 'C' }">약국</c:if>
-		                     정보 보기
+		                     정보 보기</a>
 		                    </span>
 	                    </span><br>
 					</div>
@@ -260,7 +267,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 					<span id="chatroomId" hidden>${nowChatroom.chatroom.chatroomId}</span>
 					<div class="col-lg-7  align-self-center">
 						<span id="generalUserNum" hidden>${nowChatroom.general.userNum }</span>
-	                    <h5 class="bn_pro-name">${nowChatroom.general.userName} 님&nbsp;과 채팅 중입니다 😉 &nbsp;</h5>
+	                    <h5 class="bn_pro-name"> ${nowChatroom.general.userName} 님&nbsp;과 채팅 중입니다 😉 &nbsp;</h5>
 					</div>
 				</div>
 				</c:if>
@@ -273,10 +280,10 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 							<i class="fa-solid fa-user"></i>
 						</div>
 						<div class="textbox" id="chatDefaultMsg1">
-							<c:if test="${nowChatroom.expert.expert.expertProfile eq null}">
+							<c:if test="${nowChatroom.expert.expert.expertProfile eq 'N' }">
 							안녕하세요. 반갑습니다😉
 							</c:if>
-							<c:if test="${nowChatroom.expert.expert.expertProfile ne null}">
+							<c:if test="${nowChatroom.expert.expert.expertProfile ne 'N'}">
 							${nowChatroom.expert.expert.expertProfile}
 							</c:if>
 						</div>
@@ -310,8 +317,8 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 							<span>견적금액에 대해 궁금한 점을 채팅으로 물어보세요</span>
 							<div class="row mt-2 justify-content-center">
 								<button class="col-10 btn bn_txt_strong p-3"
-									style="display: inline-block; background-color: black; color: white;">결제
-									후 채팅 시작하기</button>
+									style="display: inline-block; background-color: black; color: white;">
+									결제 후 채팅 시작하기</button>
 							</div>
 							<span class="sendtime">오전 9:28</span>
 						</div><!-- ==========견적서============ -->

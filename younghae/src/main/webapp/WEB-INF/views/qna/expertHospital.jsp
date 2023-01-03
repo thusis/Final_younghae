@@ -11,7 +11,28 @@
 
     <!--내가만든 css-->
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
-
+	
+	<style>
+		
+		h1, h2, h3, h4, h5{
+			font-family: 'IBM Plex Sans KR', sans-serif;
+		}
+		.contact a {
+			font-family: 'IBM Plex Sans KR', sans-serif;
+			font-size: 18px;
+			text-decoration: none;
+			text-transform: uppercase;
+			background: #18e06f;
+			display: inline-block;
+			padding: 15px 30px;
+			border-radius: 5px;
+			font-weight: 500;
+			color: #fff;
+			margin-top: 20px;
+		}
+		
+	</style>
+	
 </head>
 <body>
     
@@ -29,6 +50,18 @@
         </div>
         <!-- Contact Section Begin -->
         <section class="contact spad">
+        	<c:if test="${expert.expertDept eq 'N' }">
+	            <div class="section-title" style="padding: 5rem 5rem 5rem 5rem; border:0.5rem solid #24E082; ">
+	                <h2> 병원/약국 정보를<br> 설정하지 않은<br> 전문가회원입니다 </h2>
+	                <a href="${contextPath}/expertfind.qa">
+	                좀 더 안전한 영해 이용을 위해<br> 
+	                프로필을 설정한 다른 회원을 만나보세요<br>
+	                <img src="resources/img/logo_pill_white.svg" alt="흰로고">
+	                </a>
+	            </div>
+        	</c:if>
+        	
+        	<c:if test="${expert.expertDept ne 'N' }">
             <div class="section-title" style="padding: 30px 0 10px 0;">
                 <h2>${expert.expertDept} </h2>
                 <hr style="width:50vw; border:2px solid #24E082; background-color: #24E082;">
@@ -63,10 +96,14 @@
                     </div>
                 </div>
             </div>
+            </c:if>
         </section>
+        
         <!-- Contact Section End -->
          <section class="container align-center">
+	        <c:if test="${expert.expertDept ne 'N' }">
 	        <div id="map" style="width:45vw;height:20vw;"></div>
+    	    </c:if>
          </section>
 	</div>
 	<br>
