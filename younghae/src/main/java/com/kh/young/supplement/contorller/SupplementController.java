@@ -470,7 +470,7 @@ public class SupplementController {
 		Gson gson = gb2.create();
 		try {
 			gson.toJson(r, response.getWriter());
-			gson.toJson(pi, response.getWriter());
+//			gson.toJson(pi, response.getWriter());
 		} catch (JsonIOException | IOException e) {
 			e.printStackTrace();
 		}
