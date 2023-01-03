@@ -78,6 +78,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDAO.updatePwd(sqlSession, map);
 	}
 	
+	@Override
+	public void insertBasicAddress(HashMap<String, Object> addressMap) {
+		mDAO.insertBasicAddress(sqlSession,addressMap);
+	}
+	
 
 	
 	

@@ -197,6 +197,19 @@ public class MemberController {
        	 userHealth = "없음";
         }
 
+//      주소테이블에 기본 주소 추가 -----------------------------------------------------
+        HashMap < String, Object > addressMap = new HashMap < String, Object > ();
+        addressMap.put("userNum", selectMember);
+        addressMap.put("addressZipcode", req.getParameter("userZipcode"));
+        addressMap.put("addressBuilding", req.getParameter("userAddress"));
+        addressMap.put("addressDetail", req.getParameter("userAddressDetail"));
+        addressMap.put("addressPhone",	m.getUserPhone());
+        addressMap.put("userName", m.getUserName());
+        addressMap.put("addressAddressee", m.getUserName());
+        addressMap.put("userHealth", userHealth);
+        
+        mService.insertBasicAddress(addressMap);
+//      주소테이블에 기본 주소 추가 end-----------------------------------------------------
 
         HashMap < String, Object > map = new HashMap < String, Object > ();
 
@@ -207,13 +220,16 @@ public class MemberController {
         map.put("userAddressDetail", req.getParameter("userAddressDetail"));
         map.put("userHealth", userHealth);
 
-        int resultGenral = mService.insertMemberAddress(map);
+        int resultGenral = mService.insertMemberAddress(map);   
 
         if (result > 0 && resultGenral > 0) {
             return "redirect:home.do";
         } else {
             throw new MemberException("회원가입에 실패하였습니다.");
         }
+
+
+    
     }
 
     //회원가입페이지

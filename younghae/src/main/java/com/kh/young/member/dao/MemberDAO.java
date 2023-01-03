@@ -68,6 +68,10 @@ public class MemberDAO {
 		return sqlSession.update("memberMapper.updatePwd", map);
 	}
 
+	public void insertBasicAddress(SqlSessionTemplate sqlSession, HashMap<String, Object> addressMap) {
+		sqlSession.insert("memberMapper.insertBasicAddress", addressMap);
+	}
+
 
 
 
