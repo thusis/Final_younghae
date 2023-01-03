@@ -15,7 +15,8 @@ import lombok.ToString;
 @ToString
 public class Chatroom {
 	private int chatroomId;
-	private Date chatroomTime;
+	private Date openTime;
 	private int expertNum;
 	private int userNum;
+	private String chatroomStatus;
 }

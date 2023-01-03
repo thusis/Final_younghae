@@ -42,15 +42,15 @@ public class QaServiceImpl implements QaService {
 	@Override
 	public void setLoginUser(Integer userNum, HttpServletRequest request) {
 		Member loginMember = qdao.setLoginUser(sqlSession,userNum);
-		ServletContext application = request.getSession().getServletContext();
-		application.setAttribute("loginUser", loginMember);
+		request.getSession().setAttribute("loginUser", loginMember);
 	}
 	
 	/**내 질문목록**/
 	@Override
 	public ArrayList<QuestionRespDto> getMyQna(HttpServletRequest request) { 
 		
-		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+//		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+		int userNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
 		ArrayList<QuestionRespDto> myQuestions = qdao.getMyQuestions(sqlSession,userNum);
 	
 		System.out.println("test"+myQuestions);
@@ -126,7 +126,8 @@ public class QaServiceImpl implements QaService {
 	
 	@Override
 	public int insertQuestion(QuestionInsertDto quest, HttpServletRequest request) {
-		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
+//		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
+		quest.setUserNum(((Member)request.getSession().getAttribute("loginUser")).getUserNum());
 		
 		MultipartFile attachment = quest.getAttachment();
 		System.out.println("130+"+attachment);
@@ -143,7 +144,8 @@ public class QaServiceImpl implements QaService {
 	@Override
 	public boolean getAlreadyAnswered(int questionNum, HttpServletRequest request) {
 		
-		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+//		int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+		int userNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
 		
 		QuestionRespDto qresp = qdao.selectQuestion(sqlSession, questionNum);
 		for( AnswerRespDto answer : qresp.getAnswerList()) {
@@ -156,7 +158,8 @@ public class QaServiceImpl implements QaService {
 
 	@Override
 	public int insertAnswer(QuestionInsertDto quest, HttpServletRequest request) {
-		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
+//		quest.setUserNum(((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum());
+		quest.setUserNum(((Member)request.getSession().getAttribute("loginUser")).getUserNum());
 		
 		MultipartFile attachment = quest.getAttachment();
 		
@@ -230,8 +233,10 @@ public class QaServiceImpl implements QaService {
 					);
 		}
 		
-		if((Member)request.getSession().getServletContext().getAttribute("loginUser") != null) {
-			int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+//		if((Member)request.getSession().getServletContext().getAttribute("loginUser") != null) {
+//			int userNum = ((Member)request.getSession().getServletContext().getAttribute("loginUser")).getUserNum();
+		if((Member)request.getSession().getAttribute("loginUser") != null) {
+			int userNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
 			
 			if(qresp.getBoard().getUserNum() != userNum) {
 				qdao.addViewCount(sqlSession, boardNum);
@@ -265,10 +270,19 @@ public class QaServiceImpl implements QaService {
 	@Override
 	public ArrayList<ReplyRespDto> getReplyList(int boardNum) {
 		ArrayList<Reply> rList = qdao.getReplyList(sqlSession, boardNum);
+		
+		
 		ArrayList<ReplyRespDto> replyList = new ArrayList<>();
 		
 		for(int i=0; i<rList.size();i++) {
-			replyList.add(new ReplyRespDto( rList.get(i), writerInfoToString(getWriterInfoMap(rList.get(i).getUserNum())) ));
+			replyList.add(new ReplyRespDto( 
+					rList.get(i), 
+					writerInfoToString(
+							getWriterInfoMap(
+									rList.get(i).getUserNum()
+									)
+							) 
+					));
 		}
 		
 		System.out.println("서비스"+replyList);
@@ -305,8 +319,6 @@ public class QaServiceImpl implements QaService {
 	public int deleteQuestion(QuestionInsertDto quest, HttpServletRequest request) {
 		return 0;
 	}
-
-
 
 
 }

@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chatMapper">
+
+  	<resultMap type="ChatroomDto" id="GeneralChatroomDto">
+  		<association property="expert" javaType="ExpertRespDto" resultMap="ExpertRespDto"/>
+  		<association property="chatroom" javaType="Chatroom" resultMap="Chatroom"/>
+  	</resultMap>
+  	
+  	<resultMap type="ChatroomDto" id="ExpertsChatroomDto">
+  		<association property="general" javaType="Member" resultMap="Member"/>
+  		<association property="chatroom" javaType="Chatroom" resultMap="Chatroom"/>
+  	</resultMap>
+  	
+ 	<resultMap type="Chatroom" id="Chatroom">
+  		<id column="CHATROOM_ID" property="chatroomId"/>
+  		<result column="OPEN_TIME" property="openTime"/>
+  		<result column="EXPERT_NUM" property="expertNum"/>
+  		<result column="USER_NUM" property="userNum"/>
+  	</resultMap>
+  	
+ 	<resultMap type="ChatMessage" id="ChatMessage">
+  		<id column="CHAT_ID" property="chatId"/>
+  		<result column="CHAT_CONTENT" property="chatContent"/>
+  		<result column="SEND_TIME" property="sendTime"/>
+  		<result column="IS_READ" property="isRead"/>
+  		<result column="CHATROOM_ID" property="chatroomId"/>
+  		<result column="SENDER_NUM" property="senderNum"/>
+  		<result column="RECEIVER_NUM" property="receiverNum"/>
+  	</resultMap>
+
+ 	<resultMap type="ChatReserv" id="ChatReserv">
+  		<id column="RESERV_ID" property="reservId"/>
+  		<result column="CHATROOM_ID" property="chatroomId"/>
+  		<result column="PAYMENT_ID" property="paymentId"/>
+  		<result column="RESERV_SCHEDULE" property="reservSchedule"/>
+  		<result column="IS_APPROVED" property="isApproved"/>
+  		<result column="IS_COMPLETED" property="isCompleted"/>
+  	</resultMap>
+
+  	<resultMap type="ExpertRespDto" id="ExpertRespDto">
+  		<id column="EXPERT_NUM" property="member.userNum"/>
+		<association property="member" javaType="Member" resultMap="Member"/>
+		<association property="expert" javaType="ExpertUser" resultMap="ExpertUser"/>
+		<association property="eattach" javaType="Attachment" resultMap="Attachment"/>
+<!-- 		<collection column="USER_NUM" property="answerList" javaType="java.util.ArrayList" ofType="AnswerRespDto" select="selectAnswerListByUserNum"/> -->
+  	</resultMap>
+  	
+ 	<resultMap type="Member" id="Member">
+  		<id column="USER_NUM" property="userNum"/>
+  		<result column="USER_ID" property="userId"/>
+  		<result column="USER_NAME" property="userName"/>
+  		<result column="USER_NICKNAME" property="userNickname"/>
+  		<result column="USER_EMAIL" property="email"/>
+  		<result column="USER_GENDER" property="gender"/>
+  		<result column="USER_BIRTH" property="userBirth"/>
+  		<result column="USER_PHONE" property="userPhone"/>
+  		<result column="USER_RECOMMEND" property="userRecommend"/>
+  		<result column="USER_ENROLLDATE" property="userEnrollDate"/>
+  		<result column="USER_CNUMBER" property="userCNumber"/>
+  		<result column="USER_STATUS" property="userStatus"/>
+  		<result column="USER_MODIFYDATE" property="userModifyDate"/>
+  	</resultMap>
+  	
+  	<resultMap type="ExpertUser" id="ExpertUser">
+  	  	<id column="EXPERT_NUM" property="userNum"/>
+  		<result column="EXPERT_POSTADD" property="expertPostAdd"/>
+  		<result column="EXPERT_ADDRESS" property="expertAddress"/>
+  		<result column="EXPERT_ADD_DETAIL" property="expertAddDetail"/>
+  		<result column="EXPERT_SORT" property="expertSort"/>
+  		<result column="EXPERT_MEDI" property="expertMedi"/>
+  		<result column="EXPERT_DEPT" property="expertDept"/>
+  		<result column="EXPERT_PROFILE" property="expertProfile"/>
+  		<result column="EXPERT_HOMEPAGE" property="expertHomepage"/>
+  		<result column="EXPERT_CAREER" property="expertCareer"/>
+  		<result column="EXPERT_ESTIMATE" property="expertEstimate"/>
+  		<result column="EXPERT_LATITUDE" property="expertLatitude"/>
+  		<result column="EXPERT_LONGITUDE" property="expertLongtitude"/>
+  	</resultMap>
+  		
+	<resultMap type="Attachment" id="Attachment">
+		<id column="ATTACH_NUM" property="attachNum"/>
+  		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
+  		<result column="ATTACH_NAME" property="attachName"/>
+  		<result column="ATTACH_RENAME" property="attachRename"/>
+  		<result column="ATTACH_PATH" property="attachPath"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="SERIALNUMBER" property="serialNumber"/>
+  		<result column="ATTACH_STATUS" property="attachStatus"/>
+	</resultMap>
+
+	<!-- 전문가번호와 회원번호로 챗룸 조회 // 없으면 []  -->
+	<select id="getExpertChatroom" resultMap="GeneralChatroomDto">
+		SELECT *
+		FROM CHATROOM
+	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
+			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
+			LEFT JOIN ATTACHMENT ON (MEMBER.USER_NUM = SERIALNUMBER)
+		WHERE CHATROOM.EXPERT_NUM = #{expertNum} AND CHATROOM.USER_NUM = #{userNum} AND CHATROOM_STATUS = 'Y'
+	</select>
+	
+	<!-- 새로운 챗룸 생성(Chatroom) -->
+	<insert id="createChatroom">
+		INSERT INTO CHATROOM VALUES (SEQ_CHATROOM.NEXTVAL, DEFAULT, #{expertNum}, #{userNum}, DEFAULT)
+	</insert>
+	
+	<!-- 메세지 보내기(ChatMessage) -->
+	<insert id="insertMessage">
+		INSERT INTO CHATMESSAGE VALUES (SEQ_CHAT.NEXTVAL, #{chatContent}, DEFAULT, DEFAULT, #{chatroomId}, #{senderNum}, #{receiverNum})	
+	</insert>
+	
+	<!-- 일반유저인 내가 포함된(userNum) Chatroom 리스트 반환 -->
+	<select id="selectRoomList" resultMap="GeneralChatroomDto">
+		SELECT *
+		FROM CHATROOM
+	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
+			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
+			LEFT JOIN ATTACHMENT ON (MEMBER.USER_NUM = SERIALNUMBER)
+		WHERE CHATROOM.USER_NUM = #{userNum} AND CHATROOM_STATUS = 'Y'
+	</select>
+	
+	<!-- 내가 보낸게 아닌 메세지 읽음처리 -->
+	<update id="updateIsRead">
+      UPDATE CHATMESSAGE 
+      SET IS_READ = 'Y'
+      WHERE CHATROOM_ID = #{chatroomId}
+      AND RECEIVER_NUM = #{userNum}
+   </update>
+
+	<!-- 채팅룸("chatroomId")의 메세지 리스트 조회-->
+	<select id="selectMessageList" resultMap="ChatMessage">
+		SELECT CHAT_ID, CHAT_CONTENT, TO_CHAR(SEND_TIME, 'YYYY.MM.DD HH24:MI') SEND_TIME, IS_READ, CHATROOM_ID, SENDER_NUM, RECEIVER_NUM
+		FROM CHATMESSAGE
+		WHERE CHATROOM_ID  = #{chatroomId}
+		ORDER BY CHAT_ID
+	</select>
+	
+	<!-- 채팅방 아이디로 가장 최신 메세지 조회 -->
+	<select id="selectLastMessage" resultMap="ChatMessage">
+		SELECT * FROM
+		(
+		SELECT CHAT_ID, CHAT_CONTENT, TO_CHAR(SEND_TIME, 'YYYY.MM.DD HH24:MI') SEND_TIME, IS_READ, CHATROOM_ID, SENDER_NUM, RECEIVER_NUM
+		FROM CHATMESSAGE
+		WHERE CHATROOM_ID  = #{chatroomId}
+		ORDER BY CHAT_ID
+		)
+		WHERE ROWNUM = 1
+	</select>
+	
+	 <!-- 안써요 -->
+	<select id="selectLastMessageContent" resultType="String">
+		SELECT CHAT_CONTENT FROM
+			(
+			SELECT * FROM CHATMESSAGE
+			WHERE CHATROOM_ID = #{chatroomId}
+			ORDER BY CHAT_ID
+			)
+		WHERE ROWNUM = 1
+	</select>
+	
+	<select id="getNotReadCount" resultType="int">
+		SELECT COUNT (*)
+		FROM CHAT
+		WHERE CHATROOM_ID = #{chatroomId} AND IS_READ = 'N'
+	</select>
+	
+	<select id="getIsPaid" resultType="int">
+		SELECT COUNT (*)
+		FROM PAYMENT WHERE SERIALNUMBER = #{chatroomId}
+	</select>
+	
+	<!-- 전문가회원인 내가 포함된(userNum) chatRoomList 반환 -->
+	<select id="selectExpertRoomList" resultMap="ExpertsChatroomDto">
+		SELECT *
+		FROM CHATROOM
+	        LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
+		WHERE CHATROOM.EXPERT_NUM = #{userNum} AND CHATROOM_STATUS = 'Y'
+	</select>
+	
+	<select id="selectReservList" resultMap="ChatReserv">
+		SELECT * 
+		FROM CHATRESERV
+			JOIN CHATROOM USING (CHATROOM_ID)
+		WHERE CHATROOM_ID IN 
+			(
+			SELECT CHATROOM_ID 
+			FROM CHATROOM 
+			WHERE CHATROOM.EXPERT_NUM = #{userNum} AND CHATROOM_STATUS = 'Y'
+			)
+	</select>
+	
+	<select id="selectMyLatestChatId" resultType="int">
+		SELECT * FROM 
+			(
+			SELECT CHAT_ID FROM CHATMESSAGE 
+			WHERE SENDER_NUM = #{loginUserNum}
+			ORDER BY CHAT_ID DESC
+			)
+		WHERE ROWNUM = 1
+
+		UNION ALL 
+
+		SELECT 0
+		FROM DUAL
+		WHERE NOT EXISTS (
+			SELECT * FROM 
+				(
+				SELECT CHAT_ID FROM CHATMESSAGE 
+				WHERE SENDER_NUM = #{loginUserNum}
+				ORDER BY CHAT_ID DESC
+				)
+			WHERE ROWNUM = 1
+		)
+	</select>
+		
+	<select id="selectOtherLatestChatId" resultType="int">
+		SELECT * FROM 
+			(
+			SELECT CHAT_ID FROM CHATMESSAGE 
+			WHERE RECEIVER_NUM = #{loginUserNum}
+			ORDER BY CHAT_ID DESC
+			)
+		WHERE ROWNUM = 1
+
+		UNION ALL 
+
+		SELECT 0
+		FROM DUAL
+		WHERE NOT EXISTS (
+			SELECT * FROM 
+				(
+				SELECT CHAT_ID FROM CHATMESSAGE 
+				WHERE RECEIVER_NUM = #{loginUserNum}
+				ORDER BY CHAT_ID DESC
+				)
+			WHERE ROWNUM = 1
+		)
+	</select>
+	
+	<!-- 내가 일반유저면 상대는 >>전문가<< -->
+	<select id="selectGeneralRecentChatroom" resultMap="GeneralChatroomDto">
+		SELECT * FROM CHATROOM 
+	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
+			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
+			LEFT JOIN ATTACHMENT ON (MEMBER.USER_NUM = SERIALNUMBER)
+		WHERE CHATROOM_ID =
+			(
+			SELECT CHATROOM_ID FROM CHATMESSAGE WHERE CHAT_ID = #{chatId}
+			)
+	</select>
+	
+	<!-- 내가 전문가면 상대는 >>GENERAL<< -->
+	<select id="selectExpertRecentChatroom" resultMap="ExpertsChatroomDto">
+		SELECT * FROM CHATROOM 
+			LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
+		WHERE CHATROOM_ID =
+			(
+			SELECT CHATROOM_ID FROM CHATMESSAGE WHERE CHAT_ID = #{chatId}
+			)
+	</select>
+	
+	<!-- 내가 일반유저면 상대는 >>전문가<< -->
+	<select id="selectGeneralChatroomByChatroomId" resultMap="GeneralChatroomDto">
+		SELECT * FROM CHATROOM 
+	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
+			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
+			LEFT JOIN ATTACHMENT ON (MEMBER.USER_NUM = SERIALNUMBER)
+		WHERE CHATROOM_ID = #{chatroomId}
+	</select>
+
+	<!-- 내가 전문가면 상대는 >>GENERAL<< -->
+	<select id="selectExpertChatroomByChatroomId" resultMap="ExpertsChatroomDto">
+		SELECT * FROM CHATROOM 
+			LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
+		WHERE CHATROOM_ID = #{chatroomId}
+	</select>
+	
+	<select id="selectCnum" resultType="int">
+		SELECT USER_CNUMBER FROM MEMBER WHERE USER_NUM = #{loginUserNum}
+	</select>
+	
+	
+
+</mapper>
