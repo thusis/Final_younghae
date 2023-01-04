@@ -69,7 +69,7 @@ public class SupplementController {
 	
 	@RequestMapping("selectCategory.su")
 	public ModelAndView selectCategory(@RequestParam("cateName") String category, @RequestParam("cateNum") int cateNum,
-								@RequestParam("page") Integer page, ModelAndView mv, HttpSession session) {
+								@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpSession session) {
 		int currentPage = 1;
 		
 		if (page != null) {
@@ -143,6 +143,7 @@ public class SupplementController {
 		
 		if(product != null) {
 			model.addAttribute("pi", pi);
+			model.addAttribute("cateNum", cateNum);
 			model.addAttribute("cateName", cateName);
 			model.addAttribute("product", product);
 			
@@ -434,6 +435,11 @@ public class SupplementController {
 		}
 		
 		return result;
+	}
+	
+	@RequestMapping("searchPage.su")
+	public String searchPage() {
+		return "search_category";
 	}
 	
 //	=============================================== 관리자 ==========================================================================

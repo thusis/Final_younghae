@@ -137,10 +137,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
 
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
     <div class="container">
@@ -711,6 +707,7 @@
 			    	            	var check = '';
 			    	            	
 			    	            	if($(this).attr('class') != "bi bi-hand-thumbs-up-fill"){
+			    	            		console.log($(this).parent);
 				    	            	$(this).attr('class', 'bi bi-hand-thumbs-up-fill');
 			    	            		check = 'R';
 			    	            		console.log("눌렀담");
@@ -723,17 +720,17 @@
 // 			    	            	console.log(this);
 			    	            	// rvNum
 			    	            	console.log($(this).parent().children()[7].value);
-			    	            	$.ajax({
-			    	            		url: '${contextPath}/reco.su',
-			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
-			    	            				check: check},
-			    	            		success:(data)=>{
+// 			    	            	$.ajax({
+// 			    	            		url: '${contextPath}/reco.su',
+// 			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
+// 			    	            				check: check},
+// 			    	            		success:(data)=>{
 			    	            			
-			    	            		},
-			    	            		error:(data)=>{
-			    	            			console.log(data);
-			    	            		}
-			    	            	});
+// 			    	            		},
+// 			    	            		error:(data)=>{
+// 			    	            			console.log(data);
+// 			    	            		}
+// 			    	            	});
 			    	            });
 			                }
 			            }

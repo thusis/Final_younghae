@@ -72,11 +72,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
@@ -195,7 +190,7 @@
 							<c:url var="goNext" value="${ loc }">
 								<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
 							</c:url>
-							<c:if test="${ pi.currentPage <= 1 }">
+							<c:if test="${ pi.currentPage < pi.endPage }">
 							<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
 							</c:if>
 						</div>

@@ -72,10 +72,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
 
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
@@ -204,8 +200,8 @@
 								<c:param name="cateNum" value="${ cateNum }"/>
 								<c:param name="cateName" value="${ cateName }"/>
 							</c:url>
-							<c:if test="${ pi.currentPage <= 1 }">
-							<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+							<c:if test="${ pi.currentPage < pi.endPage }">
+								<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
 							</c:if>
 						</div>
 					</div>
