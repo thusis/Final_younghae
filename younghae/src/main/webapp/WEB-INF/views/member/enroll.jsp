@@ -191,7 +191,7 @@
                                     </div>
                                     <div class="input-field" id="myEmailChk2">
                                         <input type="text" id="myEmailChk" placeholder="인증번호를 입력해주세요" required>
-                                        <button type="button" id="checkCodeBtn" style="border: 0; width: 50px; background-color:white;"  disabled>확인</button>
+                                        <button type="button" id="checkCodeBtn" style="border: 0; width: 50px; background-color:white;">확인</button>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -306,7 +306,7 @@
                                     </div>
                                     <div class="input-field" id="myEmailChkExport2">
                                         <input type="text" id="myEmailChkExport" placeholder="인증번호를 입력해주세요" required>
-                                        <button type="button" id="checkCodeBtnExport" style="border: 0; width: 50px; background-color:white;"  disabled>확인</button>
+                                        <button type="button" id="checkCodeBtnExport" style="border: 0; width: 50px; background-color:white;">확인</button>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -563,6 +563,7 @@
                 const email = document.getElementById('myEmail').value;
                 console.log(email);
                 const checkEmail = document.getElementById('myEmailChk');
+                const checkCodeBtn = document.getElementById('checkCodeBtn');
 
                 $.ajax({
                     type: 'get',
@@ -578,6 +579,7 @@
                         document.getElementById('checkCodeBtn').style.color = 'black';
                         document.getElementById('checkEmail').style.display = '';
                         document.getElementById('checkCodeBtn').style.display = '';
+                        checkCodeBtn.disabled = false;
                     },
                     error: (data) => {
                         console.log(data);
@@ -837,6 +839,7 @@
             document.getElementById('mail-Check-Btn-Export').addEventListener('click', function() {
                 const emailExport = document.getElementById('myEmailExport').value;
                 const checkEmailExport = document.getElementById('myEmailChkExport');
+                const checkCodeBtnExport = document.getElementById('checkCodeBtnExport');
 
                 $.ajax({
                     type: 'get',
@@ -852,6 +855,7 @@
                         document.getElementById('checkCodeBtnExport').style.color = 'black';
                         document.getElementById('checkEmailExport').style.display = '';
                         document.getElementById('checkCodeBtnExport').style.display = '';
+                        checkCodeBtnExport.disabled = false;
                     },
                     error: (data) => {
                         console.log(data);

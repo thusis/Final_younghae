@@ -76,6 +76,10 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach var="i" items="${ BoardList }">
+                                        <div class="title">
+                                        	<input type="hidden" name="boardNum" value="${ i.boardNum }">
+	                   						<input type="hidden" name="boardUserNum" value="${ loginUser.userNum }">
+                                        </div>
                                             <tr>
                                                 <td>${ i.boardNum }</td>
                                                 <c:if test="${ i.boardType eq 1 }">
@@ -99,6 +103,7 @@
                                                 <td>${ i.boardView }</td>
                                             </tr>
                                         </c:forEach>
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -145,6 +150,14 @@
                 info: false
             });
         });
+ 	   
+ 	  $('.title').on('click', function(){
+//			console.log($(this).children('input')[1].value);
+		const boardNum = $(this).children('input')[0].value;
+		const writer = $(this).children('input')[1].value;
+		
+		location.href='${contextPath}/boardView.bo?boardNum=' + boardNum + '&writer=' + writer + '&page=' + 1;
+	});
     </script>
 </body>
 

@@ -33,7 +33,26 @@
             position: relative;
             overflow: hidden;
         }
+        
+        h1, h2, h3, h4, h5{
+         font-family: 'IBM Plex Sans KR', sans-serif;
+      }
+      .contact a {
+         font-family: 'IBM Plex Sans KR', sans-serif;
+         font-size: 18px;
+         text-decoration: none;
+         text-transform: uppercase;
+         background: #18e06f;
+         display: inline-block;
+         padding: 15px 30px;
+         border-radius: 5px;
+         font-weight: 500;
+         color: #fff;
+         margin-top: 20px;
+      }
+        
     </style>
+     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 </head>
 
 <body>
@@ -52,11 +71,12 @@
                     <hr style="width: 50vw; background-color: #24E082;">
                 </div>
             </div>
-            <div class="row">
-            	<c:if test="${ myWishList ne '' }">
+            <div class="row justify-content-center">
+            	<c:if test="${ myWishList.size() !=0 }">
                 <c:forEach items="${myWishList}" var="i">
                     <div class="col-lg-2 col-md-1 col-sm-1">
                         <div class="product__item">
+                        <input type="hidden" name="boardNum" value="${ i.proNum }">
                             <div class="product__item__pic set-bg">
                                 <img src="${i.proImage }" style="margin-top: 30px;">
                             </div>
@@ -71,9 +91,17 @@
                     </div>
                 </c:forEach>
                 </c:if>
-                <c:if test="${ myWishList eq '' }">
-                	찜하신것이없습니다.
+                <section class="contact spad">
+                <c:if test="${ myWishList.size() ==0 }">
+                	<div class="section-title" style="padding: 5rem 5rem 5rem 5rem; border:0.5rem solid #24E082;">
+                   <h2> 현재 찜하신 물품이 없습니다. </h2>
+                   <a href="${contextPath}/shoppingMain.sh">
+					찜하러가기
+                   <img src="resources/img/logo_pill_white.svg" alt="흰로고">
+                   </a>
+               </div>
                 </c:if>
+                </section>
             </div>
             <c:if test="${ myWishList.size() !=0 }">
                 <div class="col-lg-12 text-center" style="margin-top: 1%;">
@@ -93,7 +121,7 @@
                <c:url var="goNext" value="${ loc }">
                   <c:param name="page" value="${ pi.currentPage+1 }"></c:param>
                </c:url>
-               <c:if test="${ pi.currentPage <= 1 }">
+               <c:if test="${ pi.currentPage < pi.endPage }">
                <a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
                </c:if>
             </div>
@@ -101,6 +129,17 @@
          </c:if>
          </div>
     </section>
+    <script>
+    window.onload=()=>{
+    	const dives = document.getElementsByClassName('product__item');
+		for(const div of dives){
+			div.addEventListener('click',function(){
+				const proNum = $(this).children('input')[0].value;
+				location.href='${contextPath}/supplementDetail.sh?proNum=' + proNum;
+			});
+		}
+    }
+    </script>
 </body>
 
 </html>

@@ -117,6 +117,7 @@ where c.user_num = #{id}
 select board_title, ATTACH_NAME, b.board_num 
 from clip c join board b on c.board_num = b.board_num join attachment on serialnumber = b.board_num
 where c.user_num = #{id}
+order by b.board_num desc
    </select>
    
    <resultMap type="ScrapDto" id="Scrap">

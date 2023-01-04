@@ -1,4 +1,4 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -26,9 +26,6 @@
             height: 100vh;
             background: linear-gradient(to top, #c9c9ff 50%, #9090fa 90%) no-repeat
         } */
-        .container {
-            margin: 50px auto
-        }
 
         .panel-heading {
             text-align: center;
@@ -155,7 +152,7 @@
             <li><a href="#">정보수정</a></li>
         </ul>
     </div>
-    <div class="container">
+    <div class="container" style="margin-top:30px;">
         <div class="row">
             <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3 ">
                 <div class="panel" style="border: 1px solid rgb(122, 122, 122);">
@@ -193,7 +190,7 @@
                                 </div>
                                 <div class="form-group py-2">
                                     <div>닉네임*</div>
-                                    <div class="input-field" id="myNickName2">
+                                    <div class="input-field" id="myNickName2" >
                                         <input type="text" id="myNickName" name="userNickname" value="${ loginUser.userNickname }" required>
                                     </div>
                                 </div>
@@ -249,9 +246,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>전화번호</div>
+                                    <div>전화번호*</div>
                                     <div class="input-field">
-                                        <input type="text" id="myPhone" name="userPhone" value="${loginUser.userPhone }">
+                                        <input type="text" id="myPhone" name="userPhone" value="${loginUser.userPhone }" required>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -448,8 +445,9 @@
             });
 
             // 닉네임 중복 확인
-            document.getElementById('myNickName').addEventListener('change', function() {
+            document.getElementById('myNickName').addEventListener('keyup', function() {
                 const checkNickName = document.getElementById('myNickName');
+                const checkNickName2 = document.getElementById('myNickName2');
                 const regExp4 = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣0-9#]{1,}$/;
 
                 if (this.value.trim() == '') {
@@ -464,16 +462,20 @@
                             console.log(data);
                             if (data.trim() == 'yes' && regExp4.test(this.value)) {
                                 checkNickName.style.backgroundColor = '#24E082';
+                                checkNickName2.style.backgroundColor = '#24E082';
                                 isNickName = true;
                             } else if (data.trim() == 'yes' && !regExp4.test(this.value)) {
                                 checkNickName.style.backgroundColor = '#FFCECE';
+                                checkNickName2.style.backgroundColor = '#FFCECE';
                                 isNickName = false;
                             } else if (data.trim() == 'no') {
                                 if (this.value == '${ loginUser.userNickname }') {
                                     checkNickName.style.backgroundColor = '#24E082';
+                                    checkNickName2.style.backgroundColor = '#24E082';
                                     isNickName = true;
                                 } else {
                                     checkNickName.style.backgroundColor = '#FFCECE';
+                                    checkNickName2.style.backgroundColor = '#FFCECE';
                                     isNickName = false;
                                 }
                             }
@@ -533,8 +535,7 @@
             });
             // 회원가입 버튼 활성화
             document.getElementById('editInfoBtn').addEventListener('click', function() {
-
-                var radios = document.querySelector('input[type=radio][name=gender]:checked');
+            	document.getElementById('insertForm').submit();
                 var Address = document.getElementById('myAddress1').value;
                 var Address1 = document.getElementById('myAddress2').value;
                 var Address2 = document.getElementById('myAddress3').value;

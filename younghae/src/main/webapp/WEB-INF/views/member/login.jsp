@@ -132,7 +132,6 @@
     <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
     <div style="margin-top:50px;"></div>
     <div class="container">
-        <div class="row">
             <div class="offset-md-2 col-lg-5 col-md-7 offset-lg-4 offset-md-3 ">
                 <div class="panel" style="border: 1px solid rgb(122, 122, 122);">
                     <div class="panel-heading">
@@ -170,7 +169,6 @@
                 </div>
             </div>
         </div>
-    </div>
     <script>
 
     </script>
