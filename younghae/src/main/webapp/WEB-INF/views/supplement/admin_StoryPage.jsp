@@ -301,8 +301,9 @@
 					const userNum = $(this).parents().children('.blog__item__pic').children()[1].value;
 					
 					console.log(boardNum);
-					
-					location.href = '${	contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
+
+					var page = "${ pi.currentPage }";
+					location.href = '${	contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+page;
 				});
             }
         </script>

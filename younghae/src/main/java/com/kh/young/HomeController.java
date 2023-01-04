@@ -16,7 +16,7 @@ public class HomeController {
 	
 	   @RequestMapping(value = "/", method = RequestMethod.GET)
 	   public String home2() {
-	      return "/common/topmenubar";
+	      return "/supplement/admin_StoryPage";
 	   }
 	   
 	   @RequestMapping(value = "home.do", method = RequestMethod.GET)

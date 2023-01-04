@@ -67,7 +67,7 @@
                       <c:if test="${ !empty loginUser && loginUser.userCNumber ne '3'}">
                           <ul>
                               <li><a href="#" onclick="location.href='${contextPath}/cartView.sh'">
-                                      <p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i class="fa fa-shopping-bag"></i><span>1</span>
+                                      <p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i class="fa fa-shopping-bag"></i>
                                   </a></li>
                               <li><a href="#" onclick="location.href='${contextPath}/myPage.my'">
                                       <p style="font-size: 12px; display: inline;">마이페이지</p>&nbsp;&nbsp;<i class="bi bi-caret-down-fill"></i>
@@ -111,11 +111,11 @@
               <div class="col-lg">
                   <nav class="yh_header__menu">
                       <ul>
-                          <li><a href="#">영양제</a>
-                              <ul class="yh_header__menu__dropdown">
-                                  <li><a href="${contextPath}/category.su">영양성분조회</a></li>
-                                  <li><a href="${contextPath}/searchPage.su">영양제 검색</a></li>
-                              </ul>
+                          <li><a href="${contextPath}/category.su">영양제</a>
+<!--                               <ul class="yh_header__menu__dropdown"> -->
+<%--                                   <li><a href="${contextPath}/category.su">영양성분조회</a></li> --%>
+<%--                                   <li><a href="${contextPath}/searchPage.su">영양제 검색</a></li> --%>
+<!--                               </ul> -->
                           </li>
                           <li><a href="${contextPath}/shoppingMain.sh">쇼핑</a></li>
                           <li><a href="${contextPath}/home.qa">Q&A</a>
@@ -125,8 +125,8 @@
                                   <li><a href="${contextPath}/expertfind.qa">전문가 찾기</a></li>
                               </ul>
                           </li>
-                          <li><a href="${contextPath}/storyList.st">건강콘텐츠</a></li>
-                          <li><a href="${contextPath}/boardList.bo">자유게시판</a></li>
+                          <li><a href="${contextPath}/storyList.st">영해스토리</a></li>
+                          <li><a href="${contextPath}/boardList.bo">건강이야기</a></li>
                           <li><a href="${contextPath}/event.ev">이벤트</a></li>
                       </ul>
                   </nav>
