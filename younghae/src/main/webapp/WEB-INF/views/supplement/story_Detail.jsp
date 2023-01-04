@@ -31,10 +31,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
 
    	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 
@@ -57,6 +53,9 @@
                 <div class="text-center" id="column">
                 	<h3>${ board.boardTitle }</h3>
                 	<br><br>
+<!--                 	<div> -->
+<!--                 		일반 회원 시 컬럼 내부에 북마크 취소 -->
+<!--                 	</div> -->
                     <!-- <textarea name="storyContent" id="storyContent" cols="145"
                         rows="10">내용이 어쩌구 저쩌구 그렇습니다 그래서욥</textarea> -->
 <!--                     <img src="resources/img/storyContent.jpg" style="width: 650px;" alt=""> -->

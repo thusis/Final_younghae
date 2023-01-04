@@ -68,6 +68,14 @@
             font-weight: 800;
             color : #FD9F28;
         }
+        
+        .bi.bi-bookmark-plus-fill, .bi.bi-bookmark-plus{
+        	cursor: pointer;
+        }
+        
+        .blog__item{
+        	cursor: pointer;
+        }
     </style>
 </head>
 

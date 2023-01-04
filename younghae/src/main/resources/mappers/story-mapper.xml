@@ -84,6 +84,7 @@
 		from board 
              left join attachment on (board.board_num = attachment.SERIALNUMBER)
         WHERE board.BOARD_type=3 and attachment.board_type=3 and board_status = 'Y'
+        order by board.board_num desc
 	</select>
 	
 	<!-- 컬럼 디테일 가져오기 -->

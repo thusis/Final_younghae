@@ -133,6 +133,10 @@
 	    overflow: hidden;
 	    pointer-events: none;
 	  }
+	  
+	  .btn.btn-secondary.trend{
+	  	cursor: inherit;
+	  }
     </style>
 </head>
 
@@ -647,7 +651,7 @@
              		        	}
              	            });
 				            
-	        			}
+	        			}	
 		        		
 	        			var login = "${ loginUser }";
 	            		var loginNum = "${ loginUser.userNum }";
