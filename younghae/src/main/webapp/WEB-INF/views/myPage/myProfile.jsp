@@ -29,9 +29,6 @@
             height: 100vh;
             background: linear-gradient(to top, #c9c9ff 50%, #9090fa 90%) no-repeat
         } */
-        .container {
-            margin: 50px auto
-        }
 
         .panel-heading {
             text-align: center;

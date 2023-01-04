@@ -42,6 +42,9 @@
 		font-weight: 800;
 		color: #FD9F28;
 	}
+	.product__details__quantity_1 :hover{
+		cursor: pointer;
+	}
 </style>
 </head>
 
@@ -264,7 +267,7 @@
 														<p style="color: black; font-size: 130%;">${ item.proGrade }</p>
 													</div>
 													<div class="text-right font-weight-bold pr-2% pt--3 mb-1 mt-1">
-														${ item.proPrice }</div>
+														${ item.proPrice }&nbsp;원&nbsp;&nbsp;</div>
 												</div>
 												<br>
 												<br>

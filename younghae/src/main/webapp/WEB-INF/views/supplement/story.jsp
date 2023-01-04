@@ -157,7 +157,7 @@
 	                            <div class="blog__item__text">
 	                                <ul>
 	                                    <li><i class="fa fa-calendar-o"></i>${ story.boardModifyDate }</li>
-	                                    <li><i class="fa fa-comment-o"></i>${ story.boardView }</li>
+	                                    <li><i class="fa-solid fa-eye m-2"></i>${ story.boardView }</li>
 	                                    <c:if test="${ loginUser ne null }">
 				                            <div class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
 			                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
