@@ -139,10 +139,6 @@
 				</ul>
 			</div>
 
-
-			${ infoList }
-			<br><br>
-			${ basicAddress }
 			<div class="checkout__form mt-5">
 				<h3 class="mb-5">주문/결제</h3>
 				<form id="paymentForm" action="${ contextPath }/successPay.sh">
@@ -227,13 +223,7 @@
 
 							<c:forEach items="${ infoList }" var="i">
 								<div class="container mb-4 supplementDiv"	style="border: 1px solid #e5e3e3; border-radius: 0.5em;">
-									<input type="text" name="proNumList" value="${ i.cart.supplement.proNum }">
-<%-- 									<c:if test="${ empty i.cart.cartQuantity }"> --%>
-<!-- 										<input type="hidden" name="quantityList" value="0"> -->
-<%-- 									</c:if> --%>
-<%-- 									<c:if test="${ !empty i.cart.cartQuantity }"> --%>
-										<input type="hidden" name="quantityList" value="${ i.cart.cartQuantity }">
-<%-- 									</c:if> --%>
+									<input type="hidden" name="quantityList" value="${ i.cart.cartQuantity }">
 									<div class="row" style="height: 2rem; background-color: #DCFFE9;; border-top-left-radius: 0.5em; border-top-right-radius: 0.5em; padding-top:0.3rem;">
 										<div class="col-6">
 											<span> ${ i.cart.supplement.proCompany } </span>
@@ -302,7 +292,6 @@
 							</select>
 							<input type="hidden" name="couNum">
 							<!-- /쿠폰 -->
-							${ loginUser }
 							<!-- 포인트 -->
 							<div class="row" style="margin-top: 5rem;">
 								<div class="col">
@@ -375,7 +364,7 @@
 									</div>
 								</div>
 								<button type="button" class="site-btn" onclick="requestPay()">
-									<span>71,100</span>원 결제하기
+									<span>0</span>원 결제하기
 								</button>
 							</div>
 						</div>

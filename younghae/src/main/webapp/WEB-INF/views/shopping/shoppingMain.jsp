@@ -248,29 +248,47 @@
     <!-- Product Section Begin -->
     <section class="product spad" style="margin-top: -5%;">
         <div class="container" >
-            <div class="row row-cols-1">
-                <div class="hero__search" style="float: left; position: relative; left: 25%;">
-                    <form action="#" style="width: 50%;">
-                        <div class="input-group mt-3">
-                            <input type="text" class="form-control" id="bn_navbar-search-input" placeholder="궁금한 영양 성분 검색" aria-label="search" aria-describedby="search" style="border-radius: 20px; padding-left: 5%">
-                            <button class="btn bn_btn_search"><i class="bi bi-search"></i></button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="row justify-content-center" style="margin: -2%; vertical-align: middle;">
-                <div>
-					<button type="button" class="btn btn-secondary" style="background-color: white; color: rgb(112, 109, 109); border: none; font-weight: bold; font-size: 18px;">실시간 트렌드</button>
-                    <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">레시틴</button> &nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">밀크씨슬</button> &nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">종합비타민</button> &nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">비타민D</button> &nbsp;&nbsp;&nbsp;
-                    <button type="button" class="btn btn-secondary trend" style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">보충제</button>
-                </div>
-            </div>
-            <br><br><br><br>
-
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="section" style="padding-left: 25%;">
+							<input type="text" class="form-control"
+								id="searchInput" placeholder="궁금한 영양 성분 검색"
+								aria-label="search" aria-describedby="search"
+								style="width: 70%; border-radius: 30px;">
+							<button class="btn"
+								style="margin-left: 63%; transform: translatey(-95%);">
+								<i class="bi bi-search"></i>
+							</button>
+							<div class="row justify-content-center"
+								style="margin: -3%; margin-left: -38%;">
+								<div>
+									<button type="button" class="btn btn-secondary"
+										style="background-color: white; color: rgb(112, 109, 109); border: none; font-weight: bold; font-size: 18px;">실시간
+										트렌드</button>
+									<button type="button" class="btn btn-secondary trend"
+										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">레시틴</button>
+									&nbsp;&nbsp;&nbsp;
+									<button type="button" class="btn btn-secondary trend"
+										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">밀크씨슬</button>
+									&nbsp;&nbsp;&nbsp;
+									<button type="button" class="btn btn-secondary trend"
+										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">종합비타민</button>
+									&nbsp;&nbsp;&nbsp;
+									<button type="button" class="btn btn-secondary trend"
+										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">비타민D</button>
+									&nbsp;&nbsp;&nbsp;
+									<button type="button" class="btn btn-secondary trend"
+										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">보충제</button>
+								</div>
+							</div>
+						</div>					
+					</div>
+				</div>
+			</div><br><br><br><br>
+ 
 			<!-- 전체 상품 섹션-->
+			<div id="searchList">
             <div class="row">
                 <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">전체 상품</p><br><br><br>
                 <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/allView.sh'">더보기</button>
@@ -318,13 +336,13 @@
             <!-- /전체 상품 섹션-->
             
             <!-- 스테디셀러 영양제 섹션 -->
-            <div class="row">
+            <div class="row" style="margin-top:2rem;">
                 <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">베스트셀러</p>
                 <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/bestsellerView.sh'">더보기</button>
             </div>
 
 			<div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
+               	<c:forEach items="${ bestsellerList }" end="4" var="i">
 	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
 	                    <div class="product__item" style="margin-bottom: -10px; cursor: pointer;">
 	                        <div class="product__item__pic set-bg" style="margin-bottom: -40px;">
@@ -351,13 +369,13 @@
 
             <!-- 실시간트렌드 섹션 -->
             
-            <div class="row">
+            <div class="row" style="margin-top:2rem;">
                 <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">실시간 트렌드</p>
                 <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/trendView.sh'">더보기</button>
             </div>
             
 			<div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
+               	<c:forEach items="${ trendList }" end="4" var="i">
 	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
 	                    <div class="product__item" style="margin-bottom: -10px; cursor: pointer;">
 	                        <div class="product__item__pic set-bg" style="margin-bottom: -40px;">
@@ -368,7 +386,7 @@
 	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
 	                            <h5 style="height: 2rem;">${ i.proName }</h5>
 	                            <h5 style="margin-top : 1rem;" id="price"><fmt:formatNumber value="${ i.proPrice }" type="number"/>원</h5>
-	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"">${ i.proEffect }</h6>
+	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">${ i.proEffect }</h6>
 	                        </div>
 	                    </div>
                         <div>
@@ -380,7 +398,7 @@
                 </c:forEach>
             </div><br><br>
             <!-- /실시간트렌드 섹션 --> 
-
+            </div>
         </div>
     </section>
 
@@ -459,6 +477,7 @@
 			const dives = document.getElementsByClassName('product__item');
 			for(const div of dives){
 				div.addEventListener('click',function(){
+					console.log($(this).siblings().children()[0].value);
 					const proNum = $(this).siblings().children()[0].value;
 					location.href='${contextPath}/supplementDetail.sh?proNum=' + proNum;
 				});
@@ -467,21 +486,85 @@
 			const listCartBtns = document.getElementsByClassName('btn_viewCart');
 			for(const cartBtn of listCartBtns){
 				cartBtn.addEventListener('click',function(){
-    				$.ajax({
-    		    		url: '${contextPath}/insertCart.sh',
-			    		data: {userNum : ${loginUser.userNum},
-		    				proNum: $(this).siblings()[0].value,
-		    				cartQuantity : 1},
-    	    			success:(data)=>{
-    	    				if(data == 'YES'){
-    	    					alert('이미 장바구니에 있는 상품입니다');
-    	    				}else{
-	    	    				alert('상품이 장바구니에 추가되었습니다.');
-    	    				}
-    	    			}
-    				})
+					var loginUser = "${loginUser.userNum}";
+					if(loginUser == ""){
+						alert('로그인 후 이용해주세요');
+					}else{
+	    				$.ajax({
+	    		    		url: '${contextPath}/insertCart.sh',
+				    		data: {userNum : loginUser,
+			    				proNum: $(this).siblings()[0].value,
+			    				cartQuantity : 1},
+	    	    			success:(data)=>{
+	    	    				if(data == 'YES'){
+	    	    					alert('이미 장바구니에 있는 상품입니다');
+	    	    				}else{
+		    	    				alert('상품이 장바구니에 추가되었습니다.');
+	    	    				}
+	    	    			}
+	    				})
+					}
 				});
 			}
+			
+	        $('#searchInput').on('keyup', ()=>{
+				console.log($('#searchInput').val());
+				$.ajax({
+					url:'${ contextPath }/searchCategory.sh',
+					data: {search:$('#searchInput').val()},
+					success:(data)=>{
+						console.log(data);
+						
+						const div = document.getElementById('searchList');
+						div.innerHTML = '';
+						const row = document.createElement("div");
+						row.setAttribute('class', 'row');
+						row.setAttribute('style', 'margin-bottom:5rem;');
+						row.innerHTML = '<p class="col-6" style="color: #24E082; font-weight: bold; font-size: 30px;">검색 결과</p>'+
+ 						                '<button id="beforeBtn" class="col-6 text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none; text-align:right;">이전페이지</button>';
+						div.append(row);
+				        document.getElementById('beforeBtn').addEventListener('click',function(){
+				        	location.href = '${contextPath}/shoppingMain.sh';
+				        });
+						
+						for(const c of data){
+							const content = document.createElement("div");
+							content.setAttribute('class', 'col-lg-3 col-md-4 col-sm-6');
+							content.setAttribute('style', 'width: 50px;');
+							
+							content.innerHTML = '<div class="product_search_item" style="margin-bottom: -10px; cursor: pointer;">'+
+							                        '<div class="product__item__pic set-bg" style="margin-bottom: -40px;">'+
+							                            '<img src="'+c.proImage+'"style="margin-top: 30px;">'+
+							                        '</div>'+
+							                        '<div class="product__item__text" style="text-align: left;">'+
+							                            '<span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;'+c.proGrade+'</span>'+
+							                            '<h6 style="display: inline-block;">'+c.proCompany+'</h6>'+
+							                            '<h5 style="height: 2rem;">'+c.proName+'</h5>'+
+							                            '<h5 style="margin-top : 1rem;" id="price">'+ c.formatPrice +'원</h5>'+
+							                            '<h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+c.proEffect+'</h6>'+
+							                        '</div>'+
+								                '</div>'+
+							                    '<div id="djkf">'+
+						                         	'<input type="hidden" class="proNum" value="'+c.proNum+'">'+
+						                            '<button class="btn btn_viewCart" style="margin-right:0.5rem;"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>'+
+						                            '<button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>'+
+								                '</div>';
+							row.append(content);
+							const searchDives = document.getElementsByClassName('product_search_item');
+							for(const divs of searchDives){
+								divs.addEventListener('click',function(){
+									const proNum = $(this).siblings().children()[0].value;
+									location.href='${contextPath}/supplementDetail.sh?proNum=' + proNum;
+								});
+							}
+						}
+					},
+					error: (data)=>{
+						console.log(data);
+					}
+				});
+			});
+	        
 		}
 	</script> 
 

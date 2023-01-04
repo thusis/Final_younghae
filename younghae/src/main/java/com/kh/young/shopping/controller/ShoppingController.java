@@ -27,6 +27,7 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
@@ -45,8 +46,12 @@ public class ShoppingController {
 	public String shoppingMain(Model model) {
 		
 		ArrayList<Supplement> list = shService.selectSupplementList();
+		ArrayList<Supplement> trendList = shService.selectTrendList();
+		ArrayList<Supplement> bestsellerList = shService.selectBestsellerList();
 		
 		model.addAttribute("supplementList", list);
+		model.addAttribute("bestsellerList", bestsellerList);
+		model.addAttribute("trendList", trendList);
 		
 //		Member mem = shService.selectMember(1);
 //		model.addAttribute("loginUser", mem);
@@ -143,8 +148,10 @@ public class ShoppingController {
             getPayInfoDTO.setProNum(proNum);
             getPayInfoDTO.setUserNum(m.getUserNum());
             System.out.println(getPayInfoDTO);
+            
             PaymentDTO paymentList = shService.selectPayList(getPayInfoDTO);
             System.out.println(paymentList);
+            
             if(quantity[i] != null) {
             	paymentList.getCart().setCartQuantity(Integer.parseInt(quantity[i]));
             	totalPrice += (paymentList.getCart().getSupplement().getProPrice() * Integer.parseInt(quantity[i]));
@@ -305,7 +312,9 @@ public class ShoppingController {
 	
 	@RequestMapping("selectCartDetail.sh")
 	public void selectCartDetail(@RequestParam("proNum") int proNum, HttpServletResponse response) {
+		System.out.println(proNum);
 		Supplement cartDetail = shService.selectDetail(proNum);
+		System.out.println(cartDetail);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		
@@ -411,4 +420,27 @@ public class ShoppingController {
 		
 		return "successPay";
 	}
+	
+	@RequestMapping("searchCategory.sh")
+	public void searchCategory(@RequestParam("search") String search, HttpServletResponse response) {
+		System.out.println(search);
+		ArrayList<Supplement> list = shService.searchList(search);
+		
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		for(int i = 0; i < list.size(); i++) {
+			String price = formatter.format(list.get(i).getProPrice());
+			list.get(i).setFormatPrice(price);
+		}
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		// 시간 형식 지정해주기 
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}	
 }

@@ -105,72 +105,86 @@
 								</div>
 							</div>
 							<hr><br>
-
+							
 							<!-- 장바구니 상품 -->
-							<c:forEach items="${cartViewList}" var="c">
-							<div class="row" style="margin-bottom: 1.5rem;">
-								<div class="col-lg-1" style="margin-right: -1rem; margin-top:-5px;">
-									<input type="checkbox" name="cartSelectEach" class="cartSelectEach" value=${c.proNum } onclick="selectOne();">
-								</div>
-								<div class="col-lg-11" style="margin-left: -1rem; width: 15rem;">
-									<div class="container mb-4 carts" style="border: 1px solid #e5e3e3; border-radius: 0.5em; width: 45rem;">
-										<div class="row cartHeader" style="height: 2rem;">
-											<div class="col-6">
-												<span style="font-weight: bold; color: #5B5B5B;">${ c.supplement.proCompany}</span>
-											</div>
-											<div class="col-6" style="text-align: right; color:#5B5B5B;">
-												<span>배송비 <span class="eachDeliveryPrice">2,500원</span>
-												</span>
-											</div>
-										</div>
-										<div class="row mt-3 mb-3">
-											<div class="col-auto" style="vertical-align : middle;">
-												<img style="width: 5rem; margin-top: 10px;" src="${ c.supplement.proImage }">
-											</div>
-											<div class="col" style="padding-top: 0.8rem;">
-												<div style="color: black; font-weight: bold; font-size: 15px; margin-bottom:0.5rem;">${ c.supplement.proName }</div>
-												<div style="color: black; font-weight: bold; font-size: 15px; display:inline-block; margin-bottom:0.5rem;">수량 &nbsp;&nbsp;&nbsp;</div>
-						                        <div class="product__details__quantity" style="display: inline; margin-right: 2%;">
-													<div class="btn-group" role="group" aria-label="Basic example">
-														<div class="selectInputDivs">
-<!-- 															<input type="hidden" id="cartQuantity" name="quantity" > -->
-															<select class="selectDivs" style="border-color: #24E082; border-radius: 0.3em; text-align: center; width:3rem; ">
-																<c:forEach begin="1" end="9" var="i">
-																	<c:if test="${ c.cartQuantity == i}">
-																		<option selected>${ i }</option>
-																	</c:if>
-																	<c:if test="${ c.cartQuantity != i}">
-																		<option>${ i }</option>
-																	</c:if>
-																</c:forEach>	
-																	<option value="10+">10+</option>
-																	<c:if test="${ c.cartQuantity > 9}">
-																		<option selected>${ c.cartQuantity }</option>
-																	</c:if>
-															</select>
-														</div>
-														<input type="hidden" value="${ c.proNum }">
-														<input type="hidden" name="quantity" value="${ c.cartQuantity }">
-													</div>
-						                        </div><br>
-						                        
-						                        
-												<div class = "eachPrice" style="font-size: 18px; color: gray; display:inline;">
-													${ c.supplement.proPrice }
-												</div><span style="font-size: 18px; color: gray;">원</span>
-												
-												<span style="font-weight: bold; font-size: 20px;float:right;">원</span>
-												<div class="eachTotalPrice" style="font-weight: bold; font-size: 20px;float:right; display:inline;">
-													${ c.supplement.proPrice }
+				        	<section class="contact spad">
+								<c:if test="${ empty cartViewList }">
+					               <div class="section-title" style="padding: 5rem 5rem 5rem 5rem; border:0.5rem solid #24E082; ">
+					                   <h2> 병원/약국 정보를<br> 설정하지 않은<br> 전문가회원입니다 </h2>
+					                   <a href="${contextPath}/expertfind.qa">
+					                   좀 더 안전한 영해 이용을 위해<br> 
+					                   프로필을 설정한 다른 회원을 만나보세요<br>
+					                   <img src="resources/img/logo_pill_white.svg" alt="흰로고">
+					                   </a>
+					               </div>
+								</c:if>	
+							</section>
+							<c:if test="${ !empty cartViewList }">
+								<c:forEach items="${cartViewList}" var="c">
+								<div class="row" style="margin-bottom: 1.5rem;">
+									<div class="col-lg-1" style="margin-right: -1rem; margin-top:-5px;">
+										<input type="checkbox" name="cartSelectEach" class="cartSelectEach" value=${c.proNum } onclick="selectOne();">
+									</div>
+									<div class="col-lg-11" style="margin-left: -1rem; width: 15rem;">
+										<div class="container mb-4 carts" style="border: 1px solid #e5e3e3; border-radius: 0.5em; width: 45rem;">
+											<div class="row cartHeader" style="height: 2rem;">
+												<div class="col-6">
+													<span style="font-weight: bold; color: #5B5B5B;">${ c.supplement.proCompany}</span>
 												</div>
-												<div class="cartNumListDivs">
+												<div class="col-6" style="text-align: right; color:#5B5B5B;">
+													<span>배송비 <span class="eachDeliveryPrice">2,500원</span>
+													</span>
+												</div>
+											</div>
+											<div class="row mt-3 mb-3">
+												<div class="col-auto" style="vertical-align : middle;">
+													<img style="width: 5rem; margin-top: 10px;" src="${ c.supplement.proImage }">
+												</div>
+												<div class="col" style="padding-top: 0.8rem;">
+													<div style="color: black; font-weight: bold; font-size: 15px; margin-bottom:0.5rem;">${ c.supplement.proName }</div>
+													<div style="color: black; font-weight: bold; font-size: 15px; display:inline-block; margin-bottom:0.5rem;">수량 &nbsp;&nbsp;&nbsp;</div>
+							                        <div class="product__details__quantity" style="display: inline; margin-right: 2%;">
+														<div class="btn-group" role="group" aria-label="Basic example">
+															<div class="selectInputDivs">
+	<!-- 															<input type="hidden" id="cartQuantity" name="quantity" > -->
+																<select class="selectDivs" style="border-color: #24E082; border-radius: 0.3em; text-align: center; width:3rem; ">
+																	<c:forEach begin="1" end="9" var="i">
+																		<c:if test="${ c.cartQuantity == i}">
+																			<option selected>${ i }</option>
+																		</c:if>
+																		<c:if test="${ c.cartQuantity != i}">
+																			<option>${ i }</option>
+																		</c:if>
+																	</c:forEach>	
+																		<option value="10+">10+</option>
+																		<c:if test="${ c.cartQuantity > 9}">
+																			<option selected>${ c.cartQuantity }</option>
+																		</c:if>
+																</select>
+															</div>
+															<input type="hidden" value="${ c.proNum }">
+															<input type="hidden" name="quantity" value="${ c.cartQuantity }">
+														</div>
+							                        </div><br>
+							                        
+							                        
+													<div class = "eachPrice" style="font-size: 18px; color: gray; display:inline;">
+														${ c.supplement.proPrice }
+													</div><span style="font-size: 18px; color: gray;">원</span>
+													
+													<span style="font-weight: bold; font-size: 20px;float:right;">원</span>
+													<div class="eachTotalPrice" style="font-weight: bold; font-size: 20px;float:right; display:inline;">
+														${ c.supplement.proPrice }
+													</div>
+													<div class="cartNumListDivs">
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 								</div>
-							</div>
-							</c:forEach>
+								</c:forEach>
+
 
 							<!-- /주문 상품 -->
 						
@@ -198,6 +212,7 @@
 								</button>
 							</div>
 						</div>
+						</c:if>
 					</div>
 					</div>
 				</form>

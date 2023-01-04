@@ -13,6 +13,7 @@ import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dao.ShoppingDAO;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
@@ -148,6 +149,11 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Override
 	public ArrayList<OrderListDTO> selectOrderList(String orderCode) {
 		return shDAO.selectOrderList(sqlSession, orderCode);
+	}
+	
+	@Override
+	public ArrayList<Supplement> searchList(String search) {
+		return shDAO.searchList(sqlSession, search);
 	}
 
 }
