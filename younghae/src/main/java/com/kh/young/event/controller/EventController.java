@@ -111,9 +111,7 @@ public class EventController {
 		  } else if(atCount == 30) { //5000포인트 추가
 			  point = 5000;
 			  point_amount = "+5000";
-		  } else {
-			  throw new eventException("출석 보상 조건이 충족되지 않았습니다");
-		  }
+		  } 
 		  
 		  HashMap<String, Object> pointTable = new HashMap<>();
 		  pointTable.put("point", point);
@@ -171,16 +169,20 @@ public class EventController {
 				int result = eService.insertCoupon(map);
 				
 				if(result == 1) {
-					model.addAttribute("result", 1);
-					return "eventBirthday";
+//					model.addAttribute("result", 1);
+//					return "eventBirthday";
+					return String.valueOf("1");
 				} else {
-					throw new eventException("쿠폰 발급 실패");
+//					throw new eventException("쿠폰 발급 실패");
+					return String.valueOf("2");
 				}
 			} else {
-				throw new eventException("생일자가 아닙니다");
+//				throw new eventException("생일자가 아닙니다");
+					return String.valueOf("3");
 			}
 		} else {
-			throw new eventException("이미 쿠폰을 발급 받으셨습니다.");
+//			throw new eventException("이미 쿠폰을 발급 받으셨습니다.");
+					return String.valueOf("4");
 		}
 	}
 //현재 날짜 뽑아오기	

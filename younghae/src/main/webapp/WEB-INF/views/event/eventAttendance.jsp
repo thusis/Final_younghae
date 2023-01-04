@@ -44,12 +44,68 @@
 
 	<br>
 	<br>
+	
+	<!-- 이벤트 버튼 -->
 	<div id="eventAttendanceBtn">
 		<a href="#" class="btn-3d purple"  data-bs-toggle="modal"  id="atAward">출석 보상받기</a>
 	</div>
 	
-	     <!-- modal -->
+	     <!-- 출석체크 / 1 -->
         <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                    </div>
+                    <div class="modal-body">                                     
+                        <img src="resources/img/event/sweat.png" style="width: 150px; margin-left: 160px;" ><br><br>
+                        <b style="margin-left: 80px; color:orange;" >출석이벤트는 하루에 한번만 참여 가능합니다😥</b>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 출석체크 / 2 -->
+        <div class="modal fade" id="modal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                    </div>
+                    <div class="modal-body">                                     
+                        <img src="resources/img/event/stamp.png" style="width: 150px; margin-left: 160px;" ><br><br>
+                        <b style="margin-left: 120px; color:orange;">❤ 출석체크가 완료되었습니다 ❤</b>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 출석체크 / 3 -->
+        <div class="modal fade" id="modal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                    </div>
+                    <div class="modal-body">                                     
+                        <img src="resources/img/event/sad.png" style="width: 150px; margin-left: 160px;" ><br><br>
+                        <b style="margin-left: 100px; color:#24E082;">출석체크에 실패하였습니다😥</b>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 출석보상 / 1 -->
+        <div class="modal fade" id="modal4" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -58,6 +114,24 @@
                     <div class="modal-body">                                     
                         <img src="resources/img/event/firecracker.png" style="width: 150px; margin-left: 160px;" ><br><br>
                         <b style="margin-left: 100px; color:#24E082;">알약 포인트 지급이 완료되었습니다</b>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 출석보상 / 2 -->
+        <div class="modal fade" id="modal5" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                    </div>
+                    <div class="modal-body">                                     
+                        <img src="resources/img/event/sad.png" style="width: 150px; margin-left: 160px;" ><br><br>
+                        <b style="margin-left: 100px; color:#24E082;">출석체크에 실패하였습니다</b>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -161,13 +235,14 @@
 				data : {userNum:'${loginUser.userNum}'},
 				success: (data) => {
 					if(data == 1) {
-// 						var modal1 = document.getElementById('modal1');
+// 					var modal1 = document.getElementById('modal1');
 						$('#modal1').modal('show');
 						console.log("이미 출석체크 됨");
-						
 					} else if (data == 2) {
+						$('#modal2').modal('show');
 						console.log("출석체크 완료");
 					} else if (data == 3) {
+						$('#modal3').modal('show');
 						console.log("출석체크 실패");
 					}
 				},
@@ -182,29 +257,31 @@
 			console.log("출석보상버튼");
 			$.ajax({
 				 url:'${contextPath}/attendanceEventAward.ev',
-				 data: {key : 1},
+				 data: {userNum:'${loginUser.userNum}'},
 				 success: (data)=>{
 					 
 					 console.log("출석보상요청성공")
 					 console.log(data);
-					 if(data==1){
+					 if(data == 1){
+						 $('#modal4').modal('show');
 						 console.log("포인트 지급 성공")
-						 
-					 }else{
+					 }else if(date == 0){
+						 $('#modal5').modal('show');
 						 console.log("포인트 지급 실패")
 					 }
 				 },
 				 error: (data)=>{
-					 modal.style.display = "none";
-					 console.log("출석보상요청실패")
-					 alert("조건을 충족하지 않습니다")
+					 console.log("출석보상 요청실패")
+					 alert("요청을 실패하였습니다")
 				 },
 				 complete : (data)=>{
-					 console.log("출석보상요청완료")
+					 console.log("출석보상 요청완료")
 				 }
 			});
 		});
 		
+		
+		<!-- 보상받기 버튼 효과 -->
 		$('a').click(function(event) {
 			event.preventDefault();
 		});
