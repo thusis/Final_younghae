@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="zxx">
 
@@ -164,20 +165,36 @@
             text-decoration: underline;
         }
 
-        .btn_cart{
-            border-color: rgb(0, 123, 255);
+        .btn_viewCart{
+        	background-color : white;
+        	border-radius : 0.2rem;
+            border: 1px solid rgb(0, 123, 255);
             color: rgb(0, 123, 255);
             font-size: 10px;
             width: 90px;
             height: 30px;
         }
-
+        
+        .btn_viewCart:hover{
+            border: 2px solid rgb(0, 123, 255);
+            color: rgb(0, 123, 255);
+            font-weight: bold;
+        }
+        
         .btn_comment{
-            border-color: rgb(0, 123, 255);
+        	background-color : white;
+        	border-radius : 0.2rem;
+            border: 1px solid rgb(0, 123, 255);
             color: rgb(0, 123, 255);
             font-size: 11px;
             width: 65px; 
-            height: 30px;
+            height: 30px;        
+        }
+        
+        .btn_comment:hover{
+            border: 2px solid rgb(0, 123, 255);
+            color: rgb(0, 123, 255);
+            font-weight: bold;
         }
 
         .star{
@@ -212,15 +229,15 @@
    <div class="container2">
       <div class="main-view">
          <ul>
-            <li><img src="resources/img/event/Review1.PNG" width="100%" height="300%" /></li>
-            <li><img src="resources/img/event/생일00.PNG" width="100%" height="300%" /></li>
-            <li><img src="resources/img/event/attend0.png" width="100%" height="300%"  /></li>
+            <li><a href="${contextPath }/reviewEvent.ev"><img src="resources/img/event/Review1.PNG" style="width:100%; height:350%;" /></a></li>
+            <li><a href="${contextPath }/attendanceEvent.ev"><img src="resources/img/event/attend3.png" style="width:100%; height:350%;"/></a></li>
+            <li><a href="${contextPath }/birthEvent.ev"><img src="resources/img/event/birth0.PNG" style="width:100%; height:350%;"/></a></li>
          </ul>
       </div>
    </div>
 
     <!-- Product Section Begin -->
-    <section class="product spad" style="margin-top: -10%;">
+     <section class="product spad" style="margin-top: -5%;">
         <div class="container" >
             <div class="row row-cols-1">
                 <div class="hero__search" style="float: left; position: relative; left: 25%;">
@@ -251,31 +268,26 @@
                <button class="col-lg-2" style="color: #24E082; font-weight: bold; font-size: 25px; background-color: white; border: none;" onclick="location.href='${contextPath}/trendView.sh'">실시간트렌드</button>
             </div>
 			<br><br>
-            <div class="row">
+ 			<div class="row"  style="margin-bottom: 5rem;">
                	<c:forEach items="${ bestsellerList }" var="i">
 	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
-	                    <div class="product__item">
+	                    <div class="product__item" style="margin-bottom: -10px; cursor: pointer;">
 	                        <div class="product__item__pic set-bg" style="margin-bottom: -40px;">
 	                            <img src=${ i.proImage } style="margin-top: 30px;">
-	                            <ul class="product__item__pic__hover">
-	                                <li><a href="#"><i class="fa fa-heart"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-retweet"></i></a></li>
-	                                <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-	                            </ul>
 	                        </div>
 	                        <div class="product__item__text" style="text-align: left;">
 	                            <span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ i.proGrade }</span>
 	                            <h6 style="display: inline-block;">${ i.proCompany }</h6>
 	                            <h5 style="height: 2rem;">${ i.proName }</h5>
-	                            <h5 style="margin-top : 1rem;" id="price">${ i.formatPrice }원</h5>
-	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem;">${ i.proEffect }</h6>
-	                            <div>
-	                                <button class="btn btn_cart" ><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
-	                                <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
-	                            </div>
+	                            <h5 style="margin-top : 1rem;" id="price"><fmt:formatNumber value="${ i.proPrice }" type="number"/>원</h5>
+	                            <h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;"">${ i.proEffect }</h6>
 	                        </div>
-	                        
 	                    </div>
+                        <div>
+                         	<input type="hidden" class="proNum" value="${ i.proNum }">
+                            <button class="btn btn_viewCart"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
+                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
+                        </div>
 	                </div>
                 </c:forEach>
             </div><br><br>
@@ -364,7 +376,36 @@
 
     </footer>
     
-
+   	<script>
+		window.onload =()=>{
+			const dives = document.getElementsByClassName('product__item');
+			for(const div of dives){
+				div.addEventListener('click',function(){
+					const proNum = $(this).siblings().children()[0].value;
+					location.href='${contextPath}/supplementDetail.sh?proNum=' + proNum;
+				});
+			}
+			
+			const listCartBtns = document.getElementsByClassName('btn_viewCart');
+			for(const cartBtn of listCartBtns){
+				cartBtn.addEventListener('click',function(){
+    				$.ajax({
+    		    		url: '${contextPath}/insertCart.sh',
+			    		data: {userNum : ${loginUser.userNum},
+		    				proNum: $(this).siblings()[0].value,
+		    				cartQuantity : 1},
+    	    			success:(data)=>{
+    	    				if(data == 'YES'){
+    	    					alert('이미 장바구니에 있는 상품입니다');
+    	    				}else{
+	    	    				alert('상품이 장바구니에 추가되었습니다.');
+    	    				}
+    	    			}
+    				})
+				});
+			}
+		}
+	</script>
 </body>
 
 </html>

@@ -46,11 +46,6 @@ public class ShoppingController {
 		
 		ArrayList<Supplement> list = shService.selectSupplementList();
 		
-		DecimalFormat formatter = new DecimalFormat("###,###");
-		for(int i = 0; i < list.size(); i++) {
-			String price = formatter.format(list.get(i).getProPrice());
-			list.get(i).setFormatPrice(price);
-		}
 		model.addAttribute("supplementList", list);
 		
 //		Member mem = shService.selectMember(1);
