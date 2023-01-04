@@ -30,7 +30,8 @@
                             <li><a href="#">게시판관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/adminPoint.ad'">포인트관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/AdminReview.su'">리뷰관리</a></li>
-                            <li><a href="#" onclick="location.href='${contextPath}/storyList.st'">영해 이야기 관리</a></li>
+                            <li><a href="#" onclick="location.href='${contextPath}/storyList.st'">이야기 관리</a></li>
+                            <li><a href="#" onclick="location.href='${contextPath}/AdminwriteStory.st'">이야기 작성</a></li>
                             <li><a href="#">신고관리</a></li>
                             <li><a href="#">통계분석</a></li>
                         </ul>

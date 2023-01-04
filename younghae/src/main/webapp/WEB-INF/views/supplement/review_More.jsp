@@ -28,6 +28,10 @@
 	font-weight: 800;
 	color: #FD9F28;
 }
+
+.product__details__quantity :hover{
+		cursor: pointer;
+	}
 </style>
 </head>
 
@@ -72,7 +76,7 @@
 					</div>
 					<div name="reviewNickName"
 						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="font-weight: 600;">유저 이름</p>
+						<p style="font-weight: 600;">${ r.member.userNickname }</p>
 					</div>
 					<div class="product__details__rating"
 						style="float: left; padding-top: 3.5%; padding-left: 20%;">
@@ -90,12 +94,14 @@
 					</div>
 					<div name="reviewRank"
 						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">22</p>
+						<p style="color: black; font-size: 130%;">${ r.rvRecommend }</p>
 					</div>
 					<div name="reviewImg"
 						style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-						<img src="resources/uploadFiles/${ r.image }"
-							class=".img-fluid">
+						<c:if test="${ r.image ne '없음'}">
+							<img src="resources/uploadFiles/${ r.image }"
+								class=".img-fluid">
+						</c:if>
 					</div>
 					<div name="reviewContent" style="padding-top: 9%;">${ r.rvContent }</div>
 				</div>
@@ -172,7 +178,6 @@
 							<li><a href="#">Projects</a></li>
 							<li><a href="#">Contact</a></li>
 							<li><a href="#">Innovation</a></li>
-							<li><a href="#">Testimonials</a></li>
 						</ul>
 					</div>
 				</div>
@@ -220,5 +225,18 @@
 	<!-- Footer Section End -->
 
 </body>
-
+<script>
+	window.onload=()=>{
+		const reviews = document.getElementsByClassName('product__details__quantity');
+		for(const r of reviews){
+			r.addEventListener('click', function(){
+				const rSelect = $(this).children().children();
+				console.log(rSelect);
+				
+// 				location.href = '${contextPath}/selectProduct.su?proNum='+productSelect;
+			});
+			
+		}
+	}
+</script>
 </html>
