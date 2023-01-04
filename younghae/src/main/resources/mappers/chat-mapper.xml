@@ -294,6 +294,11 @@
 	<select id="getGeneralUser" resultMap="Member">
 	SELECT * FROM MEMBER WHERE USER_NUM = #{userNum}
 	</select>
-	
 
+	<insert id="afterPayInsertChatReserv">
+		INSERT ALL
+		INTO CHATRESERV VALUES (SEQ_CHATRESERV.NEXTVAL, #{crInsert.chatroomId},SEQ_ORDER.NEXTVAL,TO_DATE(#{crInsert.reservSchedule}, 'YYYY/MM/DD HH:MI'),DEFAULT, DEFAULT,#{crInsert.reservHowLong}*10 )
+		INTO ORDERS VALUES (SEQ_ORDER.CURRVAL, #{ordInsert.orderCode}, #{orderInsert.userNum},#{orderInsert.userId},#{orderInsert.orderDate},DEFAULT,#{orderInsert.orderPayAmount},#{orderInsert.orderPayAmount},#{orderInsert.orderUserName},#{orderInsert.orderPaymethod},#{orderInsert.orderCouponPrice}, #{orderInsert.orderImpCode}, #{orderInsert.orderPhone}, 0,'없음' )
+		SELECT * FROM DUAL
+	</insert>
 </mapper>

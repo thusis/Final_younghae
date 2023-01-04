@@ -112,6 +112,10 @@ public class ChatDao {
 		return sqlSession.selectOne("chatMapper.fullMessageListCount", loginUserNum);
 	}
 
+	public int afterPayInsertChatReserv(SqlSessionTemplate sqlSession, Map<String, Object> paraMap) {
+		return sqlSession.insert("chatMapper.afterPayInsertChatReserv", paraMap);
+	}
+
 	
 	
 	

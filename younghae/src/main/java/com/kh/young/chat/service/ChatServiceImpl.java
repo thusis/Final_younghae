@@ -1,6 +1,7 @@
 package com.kh.young.chat.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -8,13 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.young.chat.dao.ChatDao;
-import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.model.vo.ChatMessage;
+import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
-import com.kh.young.model.vo.Member;
-import com.kh.young.qna.dto.ExpertRespDto;
-import com.kh.young.qna.service.QaService;
+import com.kh.young.model.vo.Orders;
 
 @Service("chService")
 public class ChatServiceImpl implements ChatService {
@@ -168,6 +167,40 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public int fullMessageListCount(int loginUserNum) {
 		return chDao.fullMessageListCount(sqlSession, loginUserNum);
+	}
+
+    /**
+    ChatReserv(
+    reservId=0, 
+    chatroomId=26, 
+    orderNum=0, 
+    reservSchedule=2023/01/06 10:40, 
+    isApproved=null, 
+    isCompleted=null, 
+    reservHowLong=2)
+    
+    Orders(
+    orderNum=0, 
+    orderCode=CHAT_1672819824571, 
+    userNum=150, 
+    userId=young04, 
+    orderDate=2023. 1. 4. 오후 5:10:24, 
+    orderStatus=null, 
+    orderPayAmount=100, 
+    orderTotalPrice=0, 
+    orderUserName=성수현, 
+    orderPaymethod=card, 
+    orderCouponPrice=0, 
+    orderImpCode=imp_689824461093, 
+    orderPhone=01012341234, 
+    addressNum=0)
+     */
+	@Override
+	public int afterPayInsertChatReserv(ChatReserv crInsert, Orders ordInsert) {
+		Map<String, Object> paraMap = new HashMap<>();
+		paraMap.put("crInsert", crInsert);
+		paraMap.put("ordInsert", ordInsert);
+		return chDao.afterPayInsertChatReserv(sqlSession, paraMap);
 	}
 
 

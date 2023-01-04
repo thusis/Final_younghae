@@ -1,5 +1,6 @@
 package com.kh.young.chat.controller;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,8 +22,10 @@ import com.google.gson.Gson;
 import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.chat.service.ChatService;
 import com.kh.young.model.vo.ChatMessage;
+import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.Orders;
 import com.kh.young.qna.service.QaService;
 
 @Controller
@@ -170,6 +174,54 @@ public class ChatController {
     	
     	return 1+"";
     }
+    
+    @PostMapping("afterPayInsertChatReserv.ch")
+    @ResponseBody
+    /**
+    ChatReserv(
+    reservId=0, 
+    chatroomId=26, 
+    orderNum=0, 
+    reservSchedule=2023/01/06 10:40, 
+    isApproved=null, 
+    isCompleted=null, 
+    reservHowLong=2)
+    
+    Orders(
+    orderNum=0, 
+    orderCode=CHAT_1672819824571, 
+    userNum=150, 
+    userId=young04, 
+    orderDate=2023. 1. 4. 오후 5:10:24, 
+    orderStatus=null, 
+    orderPayAmount=100, 
+    orderTotalPrice=0, 
+    orderUserName=성수현, 
+    orderPaymethod=card, 
+    orderCouponPrice=0, 
+    orderImpCode=imp_689824461093, 
+    orderPhone=01012341234, 
+    addressNum=0)
+     */
+    public String afterPayInsertChatReserv(@ModelAttribute ChatReserv crInsert, @ModelAttribute Orders ordInsert) {
+    	System.out.println(crInsert);
+    	System.out.println(ordInsert);
+    	
+    	int result = chService.afterPayInsertChatReserv(crInsert, ordInsert);
+    	
+    	return String.valueOf(result);
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     

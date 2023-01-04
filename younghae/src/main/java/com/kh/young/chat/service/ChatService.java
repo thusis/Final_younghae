@@ -12,6 +12,7 @@ import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
+import com.kh.young.model.vo.Orders;
 
 @Service
 public interface ChatService {
@@ -35,5 +36,7 @@ public interface ChatService {
 	int updateIsRead(Map<String, Object> paramMap);
 
 //	ArrayList<ChatReserv> selectReservList(int loginUserNum);
+
+	int afterPayInsertChatReserv(ChatReserv crInsert, Orders ordInsert);
 
 }

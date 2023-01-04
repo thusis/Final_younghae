@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 <title>채팅 상담 결제하기</title>
 
+    <script	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"	integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"crossorigin="anonymous"></script>
+
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 
     <!--내가만든 css-->
@@ -33,9 +35,12 @@
             margin-top: 1rem;
         }
 	</style>
+	<!-- 결제 API -->
+	<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.2.0.js"></script>
+	
 </head>
 <body>
-	
+
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
@@ -119,7 +124,7 @@
                         </div>
                         <div class="col-9">
                             <h5 class="row" >: 
-                            <input type="text" id="datetimepicker"> 
+                            <input type="text" id="datetimepicker" required> 
                             </h5><br>
                             
                             <h6 class="chatDateTimeResult" style="display:none; margin-top:0.3rem; color:red;">이미 예약된 시간입니다</h6>
@@ -129,7 +134,7 @@
                     </div>
                     
                     <div class="row" style="padding : 0 15px;">
-                        <span style="margin-top: 0.5rem;color:dimgray;"><input style="display: inline-block; margin-top: 0.5rem;" type="checkbox" name="chatPayApprove1"> 결제 후 해당 채팅상담에 대하여 상대 전문가 회원이 이를 승인했을 때 예약이 확정됩니다.<br> 이에 동의합니다.</span>
+                        <span style="margin-top: 0.5rem;color:dimgray;"><input style="display: inline-block; margin-top: 0.5rem;" type="checkbox" name="chatPayApprove1" required> 결제 후 해당 채팅상담에 대하여 상대 전문가 회원이 이를 승인했을 때 예약이 확정됩니다.<br> 이에 동의합니다.</span>
                     </div>
                     
                     <br><hr><br>
@@ -147,47 +152,43 @@
 
                     <span style="width:10rem;">결제 예정 금액</span><h5 id="chatPayAmout">: </h5><br>
                     <div class="row" style="padding : 0 15px;">
-                        <span style="margin-top: 0.5rem;color:dimgray;"><input style="display: inline-block; margin-top: 0.5rem;" type="checkbox" name="chatPayApprove1"> 상대 전문가 회원의 사정에 따라 예약은 취소될 수 있으며, 결제 내역 및 사용된 포인트는 영해 사이트 정책을 거쳐 환불됩니다. 이에 동의합니다.</span>
+                        <span style="margin-top: 0.5rem;color:dimgray;"><input style="display: inline-block; margin-top: 0.5rem;" type="checkbox" name="chatPayApprove1" required> 상대 전문가 회원의 사정에 따라 예약은 취소될 수 있으며, 결제 내역 및 사용된 포인트는 영해 사이트 정책을 거쳐 환불됩니다. 이에 동의합니다.</span>
                     </div>
                 </div>
                 
                 <!-- 2열 -->
                 <div class="col-lg-4">
-                <div class="checkout__order" style="height: 37rem;">
-				<h5 style="margin-top:-5px;">결제 금액</h5>
-				<ul style="margin-top:-10px;">
-					<li>총 상품 금액 <span>
-<%-- 					<fmt:formatNumber value="${ totalPrice }" type="number"/> --%>
-					 원</span></li>
-					<li>쿠폰 사용<span><span>&nbsp;원</span><span id="useCouponPrice">0</span></span></li>
-					<li>포인트 사용<span>&nbsp;원</span><span id="totalUsePoint">0</span></li>
-				</ul>
+                <div class="checkout__order" style="height: 37rem;">금액</h5>
 				<div class="checkout__order__subtotal" style="height: 5rem;">최종 결제 금액 
-					<span><span>&nbsp;원</span><span id="totalPayPrice" style="color: #24E082;">
-	<%-- 										<fmt:formatNumber value="${ totalPrice }" type="number"/></span></span><br> --%>
+					<span>
+						<span>&nbsp;원</span>
+						<span id="totalPayPrice" style="color: #24E082;"></span>
+					</span><br> 
 					<span style="font-size: 0.6rem;">P적립 예정&nbsp;</span>
 					<span id="savePoint" style="font-size: 0.6rem; color: #24E082; font-weight: 500;">
-	<%-- 										<fmt:formatNumber value="${ totalPrice * 0.01}" type="number"/> --%>
 					</span>
 				</div>
 	
 				<div>
-					<input type="checkbox" id="allAgree" class="cartSelectAll" onclick="selectAll();" required>
+					<input type="checkbox" class="selectAll" onclick="selectAll();" required>
 					<label for="allAgree" style="color:#828282; font-size: 1rem; display: inline; margin-left:5px; cursor: pointer;">아래 내용에 모두 동의합니다.(필수) </label>
 				</div>
 				<div class="container">
-					<p>본인은 만 14세 이상이며, 주문 내용을 확인하였습니다.</p>
+					<div>
+						<input type="checkbox" name="eachAgree1" class="selectAll" required>
+						<label for="eachAgree1"> 본인은 만 14세 이상이며, 주문 내용을 확인하였습니다.</label>
+					</div>										
 					<div >
-						<input type="checkbox" id="eachAgree1" class="cartSelectEach" onclick="selectOne();" required>
-						<label for="eachAgree1" style="margin-top: -10px; color:#828282; cursor: pointer;"> 개인정보 수집 이용 및 제 3자 제공 동의(필수)</label>
+						<input type="checkbox" name="eachAgree2" class="selectAll" required>
+						<label for="eachAgree2"> 개인정보 수집 이용 및 제 3자 제공 동의(필수)</label>
 					</div>										
 					<div>
-						<input type="checkbox" id="eachAgree2" class="cartSelectEach" onclick="selectOne();" required>
-						<label for="eachAgree2" style="margin-top: -10px; color:#828282; cursor: pointer;"> 결제대행 서비스 이용약관 동의(필수) </label>
+						<input type="checkbox" name="eachAgree3" class="selectAll" required>
+						<label for="eachAgree3"> 결제대행 서비스 이용약관 동의(필수) </label>
 					</div>
 				</div>
-				<button type="button" class="site-btn" onclick="requestPay()">
-					<span>71,100</span>원 결제하기
+				<button type="submit" class="site-btn" onclick="requestChatPay()">
+					<span id="totalPayPrice2"></span>원 결제하기
 				</button>
 				</div>
                 </div>
@@ -215,10 +216,15 @@
 		const originalEstimate = parseInt(${chatResp.expertUser.expert.expertEstimate.split('원')[0].trim()});
 		const originalUserPoint = parseInt(${chatResp.generalUser.userPoint});
 		
+		const chatExpertName = "${chatResp.expertUser.member.userName}";
+		const chatProductName = document.location.href.split('info=')[1];
+		
 		window.onload=()=>{
 			console.log(originalEstimate);
 			document.getElementById('chatPayEstimate').innerHTML = ": "+originalEstimate;
 			document.getElementById('chatPayAmout').innerText = ": "+originalEstimate;
+			document.getElementById('totalPayPrice').innerText = originalEstimate;
+			document.getElementById('totalPayPrice2').innerText = originalEstimate;
 		}
 		
 		$('#datetimepicker').datetimepicker();
@@ -271,8 +277,7 @@
 			return firstChatPayEstimate;
 		}
 		
-		function 
-		const changeChatPayEstimate = (selectHowLong) => {
+		function changeChatPayEstimate(selectHowLong){
 			const chatPayHowLongValue = parseInt(selectHowLong.value);
 			var firstChatPayEstimate = parseInt(originalEstimate);
 			firstChatPayEstimate = parseInt( firstChatPayEstimate * chatPayHowLongValue) ;
@@ -282,6 +287,8 @@
 			var point = parseInt(document.getElementById("chatPayPoint").value);
 			var secondChatPayEstimate = firstChatPayEstimate - point;
 			document.getElementById('chatPayAmout').innerText = ": "+secondChatPayEstimate;
+			document.getElementById('totalPayPrice').innerText = secondChatPayEstimate;
+			document.getElementById('totalPayPrice2').innerText = secondChatPayEstimate;
 		}
 		
 		document.getElementById("chatPayPoint").addEventListener("keyup", function(){
@@ -297,13 +304,113 @@
 			var firstChatPayEstimate = getChatPayEstimate();
 			var result = firstChatPayEstimate - point;
 			
-			document.getElementById('chatPayAmout').innerText =
-				": " + result;
+			document.getElementById('chatPayAmout').innerText =": " + result;
+			document.getElementById('totalPayPrice').innerText = result;
+			document.getElementById('totalPayPrice2').innerText = result;
 		})
 		
+		function selectAll(){
+			if( document.getElementsByClassName('selectAll')[3].checked == false ){
+				for(each of document.getElementsByClassName('selectAll')){
+					each.checked = true;
+				}
+			}else{
+				for(each of document.getElementsByClassName('selectAll')){
+					each.checked = false;
+				}
+			}
+		}
 		
-		
-	
+		function requestChatPay(){
+			const confirmedChatReservTime = $('#datetimepicker').val();
+			const confirmedChatPayHowLongValue = document.getElementById('chatPayReservHowLongSelect').value;
+			
+			var checkFlag = 0;
+			if( document.querySelector("#datetimepicker").value=="" ){
+				document.querySelector("#datetimepicker").focus();
+			} else {
+				checkFlag = 1;
+			}
+			for( each of document.querySelectorAll("input[type='checkbox']") ){
+				if(each.checked == false){
+					each.style.outline = '1px solid red';
+					each.focus();
+					checkFlag = 0;
+				} else {
+					checkFlag = 1;
+				}
+			}
+			
+			if(checkFlag == 1){
+				console.log("결제 가능")
+				
+				var key = "imp73521438";
+				const IMP = window.IMP;
+				const finalChatPayAmount = parseInt(document.getElementById('totalPayPrice2').innerText);
+				var today = new Date(); 
+				console.log(today.toLocaleString());
+				var todayToLocal = today.toLocaleString();
+				IMP.init(key); 
+			    impPay();
+			    
+			    function impPay() {
+			 	      IMP.request_pay({ // param
+			 	    	  
+			 	          pg: "html5_inicis",
+			 	          merchant_uid: 'CHAT_' + new Date().getTime(),
+			 	          name: chatExpertName+"님과 채팅상담" + chatProductName,
+// 			 	          amount: finalChatPayAmount, //추후 주석 해제!
+			 	          amount: 100,
+			 	          buyer_email: "${loginUser.email}" ,
+			 	          buyer_name: "${loginUser.userName}" ,
+			 	          buyer_tel: "${loginUser.userPhone}",
+			 	          buyer_addr: "해당없음",
+			 	          buyer_postcode: "해당없음",
+			 	    	  
+			 	      }, function (rsp) { // callback
+			 	          if (rsp.success) {
+							console.log("결제 성공");
+							console.log(rsp);
+			                 $.ajax({
+			                     type: 'post',
+			                     url: '${contextPath}/afterPayInsertChatReserv.ch',
+			                     data: {
+			                    	 chatroomId : chatPayChatroomId,
+			                    	 reservSchedule : confirmedChatReservTime,
+			                    	 reservHowLong : confirmedChatPayHowLongValue , // ChatReserv 객체
+			                    	 
+			                         orderCode : rsp.merchant_uid,
+			                         userNum : "${ loginUser.userNum }",
+			                         userId : "${ loginUser.userId }",
+			                         orderDate : todayToLocal,
+			                         orderStaus : rsp.status,
+			                         orderPayAmount : rsp.paid_amount,
+			                         orderUserName : rsp.buyer_name,
+			                         orderPaymethod : rsp.pay_method,
+			                         orderImpCode : rsp.imp_uid,
+			                         orderPhone : rsp.buyer_tel // Orders 객체
+			                     },
+			                     success : (data)=>{
+			                    	 if(data != 0){
+			                    		 console.log('예약 및 결제 정보 정상 처리');
+			                    		 document.location.href="${contextPath}/home.qa";
+			                    	 }else{
+			                    		 console.log('예약 및 결제 정보 처리 중 에러 발생');
+			                    	 }
+			                     },
+			                     error: (data)=>{
+			                    	 alert("예약 및 결제 정보 DB 삽입 실패");
+			                     }
+			                 }); // 예약 및 결제 정보 DB 삽입 ajax
+			 	          } else {
+			 	        	alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
+							console.log(rsp);
+							console.log("실패");
+			 	          } // 아임포트 결제 실패
+						});
+			   	 }//아임포트 결제 전체 함수
+				}//결제준비가 되면 결제처리
+			}
 	</script>
 </body>
 </html>
