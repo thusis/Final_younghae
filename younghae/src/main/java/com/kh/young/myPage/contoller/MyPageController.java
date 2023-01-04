@@ -133,8 +133,7 @@ public class MyPageController {
 	    PageInfo pi = Pagination.getPageInfo(currentPage, listCount, 12);
     	
     	ArrayList<Supplement> zzim =  myService.seletAllzzim(pi,id); 
-    	
-    	
+    
     	model.addAttribute("pi", pi);
         model.addAttribute("myWishList", zzim);
     	

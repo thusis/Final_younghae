@@ -157,29 +157,7 @@ public class MemberController {
  		m.setUserBirth(d);
  		
  		int resultPoint = 0;
- 		
-        //추천인코드입력하고 다른 추천포인트올려주기.(포인트단하면서하기)
- 		
- 		if(m.getUserRecommend()!="") {
- 			String userRecommend = m.getUserRecommend();
- 			// 있는지없는지확인
- 			resultPoint = mService.checkRecommend(userRecommend);
- 	 		System.out.println(resultPoint);
- 	 		//있으면
- 			if(resultPoint >0) {
- 				//usernum가져와서
- 				Member otherRecommend= mService.searchRecommend(userRecommend);
- 				
- 				HashMap<String, Object> recommendMap = new HashMap < String, Object > ();
- 				recommendMap.put("id", otherRecommend.getUserNum());
- 				recommendMap.put("updateName","추천인코드");
- 				recommendMap.put("updatePoint", "+1000");
- 				//해당 usernum에 insert
- 				mService.pointAdd(recommendMap);
- 				//해당 유저 총점수 업데이트.
- 				mService.totalPoint(otherRecommend.getUserNum());
- 			}
- 		}
+ 		String getUserRecommend = m.getUserRecommend();
  	
         //추천인코드자동부여
         String generatedString = RandomStringUtils.randomAlphanumeric(6);
@@ -200,7 +178,7 @@ public class MemberController {
         } else {
             m.setUserCNumber(2);
         }
-
+        // 회원가입.
         int result = mService.insertMember(m);
 
         String userId = m.getUserId();
@@ -244,10 +222,28 @@ public class MemberController {
         map.put("userHealth", userHealth);
 
         int resultGenral = mService.insertMemberAddress(map); 
-        
-        if(resultPoint>0) {
-        	//usernum가져와서
-				Member myRecommend= mService.searchMyUserNum(m.getUserId());
+        //추천인코드입력하고 다른 추천포인트올려주기.(포인트단하면서하기)
+ 		
+ 		if(getUserRecommend!="") {
+ 			// 있는지없는지확인
+ 			resultPoint = mService.checkRecommend(getUserRecommend);
+ 	 		System.out.println(resultPoint);
+ 	 		//있으면
+ 			if(resultPoint >0) {
+ 				//다른사람 추천인포인트
+ 				Member otherRecommend= mService.searchRecommend(getUserRecommend);
+ 				
+ 				HashMap<String, Object> recommendMap = new HashMap < String, Object > ();
+ 				recommendMap.put("id", otherRecommend.getUserNum());
+ 				recommendMap.put("updateName","추천인코드");
+ 				recommendMap.put("updatePoint", "+1000");
+ 				//해당 usernum에 insert
+ 				mService.pointAdd(recommendMap);
+ 				//해당 유저 총점수 업데이트.
+ 				mService.totalPoint(otherRecommend.getUserNum());
+ 				
+ 				// 내 추천인 포인트
+ 				Member myRecommend= mService.searchMyUserNum(m.getUserId());
 				
 				HashMap<String, Object> MyPoint = new HashMap < String, Object > ();
 				MyPoint.put("id", myRecommend.getUserNum());
@@ -257,12 +253,14 @@ public class MemberController {
 				mService.pointAdd(MyPoint);
 				//해당 유저 총점수 업데이트.
 				mService.totalPoint(myRecommend.getUserNum());
-        }
-
+ 				
+ 				
+ 			}
+ 		}
         if (result > 0 && resultGenral > 0) {
-            return "redirect:home.do";
+            return "enrollSuccess";
         } else {
-            throw new MemberException("회원가입에 실패하였습니다.");
+            return "enrollFail";
         }
 
 
@@ -477,7 +475,7 @@ public class MemberController {
  		m.setUserBirth(d);
  		
  		//비밀번호 변경
- 		if(newPwd !=null) {
+ 		if(newPwd !="") {
  			HashMap<String, String> map = new HashMap<String,String>();
  			map.put("memberId", mem.getUserId());
  			map.put("encPwd", bcrypt.encode(newPwd));

@@ -278,7 +278,19 @@
         </div>
     </div>
     <script>
-
+    <!-- 상세보기 -->
+    window.onload=()=>{
+    	//qna
+    	const questionTr = document.getElementsByClassName('questionTr');
+    	for(const question of questionTr){
+    		question.addEventListener('click', function(){
+    			const boardNum = this.querySelector('td').innerText;
+    			location.href='${contextPath}/question.qa?boardNum='+boardNum;
+    		})
+    	}
+	      
+	      
+	    }
     </script>
 </body>
 
