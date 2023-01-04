@@ -87,15 +87,18 @@
 						style="float: left; padding-top: 3.5%; padding-left: 1%;">
 						<p style="color: black; font-size: 130%;">${ r.rvStar }</p>
 					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.2%; padding-left: 5%;">
-						<i class="bi bi-hand-thumbs-up-fill"
-							style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">${ r.rvRecommend }</p>
-					</div>
+					<c:if test="${ loginUser ne null}">
+						<div class="product__details__rating"
+							style="float: left; padding-top: 3.2%; padding-left: 5%;">
+							<i class="bi bi-hand-thumbs-up"
+								style="color: rgb(0, 0, 0); font-size: 130%;"></i>
+							<input type="hidden" name="rvNum" value="${ r.rvNum }">
+						</div>
+						<div name="reviewRank"
+							style="float: left; padding-top: 3.5%; padding-left: 1%;">
+							<p style="color: black; font-size: 130%;">${ r.rvRecommend }</p>
+						</div>
+					</c:if>
 					<div name="reviewImg"
 						style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
 						<c:if test="${ r.image ne '없음'}">
@@ -142,7 +145,82 @@
 			</div>
 	</section>
 
-
+    <!-- 리뷰쓰기 Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content" style="width:65%;">
+            <span class="close" style="align-content: right; padding-left:95%;">&times;</span>
+            <div class="container">
+                <div class="row g-0 text-center">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="product__details__pic">
+                            <div style="border: 2px solid #24E082; border-radius: 5em;">
+								<form action="${ contextPath }/insertReview.su" method="post" id="reviewFrom" enctype="multipart/form-data">
+									<div class="row" style="margin-left: 5%; margin-top:3%; padding-right: 0px;  margin-bottom: -5%;">
+										<div class="d-inline" name="reviewImg" style="margin-right: -20%;">
+											<img src="${ product.proImage }"
+												style="border: 1px solid #24E082; border-radius: 5%; margin: 1%; height: 80%; width: 55%; float: left; ">
+												<input type="hidden" name="proNum" value="${ product.proNum }">
+												<input type="hidden" name="userNum" value="${ loginUser.userNum }">
+										</div>
+										<div class="d-inline">
+											<div class="d-inline" name="reviewName" >
+												<label
+													style="font-size: 130%; font-weight: 800; padding-top: 10%; margin-left: 5%; float:left; width: 100%">${ product.proName }</label>
+												<br><br><br><br><br><br><br>
+												<div class="product__details__rating ml-3"
+													style="font-size: 130%; display: inline; margin: 5%; color: rgb(236, 236, 55); text-align: left;">
+													<span style="color: black; margin-right: 1.5%;">별점</span> 
+												    <span class="star" style="display: inline-block;">
+												        ★★★★★
+												        <span>★★★★★</span>
+												        <input type="range" oninput="drawStar(this)" value="1" step="1" min="0" max="10">
+												    </span>
+													<output for="star-input" style="display: inline-block;">
+														<b id="rating" name="rating">0</b>점
+														<input id="rateIn" type="hidden" name="rvStar" value="0">
+													</output>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row" style="margin: 3%;">
+										<div class="d-block" name="fileInput"
+											style="width: 10%; padding-left: 2%;">
+											<label
+												style="padding-left: 3%; font-size: 110%; padding-top: 5%; font-weight: 800; color: #24E082;">첨부파일</label>
+										</div>
+										<div class="filebox" style="width: 65%; text-align: center;">
+											<input class="upload-name" value="첨부파일" placeholder="첨부파일"
+												readonly> <label for="file" style="display: inline;">파일찾기</label>
+											<input type="file" id="file" name="file">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-11"
+											style="margin-left: 3.5%; margin-bottom: 3%;">
+											<div style="border: 2px solid #24E082; border-radius: 1em;"
+												name="rvContent">
+												<textarea name="rvContent" id="rvContent"
+													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;">1</textarea>
+											</div>
+											<div>
+												<div name="writeReview"
+													style="margin-left: 1.5%; margin-top: 2%;">
+													<button type="button"  id="writeBtn"
+														style="text-align: center; height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;">리뷰
+														작성</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 	<!-- Footer Section Begin -->
@@ -227,15 +305,49 @@
 </body>
 <script>
 	window.onload=()=>{
+		
+		var login = "${ loginUser }";
+		var loginNum = "${ loginUser.userNum }";
+		
 		const reviews = document.getElementsByClassName('product__details__quantity');
 		for(const r of reviews){
 			r.addEventListener('click', function(){
-				const rSelect = $(this).children().children();
-				console.log(rSelect);
+				// 추천
+				console.log($(this).children().children()[4]);
 				
-// 				location.href = '${contextPath}/selectProduct.su?proNum='+productSelect;
+				//
 			});
 			
+		}
+		
+		// 추천 누르기
+		const reco = document.getElementsByClassName('bi bi-hand-thumbs-up');
+		for(const re of reco){
+			re.addEventListener('click', function(){
+				if($(this).attr('class') != "bi bi-hand-thumbs-up"){
+					$(this).attr('class', 'bi bi-hand-thumbs-up');
+					check = 'R';
+					console.log("누름");
+				}else{
+					$(this).attr('class', 'bi bi-hand-thumbs-up-fill');
+					check = 'D';
+					console.log("누른거 취소");
+				}
+				
+				console.log($(this).parent().children()[1].value);
+				console.log(loginNum);
+				$.ajax({
+            		url: '${contextPath}/reco.su',
+            		data: {rvNum: $(this).parent().children()[1].value ,userNum: loginNum,
+            				check: check},
+            		success:(data)=>{
+            			console.log(data);
+            		},
+            		error:(data)=>{
+            			console.log(data);
+            		}
+            	});
+			});
 		}
 	}
 </script>
