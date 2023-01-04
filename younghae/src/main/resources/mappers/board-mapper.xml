@@ -174,6 +174,12 @@
 		<result column="BOARD_TYPE" property="boardType"/>
 		<association property="attachment" javaType="Attachment" resultMap="attachmentResultSet" />
 		<association property="member" javaType="Member" resultMap="memberResultSet" />
+		<association property="clip" javaType="Clip" resultMap="ClipResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Clip" id="ClipResultSet">
+		<id column="BOARD_NUM" property="boardNum"/>
+		<result column="USER_NUM" property="userNum"/>
 	</resultMap>
 	
 	<resultMap type="Reply" id="replyResultSet">
