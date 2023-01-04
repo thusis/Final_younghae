@@ -56,7 +56,7 @@
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
-                <li>영양 성분 조회</li>
+                <li><a href="${ contesyPath }/category.su">건강해지는 이야기 작성하기</a></li>
             </ul>
         </div>
     </div>
@@ -122,7 +122,7 @@
 			<c:forEach items="${ list }" var="c">
 				<div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
 					<div class="featured__item">
-						<div class="featured__item__pic set-bg">
+						<div class="featured__item__pic set-bg" >
 							<input type="hidden" value="${ c.cateNum }">
 							<p>${ c.cateName }</p>
 						</div>

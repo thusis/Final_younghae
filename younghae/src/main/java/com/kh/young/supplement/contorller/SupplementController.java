@@ -440,7 +440,7 @@ public class SupplementController {
 	@ResponseBody
 	@RequestMapping("adminReviewList.su")
 	public HashMap<String, Object> adminReviewList(@RequestParam(value="page", required=false) Integer page,  HttpServletResponse response,
-									@RequestParam(value="check", required=false) String check, Model model) {
+									@RequestParam(value="check", required=false) String check) {
 		System.out.println("check : " + check);
 		
 		
@@ -472,5 +472,10 @@ public class SupplementController {
 		map.put("listCount", reviewCount);
 		
 		return map;
+	}
+	
+	@RequestMapping("goAdminReviewList.su")
+	public void goAdminReviewList(@RequestParam("page") int page, Model model) {
+		adminReviewList(page, null, null);
 	}
 }
