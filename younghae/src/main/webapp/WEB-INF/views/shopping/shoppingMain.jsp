@@ -342,7 +342,7 @@
             </div>
 
 			<div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
+               	<c:forEach items="${ bestsellerList }" end="4" var="i">
 	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
 	                    <div class="product__item" style="margin-bottom: -10px; cursor: pointer;">
 	                        <div class="product__item__pic set-bg" style="margin-bottom: -40px;">
@@ -375,7 +375,7 @@
             </div>
             
 			<div class="row">
-               	<c:forEach items="${ supplementList }" end="4" var="i">
+               	<c:forEach items="${ trendList }" end="4" var="i">
 	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
 	                    <div class="product__item" style="margin-bottom: -10px; cursor: pointer;">
 	                        <div class="product__item__pic set-bg" style="margin-bottom: -40px;">

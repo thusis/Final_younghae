@@ -304,7 +304,7 @@
 	<div class="container">
 		<div class="bn_index mt-5">
 			<ul>
-				<li><a href="#">쇼핑</a></li>
+				<li><a href="${contextPath }/shoppingMain.sh">쇼핑</a></li>
 				<li><b>/</b></li>
 				<li><a href="#">영양제 상세보기</a></li>
 			</ul>
@@ -463,7 +463,6 @@
 	                                                        <div style="display: inline;">2점</div><div class="rating-count"></div><div style="display: inline;">10</div><br>
 	                                                        <div style="display: inline;">1점</div><div class="rating-count"></div><div style="display: inline;">11</div><br>
 	                                                    </div>
-	
 	                                                </td>
 	                                            </tr>
 	                                        </table>
@@ -697,40 +696,46 @@
 	    	    
 	    const quantity = document.getElementById("quantity");
 	    cartBtn.onclick = function() {
-	    	$.ajax({
-	    		url: '${contextPath}/insertCart.sh',
-	    		data: {userNum : ${loginUser.userNum},
-	    				proNum: ${supplementDetail.proNum},
-	    				cartQuantity : quantity.value},
-	    		success:(data)=>{
-	    			if(data == 'YES'){
-	    				if(confirm('이미 장바구니에 있는 상품입니다. 수량을 추가하시겠습니까?')){
-		    				$.ajax({
-		    		    		url: '${contextPath}/addCartCount.sh',
-		    		    		data: {userNum : ${loginUser.userNum},
-		    		    				proNum: ${supplementDetail.proNum},
-		    		    				cartQuantity : quantity.value},
-		    	    			success:(data)=>{
-		    	    				if(confirm('상품이 추가되었습니다.')){
-								    	cartList();
-		    	    				}
-		    	    			}
-		    				})
-	    				}
-	    			}else{
-	    				cartList();
-	    			}
-	    		}
-	    		
-	    	});
+			var loginUser = "${loginUser.userNum}";
+			if(loginUser == ""){
+				alert('로그인 후 이용해주세요');
+			}else{
+		    	$.ajax({
+		    		url: '${contextPath}/insertCart.sh',
+		    		data: {userNum : loginUser,
+		    				proNum: ${supplementDetail.proNum},
+		    				cartQuantity : quantity.value},
+		    		success:(data)=>{
+		    			if(data == 'YES'){
+		    				if(confirm('이미 장바구니에 있는 상품입니다. 수량을 추가하시겠습니까?')){
+			    				$.ajax({
+			    		    		url: '${contextPath}/addCartCount.sh',
+			    		    		data: {userNum : loginUser,
+			    		    				proNum: ${supplementDetail.proNum},
+			    		    				cartQuantity : quantity.value},
+			    	    			success:(data)=>{
+			    	    				if(confirm('상품이 추가되었습니다.')){
+									    	cartList();
+			    	    				}
+			    	    			}
+			    				})
+		    				}
+		    			}else{
+		    				cartList();
+		    			}
+		    		}
+		    		
+		    	});
+			}
 	    }
 	    
 // 	    장바구니 창 열기
 	    const cartList = function(){
 	    	cartModal.style.display = "block";
+	    	var loginUser = "${loginUser.userNum}";
 	    	$.ajax({
 	    		url: '${contextPath}/selectCartList.sh',
-	    		data: {userNum : ${loginUser.userNum},
+	    		data: {userNum : loginUser,
 	    				proNum: ${supplementDetail.proNum},
 	    				cartQuantity : quantity.value},
 	    		success:(data)=>{
@@ -793,7 +798,8 @@
 					}
 					
 	    		}
-	    	})	
+	    	})
+
 	    }
 	    
 	    // When the user clicks on <span> (x), close the modal
@@ -829,12 +835,16 @@
     		}
     	});    	
     	
-    	// 로그인했을때 안했을 때 구분해야함!!!!!!!!(로그인세션 있을 때 수정할 것!!)
     	const btnBuy = document.getElementById("btn_buy");
     	btnBuy.addEventListener('click',function(){
+			var loginUser = "${loginUser.userNum}";
+			if(loginUser == ""){
+				alert('로그인 후 이용해주세요');
+			}else{
     		const paymentTotal = ${ supplementDetail.proPrice } * quantity.value;
     		const proNum = ${supplementDetail.proNum};
     		location.href='${ contextPath }/payment.sh?proNumList='+proNum+'&quantity='+quantity.value;
+			}
     	});
     	
     }

@@ -46,8 +46,12 @@ public class ShoppingController {
 	public String shoppingMain(Model model) {
 		
 		ArrayList<Supplement> list = shService.selectSupplementList();
+		ArrayList<Supplement> trendList = shService.selectTrendList();
+		ArrayList<Supplement> bestsellerList = shService.selectBestsellerList();
 		
 		model.addAttribute("supplementList", list);
+		model.addAttribute("bestsellerList", bestsellerList);
+		model.addAttribute("trendList", trendList);
 		
 //		Member mem = shService.selectMember(1);
 //		model.addAttribute("loginUser", mem);
@@ -308,7 +312,9 @@ public class ShoppingController {
 	
 	@RequestMapping("selectCartDetail.sh")
 	public void selectCartDetail(@RequestParam("proNum") int proNum, HttpServletResponse response) {
+		System.out.println(proNum);
 		Supplement cartDetail = shService.selectDetail(proNum);
+		System.out.println(cartDetail);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		
