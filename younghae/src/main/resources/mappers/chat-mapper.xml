@@ -36,6 +36,7 @@
   		<result column="RESERV_SCHEDULE" property="reservSchedule"/>
   		<result column="IS_APPROVED" property="isApproved"/>
   		<result column="IS_COMPLETED" property="isCompleted"/>
+  		<result column="RESERV_HOW_LONG" property="reservHowLong"/>
   	</resultMap>
 
   	<resultMap type="ExpertRespDto" id="ExpertRespDto">

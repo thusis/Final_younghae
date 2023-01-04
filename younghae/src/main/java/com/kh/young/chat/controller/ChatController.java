@@ -6,7 +6,6 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,13 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
-import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.chat.service.ChatService;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Member;
-import com.kh.young.qna.common.Qexception;
 import com.kh.young.qna.service.QaService;
 
 @Controller
@@ -155,6 +152,30 @@ public class ChatController {
         return chService.updateIsRead(paraMap);
     }
 
-	
+	/**
+	 * 결제와 예약======================================================================================
+	 * 	private int reservId;
+		private int chatroomId;
+		private int paymentId;
+		private Date reservSchedule;
+		private String isApproved;
+		private String isCompleted;
+	 */
+    @PostMapping("checkChatReservTime.ch")
+    @ResponseBody
+    public String checkChatReservTime(@RequestParam Map<String, Object> paraMap) {
+    	System.out.println(paraMap);
+    	System.out.println(paraMap.get("reservSchedule"));
+    	System.out.println(paraMap.get("reservSchedule").getClass().getName());
+    	
+    	return 1+"";
+    }
+    
+    
+    
+    
+    
+    
+    
 }
 
