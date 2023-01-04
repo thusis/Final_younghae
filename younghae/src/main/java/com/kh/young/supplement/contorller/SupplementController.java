@@ -416,7 +416,7 @@ public class SupplementController {
 	}
 	
 	@RequestMapping("reco.su")
-	public Integer reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
+	public void reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
 		Review r = new Review();
 		System.out.println(check);
 		
@@ -426,15 +426,17 @@ public class SupplementController {
 		System.out.println(r);
 		
 		int result = 0;
+		int result1 = 0;
 		if(check.equals("R")) {
 			System.out.println("인서트");
 			result = sService.insertReco(r);
+			result1 = sService.updateReviewCount(r);
+			
 		}else if(check.equals("D")) {
 			System.out.println("삭제");
 			result = sService.deleteReco(r);
+			result1 = sService.deleteReviewCount(r);
 		}
-		
-		return result;
 	}
 	
 	@RequestMapping("searchPage.su")

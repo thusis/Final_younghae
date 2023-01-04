@@ -164,9 +164,9 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
                         <h3 class="d-inline">${ product.proName }</h3>
-                        <div class="float-right" style="font-size: 150%; color: #24E082;">
-                            <i class="bi bi-bookmark-plus-fill"></i>
-                        </div>
+<!--                         <div class="float-right" style="font-size: 150%; color: #24E082;"> -->
+<!--                             <i class="bi bi-bookmark-plus-fill"></i> -->
+<!--                         </div> -->
                         <div class="product__details__rating">
                             <i class="fa fa-star"></i>
                             &nbsp;<span id="starIn">0</span>점
@@ -720,17 +720,17 @@
 // 			    	            	console.log(this);
 			    	            	// rvNum
 			    	            	console.log($(this).parent().children()[7].value);
-// 			    	            	$.ajax({
-// 			    	            		url: '${contextPath}/reco.su',
-// 			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
-// 			    	            				check: check},
-// 			    	            		success:(data)=>{
+			    	            	$.ajax({
+			    	            		url: '${contextPath}/reco.su',
+			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
+			    	            				check: check},
+			    	            		success:(data)=>{
 			    	            			
-// 			    	            		},
-// 			    	            		error:(data)=>{
-// 			    	            			console.log(data);
-// 			    	            		}
-// 			    	            	});
+			    	            		},
+			    	            		error:(data)=>{
+			    	            			console.log(data);
+			    	            		}
+			    	            	});
 			    	            });
 			                }
 			            }

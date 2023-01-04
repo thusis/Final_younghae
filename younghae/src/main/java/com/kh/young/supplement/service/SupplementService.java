@@ -54,4 +54,8 @@ public interface SupplementService {
 
 	int adminReviewListCount();
 
+	int updateReviewCount(Review r);
+
+	int deleteReviewCount(Review r);
+
 }

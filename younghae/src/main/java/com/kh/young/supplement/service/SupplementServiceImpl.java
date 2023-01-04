@@ -131,5 +131,15 @@ public class SupplementServiceImpl implements SupplementService {
 		return pcDAO.adminReviewListCount(sqlSession);
 	}
 
+	@Override
+	public int updateReviewCount(Review r) {
+		return pcDAO.updateReviewCount(sqlSession, r);
+	}
+
+	@Override
+	public int deleteReviewCount(Review r) {
+		return pcDAO.deleteReviewCount(sqlSession, r);
+	}
+
 
 }
