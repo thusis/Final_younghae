@@ -29,7 +29,56 @@
 	.boardselect{
 		cursor: pointer;
 	}	
-
+	#replySubmit{
+		border: 3px solid #24E082;
+		color:#24E082;
+	}
+	#replyTable{
+	  text-align: center; 
+	  margin-left: 430px;
+  	  vertical-align: middle;
+	}
+	#ViewForm{
+		text-align: center;
+	}
+	#updateForm{
+		border: 3px solid #00db71;
+		width: 90px;
+		height: 40px;
+		background: #24E082;
+		border-radius: 10px;
+		color:white;
+	}
+	#deleteForm{
+		border: 3px solid #00db71;
+		width: 90px;
+		height: 40px;
+		background: #24E082;
+		border-radius: 10px;
+		color:white;
+	}
+	#boardListBack{
+		border: 3px solid #00db71;
+		width: 90px;
+		height: 40px;
+		background: #24E082;
+		border-radius: 10px;
+		color:white;
+	}
+	#replyTxt{
+		margin-left: 70px;
+	}
+	th{
+		color:green;
+	}
+	.fa-trash-alt{
+		color:pink;
+		cursor: pointer;
+	}
+	.deleteReply{
+		border:none; 
+		background: none;
+	}
 </style>
 </head>
 <body>
@@ -132,29 +181,24 @@
 					<div class="container"
 						style="border: 2px solid #24E082; border-radius: 3%; padding: 8%;">
 						<div class="blog__details__text">
-							<img src="resources/img/blog/details/details-pic.jpg" alt="">
-							<p>Sed porttitor lectus nibh. Vestibulum ac diam sit amet
-								quam vehicula elementum sed sit amet dui. Curabitur non nulla
-								sit amet nisl tempus convallis quis ac lectus. Mauris blandit
-								aliquet elit, eget tincidunt nibh pulvinar a. Vivamus magna
-								justo, lacinia eget consectetur sed, convallis at tellus. Sed
-								porttitor lectus nibh. Donec sollicitudin molestie malesuada.
-								Curabitur non nulla sit amet nisl tempus convallis quis ac
-								lectus. Proin eget tortor risus. Donec rutrum congue leo eget
-								malesuada. Curabitur non nulla sit amet nisl tempus convallis
-								quis ac lectus. Donec sollicitudin molestie malesuada. Nulla
-								quis lorem ut libero malesuada feugiat. Curabitur arcu erat,
-								accumsan id imperdiet et, porttitor at sem.</p>
-							<h3>The corner window forms a place within a place that is a
-								resting point within the large space.</h3>
-							<p>The study area is located at the back with a view of the
-								vast nature. Together with the other buildings, a congruent
-								story has been managed in which the whole has a reinforcing
-								effect on the components. The use of materials seeks connection
-								to the main house, the adjacent stables</p>
+							<p>${b.boardContent }</p>
 						</div>
 					</div>
 					<br>
+					<form id="detailForm">
+					<input type="hidden" value="${b.boardNum}" name="boardNum" id="boardNum" class="boardNum">
+					<input type="hidden" value="${page}" name="page" id="page" class="page">	
+						<div id="ViewForm">
+							<button type="button" id="updateForm"
+								<c:if test="${ loginUser.userNum ne b.userNum }">style="display:none;"</c:if>>수정하기</button>
+							&nbsp;&nbsp;&nbsp;
+							<button type="button" id="deleteForm"
+								<c:if test="${ loginUser.userNum ne b.userNum }">style="display:none;"</c:if>>삭제하기</button>
+							&nbsp;&nbsp;&nbsp;
+							<button type="button" id="boardListBack"
+								onclick="location.href='${contextPath}/boardList.bo'">목록으로</button>
+						</div>
+					</form>
 					<br>
 					<div class="blog__details__content">
 						<div class="row">
@@ -200,8 +244,8 @@
 			<div class="col-lg-10">
 				<div class="row justify-content-end bn_board-meta">
 					<i class="bi bi-heart"></i><span class=" m-2">12</span>&nbsp;&nbsp;
-					<i class="fa-regular fa-eye"></i><span class=" m-2">56</span>&nbsp;&nbsp;
-					<i class="bi bi-chat-dots m-2"></i><span class=" m-2">19</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<i class="fa-regular fa-eye"></i><span class=" m-2">${b.boardView }</span>&nbsp;&nbsp;
+					<i class="bi bi-chat-dots m-2"></i><span class=" m-2">${replyCount}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
 
 			</div>
@@ -218,16 +262,47 @@
 		</div>
 		<div class="row">
 			<div class="replyComment">
-				<h4 class="bn_txt_strong">
+				<h4 class="bn_txt_strong" id="replyTxt">
 					댓글을 남기세요&nbsp;&nbsp;<i class="bi bi-chat-dots"></i>
 				</h4>
 			</div>
 		</div>
 		<br>
+		<div id="replyDiv">
 		<div id="replyContent">
 			<textarea id="replyTextarea"></textarea>
 			&nbsp;&nbsp;
 			<button class="btn bn_btn_search2" id="replySubmit" type="button">SUBMIT</button>
+		</div>
+		<hr style="border: 1px solid #8bffc5; width:1250px; " noshade />
+		<table id="replyTable">
+			<thead>
+				<tr>
+					<th width="100px">댓글 번호</th>
+					<th width="140px">작성자</th>
+					<th width="500px">작성내용</th>
+					<th width="200px">작성일</th>
+					<th width="140px">삭제</th>
+				</tr>
+			</thead>
+			<tbody>
+				<c:forEach items="${rList}" var="r">
+				<tr>
+ 					<td>${r.replyNum}</td>
+					<td>${r.member.userNickname}</td>
+					<td>${r.replyContent}</td>
+					<td>${r.replyDate}</td>
+					<td>
+					<button type="button" class="deleteReply" 
+					<c:if test="${ loginUser.userNickname ne r.member.userNickname }">style="display:none;"</c:if>>
+					<i class="fas fa-trash-alt"></i>
+					</button>
+					<input type="hidden" value="${r.replyNum}" name="replyNum" class="replyNum">
+					</td> 
+				</tr>
+				</c:forEach> 
+			</tbody>
+		</table>
 		</div>
 
 
@@ -319,6 +394,49 @@
 
 	<!--소셜공유-->
 	 		<script>	
+	 		 /**댓글작성*/
+	 		document.getElementById('replySubmit').addEventListener('click', ()=>{
+
+	     		   $.ajax({
+	     			   url: '${contextPath}/insertReply.bo',
+	     			   data:{replyContent:document.getElementById('replyTextarea').value,
+	     				   		boardType:${b.boardType},
+	     				   		boardNum:${b.boardNum}, userNum:'${loginUser.userNum}'},
+	     				success:(data) => {
+	     					const tbody = document.querySelector('tbody');
+	     					tbody.innerHTML = '';
+	     					
+	     					
+	     					for(const r of data) {
+	     						const tr = document.createElement('tr');
+	     						
+	     						const replyNumTd = document.createElement('td');
+	     						replyNumTd.innerText = r.replyNum;
+	     						const replyWriterTd = document.createElement('td');
+	     						replyWriterTd.innerText = r.member.userNickname;
+	     						const replyContentTd = document.createElement('td');
+	     						replyContentTd.innerText = r.replyContent;
+	     						const replyDateTd = document.createElement('td');
+	     						replyDateTd.innerText = r.replyDate;
+	     						const deleteReplyTd = document.createElement('td');
+	     						deleteReplyTd.innerText = '';
+	     						
+	     						tr.append(replyNumTd);
+	     						tr.append(replyWriterTd);
+	     						tr.append(replyContentTd);
+	     						tr.append(replyDateTd);
+	     						tr.append(deleteReplyTd);
+	     						
+	     						tbody.append(tr);
+	     					}
+	     					document.getElementById('replyTextarea').value='';
+	     				},
+	     				error:(data) => {
+	     					console.log(data);
+	     				}
+	     		   });
+	     	   });
+	 		
             function shareFacebook() {
               var sendUrl = "http://www.google.com";
               window.open("http://www.facebook.com/sharer/sharer.php?u=" + sendUrl, "Y2K World", "height=480px, width=600px");
@@ -331,7 +449,7 @@
               const page = '${page}';
              
               
-              var sendUrl = "http://localhost:8080/selectBoard.bo?bNo=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page} + "%26userNo=" + ${userNo};
+              var sendUrl = "http://localhost:8080/selectBoard.bo?bNo=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page};
               console.log(sendUrl);
               window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl, "Y2K World", "height=480px, width=600px");
             }
@@ -354,7 +472,49 @@
      			   location.href='${contextPath}/boardList.bo?boardCategory=' + boardCategory;
      			   console.log(boardCategory);
      		   });
-     	   }						            
+     	   }					
+     	   
+     	  
+     	   
+           //게시글 수정 삭제
+           	const upd = document.getElementById('updateForm');
+			const form = document.getElementById('detailForm');
+			
+			if(upd != null) {
+				upd.addEventListener('click', ()=> {
+					form.action = '${contextPath}/updateBoard.bo';
+					form.submit();
+				});
+			}
+			
+			document.getElementById('deleteForm').addEventListener('click', ()=> {
+				 if (confirm("게시글을 삭제하시겠습니까?")){ 
+						console.log(${b.boardNum});
+						form.action = '${contextPath}/deleteBoard.bo';
+						form.submit();
+
+					 }else{
+					   console.log("게시글 삭제 취소");
+					 }
+			});
+     	   
+			//댓글 삭제
+			$(".deleteReply").click(function(){
+			       let params={
+				             replyNum : $(this).next().val(),
+				             boardNum : ${b.boardNum}
+			       }
+			       
+			       $.ajax({
+			    	   url: '${contextPath}/deleteReply.bo',
+			    	   data: params,
+			    	   success:function(res){
+			    		   console.log("댓글삭제 에작스");
+			    		   window.location.reload();
+			    	   }
+			       });
+			});
+     	   
             </script>
 
 </body>

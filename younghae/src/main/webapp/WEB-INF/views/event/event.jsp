@@ -44,7 +44,7 @@
 								<div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
 									<img
 										class="img-fluid w-100 fit-cover h-100 rounded-top rounded-md-end rounded-md-top-0"
-										src="resources/img/event/Review1.PNG" alt="..." />
+										src="resources/img/event/review00.png" alt="..." />
 								</div>
 								<div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
 									<h1 class="card-title mt-xl-5 mb-4">
@@ -81,7 +81,7 @@
 	<!-- <section> begin ============================-->
 	<section class="py-0">
 
-		<div class="eventDiv" id="eventLast">
+		<div class="eventDiv" id="eventLast" >
 			<div class="row">
 				<div class="col-12">
 					<div class="card card-span mb-3 shadow-lg">
@@ -97,7 +97,7 @@
 										Attendance Event
 									</h1>
 									<p class="fs-1">
-										영해 10주년 기념 출석체크 이벤트<br> 누적일에 따른 알약 포인트 증정!<br>
+										영해 OPEN 기념 출석체크 이벤트<br> 누적일에 따른 알약 포인트 증정!<br>
 										(2023.01.01 - 2023.01.31)
 									</p>
 									<div class="d-grid bottom-0">
@@ -135,7 +135,7 @@
 								<div class="col-md-5 col-xl-7 col-xxl-8 g-0 order-0 order-md-1">
 									<img
 										class="img-fluid w-100 fit-cover h-100 rounded-top rounded-md-end rounded-md-top-0"
-										src="resources/img/event/birth0.PNG"  style="height: 420px;" alt="..." />
+										src="resources/img/event/birth00.png"  style="height: 420px;" alt="..." />
 								</div>
 								<div class="col-md-7 col-xl-5 col-xxl-4 p-4 p-lg-5">
 									<h1 class="card-title mt-xl-5 mb-4">

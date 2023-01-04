@@ -40,40 +40,109 @@
 		insert into attachment values(seq_attach.nextval, sysdate, #{attachName}, #{attachRename}, #{attachPath}, #{boardType}, seq_board.currval, 'Y')
 	</insert>
  -->	
+ 	<!-- 썸네일 삽입 -->
 	<insert id="insertThumbnail">
 		insert into attachment values(seq_attach.nextval, sysdate, #{attachName}, #{attachRename}, #{attachPath}, #{boardType}, seq_board.currval, 'Y')
 	</insert>
 	
+	<!-- 썸네일 가져오기 -->
+	<select id="selectThumbnail" resultMap="attachmentResultSet">
+		select * from attachment
+		where board_type in (11, 12, 13, 14) and serialnumber = #{boardNum}
+	</select>
+	<!-- 게시글 업데이트 -->
+	<update id="updateBoard">
+		update board 
+		set board_title = #{boardTitle}, board_content = ${boardContent}, 
+			  board_type = #{boardType}, board_modifydate = sysdate
+		where board_status = 'Y' and board_num = #{boardNum}
+	</update>
+	<!-- 썸네일 업데이트 -->
+	<update id="updateThumbnail">
+		update attachment 
+		set attach_rename = ${attachment.attachrename},
+			  attach_name = #{attachment.attachName}, attach_path = #{attachment.attachPath},
+			  board_type = #{boardType} where serialnumber = #{boardnum}
+	</update>
+	<!-- 게시글 조회수 -->
 	<update id="viewCount">
 		update board set board_view = board_view + 1
 		where board_num = #{boardNum}
 	</update>
-	
+	<!-- 게시글 상세보기 -->
 	<select id="boardView" resultMap="boardResultSet">
 		select * from board
-			join member using(user_num)
-		where board_status = 'Y' and board_num = #{boardNum}
+			join attachment on(board_num = serialnumber)
+			left join member using(user_num)
+		where board_status = 'Y' 
+				    and board_num = #{boardNum}
 	</select>
 	
-	<select id="photoView"  resultMap="attachmentResultSet">
+<!-- 	<select id="photoView"  resultMap="attachmentResultSet">
 		select * from attachment
 		where attach_status = 'Y' and serialnumber = #{boardNum}
-	</select>
+	</select> -->
 	
+	<!-- 게시글 삭제 -->
 	<update id="deleteBoard">
-		update board set board_status = 'N' where board_num = #{boardNo} and board_type = 1
+		update board set board_status = 'N' where board_num = #{boardNum}
 	</update>
-		
-	<update id="deletePhoto">
-		update attachment set attach_status = 'N' and board_num = #{boardNo}
+	<!-- 댓글 작성 -->
+	<insert id="insertReply">
+		insert into reply values(seq_reply.nextval, #{replyContent}, sysdate, default, #{boardType}, #{boardNum}, #{userNum})
+	</insert>
+	<!-- 댓글 리스트 -->
+	<select id="replyList" resultMap="replyResultSet">
+		select * from reply 
+			join member using(user_num)
+		where board_num = #{boardNum}
+		and reply_status = 'Y'
+		order by reply_num desc
+	</select>
+	<!-- 댓글 수 -->
+	<select id="replyCount" resultType="_int">
+		select count(*) from reply
+		where reply_status = 'Y' and board_num = #{boardNum}
+	</select>
+	<!-- 댓글 삭제 -->
+	<update id="deleteReply">
+		update reply set reply_status = 'N' where reply_num = #{replyNum}
 	</update>
-	
-	<!-- 임시 로그인 -->
-	<select id="selectMember" resultMap="memberResultSet">
-      select *
-      from member
-      where user_status='Y' and user_num=#{i}
-   	</select>
+	<!-- 조건 검색 수 -->
+	<select id="getSearchListCount" parameterType="map" resultType="_int">
+		select count(*) from board
+			join member using(user_num)
+			join attachment on(board_num = serialnumber)
+		where board_status = 'Y' and board.board_type in (11,12,13,14)
+		<if test="condition == 1">
+			and user_nickname like '%' || #{value} || '%'
+		</if>
+		<if test="condition == 2">
+			and board_title like '%' || #{value} || '%'
+		</if>
+		<if test="condition == 3">
+			and board_content like '%' || #{value} || '%'
+		</if>
+	</select>
+	<!-- 조건 검색 리스트 -->
+	<select id="searchList" parameterType="hashmap" resultMap="boardResultSet">
+		select * from board
+			join member using(user_num)
+			join attachment on(board_num = serialnumber)
+		where board_status = 'Y' and board.board_type in (11,12,13,14)
+		<choose>
+			<when test="condition == 1">
+				and user_nickname like '%' || #{value} || '%'
+			</when>
+			<when test="condition == 2">
+				and board_title like '%' || #{value} || '%'
+			</when>
+			<otherwise>
+				and board_content like '%' || #{value} || '%'
+			</otherwise>
+		</choose>
+		order by board_num desc
+	</select>
    	
    	<resultMap type="Member" id="memberResultSet">
       <id column="USER_NUM" property="userNum"/>
@@ -103,7 +172,19 @@
 		<result column="BOARD_STATUS" property="boardStatus"/>
 		<result column="USER_NUM" property="userNum"/>
 		<result column="BOARD_TYPE" property="boardType"/>
-		<association property="attachment" javaType="Attachment" resultMap="attachmentResultSet"></association>
+		<association property="attachment" javaType="Attachment" resultMap="attachmentResultSet" />
+		<association property="member" javaType="Member" resultMap="memberResultSet" />
+	</resultMap>
+	
+	<resultMap type="Reply" id="replyResultSet">
+		<id column="REPLY_NUM" property="replyNum"/>
+		<result column="REPLY_CONTENT" property="replyContent"/>
+		<result column="REPLY_DATE" property="replyDate"/>
+		<result column="REPLY_STATUS" property="replyStatus"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="BOARD_NUM" property="boardNum"/>
+		<result column="USER_NUM" property="userNum"/>
+		<association property="member" javaType="Member" resultMap="memberResultSet" />
 	</resultMap>
 	
 	<resultMap type="Attachment" id="attachmentResultSet">
@@ -117,20 +198,5 @@
 		<result column="ATTACH_STATUS" property="attachStatus"/>		
 	</resultMap>
 	
-	    <resultMap type="Member" id="member">
-        <id column="USER_NUM" property="userNum"/>
-        <result column="USER_ID" property="userId"/>
-        <result column="USER_NAME" property="userName"/>
-        <result column="USER_NICKNAME" property="userNickname"/>
-        <result column="USER_EMAIL" property="email"/>
-        <result column="USER_GENDER" property="gender"/>
-        <result column="USER_BIRTH" property="userBirth"/>
-        <result column="USER_PHONE" property="userPhone"/>
-        <result column="USER_RECOMMEND" property="userRecommend"/>
-        <result column="USER_ENROLLDATE" property="userEnrollDate"/>
-        <result column="USER_CNUMBER" property="userCNumber"/>
-        <result column="USER_STATUS" property="userStatus"/>
-        <result column="USER_MODIFYDATE" property="userModifyDate"/>
-     </resultMap>
 	
 </mapper>

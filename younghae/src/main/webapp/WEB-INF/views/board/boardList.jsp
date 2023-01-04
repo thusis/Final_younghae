@@ -31,6 +31,15 @@
 	}	
 	.col-lg-12{
 	color: green; }
+	#boardView{
+		background: white;
+		color: #24E082;
+		border: 2px solid #24E082;
+	}
+	#boardView:hover{
+		background: #24E082;
+		color: white;
+	}
 </style>
 </head>
 <body>
@@ -67,7 +76,7 @@
 <!-- 							  <option value="4">해시태그</option> -->
 							</select>
                                 <br>
-                                <input type="text" placeholder="Search..." id="searchValue" name="searchValue">
+                                <input type="search" placeholder="Search..." id="searchValue" name="searchValue">
                                 <button type="button" onclick="searchBoard();"><br><br><i class="fa-solid fa-magnifying-glass"></i></button>
                             </form>
                         </div>
@@ -148,9 +157,10 @@
 					<div class="row">
 					<c:forEach items="${ bList }"  var="b" >
 						<div class="col-lg-6 col-md-6 col-sm-6" >
-						<input type="hidden" value="${b.boardType}" name="boardType" class="boardType">
-						<input type="hidden" value="${b.boardNum}" name="boardNum" class="boardNum">
-						<input type="hidden" value="${b.userNum}" name="userNum" class="userNum">
+						<input type="hidden" value="${b.boardType}" name="boardType" class="boardType" >
+						${b.boardNum }
+						<input type="hidden" value="${b.boardNum}" name="boardNum" class="boardNum" >
+						<input type="hidden" value="${b.userNum}" name="userNum" class="userNum" >
 							<div class="blog__item">
 								<div class="blog__item__text">
 								<div class="blog__item__pic">	
@@ -165,8 +175,8 @@
 									<h5>
 										<a href="#">${b.boardTitle }	 </a>
 									</h5>
-									<a href="#" class="blog__btn" id="boardView" class="boardView" onclick="boardView();">READ MORE <span
-										class="arrow_right"></span></a>
+									<button type="button" class="blog__btn" id="boardView" >READ MORE <span
+										class="arrow_right"></span></button>
 								</div>
 							</div>
 						</div>
@@ -289,7 +299,62 @@
  								<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a
 									href="#">4</a> <a href="#">5</a> <a href="#">6</a> <a href="#">
 									<i class="fa fa-long-arrow-right"></i></a>  -->
-	<ul class="pagination d-flex justify-content-center">
+									
+									
+					<div class="col-lg-12 text-center" style="margin-top: 8%;">
+						<div class="product__pagination blog__pagination">
+							<c:url var="goBack" value="${ loc }">
+								  <c:if test="${ boardNum != null }">
+				                      <c:param name="boardNum" value="${ b.boardNum }"/>
+				                  </c:if>
+				                  <c:if test="${ searchValue != null }">
+				                      <c:param name="searchValue" value="${ searchValue }"/>
+				                  </c:if>
+				                  <c:if test="${boardType != null}">
+				                  	<c:param name="boardType" value="${boardType}"/>
+				                  </c:if>
+				                  <c:param name="page" value="${ pi.currentPage-1 }"/>
+							</c:url>
+							<c:if test="${ pi.currentPage > 1 }">
+									<a href="${ goBack }" aria-label="Previous"><i
+									class="fa fa-long-arrow-left"></i></a>
+							</c:if>
+						<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }"
+								var="p">
+							<c:url var="goNum" value="${ loc }">
+			                  <c:if test="${ boardNum != null }">
+			                      <c:param name="boardNum" value="${ boardNum }"/>
+			                  </c:if>
+			                  <c:if test="${ searchValue != null }">
+			                      <c:param name="searchValue" value="${ searchValue }"/>
+			                  </c:if>
+			                  <c:if test="${boardType != null}">
+			                  	<c:param name="boardType" value="${boardType}"/>
+			                  </c:if>
+			                  <c:param name="page" value="${ p }"/>
+							</c:url>
+								<a href="${ goNum }">${ p }</a>
+							</c:forEach>
+							<c:url var="goNext" value="${ loc }">
+ 					 <c:if test="${ boardNum != null }">
+                      <c:param name="boardNum" value="${ boardNum }"/>
+                  </c:if>
+                  <c:if test="${ searchValue != null }">
+                      <c:param name="searchValue" value="${ searchValue }"/>
+                  </c:if>
+                  <c:if test="${boardType != null}">
+                  	<c:param name="boardType" value="${boardType}"/>
+                  </c:if>
+                  <c:param name="page" value="${ pi.currentPage+1 }"/>
+							</c:url>
+							<c:if test="${ pi.currentPage <= 1 }">
+								<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+							</c:if>
+						</div>
+					</div>
+									
+									
+<%-- 	<ul class="pagination d-flex justify-content-center">
           <li>
               <c:url var="goBack" value="${ loc }">
                   <c:if test="${ boardNum != null }">
@@ -351,7 +416,7 @@
                 <i class="fa fa-long-arrow-right"></i>
               </a>
           </li>
-        </ul>
+        </ul> --%>
 							<!-- </div> -->
 						</div>
 					</div>
@@ -447,6 +512,14 @@
 
 <script>
 	
+		<!-- 조건검색 -->
+		const searchBoard = () => {
+			   const searchCondition = document.getElementById('searchCondition').value;
+			   const searchValue = document.getElementById('searchValue').value;
+			   
+			   location.href='${contextPath}/search.bo?searchCondition=' + searchCondition + '&searchValue=' + searchValue;
+		}
+	
 		<!-- 카테고리 -->
 	   const categorys = document.getElementsByClassName('ll');
 	   for(const category of categorys){
@@ -457,29 +530,26 @@
 		   });
 	   }
 	   
-		<!-- 조건검색 -->
-	   const searchBoard = () => {
-		   const searchCondition = document.getElementById('searchCondition').value;
-		   const searchValue = document.getElementById('searchValue').value;
-		   
-		   location.href='${contextPath}/search.bo?searchCondition=' + searchCondition + '&searchValue=' + searchValue;
-	   }
 		<!-- 상세보기 -->
-	   boardView = () => {
-		   const boardCard = document.getElementsByClassName('col-lg-6');
+		window.onload = () => {
+		   /* const bCardAll = document.querySelector('.col-sm-6'); */
+		   const boardCard = document.getElementsByClassName('blog__btn');
+		   
 		   for(const card of boardCard) {
 			   card.addEventListener('click', function() {
-				   const boardNum = this.querySelector('.boardNum').value;
-				   const writer = this.querySelector('.userNum').value;
-			   
-				location.href='${contextPath}/boardView.bo?boardNum=' + boardNum + '&writer=' + writer + '&page=' + ${pi.currentPage};
+				   const hiddens = this.parentElement.parentElement.parentElement.querySelectorAll('input');
+				   //console.log(hiddens);
+				   const boardCategory = hiddens[0].value;
+				   const boardNum = hiddens[1].value;
+				   //console.log(boardNum);
+				   const writer = hiddens[2].value;
+				   //console.log(writer);
+				location.href='${contextPath}/boardView.bo?boardCategory=' + boardCategory + '&boardNum=' + boardNum + '&writer=' + writer + '&page=' + ${pi.currentPage};
 	
 		   
 			 });
-		   }
-	   }
-	
-</script>
-
+		   }   
+		}
+	</script>
 </body>
 </html>

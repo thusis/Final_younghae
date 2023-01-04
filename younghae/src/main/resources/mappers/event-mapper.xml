@@ -34,6 +34,7 @@
 		<result column="COU_DISCOUNT" property="couDiscount"/>
 		<result column="COU_INTRO" property="couIntro"/>
 		<result column="USER_NUM" property="userNum"/>
+		<result column="COU_REGISTER" property="couRegister"/>
 	</resultMap>
 	
 	<resultMap type="Member" id="memberResultSet">
@@ -53,6 +54,18 @@
       <result column="USER_MODIFYDATE" property="userModifyDate"/>
    	  <result column="USER_POINT" property="userPoint"/>
    </resultMap>
+   
+   	<select id="attendanceCheck" resultType="_int">
+   		select count(*)
+        from event_attendance
+   			where att_date like TO_CHAR(SYSDATE, 'YY/MM/DD') and user_Num = #{userNum}
+   	</select>
+   	
+   	<select id="birthCheck" resultType="_int">
+   		select count(*)
+        from coupon
+   			where COU_PUBLISHDATE like TO_CHAR(SYSDATE, 'YY/MM/DD') and user_Num = #{userNum}
+   	</select>
 
 	<insert id="insertAttendance">
 		insert into event_attendance values(seq_att.nextval, sysdate, #{userNum}, 2)
@@ -79,7 +92,8 @@
 	</select>
 	
 	<insert id="insertCoupon">
-		insert into coupon values(seq_cou.nextval, sysdate, #{couponTimeLimit}, default, #{disCount}, #{disCountContent}, #{userNum})
+		insert into coupon values
+		(seq_cou.nextval, sysdate, #{couponTimeLimit}, default, #{disCount}, #{disCountContent}, #{userNum}, #{couponRegister})
 	</insert>
  	
  	

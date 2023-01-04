@@ -32,4 +32,16 @@ public class EventDAO {
 		return sqlSession.insert("eventMapper.insertCoupon", map);
 	}
 
+	public int attendanceCheck(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("eventMapper.attendanceCheck", userNum);
+	}
+
+	public int checkEvent(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("eventMapper.checkEvent", userNum);
+	}
+
+	public int birthCheck(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("eventMapper.birthCheck", userNum);
+	}
+
 }

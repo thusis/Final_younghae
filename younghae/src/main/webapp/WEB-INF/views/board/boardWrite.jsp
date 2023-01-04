@@ -80,7 +80,7 @@
 	<div class="container">
 		<div class="bn_index mt-5">
 			<ul>
-				<li>자유 게시판</li>
+				<li>건강 이야기</li>
 				<li><b>/</b></li>
 				<li><a href="#">게시글 작성</a></li>
 			</ul>
