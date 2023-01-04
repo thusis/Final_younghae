@@ -285,11 +285,6 @@
 							tbody.append(tr);
 						}
 						
-// 						const page = document.getElementById('pagination');
-// 						page.innerHTML = '';
-						
-						console.log(data.pi.currentPage-1);
-						
 						const totalData = data.listCount;
 						
 						paging();
@@ -301,8 +296,8 @@
 			            	const totalPage = Math.ceil(data.listCount/dataPerPage);
 			            	const pageGroup = Math.ceil(data.pi.currentPage/pageCount);
 			            	
-			            	console.log("dataPerPage : " + dataPerPage);
-			            	console.log("pageGroup : " + pageGroup);
+// 			            	console.log("dataPerPage : " + dataPerPage);
+// 			            	console.log("pageGroup : " + pageGroup);
 			            	
 			            	var last = pageGroup * pageCount;
 			            	
@@ -310,7 +305,7 @@
 			            		last = totalPage;
 			            	}
 			            	
-			            	console.log("last : "+ last);
+// 			            	console.log("last : "+ last);
 			            	
 			            	let first = last - (pageCount - 1);
 			            	
@@ -318,15 +313,15 @@
 			            	const prev = data.pi.startPage - 1;
 			            	const next = data.pi.endPage + 1;
 			            	
-			            	console.log("prev : " + prev);
-			            	console.log("next : " + next);
+// 			            	console.log("prev : " + prev);
+// 			            	console.log("next : " + next);
 			            	
 			            	
 			            	if(totalPage < 1){
 			            		first = last;
 			            	}
 			            	
-			            	console.log("first : " + first);
+// 			            	console.log("first : " + first);
 			            	
 			            	const pages = $('#pages');
 			            	pages.empty();
@@ -348,9 +343,6 @@
 		            		if (next > 5 && next < totalPage){
         						pages.append('<li class="pagination-item">' + '<a onclick="GetTarget(' + (next) + ');" style="margin-left: 2px">next</a></li>');
 		            		}
-			            	
-		            		
-		                    
 			            }
 					},
 					error:(data)=>{

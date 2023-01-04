@@ -463,12 +463,17 @@ public class SupplementController {
 		PageInfo pi =  Pagination.getPageInfo(currentPage, reviewCount, 10);
 		
 		ArrayList<Review> r = new ArrayList<Review>();
-		if(check.contains("Name")) {
-			r = sService.adminReviewListNa(pi, 1);
-		}else if(check.contains("Number")){
+		
+		if(check == null) {
 			r = sService.adminReviewListN(pi, 1);
 		}else {
-			r = sService.adminReviewListG(pi, 1);
+			if(check.contains("Name")) {
+				r = sService.adminReviewListNa(pi, 1);
+			}else if(check.contains("Number")){
+				r = sService.adminReviewListN(pi, 1);
+			}else if(check.contains("Good")){
+				r = sService.adminReviewListG(pi, 1);
+			}
 		}
 		
 		System.out.println(r);
@@ -485,5 +490,10 @@ public class SupplementController {
 	@RequestMapping("goAdminReviewList.su")
 	public void goAdminReviewList(@RequestParam("page") int page, Model model) {
 		adminReviewList(page, null, null);
+	}
+	
+	@RequestMapping("AdminReview.su")
+	public String AdminReview() {
+		return "admin_ReviewPage";
 	}
 }
