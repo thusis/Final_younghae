@@ -25,4 +25,6 @@ public class Story {
 	private int boardType;
 	private Attachment attachment;
 	private Member member;
+	private String check;
+	private Clip clip;
 }

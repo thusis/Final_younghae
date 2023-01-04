@@ -161,7 +161,12 @@
 	                                    <c:if test="${ loginUser ne null }">
 				                            <div class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
 			                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
-				                                <i class="bi bi-bookmark-plus"></i>
+			                                	<c:if test="${ story.check eq 'Y'}">
+					                                <i class="bi bi-bookmark-plus-fill"></i>
+			                                	</c:if>
+			                                	<c:if test="${ story.check ne 'Y' }">
+					                                <i class="bi bi-bookmark-plus"></i>			                                		
+			                                	</c:if>
 				                            </div>
 			                            </c:if>
 	                                </ul>
