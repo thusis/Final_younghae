@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.young.member.dao.MemberDAO;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.Point;
 
 @Service("mService")
 public class MemberServiceImpl implements MemberService {
@@ -83,7 +84,28 @@ public class MemberServiceImpl implements MemberService {
 		mDAO.insertBasicAddress(sqlSession,addressMap);
 	}
 	
-
+	@Override
+	public Member searchRecommend(String otherRecommend) {
+		return mDAO.searchRecommend(sqlSession,otherRecommend);
+	}
 	
+	@Override
+	public int pointAdd(HashMap<String, Object> map) {
+		return mDAO.pointAdd(sqlSession,map);
+	}
 	
+	@Override
+	public int checkRecommend(String userRecommend) {
+		return mDAO.checkRecommend(sqlSession,userRecommend);
+	}
+	
+	@Override
+	public void totalPoint(int i) {
+		mDAO.totalPoint(sqlSession,i);
+	}
+	
+	@Override
+	public Member searchMyUserNum(String userId) {
+		return mDAO.searchMyUserNum(sqlSession,userId);
+	}
 }

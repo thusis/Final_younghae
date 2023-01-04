@@ -1,6 +1,7 @@
 package com.kh.young.member.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -30,6 +31,8 @@ import com.kh.young.member.exception.MemberException;
 import com.kh.young.member.service.KakaoService;
 import com.kh.young.member.service.MemberService;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.Point;
+import com.kh.young.myPage.service.MyPageService;
 
 @SessionAttributes({"loginUser", "access_Token"})
 @Controller
@@ -148,16 +151,36 @@ public class MemberController {
  			str = "19"+str;
  			str = str.substring(0,4)+"-"+str.substring(4,6)+"-"+str.substring(6,8);
  		}
- 		System.out.println(req.getParameter("userBirth"));
- 		
  		
  		java.sql.Date d = java.sql.Date.valueOf(str);
  		
  		m.setUserBirth(d);
  		
+ 		int resultPoint = 0;
+ 		
         //추천인코드입력하고 다른 추천포인트올려주기.(포인트단하면서하기)
  		
-
+ 		if(m.getUserRecommend()!="") {
+ 			String userRecommend = m.getUserRecommend();
+ 			// 있는지없는지확인
+ 			resultPoint = mService.checkRecommend(userRecommend);
+ 	 		System.out.println(resultPoint);
+ 	 		//있으면
+ 			if(resultPoint >0) {
+ 				//usernum가져와서
+ 				Member otherRecommend= mService.searchRecommend(userRecommend);
+ 				
+ 				HashMap<String, Object> recommendMap = new HashMap < String, Object > ();
+ 				recommendMap.put("id", otherRecommend.getUserNum());
+ 				recommendMap.put("updateName","추천인코드");
+ 				recommendMap.put("updatePoint", "+1000");
+ 				//해당 usernum에 insert
+ 				mService.pointAdd(recommendMap);
+ 				//해당 유저 총점수 업데이트.
+ 				mService.totalPoint(otherRecommend.getUserNum());
+ 			}
+ 		}
+ 	
         //추천인코드자동부여
         String generatedString = RandomStringUtils.randomAlphanumeric(6);
         //추천인이 동일한지여부하고 다시돌리기
@@ -220,7 +243,21 @@ public class MemberController {
         map.put("userAddressDetail", req.getParameter("userAddressDetail"));
         map.put("userHealth", userHealth);
 
-        int resultGenral = mService.insertMemberAddress(map);   
+        int resultGenral = mService.insertMemberAddress(map); 
+        
+        if(resultPoint>0) {
+        	//usernum가져와서
+				Member myRecommend= mService.searchMyUserNum(m.getUserId());
+				
+				HashMap<String, Object> MyPoint = new HashMap < String, Object > ();
+				MyPoint.put("id", myRecommend.getUserNum());
+				MyPoint.put("updateName","추천인코드");
+				MyPoint.put("updatePoint", "+1000");
+				//해당 usernum에 insert
+				mService.pointAdd(MyPoint);
+				//해당 유저 총점수 업데이트.
+				mService.totalPoint(myRecommend.getUserNum());
+        }
 
         if (result > 0 && resultGenral > 0) {
             return "redirect:home.do";
