@@ -10,6 +10,7 @@ import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
@@ -63,6 +64,8 @@ public interface ShoppingService {
 	int insertOrderDetails(OrderDetails od);
 	
 	ArrayList<OrderListDTO> selectOrderList(String orderCode);
+	
+	ArrayList<Supplement> searchList(String search);
 	
 	
 

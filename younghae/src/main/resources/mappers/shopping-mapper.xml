@@ -298,5 +298,11 @@
 	        right outer join order_details using(order_code)
 	    where order_code = #{orderCode}
 	</select>
+	
+	<select id="selectSearchList" resultMap="supplementResultSet">
+		select  *
+		from product
+		where pro_name like '%'||#{search}||'%'
+	</select>
 
 </mapper>
