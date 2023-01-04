@@ -20,4 +20,5 @@ public class ChatReserv {
 	private Date reservSchedule;
 	private String isApproved;
 	private String isCompleted;
+	private int reservHowLong;
 }
