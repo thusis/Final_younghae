@@ -321,4 +321,9 @@ public class StoryController {
 		return "admin_StoryPage";
 
 	}
+	
+	@RequestMapping("AdminwriteStory.st")
+	public String AdminwriteStory() {
+		return "story_write";
+	}
 }

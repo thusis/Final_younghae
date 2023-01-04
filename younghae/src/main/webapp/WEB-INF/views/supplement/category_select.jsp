@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +43,12 @@
 		font-weight: 800;
 		color: #FD9F28;
 	}
+	
 	.product__details__quantity_1 :hover{
+		cursor: pointer;
+	}
+	
+	.product__details__quantity :hover{
 		cursor: pointer;
 	}
 </style>
@@ -267,7 +273,7 @@
 														<p style="color: black; font-size: 130%;">${ item.proGrade }</p>
 													</div>
 													<div class="text-right font-weight-bold pr-2% pt--3 mb-1 mt-1">
-														${ item.proPrice }&nbsp;원&nbsp;&nbsp;</div>
+														<fmt:formatNumber type="number" maxFractionDigits="3" value="${ item.proPrice }" />&nbsp;원&nbsp;&nbsp;</div>
 												</div>
 												<br>
 												<br>
@@ -285,14 +291,6 @@
 							<li><a class="nav-link active" data-toggle="tab"
 								href="#tabs-1" role="tab" aria-selected="true">Reviews <span>(${ reviewCount })</span></a>
 							</li>
-							<!-- <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-2" role="tab"
-                                    aria-selected="false">Information</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-toggle="tab" href="#tabs-3" role="tab"
-                                    aria-selected="false">Description</a>
-                            </li> -->
 						</ul>
 						<div class="tab-content">
 							<div class="tab-pane active" id="tabs-1" role="tabpanel">

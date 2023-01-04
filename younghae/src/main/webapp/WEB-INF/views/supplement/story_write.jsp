@@ -238,7 +238,7 @@
 
     <script>
       $('#summernote').summernote({
-        placeholder: 'Hello stand alone ui',
+        placeholder: '글 내용을 입력해주세요! 첫번쨰 이미지가 썸네일이 됩니다.',
         tabsize: 2,
         height: 500,
         disableResizeEditor: true,
