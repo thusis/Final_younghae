@@ -18,6 +18,10 @@
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
     <style>
 
+		h1, h2, h3, h4, h5, h6, span, p{
+		font-family: 'IBM Plex Sans KR', sans-serif;
+		}
+        
         .product__item{
             width: 200px;
         }
@@ -117,6 +121,19 @@
             color: rgb(0, 123, 255);
             font-weight: bold;
         }
+        
+        .jh_featured_item_pic{
+     	     vertical-align:middle;
+             cursor : pointer;
+        	height : 4.5rem;
+        	text-align:center;
+	        background-color: #DCFFE9;
+	        border-radius : 0.5rem;
+        }
+        .jh_featured_item_pic p{
+        	line-height:4.5rem;
+	        color: black;
+	   }
     </style> 
     <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">  
 </head>
@@ -127,10 +144,11 @@
 
    <div class="container2">
       <div class="main-view">
-         <ul>
-            <li><a href="${contextPath }/reviewEvent.ev"><img src="resources/img/event/Review1.PNG" style="width:100%; height:350%;" /></a></li>
-            <li><a href="${contextPath }/attendanceEvent.ev"><img src="resources/img/event/attend3.png" style="width:100%; height:350%;"/></a></li>
-            <li><a href="${contextPath }/birthEvent.ev"><img src="resources/img/event/birth0.PNG" style="width:100%; height:350%;"/></a></li>
+           <a href="${contextPath }/reviewEvent.ev"><img src="resources/img/mainbanner1.png" style="width:100%; height:350px;" /></a>
+<!--          <ul> -->
+<%--             <li><a href="${contextPath }/reviewEvent.ev"><img src="resources/img/event/Review1.PNG" style="width:100%; height:350%;" /></a></li> --%>
+<%--             <li><a href="${contextPath }/attendanceEvent.ev"><img src="resources/img/event/attend3.png" style="width:100%; height:350%;"/></a></li> --%>
+<%--             <li><a href="${contextPath }/birthEvent.ev"><img src="resources/img/event/birth0.PNG" style="width:100%; height:350%;"/></a></li> --%>
 
 
 
@@ -142,14 +160,17 @@
             
             
             
-         </ul>
+<!--          </ul> -->
       </div>
    </div>
 
     <!-- Product Section Begin -->
     <section class="product spad" style="margin-top: -5%;">
         <div class="container" >
-			            <!-- 영양제/검색 -->
+        
+
+        
+			<!-- 영양제/검색 -->
             <div class="row">
 				<div class="col-lg-12">
 					<div class="section" style="padding-left: 25%;">
@@ -186,11 +207,12 @@
 					</div>
 					<br>
 					<br>
-					<div class="section-title">
-						<h2 style="position: absolute; left: -5%; right: 60%; height: 4px; width: 40%; background: #24E082; content: ''; margin: 0 auto; display: inline; margin-top: 2%"></h2>
-						<h2 style="color: #24E082; display: inline;">영양성분</h2>
-						<h2 style="position: absolute; left: 60%; right: -5%; height: 4px; width: 40%; background: #24E082; content: ''; margin: 0 auto; display: inline; margin-top: 2%"></h2>
-					</div>
+				<div style="padding: 30px 0 10px 0;" >
+					<div class="row justify-content-between">
+		            <h3 class="text-start" style="display:inline-block; font-weight: 700;">영양성분 조회</h3>
+		            </div>
+		            <hr style="border:1px solid #24E082; background-color: #24E082;">
+		        </div>
 				</div>
 			</div>
 			
@@ -198,7 +220,8 @@
 				<c:forEach items="${ jhSupplmentList }" var="c" begin="0" end="5">
 					<div class="col-lg-2 col-md-3 col-sm-3 mix fastfood vegetables">
 						<div class="featured__item">
-							<div class="featured__item__pic set-bg" style="height:165px; text-align:center;" >
+<!-- 							<div class="featured__item__pic set-bg" style="height:165px; text-align:center;" > -->
+							<div class="jh_featured_item_pic set-bg" style="text-align:center;" >
 								<input type="hidden" value="${ c.cateNum }">
 								<p>${ c.cateName }</p>
 							</div>
@@ -208,21 +231,18 @@
 			</div>
 
 
-
-
-
-
-
-
-
-			<br><br><br><br>
- 
 			<!-- 전체 상품 섹션-->
 			<div id="searchList">
             <div class="row">
-                <p class="col" style="color: #24E082; font-weight: bold; font-size: 30px; display: inline;">전체 상품</p><br><br><br>
-                <button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/allView.sh'">더보기</button>
-                <br>
+            	<div class="col-lg-12">
+            	<div style="padding: 30px 0 10px 0;" >
+            		<div class="row justify-content-between">
+	            	<h3 class="text-start" style="display:inline-block; font-weight: 700;">전체 상품</h3>
+	            	<button class="text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none;" onclick="location.href='${contextPath}/allView.sh'">더보기</button>
+		        	</div>
+		        	<hr class="row" style="border:1px solid #24E082; background-color: #24E082;">
+                </div>
+                </div>
                 
                 <!-- 건강고민별 제품섹션 -->
 <!--                 <div class="col-lg-12"> -->
@@ -267,8 +287,55 @@
                 </c:forEach>
             </div><br><br>
             <!-- 쇼핑/전체 상품 섹션 끝-->
-            
 
+            <!-- ================================================================-->
+            
+			<div class="row">
+				<div class="col-lg-6"> <!-- 1열 -->
+				 <div style="padding: 30px 0 10px 0;" >
+		            	<h3 class="text-start" style="display:inline-block; font-weight: 700;">건강해지는 이야기</h3>
+		            <hr style="border:1px solid #24E082; background-color: #24E082;">
+		        </div>
+				        <div class="bn_boardlist mt-2" style="background-color: #ffffff;">
+			            <table class="table" >
+			                <thead>
+			                  <tr class="text-teal-100">
+			                    <th scope="col" class="col-lg-4">제목</th>
+			                    <th scope="col">조회수</th>
+			                  </tr>
+			                </thead>
+			                <tbody>
+			                    <c:forEach items="${columnlist}" var="st" begin="0" end="5" >
+				                    <tr class="questionTr">
+				                        <td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${st.boardTitle}</td>
+				                        <td>${st.boardView }</td>
+				                    </tr>
+			                    </c:forEach>
+			                </tbody>
+			            </table>
+        				</div>
+				</div><!-- 1열 -->
+				
+				<div class="col-lg-6"><!-- 2열 -->
+				<div style="padding: 30px 0 10px 0;" >
+		            <h3 class="text-start" style="display:inline-block; font-weight: 700;">활동하러 가기</h3>
+		            <hr style="border:1px solid #24E082; background-color: #24E082;">
+		        </div>
+	                <div class="bn_homebox" style="padding-left: 2rem;" onclick="location.href='${contextPath}/writequestion.qa'"><h4><b>질문하러 가기</b></h4></div>
+	                <div class="bn_homebox row" onclick="location.href='${contextPath}/open.ch'">
+	                    <div class="col-lg-9">
+	                        <h4><b>안전한 복용을 위해</b></h4>
+	                        <h6><b>전문 의료인과</b></h6>
+	                        <h6><b>1:1채팅 서비스를 시작해보세요</b></h6>
+	                        <br>
+	                        <h6>영해는 전문 의료인과 1:1 채팅 서비스를 제공합니다</h6>
+	                    </div>
+	                    <div class="col-lg-3">
+	                        <img src="resources/img/qna/chat.png" alt="채팅" width="">
+	                    </div>
+	                </div>
+	            </div><!-- 2열 -->
+			</div>
 			
 
 
@@ -399,7 +466,8 @@
 							
 							content.setAttribute('class', 'col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables');
 							
-							content.innerHTML = '<div class="featured__item"><div class="featured__item__pic set-bg" style="height:165px;text-align:center;">'+
+// 							content.innerHTML = '<div class="featured__item"><div class="featured__item__pic set-bg" style="height:165px;text-align:center;">'+
+							content.innerHTML = '<div class="featured__item"><div class="jh_featured_item_pic set-bg" style="height:165px;text-align:center;">'+
 												'<input type="hidden" value="'+ d.cateNum +'"><p>'+ d.cateName +'</p>'+
 												'</div></div>';
 												
@@ -412,9 +480,8 @@
 				});
 			});
 	        
-	        const Allcategory = document.getElementsByClassName("featured__item__pic set-bg");
-	        
-	        $(document).on("click", ".featured__item__pic.set-bg", function(){
+// 	        $(document).on("click", ".featured__item__pic.set-bg", function(){
+	        $(document).on("click", ".jh_featured_item_pic.set-bg", function(){
 	                console.log(this);
 	                const cateNum = this.children[0].value;
 	                const cateName = this.children[1].innerText;

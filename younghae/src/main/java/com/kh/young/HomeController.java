@@ -13,9 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Story;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.service.ShoppingService;
-import com.kh.young.supplement.contorller.SupplementController;
+import com.kh.young.story.service.StoryService;
 import com.kh.young.supplement.service.SupplementService;
 
 /**
@@ -27,10 +28,13 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@Autowired
-	private ShoppingService shService;
+	private ShoppingService shService; //쇼핑
 	
 	@Autowired
-	private SupplementService sService;
+	private SupplementService sService; //영양제
+	
+	@Autowired
+	private StoryService stService; //스토리
 	
 	   @RequestMapping(value = "/", method = RequestMethod.GET)
 	   public String home2(Model model) {
@@ -44,11 +48,20 @@ public class HomeController {
 		   ArrayList<ProCategory> jhSupplmentList = sService.allCategory(pi);
 		   /**영양제===============================================================**/
 		   
+		   /**컬럼리스트===============================================================**/
+		   PageInfo pi2 =  Pagination.getPageInfo(1, 10, 10);
+		   ArrayList<Story> columnlist = stService.allStory(pi2);
+		   /**컬럼리스트===============================================================**/
+		   
+		   
+		   
 		   System.out.println("h컨트롤러47:supplementList"+supplementList);
 		   System.out.println("h컨트롤러47:jhSupplmentList"+jhSupplmentList);
+		   System.out.println("h컨트롤러47:columnlist"+columnlist.size());
 		   
 		   model.addAttribute("supplementList",supplementList);
 		   model.addAttribute("jhSupplmentList",jhSupplmentList);
+		   model.addAttribute("columnlist",columnlist);
 		   
 		   
 		   
