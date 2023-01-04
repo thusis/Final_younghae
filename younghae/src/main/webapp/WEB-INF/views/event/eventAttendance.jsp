@@ -31,8 +31,11 @@
 			 usemap="#attendanceMap" class="attendanceImg"/>
 <!-- 			 <h2 class="attendanceCount">7</h2> 출석횟수 -->
 		<map name="attendanceMap" id="attendanceMap" >
-		<area shape="rect" coords="361, 854, 723, 946" style="cursor:pointer;" onclick="location.href='${contextPath}/insertAttendance.ev'">
+		<area shape="rect" coords="361, 854, 723, 946" style="cursor:pointer;">
 		</map>
+		<div style="left: 100px; width: 2400px; bottom: 80px; font-size: 2.2em; font-weight: bold; color:orange; position: absolute;">
+			5
+		</div>
 	</div>
 	<div class="attendance">
 		<img src="resources/img/event/attend2.png"
@@ -42,11 +45,11 @@
 	<br>
 	<br>
 	<div id="eventAttendanceBtn">
-		<a href="#" class="btn-3d purple"  data-bs-toggle="modal" data-bs-target="#reportMo" id="atAward">출석 보상받기</a>
+		<a href="#" class="btn-3d purple"  data-bs-toggle="modal"  id="atAward">출석 보상받기</a>
 	</div>
 	
-	     <!-- model -->
-        <div class="modal fade" id="reportMo" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	     <!-- modal -->
+        <div class="modal fade" id="modal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -147,21 +150,64 @@
 	</footer>
 	<!-- Footer Section End -->
 
-	<!-- 버튼 -->
+	
 	<script>
-		$('a').click(function(event) {
-			event.preventDefault();
+	
+		<!-- 출석하기 -->
+		document.getElementById('attendanceMap').addEventListener("click", function() {
+			console.log("출석하기 클릭 요청 들어오나?")
+			$.ajax({
+				url: '${contextPath}/insertAttendance.ev',
+				data : {userNum:'${loginUser.userNum}'},
+				success: (data) => {
+					if(data == 1) {
+// 						var modal1 = document.getElementById('modal1');
+						$('#modal1').modal('show');
+						console.log("이미 출석체크 됨");
+						
+					} else if (data == 2) {
+						console.log("출석체크 완료");
+					} else if (data == 3) {
+						console.log("출석체크 실패");
+					}
+				},
+				error: (data) => {
+					
+				}
+			});
 		});
 		
-		document.getElmentById('atAward').addEventListener('click', function() {
+		<!-- 출석보상 -->
+		document.getElementById('atAward').addEventListener('click', function() {
+			console.log("출석보상버튼");
 			$.ajax({
 				 url:'${contextPath}/attendanceEventAward.ev',
 				 data: {key : 1},
-				 success: 
-				 error:
+				 success: (data)=>{
+					 
+					 console.log("출석보상요청성공")
+					 console.log(data);
+					 if(data==1){
+						 console.log("포인트 지급 성공")
+						 
+					 }else{
+						 console.log("포인트 지급 실패")
+					 }
+				 },
+				 error: (data)=>{
+					 modal.style.display = "none";
+					 console.log("출석보상요청실패")
 					 alert("조건을 충족하지 않습니다")
+				 },
+				 complete : (data)=>{
+					 console.log("출석보상요청완료")
+				 }
 			});
-		})
+		});
+		
+		$('a').click(function(event) {
+			event.preventDefault();
+		});
 	</script>
 
 	

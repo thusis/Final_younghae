@@ -6,21 +6,21 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.kh.young.event.exception.eventException;
 import com.kh.young.event.service.EventService;
 import com.kh.young.model.vo.Member;
-import com.kh.young.model.vo.Point;
 
-@SessionAttributes("loginUser")
+@SessionAttributes({"loginUser", "access_Token"})
 @Controller	
 public class EventController {
 	
@@ -52,35 +52,50 @@ public class EventController {
 	public String replyEventView() {
 		return "eventReply";
 	}
-	/** 출석 이벤트 **/
-	//출석체크하기 버튼 insert
-	@RequestMapping("insertAttendance.ev")
-	public String insertAttendance(HttpSession session
-//														ServletContext application
-			) {
 	
-//		int userNum = ((Member)session.getAttribute("loginUser")).getUserNum();
-//		int userNum = ((Member)application.getAttribute("loginUser")).getUserNum();
-//		Member m = (Member)session.getAttribute("loginUser");
-//		System.out.println("m : " + m);
-//		int userNum = m.getUserNum();
+	/** 출석 이벤트 **/
+	@RequestMapping("insertAttendance.ev")
+	@ResponseBody
+	public String insertAttendance(HttpSession session, HttpServletResponse response) {
+	
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNum = loginUser.getUserNum();
 		
-		int userNum = 27;
-		int result = eService.insertAttendance(userNum);
+		System.out.println("userNum : " + userNum);
 		
-		if(result > 0) {
-			return "redirect:attendanceEvent.ev";
+		//당일 출석체크 여부
+		int attendanceCheck = eService.attendanceCheck(userNum);
+		
+//		HashMap<String, Object> map = new HashMap<>();
+//		map.put("userNum", userNum);
+//		int checkEvent = eService.checkEvent(userNum);
+		
+		System.out.println(attendanceCheck);
+		
+		if(attendanceCheck > 0) {
+//			throw new eventException("이미 출석체크를 하셨습니다.");
+			return String.valueOf("1");
 		} else {
-			throw new eventException("출석체크 실패");
-		}
+			int result = eService.insertAttendance(userNum);	
 		
+			if(result > 0) {
+//				return "redirect:attendanceEvent.ev";
+				return String.valueOf("2");
+			} else {
+				return String.valueOf("3");
+//				throw new eventException("출석체크 실패");
+			}
+		}
+//		return null;		
 	}
 	
 	@RequestMapping("attendanceEventAward.ev")
-	public String eventAward(HttpSession session, @ModelAttribute Point p) {
+	@ResponseBody
+	public String eventAward(HttpSession session, HttpServletResponse response) {
 //		int userNum = ((Member)session.getAttribute("loginUser")).getUserNum();
-		Member m = (Member)session.getAttribute("loginUser");
-		int userNum = m.getUserNum();
+
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNum = loginUser.getUserNum();
 		
 		//출석 수 카운트
 		int atCount = eService.selectCountAttendance(userNum); 
@@ -96,28 +111,40 @@ public class EventController {
 		  } else if(atCount == 30) { //5000포인트 추가
 			  point = 5000;
 			  point_amount = "+5000";
+		  } else {
+			  throw new eventException("출석 보상 조건이 충족되지 않았습니다");
 		  }
-		  p.setUserNum(userNum);
+		  
 		  HashMap<String, Object> pointTable = new HashMap<>();
 		  pointTable.put("point", point);
 		  pointTable.put("userNum", userNum);
 		  pointTable.put("content", "출석이벤트");
 		  pointTable.put("point_amount", point_amount);
 		  
+		  //포인트 테이블 내역 추가, 회원 포인트 업데이트
 		  int attendanceAward = eService.attendanceAward(pointTable);
 		  int updatePoint = eService.updatePoint(pointTable);
-		
-		return "eventAttendance";
+		  
+		  if(attendanceAward > 0 && updatePoint > 0) {
+			  return String.valueOf("1");
+//			  return String.valueOf("포인트 지급 성공");
+//			  	return "eventAttendance";			  
+		  } else {
+			  return String.valueOf("0");
+//			  return String.valueOf("포인트 지급 실패");
+//			  throw new eventException("포인트 지급 실패");
+		  }
+		  
 	}
 	
 	/** 생일 이벤트 
 	 * @throws Exception **/
 	@RequestMapping("birthdayEvent.ev")
-	public String checkBirth(HttpSession session, Model model) throws Exception {
-//		int userNum = ((Member)session.getAttribute("loginUser")).getUserNum();	
-//		Member m = (Member)session.getAttribute("loginUser");
-//		int userNum = m.getUserNum();
-		int userNum = 27;
+	@ResponseBody
+	public String checkBirth(HttpSession session, Model model, HttpServletResponse response) throws Exception {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNum = loginUser.getUserNum();
 		
 		int checkBirth = eService.checkBirth(userNum);
 	
@@ -126,30 +153,37 @@ public class EventController {
 		System.out.println("nowMonth : " + nowMonth);
 		System.out.println("checkBirth : " + checkBirth);
 		String coupon = LocalDate.now().toString();
-		int disCount = 20;
-		String disCountContent = "생일 이벤트 쿠폰";
+		int disCount = 7;
+		String disCountContent = "HappyBirthday! 생일 기념 쿠폰!(7% 할인 쿠폰)";
+		String couponRegister = "xcvawersdfs";
 		
 		String couponTimeLimit = AddDate(coupon, 0, 1, 0);
 		 HashMap<String, Object> map = new HashMap<>();
 		
-		if(checkBirth == nowMonth) {
-			map.put("userNum", userNum);
-			map.put("couponTimeLimit", couponTimeLimit);
-			map.put("disCount", disCount);
-			map.put("disCountContent", disCountContent);
-			int result = eService.insertCoupon(map);
-			
-			if(result == 1) {
-				model.addAttribute("result", 1);
-				return "eventBirthday";
+		 int birthCheck = eService.birthCheck(userNum);
+		if(birthCheck == 0) {
+			if(checkBirth == nowMonth) {
+				map.put("userNum", userNum);
+				map.put("couponTimeLimit", couponTimeLimit);
+				map.put("disCount", disCount);
+				map.put("disCountContent", disCountContent);
+				map.put("couponRegister", couponRegister);
+				int result = eService.insertCoupon(map);
+				
+				if(result == 1) {
+					model.addAttribute("result", 1);
+					return "eventBirthday";
+				} else {
+					throw new eventException("쿠폰 발급 실패");
+				}
 			} else {
-				throw new eventException("쿠폰 발급 실패");
+				throw new eventException("생일자가 아닙니다");
 			}
 		} else {
-			throw new eventException("생일자가 아닙니다");
+			throw new eventException("이미 쿠폰을 발급 받으셨습니다.");
 		}
-		
 	}
+//현재 날짜 뽑아오기	
 private static String AddDate(String strDate, int year, int month, int day) throws Exception {
 		
         SimpleDateFormat dtFormat = new SimpleDateFormat("yyyyMMdd");

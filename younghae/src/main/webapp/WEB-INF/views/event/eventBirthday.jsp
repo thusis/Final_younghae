@@ -27,7 +27,7 @@
 	<br>
 	<br>
 	<div class="attendance">
-		<img src="resources/img/event/birth1.png"
+		<img src="resources/img/event/birth2.png"
 			style="width: 800px; height: 800px;">
 	</div>
 

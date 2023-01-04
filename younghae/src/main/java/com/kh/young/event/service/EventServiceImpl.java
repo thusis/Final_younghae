@@ -46,6 +46,21 @@ public class EventServiceImpl implements EventService {
 		return eDAO.insertCoupon(sqlSession, map);
 	}
 
+	@Override
+	public int attendanceCheck(int userNum) {
+		return eDAO.attendanceCheck(sqlSession, userNum);
+	}
+
+	@Override
+	public int checkEvent(int userNum) {
+		return eDAO.checkEvent(sqlSession, userNum);
+	}
+
+	@Override
+	public int birthCheck(int userNum) {
+		return eDAO.birthCheck(sqlSession, userNum);
+	}
+
 
 
 

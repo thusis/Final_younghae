@@ -1,6 +1,7 @@
 package com.kh.young.board.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -8,6 +9,8 @@ import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
+import com.kh.young.model.vo.Reply;
+import com.kh.young.model.vo.Story;
 
 public interface BoardService {
 
@@ -17,16 +20,30 @@ public interface BoardService {
 	
 	int insertBoard(Board b);
 
-	int deleteBoard(int boardNo);
+	int deleteBoard(int boardNum);
 
-	int deletePhoto(int boardNo);
-
-	Board boardView(int boardNum);
+	Story boardView(int boardNum);
 
 	int insertThumbnail(Attachment attm);
 	
-	//임시 로그인
-	Member selectMember(int i);
+	int insertReply(Reply r);
+
+	ArrayList<Reply> replyList(int boardNum);
+
+	int getSearchListCount(HashMap<String, Object> map);
+
+	ArrayList<Board> searchList(HashMap<String, Object> map, PageInfo pi);
+
+	int replyCount(int boardNum);
+
+	int deleteReply(int replyNum);
+
+	Attachment selectThumbnail(int boardNum);
+
+	int updateThumbnail(Story b);
+
+	int updateBoard(Story b);
+
 
 
 

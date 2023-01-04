@@ -23,4 +23,5 @@ public class Reply {
 	private int boardType;
 	private int boardNum;
 	private int userNum;
+	private Member member;
 }

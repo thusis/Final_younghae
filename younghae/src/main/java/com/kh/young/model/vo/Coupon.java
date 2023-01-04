@@ -21,4 +21,5 @@ public class Coupon {
 	private int couDiscount;
 	private String couIntro;
 	private int userNum;
+	private String couRegister;
 }

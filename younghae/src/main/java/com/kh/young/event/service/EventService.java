@@ -16,6 +16,12 @@ public interface EventService {
 
 	int insertCoupon(HashMap<String, Object> map);
 
+	int attendanceCheck(int userNum);
+
+	int checkEvent(int userNum);
+
+	int birthCheck(int userNum);
+
 
 
 

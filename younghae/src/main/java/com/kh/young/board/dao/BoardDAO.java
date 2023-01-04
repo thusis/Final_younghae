@@ -1,6 +1,7 @@
 package com.kh.young.board.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -10,6 +11,8 @@ import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
+import com.kh.young.model.vo.Reply;
+import com.kh.young.model.vo.Story;
 
 @Repository
 public class BoardDAO {
@@ -36,21 +39,57 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.deleteBoard", boardNo);
 	}
 
-	public int deletePhoto(SqlSessionTemplate sqlSession, int boardNo) {
-		return sqlSession.update("boardMapper.deletePhoto", boardNo);
-	}
-
-
 	public int viewCount(SqlSessionTemplate sqlSession, int boardNum) {
 		return sqlSession.update("boardMapper.viewCount", boardNum);
 	}
 
-	public Board boardView(SqlSessionTemplate sqlSession, int boardNum) {
+	public Story boardView(SqlSessionTemplate sqlSession, int boardNum) {
 		return sqlSession.selectOne("boardMapper.boardView", boardNum);
 	}
 
 	public Member selectMember(SqlSessionTemplate sqlSession, int i) {
 		return sqlSession.selectOne("boardMapper.selectMember", i);
+	}
+
+	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.insert("boardMapper.insertReply", r);
+	}
+
+	public ArrayList<Reply> replyList(SqlSessionTemplate sqlSession, int boardNum) {
+		ArrayList<Reply> rList = new ArrayList<Reply>();
+		rList = (ArrayList)sqlSession.selectList("boardMapper.replyList", boardNum);
+		return rList;
+	}
+
+	public int getSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("boardMapper.getSearchListCount", map);
+	}
+
+	public ArrayList<Board> searchList(SqlSessionTemplate sqlSession, HashMap<String, Object> map, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1)*pi.getBoardLimit();
+		RowBounds row = new RowBounds(offset, pi.getBoardLimit());
+		return (ArrayList)sqlSession.selectList("boardMapper.searchList", map, row);
+	}
+
+	public int replyCount(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("boardMapper.replyCount", boardNum);
+	}
+
+	public int deleteReply(SqlSessionTemplate sqlSession, int replyNum) {
+		return sqlSession.update("boardMapper.deleteReply", replyNum);
+	}
+
+	public Attachment selectThumbnail(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("boardMapper.selectThumbnail", boardNum);
+	}
+	
+	public int updateBoard(SqlSessionTemplate sqlSession, Story b) {
+		return sqlSession.update("boardMapper.updateBoard", b);
+	}
+
+	public int updateThumbnail(SqlSessionTemplate sqlSession, Story b) {
+		return sqlSession.update("boardMapper.updateThumbnail", b);
 	}
 
 
