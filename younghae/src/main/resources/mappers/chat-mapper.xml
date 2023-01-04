@@ -14,7 +14,7 @@
   	
  	<resultMap type="Chatroom" id="Chatroom">
   		<id column="CHATROOM_ID" property="chatroomId"/>
-  		<result column="OPEN_TIME" property="openTime"/>
+  		<result column="CHATROOM_TIME" property="chatroomTime"/>
   		<result column="EXPERT_NUM" property="expertNum"/>
   		<result column="USER_NUM" property="userNum"/>
   	</resultMap>
@@ -36,6 +36,7 @@
   		<result column="RESERV_SCHEDULE" property="reservSchedule"/>
   		<result column="IS_APPROVED" property="isApproved"/>
   		<result column="IS_COMPLETED" property="isCompleted"/>
+  		<result column="RESERV_HOW_LONG" property="reservHowLong"/>
   	</resultMap>
 
   	<resultMap type="ExpertRespDto" id="ExpertRespDto">
@@ -117,6 +118,7 @@
 			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
 			LEFT JOIN ATTACHMENT ON (MEMBER.USER_NUM = SERIALNUMBER)
 		WHERE CHATROOM.USER_NUM = #{userNum} AND CHATROOM_STATUS = 'Y'
+		ORDER BY CHATROOM_ID DESC
 	</select>
 	
 	<!-- 내가 보낸게 아닌 메세지 읽음처리 -->
@@ -175,6 +177,7 @@
 		FROM CHATROOM
 	        LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
 		WHERE CHATROOM.EXPERT_NUM = #{userNum} AND CHATROOM_STATUS = 'Y'
+		ORDER BY CHATROOM_ID DESC
 	</select>
 	
 	<select id="selectReservList" resultMap="ChatReserv">
@@ -279,6 +282,23 @@
 		SELECT USER_CNUMBER FROM MEMBER WHERE USER_NUM = #{loginUserNum}
 	</select>
 	
+	<select id="fullMessageListCount" resultType="int">
+		SELECT COUNT(*) FROM CHATMESSAGE
+		WHERE SENDER_NUM = #{loginUserNum} OR RECEIVER_NUM = #{loginUserNum}
+	</select>
 	
+	<!-- chatpayment 관련 -->
+	<select id="getChatroom" resultMap="Chatroom">
+	SELECT CHATROOM_ID, CHATROOM_TIME, EXPERT_NUM, USER_NUM FROM CHATROOM WHERE CHATROOM_ID = #{chatroomId}
+	</select>
+	<select id="getGeneralUser" resultMap="Member">
+	SELECT * FROM MEMBER WHERE USER_NUM = #{userNum}
+	</select>
 
+	<insert id="afterPayInsertChatReserv">
+		INSERT ALL
+		INTO CHATRESERV VALUES (SEQ_CHATRESERV.NEXTVAL, #{crInsert.chatroomId},SEQ_ORDER.NEXTVAL,TO_DATE(#{crInsert.reservSchedule}, 'YYYY/MM/DD HH:MI'),DEFAULT, DEFAULT,#{crInsert.reservHowLong}*10 )
+		INTO ORDERS VALUES (SEQ_ORDER.CURRVAL, #{ordInsert.orderCode}, #{orderInsert.userNum},#{orderInsert.userId},#{orderInsert.orderDate},DEFAULT,#{orderInsert.orderPayAmount},#{orderInsert.orderPayAmount},#{orderInsert.orderUserName},#{orderInsert.orderPaymethod},#{orderInsert.orderCouponPrice}, #{orderInsert.orderImpCode}, #{orderInsert.orderPhone}, 0,'없음' )
+		SELECT * FROM DUAL
+	</insert>
 </mapper>

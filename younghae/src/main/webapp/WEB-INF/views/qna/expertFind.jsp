@@ -59,6 +59,7 @@
 	                    <h5 class="bn_pro-name">
 		                    <span >${eresp.member.userName}&nbsp;&nbsp;</span>
 		                    <span  class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+		                    <c:if test="${eresp.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
 		                    <c:if test="${eresp.expert.expertSort.trim() eq 'D' }">의사</c:if>
 		                    <c:if test="${eresp.expert.expertSort.trim() eq 'C' }">약사</c:if>
 		                    </span>
@@ -66,11 +67,16 @@
 	                    <span class="bn_pro-info">답변수 ${eresp.answerListSize} 개</span><br>
 	                    <span class="bn_pro-info">전문과목 ${eresp.expert.expertMedi}</span><br>
 	                    <span class="bn_pro-info">
-		                    <span>소속 : ${eresp.expert.expertDept}&nbsp;&nbsp;</span>
+		                    <span>소속 : 
+		                     <c:if test="${eresp.expert.expertDept.trim() eq 'N' }">선택안함</c:if>
+		                     <c:if test="${eresp.expert.expertDept.trim() ne 'N' }">${eresp.expert.expertDept}&nbsp;&nbsp;</c:if>
+		                    </span>
 		                    <span class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
+							<a style="text-decoration:none; color:white;" href="${contextPath}/experthospital.qa?expertNum=${eresp.member.userNum}">
+		                      <c:if test="${eresp.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
 		                      <c:if test="${eresp.expert.expertSort.trim() eq 'D' }">병원</c:if>
 		                      <c:if test="${eresp.expert.expertSort.trim() eq 'C' }">약국</c:if>
-		                     정보 보기
+		                     정보 보기</a>
 		                    </span>
 	                    </span><br>
 					</div>
@@ -86,11 +92,15 @@
 						</div>
 						</c:if>
 					</div>
+					
 					<div class="col-2 align-self-center">
-						<div class="bn_pro-icon" style="width: 2.5rem; height: 2.5rem;">
-							<span style="font-size: 0.8rem;" onclick="location.href='${contextPath}/expertprofile.qa?expertNum='+${eresp.member.userNum}">프로필</span>
-						</div>
+						<div class="bn_pro-icon" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover"><a style="text-decoration:none; color:white;" href="${contextPath}/expertprofile.qa?expertNum=${eresp.member.userNum}"><i class="bi bi-list-ul"></i></a></div>
+						<c:if test="${loginUser != null }">
+							<div class="bn_pro-icon" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover"><a style="text-decoration:none; color:white;" href="${contextPath}/open.ch?expertNum=${eresp.member.userNum}"><i class="bi bi-send"></i></a></div>
+						</c:if>
 					</div>
+					
+					
 				</div>
 				</div>
 			    	<c:if test="${i%j ==  j-1 }">

@@ -43,16 +43,9 @@
                 </div>
 
                 <div class="row bn_pro-infobox-bottom" id="infoboxBottom1">
-                    <c:if test="${eresp.expert.expertCareer != null}">${eresp.expert.expertCareer}</c:if>
-                    <c:if test="${eresp.expert.expertCareer == null}">
-                    <ul>
-                        <li>(현) 세계로마취통증의학과의원, 마취통증의학과 전문의</li>
-                        <li>1984 제천서울병원 공동설립</li>
-                        <li>2001-2006 서울정신자병원 통증클리닉</li>
-                        <li>1974 서울의대졸업</li>
-                        <li>1979 서울대학병원마취통증의학과 전문의 수료 및 전문의취득</li>
-                        <li>1982년 서울의대.박사학위 취득</li>
-                    </ul>
+                    <c:if test="${eresp.expert.expertCareer ne 'N'}">${eresp.expert.expertCareer}</c:if>
+                    <c:if test="${eresp.expert.expertCareer eq 'N'}">
+                    	작성한 경력 내용이 없습니다
                     </c:if>
                 </div>
                 <div class=" row bn_pro-infobox-bottom" id="infoboxBottom2">
@@ -94,16 +87,20 @@
                         <div class="col-lg-8 align-self-center">
                             <h5 class="bn_pro-name">${eresp.member.userName}&nbsp;&nbsp;
                             <span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+                            <c:if test="${eresp.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
                             <c:if test="${eresp.expert.expertSort.trim() eq 'D' }">의사</c:if>
 		                    <c:if test="${eresp.expert.expertSort.trim() eq 'C' }">약사</c:if>
                             </span></h5>
                             <span style="display: inline-block; width: 3.5rem;">답변수 </span><span>: ${ eresp.answerListSize }개</span><br>
                             <span style="display: inline-block; width: 3.5rem;">전문과목 </span><span>: ${ eresp.expert.expertMedi}</span><br>
-                            <span style="display: inline-block; width: 3.5rem;">소속 </span><span>: ${ eresp.expert.expertDept}</span>&nbsp;&nbsp;
+                            <span style="display: inline-block; width: 3.5rem;">소속
+		                     <c:if test="${eresp.expert.expertDept.trim() eq 'N' }">선택안함</c:if>
+		                     <c:if test="${eresp.expert.expertDept.trim() ne 'N' }">${eresp.expert.expertDept}&nbsp;&nbsp;</c:if>
+                            </span>
 	                         	<span class="badge rounded-pill bn_badge" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;" id="goToExpertHospital">
-		                           <c:if test="${eresp.expert.expertSort.trim() eq 'D' }">병원</c:if>
-		                           <c:if test="${eresp.expert.expertSort.trim() eq 'C' }">약국</c:if>
-	                          	정보 보기
+		                           <c:if test="${eresp.expert.expertSort.trim() eq 'N' }"></c:if>
+		                           <c:if test="${eresp.expert.expertSort.trim() eq 'D' }">병원정보 보기</c:if>
+		                           <c:if test="${eresp.expert.expertSort.trim() eq 'C' }">약국정보 보기</c:if>
 	                           	</span>
                         </div>
 
@@ -135,12 +132,17 @@
                    	</div>
                     
                     <div class="row justify-content-center">
-                        <c:if test="${loginUser.userNum != eresp.member.userNum }">
+                    	<c:if test="${loginUser == null }">
+                        <button class="btn" style="color:white;" onclick="location.href='${contextPath}/login.me'">
+                        	<h3 class="bn_txt_strong">채팅권한이 없네요! 로그인해보세요</h3>
+                        </button>
+                    	</c:if>
+                        <c:if test="${loginUser != null && loginUser.userNum != eresp.member.userNum }">
                         <button class="btn" style="color:white;" onclick="location.href='${contextPath}/open.ch?expertNum=${eresp.member.userNum}'">
                         	<h3 class="bn_txt_strong">채팅하러가기</h3>
                         </button>
                        	</c:if>
-                        <c:if test="${loginUser.userNum == eresp.member.userNum }">
+                        <c:if test="${loginUser != null && loginUser.userNum == eresp.member.userNum }">
                         <button class="btn" style="color:white;">
                         	<h3 class="bn_txt_strong">본인과 채팅할 수 없습니다</h3>
                         </button>

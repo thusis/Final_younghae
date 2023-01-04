@@ -197,16 +197,23 @@
 		                       <div class="col-lg-7  align-self-center">
 		                           <h5 class="bn_pro-name">${ans.eresp.member.userName}&nbsp;&nbsp;
 		                           <span class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
 				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'D' }">의사</c:if>
 				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'C' }">약사</c:if>
 		                           </span></h5>
 		                           <span class="bn_pro-info">답변수 ${ans.eresp.answerListSize} 개</span><br>
 		                           <span class="bn_pro-info">전문과목 ${ans.eresp.expert.expertMedi}</span><br>
-		                           <span class="bn_pro-info">소속 : ${ans.eresp.expert.expertDept}&nbsp;&nbsp;
+		                           <span class="bn_pro-info">
+					                    <span>소속 : 
+					                    <c:if test="${ans.eresp.expert.expertDept.trim() eq 'N' }">선택안함</c:if>
+					                    <c:if test="${ans.eresp.expert.expertDept.trim() ne 'N' }">${ans.eresp.expert.expertDept}&nbsp;&nbsp;</c:if>
+					                    </span>
 			                           <span class="badge rounded-pill" style="background-color: #8496AE; color:#ffffff; padding-left: 0.5rem; padding-right:0.5rem;">
+				                           <a style="text-decoration:none; color:white;" href="${contextPath}/experthospital.qa?expertNum=${ans.eresp.member.userNum}">
+				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
 				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'D' }">병원</c:if>
 				                           <c:if test="${ans.eresp.expert.expertSort.trim() eq 'C' }">약국</c:if>
-			                           정보 보기
+			                           정보 보기</a>
 			                           </span>
 		                           </span><br>
 		                       </div>
@@ -225,7 +232,9 @@
 		                       </div>
 		                       <div class="col-2 align-self-center">
 		                           <div class="bn_pro-icon" id="goToExpert" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover"><a style="text-decoration:none; color:white;" href="${contextPath}/expertprofile.qa?expertNum=${ans.eresp.member.userNum}"><i class="bi bi-list-ul"></i></a></div>
+		                           <c:if test="${loginUser != null }">
 		                           <div class="bn_pro-icon" id="goToChat" data-bs-toggle="popover" data-bs-trigger="hover focus" data-bs-content="Disabled popover"><a style="text-decoration:none; color:white;" href="${contextPath}/open.ch?expertNum=${ans.eresp.member.userNum}"><i class="bi bi-send"></i></a></div>
+		                           </c:if>
 		                       </div>
 		                   </div>
 						
@@ -348,9 +357,17 @@
 <br>
 	
 	<script>
-	console.log(document.getElementsByClassName('replySubmits')[0])
+		console.log(document.getElementsByClassName('replySubmits')[0]);
 		
 		const replyBtns = document.getElementsByClassName('replySubmits');
+		var loginUserNum = 0;
+		if(${loginUser != null}){
+			loginUserNum = ${loginUser.userNum}+"";
+		} else {
+			loginUserNum = 0;
+		}
+		
+		console.log(loginUserNum);
 		
 		for(const btn of replyBtns){//댓글달기===================================================================================
 			btn.addEventListener('click', function(){
@@ -358,8 +375,10 @@
 				const replyContent = btn.parentNode.parentNode.querySelector('input').value;
 				var boardNum = this.querySelector('span').innerText;
 				const boardType = this.querySelector('h6').innerText;
-				if( ${loginUser.userNum} ){
-					var userNum = ${loginUser.userNum};
+				if(loginUserNum != 0){
+					var userNum = loginUserNum;
+				}else{
+					var userNum = 0;
 				}
 				
 				console.log(btn.parentNode.parentNode.querySelector('input').value);
@@ -465,34 +484,33 @@
 	  				}
 	  			}); // ajax 스크랩 추가
 			}
+		
 // 		function changeScrap(){
-// 			if(isScrap==1){
-// 	   			$.ajax({
-// 	   				url:'${contextPath}/deleteScrap.qa',
-// 	   				data :{ boardNum : boardNum , userNum : userNum },
-// 	   				success : (data)=>{
-// 	   					console.log("스크랩취소");
-// // 						document.getElementById('isScrap').innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
-// 	// 					this.innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
-// // 						document.getElementById('scrapCount').innerHTML = '<i class="save fa-regular fa-bookmark"></i>' + data;
-// // 	    				isScrap = 0;
-// 	   				}
-// 	   			}); // ajax 스크랩 취소
-// 			} else {
-// 				$.ajax({
-// 	  				url:'${contextPath}/setScrap.qa',
-// 	   				data :{boardId:boardId,userId:userId},
-// 	   				success : (data)=>{
-// 	   					console.log("스크랩함");
-// // 	   					document.getElementById('isScrap').innerHTML = '<h2><i class="fa-solid fa-bookmark"></i></h2>';
-// // 						document.getElementById('scrapCount').innerHTML = '<i class="fa-solid fa-bookmark"></i>' + data;
-// // 	    				isScrap = 1;
-// 	  				}
-// 	  			}); // ajax 스크랩 추가
-// 			}
-// 		}
-	
-	
+//			if(isScrap==1){
+//	   			$.ajax({
+//	   				url:'${contextPath}/deleteScrap.qa',
+//	   				data :{ boardNum : boardNum , userNum : userNum },
+//	   				success : (data)=>{
+//	   					console.log("스크랩취소");
+//// 						document.getElementById('isScrap').innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
+//	// 					this.innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
+//// 						document.getElementById('scrapCount').innerHTML = '<i class="save fa-regular fa-bookmark"></i>' + data;
+//// 	    				isScrap = 0;
+//	   				}
+//	   			}); // ajax 스크랩 취소
+//			} else {
+//				$.ajax({
+//	  				url:'${contextPath}/setScrap.qa',
+//	   				data :{boardId:boardId,userId:userId},
+//	   				success : (data)=>{
+//	   					console.log("스크랩함");
+//// 	   					document.getElementById('isScrap').innerHTML = '<h2><i class="fa-solid fa-bookmark"></i></h2>';
+//// 						document.getElementById('scrapCount').innerHTML = '<i class="fa-solid fa-bookmark"></i>' + data;
+//// 	    				isScrap = 1;
+//	  				}
+//	  			}); // ajax 스크랩 추가
+//			}
+//		}
 	</script>
 </body>
 </html>

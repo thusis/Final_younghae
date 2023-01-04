@@ -16,8 +16,9 @@ import lombok.ToString;
 public class ChatReserv {
 	private int reservId;
 	private int chatroomId;
-	private int paymentId;
-	private Date reservSchedule;
+	private int orderNum;
+	private String reservSchedule;
 	private String isApproved;
 	private String isCompleted;
+	private int reservHowLong;
 }

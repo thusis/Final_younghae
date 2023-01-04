@@ -194,7 +194,7 @@
                 </c:if>
                 <div class="row  justify-content-end" style="margin-right: 1.5rem;">
                     <i class="view fa-solid fa-eye m-2"></i><span class="m-1">${t.board.boardView}</span>
-                    <i class="save fa-regular fa-bookmark m-2"></i><span class="m-1">10</span>
+                    <i class="save fa-regular fa-bookmark m-2"></i><span class="m-1">${t.scrapListSize }</span>
                 </div>
                </div>
              </c:forEach>

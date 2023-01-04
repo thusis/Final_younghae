@@ -33,6 +33,9 @@ public class QuestionRespDto {
 	private ArrayList<ReplyRespDto> replyList;
 	private ArrayList<Clip> scrapList; 
 	
+	private int scrapListSize;
+	
+	
 //	private int boardNum;
 //	private String boardTitle;
 //	private String boardContent;

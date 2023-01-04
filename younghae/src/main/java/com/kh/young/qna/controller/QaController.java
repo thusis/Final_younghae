@@ -306,4 +306,14 @@ public class QaController {
 		return "expertHospital";
 	}
 
+    @GetMapping("goToChatPayment.qa")
+    public String goToChatPayment(HttpServletRequest request, @RequestParam String info, Model model) {
+//    	http://localhost:8888/young/goToChatPayment.ch?info=26_21_150
+    	if(((Member)request.getSession().getAttribute("loginUser")).getUserNum() != Integer.parseInt(info.split("_")[2])) {
+    		throw new Qexception("잘못된 접근입니다");
+    	}else {
+    		model.addAttribute("chatResp",qService.getChatPaymentResp(info));
+    	}
+    	return "chatPayment";
+    }
 }

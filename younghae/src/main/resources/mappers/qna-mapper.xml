@@ -312,7 +312,7 @@
 	<!-- 전문가찾기 -->
 	<!-- 전문가의 총 수(LISTCOUNT) 반환 -->
 	<select id="getExpertsListCount" resultType="int">SELECT COUNT(*) FROM EXPERT_USER</select>
-	<select id="selectExpertList" resultMap="ExpertRespDto">	SELECT * FROM MEMBER JOIN EXPERT_USER USING (USER_NUM) </select>
+	<select id="selectExpertList" resultMap="ExpertRespDto">SELECT * FROM MEMBER JOIN EXPERT_USER USING (USER_NUM) </select>
 	
 	
 </mapper>
