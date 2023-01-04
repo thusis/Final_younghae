@@ -3,6 +3,7 @@ package com.kh.young.member.service;
 import java.util.HashMap;
 
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.Point;
 
 public interface MemberService {
 	
@@ -31,5 +32,15 @@ public interface MemberService {
 	int updatePwd(HashMap<String, String> map);
 
 	void insertBasicAddress(HashMap<String, Object> addressMap);
+
+	Member searchRecommend(String userRecommend);
+
+	int pointAdd(HashMap<String, Object> map);
+
+	int checkRecommend(String userRecommend);
+
+	void totalPoint(int i);
+
+	Member searchMyUserNum(String userId);
 
 }

@@ -187,11 +187,11 @@
                                 <div class="form-group py-2">
                                     <div>
                                         이메일 인증번호*
-                                        <button type="button" id="mail-Check-Btn" style="float: right; border: 0; background-color:white;">인증번호전송</button>
+                                        <button type="button" id="mail-Check-Btn" style="float: right; border: 0; background-color:white;"  disabled>인증번호전송</button>
                                     </div>
                                     <div class="input-field" id="myEmailChk2">
                                         <input type="text" id="myEmailChk" placeholder="인증번호를 입력해주세요" required>
-                                        <button type="button" id="checkCodeBtn" style="border: 0; width: 50px; background-color:white;">확인</button>
+                                        <button type="button" id="checkCodeBtn" style="border: 0; width: 50px; background-color:white;"  disabled>확인</button>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -213,13 +213,13 @@
                                 <div class="form-group py-2">
                                     <div>생년월일*(주민등록번호 앞 6자리를 입력해주세요.)</div>
                                     <div class="input-field">
-                                        <input type="text" id="myBirth" name="userBirths" style="weigth: 100%;" required>
+                                        <input type="text" id="myBirth" name="userBirths" style="weigth: 100%;" placeholder="생년월일" required >
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>전화번호</div>
+                                    <div>전화번호(-을제외하고 입력해주세요.)</div>
                                     <div class="input-field">
-                                        <input type="text" id="myPhone" name="userPhone" placeholder="전화번호를 입력해주세요">
+                                        <input type="text" id="myPhone" name="userPhone" placeholder="전화번호를 입력해주세요" required>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -241,7 +241,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>추천인코드</div>
+                                    <div>추천인코드(포인트 1000점이 지급됩니다.)</div>
                                     <div class="input-field">
                                         <input type="text" id="otherRecommand" name="userRecommend" placeholder="추천인코드를 입력해주세요">
                                     </div>
@@ -302,11 +302,11 @@
                                 <div class="form-group py-2">
                                     <div>
                                         이메일 인증번호*
-                                        <button type="button" id="mail-Check-Btn-Export" style="float: right; border: 0; background-color:white;">인증번호전송</button>
+                                        <button type="button" id="mail-Check-Btn-Export" style="float: right; border: 0; background-color:white; " disabled >인증번호전송</button>
                                     </div>
                                     <div class="input-field" id="myEmailChkExport2">
                                         <input type="text" id="myEmailChkExport" placeholder="인증번호를 입력해주세요" required>
-                                        <button type="button" id="checkCodeBtnExport" style="border: 0; width: 50px; background-color:white;">확인</button>
+                                        <button type="button" id="checkCodeBtnExport" style="border: 0; width: 50px; background-color:white;"  disabled>확인</button>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -319,13 +319,13 @@
                                 <div class="form-group py-2">
                                     <div>생년월일*(주민등록번호 앞 6자리를 입력해주세요.)</div>
                                     <div class="input-field">
-                                        <input type="text" id="myBirth" name="userBirths" style="weigth: 100%;" required>
+                                        <input type="text" id="myBirth" name="userBirths" style="weigth: 100%;" placeholder="생년월일"required>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
-                                    <div>전화번호</div>
+                                    <div>전화번호(-을제외하고 입력해주세요.)</div>
                                     <div class="input-field">
-                                        <input type="text" id="myPhoneExport" name="userPhone" placeholder="전화번호를 입력해주세요">
+                                        <input type="text" id="myPhoneExport" name="userPhone" placeholder="전화번호를 입력해주세요" required>
                                     </div>
                                 </div>
                                 <div class="form-group py-2">
@@ -470,14 +470,14 @@
 
 
             // 닉네임 중복 확인
-            document.getElementById('myNickName').addEventListener('change', function() {
+            document.getElementById('myNickName').addEventListener('keyup', function() {
                 const checkNickName = document.getElementById('myNickName');
                 const checkNickName2 = document.getElementById('myNickName2');
                 const regExp4 = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{1,}$/;
 
                 if (this.value.trim() == '') {
                     checkNickName.style.backgroundColor = '#FFCECE';
-                    checkNickName.style.backgroundColor = '#FFCECE';
+                    checkNickName2.style.backgroundColor = '#FFCECE';
                 } else {
                     $.ajax({
                         url: '${contextPath}/checkNickName.me',
@@ -509,7 +509,7 @@
 
 
             // 이메일 중복확인
-            document.getElementById('myEmail').addEventListener('change', function() {
+            document.getElementById('myEmail').addEventListener('keyup', function() {
                 const email = document.getElementById('myEmail').value;
                 const searchEmail = document.getElementById('myEmail');
                 const searchEmail2 = document.getElementById('myEmail2');
@@ -746,14 +746,14 @@
 
 
             // 닉네임 중복 확인
-            document.getElementById('myNickNameExport').addEventListener('change', function() {
+            document.getElementById('myNickNameExport').addEventListener('keyup', function() {
                 const checkNickNameExport = document.getElementById('myNickNameExport');
                 const checkNickNameExport2 = document.getElementById('myNickNameExport2');
                 const regExpExport4 = /^[a-zA-Zㄱ-힣][a-zA-Zㄱ-힣 ]{1,}$/;
 
                 if (this.value.trim() == '') {
                     checkNickNameExport.style.backgroundColor = '#FFCECE';
-                    checkNickNameExport.style.backgroundColor = '#FFCECE';
+                    checkNickNameExport2.style.backgroundColor = '#FFCECE';
                 } else {
                     $.ajax({
                         url: '${contextPath}/checkNickName.me',
@@ -785,7 +785,7 @@
 
 
             // 이메일 중복확인
-            document.getElementById('myEmailExport').addEventListener('change', function() {
+            document.getElementById('myEmailExport').addEventListener('keyup', function() {
                 const emailExport = document.getElementById('myEmailExport').value;
                 const searchEmailExport = document.getElementById('myEmailExport');
                 const searchEmailExport2 = document.getElementById('myEmailExport2');

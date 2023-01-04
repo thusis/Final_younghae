@@ -80,6 +80,36 @@
       where USER_Id=#{userId} and user_status='Y'
    </select>
    
+   <select id="searchRecommend" resultMap="loginResultMap">
+      select *
+      from member
+      where USER_RECOMMEND = #{userRecommend} and user_status='Y'
+   </select>
+   
+   <insert id="pointAdd">
+      insert into point
+		values(seq_point.nextval,#{updateName}, +#{updatePoint}, SYSDATE,
+			 #{id})
+   </insert>
+   
+    <select id="checkRecommend" resultType="_int">
+      select count(*)
+      from member
+      where USER_RECOMMEND = #{userRecommend} and user_status='Y'
+   </select>
+   
+   <update id="totalPoint">
+      update member
+      set USER_POINT = USER_POINT+1000
+      where USER_NUM=#{i}
+   </update>
+   
+   <select id="searchMyUserNum" resultMap="loginResultMap">
+   	  select *
+      from member
+      where USER_ID = #{userId} and user_status='Y'
+   </select>
+   
    <update id="updatePwd">
       update member
       set USER_PWD=#{encPwd}
@@ -103,6 +133,14 @@
       <result column="USER_MODIFYDATE" property="userModifyDate"/>
       <result column="USER_POINT" property="userPoint"/>
    </resultMap>
+   
+   <resultMap type="Point" id="pointResultMap">
+		<id column="POINT_NUM" property="pointNum"/>
+		<result column="POINT_CONTENT" property="pointContent"/>
+		<result column="POINT_AMOUNT" property="pointAmount"/>
+		<result column="POINT_DATE" property="pointDate"/>
+		<result column="USER_NUM" property="userNum"/>
+	</resultMap>
    
    <insert id="insertBasicAddress">
 	insert into address
