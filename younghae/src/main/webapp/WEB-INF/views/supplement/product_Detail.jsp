@@ -652,8 +652,12 @@
              	            });
 				            
 	        			}
-		        		const update  = document.getElementsByClassName('text-left');
-			            
+		        		
+	        			var login = "${ loginUser }";
+	            		var loginNum = "${ loginUser.userNum }";
+	        			
+	        			const update  = document.getElementsByClassName('text-left');
+		        		
 			            for(const up of update){
 			            	up.addEventListener('click' ,function(){
 			            		// 별점
@@ -668,8 +672,10 @@
 // 			            		console.log($(this).children().siblings()[6].innerText);
 			            		console.log($(this).parent().children().siblings()[6].innerText);
 			            		
-			            		if(${ loginUser ne null}){
-				            		if( ${ loginUser.userNum } == $(this).parent().children().children()[0].value ){
+			            		
+			            		
+			            		if(login != null){
+				            		if( loginNum == $(this).parent().children().children()[0].value ){
 			            				updateModal.style.display = "block";
 				            			
 	// 				            			닫기 버튼
@@ -697,7 +703,7 @@
 			            	});
 			            	
 			            }
-			            if(${loginUser ne null}){
+			            if(login != null){
 			            	const reco = document.getElementsByClassName('product__details__rating 1');
 			                for(var re of reco){
 			    	            re.addEventListener('click', function(){
@@ -719,7 +725,7 @@
 			    	            	console.log($(this).parent().children()[7].value);
 			    	            	$.ajax({
 			    	            		url: '${contextPath}/reco.su',
-			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: ${ loginUser.userNum },
+			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
 			    	            				check: check},
 			    	            		success:(data)=>{
 			    	            			

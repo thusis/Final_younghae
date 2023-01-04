@@ -107,50 +107,9 @@
             
             <!-- 페이징 -->
 			<div class="col-lg-12 text-center">
-				<div class="product__pagination blog__pagination" id="pagination">
-<%-- 					<c:url var="goBack" value="${ loc }"> --%>
-<%-- 						<c:param name="page" value="${ pi.currentPage-1 }"></c:param> --%>
-<%-- 						<c:param name="check" value="${ check }"/> --%>
-<%-- 					</c:url> --%>
-<%-- 					<c:if test="${ pi.currentPage > 1 }"> --%>
-<%-- 						<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a> --%>
-<%-- 					</c:if> --%>
-<%-- 					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p"> --%>
-<%-- 						<c:url var="goNum" value="${ loc }"> --%>
-<%-- 							<c:param name="page" value="${p}"></c:param> --%>
-<%-- 							<c:param name="check" value="${ check }"/> --%>
-<%-- 						</c:url> --%>
-<%-- 						<a href="${ goNum }">${ p }</a> --%>
-<%-- 					</c:forEach> --%>
-<%-- 					<c:url var="goNext" value="${ loc }"> --%>
-<%-- 						<c:param name="page" value="${ pi.currentPage+1 }"></c:param> --%>
-<%-- 						<c:param name="check" value="${ check }"/> --%>
-<%-- 					</c:url> --%>
-<%-- 					<c:if test="${ pi.currentPage <= 1 }"> --%>
-<%-- 					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a> --%>
-<%-- 					</c:if> --%>
-<!-- 					<div class="pagination-wrapper clearfix"> -->
-<!-- 						<ul class="pagination float--right"  id="pages"> -->
-<!-- 						</ul> -->
-<!-- 					</div> -->
-
 					<div class="pagination-wrapper clearfix" stlye="text-align: center;">
 						<ul class="pagination float--right" id="pages"></ul>
 					</div>
-<!-- 					<div class="container">   -->
-<!-- 						<ul class="pagination justify-content-center"  id="paginationUl"> -->
-<!-- 							<li class="page-item"><a class="page-link" -->
-<!-- 								href="javascript:void(0);">&lt;</a></li> -->
-<!-- 							<li class="page-item"><a class="page-link" -->
-<!-- 								href="javascript:void(0);">1</a></li> -->
-<!-- 							<li class="page-item"><a class="page-link" -->
-<!-- 								href="javascript:void(0);">2</a></li> -->
-<!-- 							<li class="page-item"><a class="page-link" -->
-<!-- 								href="javascript:void(0);">&gt;</a></li> -->
-<!-- 						</ul> -->
-<!-- 						<br><br> -->
-<!-- 					</div> -->
-				</div>
 			</div>
 			<br><br>
         </div>

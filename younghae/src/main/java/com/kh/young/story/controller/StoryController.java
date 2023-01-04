@@ -148,10 +148,15 @@ public class StoryController {
 		System.out.println(b);
 
 		Member m = (Member) session.getAttribute("loginUser");
-
-		if (m.getUserNum() != userNum) {
+		
+		if(m == null) {
 			int result = stService.updateView(boardNum);
+		}else {
+			if (m.getUserNum() != userNum) {
+				int result = stService.updateView(boardNum);
+			}
 		}
+
 
 		mv.addObject("board", b);
 		mv.addObject("loginUser", m);
