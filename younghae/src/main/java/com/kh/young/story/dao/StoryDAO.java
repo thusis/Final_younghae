@@ -64,5 +64,9 @@ public class StoryDAO {
 	public int updateThumbnail(SqlSessionTemplate sqlSession, Story s) {
 		return sqlSession.update("storyMapper.updateThumbnail", s);
 	}
+	
+	public Story checkBook(SqlSessionTemplate sqlSession, Story s){
+		return sqlSession.selectOne("storyMapper.checkBook", s);
+	}
 
 }

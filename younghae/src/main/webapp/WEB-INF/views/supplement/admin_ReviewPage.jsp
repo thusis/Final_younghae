@@ -33,11 +33,6 @@
     </style>
 </head>
 <body>
-
-        <!-- Page Preloder -->
-        <div id="preloder">
-            <div class="loader"></div>
-        </div>
     
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>    
         <div class="container">
@@ -106,37 +101,10 @@
             
             
             <!-- 페이징 -->
-			<div class="col-lg-12 text-center" style="margin-top: 8%;">
-				<div class="product__pagination blog__pagination" id="pagination">
-<%-- 					<c:url var="goBack" value="${ loc }"> --%>
-<%-- 						<c:param name="page" value="${ pi.currentPage-1 }"></c:param> --%>
-<%-- 						<c:param name="check" value="${ check }"/> --%>
-<%-- 					</c:url> --%>
-<%-- 					<c:if test="${ pi.currentPage > 1 }"> --%>
-<%-- 						<a href="${ goBack }" aria-label="Previous"><i class="fa fa-long-arrow-left"></i></a> --%>
-<%-- 					</c:if> --%>
-<%-- 					<c:forEach begin="${ pi.startPage }" end="${ pi.endPage }" var="p"> --%>
-<%-- 						<c:url var="goNum" value="${ loc }"> --%>
-<%-- 							<c:param name="page" value="${p}"></c:param> --%>
-<%-- 							<c:param name="check" value="${ check }"/> --%>
-<%-- 						</c:url> --%>
-<%-- 						<a href="${ goNum }">${ p }</a> --%>
-<%-- 					</c:forEach> --%>
-<%-- 					<c:url var="goNext" value="${ loc }"> --%>
-<%-- 						<c:param name="page" value="${ pi.currentPage+1 }"></c:param> --%>
-<%-- 						<c:param name="check" value="${ check }"/> --%>
-<%-- 					</c:url> --%>
-<%-- 					<c:if test="${ pi.currentPage <= 1 }"> --%>
-<%-- 					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a> --%>
-<%-- 					</c:if> --%>
-<!-- 					<div class="pagination-wrapper clearfix"> -->
-<!-- 						<ul class="pagination float--right"  id="pages"> -->
-<!-- 						</ul> -->
-<!-- 					</div> -->
-					<div class="pagination-wrapper clearfix">
+			<div class="col-lg-12 text-center">
+					<div class="pagination-wrapper clearfix" stlye="text-align: center;">
 						<ul class="pagination float--right" id="pages"></ul>
 					</div>
-				</div>
 			</div>
 			<br><br>
         </div>
@@ -322,29 +290,45 @@
 						
 						console.log(data.pi.currentPage-1);
 						
+						const totalData = data.listCount;
+						
+						paging();
+						
 			            function paging(totalData, currentPage){
 			            	const dataPerPage = 10;
 			            	const pageCount = 5;
 			            	
-			            	const totalPage = Math.ceil(data.listCount/dataPerpage);
+			            	const totalPage = Math.ceil(data.listCount/dataPerPage);
 			            	const pageGroup = Math.ceil(data.pi.currentPage/pageCount);
 			            	
-			            	const last = pageGroup * pageCount;
+			            	console.log("dataPerPage : " + dataPerPage);
+			            	console.log("pageGroup : " + pageGroup);
+			            	
+			            	var last = pageGroup * pageCount;
 			            	
 			            	if(last > totalPage){
 			            		last = totalPage;
 			            	}
 			            	
+			            	console.log("last : "+ last);
+			            	
 			            	let first = last - (pageCount - 1);
+			            	
 			            	
 			            	const prev = data.pi.startPage - 1;
 			            	const next = data.pi.endPage + 1;
+			            	
+			            	console.log("prev : " + prev);
+			            	console.log("next : " + next);
+			            	
 			            	
 			            	if(totalPage < 1){
 			            		first = last;
 			            	}
 			            	
-			            	const pages = $('#pagination');
+			            	console.log("first : " + first);
+			            	
+			            	const pages = $('#pages');
 			            	pages.empty();
 			            	
 			            	// < 그려줌
@@ -362,12 +346,11 @@
 			            	
 			            	// > 그려줌
 		            		if (next > 5 && next < totalPage){
-        					pages.append('<li class="pagination-item">' + '<a onclick="GetTarget(' + (next) + ');" style="margin-left: 2px">next</a></li>');
+        						pages.append('<li class="pagination-item">' + '<a onclick="GetTarget(' + (next) + ');" style="margin-left: 2px">next</a></li>');
 		            		}
 			            	
-			            	
-
-
+		            		
+		                    
 			            }
 					},
 					error:(data)=>{
@@ -376,6 +359,73 @@
 				});
             }
             
+            function GetTarget(currentPage){
+    			
+    			var goNum = arguments[0];
+            	console.log(goNum);
+            	
+            	const selectValue = document.getElementById('selectBtn').value;
+            	
+            	$.ajax({
+            		url: '${contextPath}/adminReviewList.su',
+					data:{page: arguments[0], check: selectValue},
+					success:(data)=>{
+						const tbody = document.querySelector('tbody');
+						console.log(data.r);
+						tbody.innerHTML  = '';
+						
+						const listCount = document.getElementById('listCount');
+						listCount.value = data.listCount;
+						
+						for(const d of data.r){
+							const tr = document.createElement('tr');
+							
+							const pronum = document.createElement('td');
+							pronum.setAttribute("style", "overflow:hidden;white-space:nowrap;text-overflow:ellipsis;");
+							pronum.innerText = d.proNum;
+							
+							const proname = document.createElement('td');
+							proname.innerText = d.supplement.proName;
+							
+							const content = document.createElement('td');
+							content.innerText = d.rvContent;
+							
+							const nickname = document.createElement('td');
+							nickname.innerText = d.member.userNickname;
+							
+							const modifyDate = document.createElement('td');
+							
+							var date = new Date(d.strMOdifyDate);
+// 							var ymd  = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+							modifyDate.innerText = d.strMOdifyDate;
+							
+							const good = document.createElement('td');
+							good.innerText = d.rvRecommend;
+							
+							const status = document.createElement('td');
+							
+							if(d.rvStatus ==  'Y'){
+								status.innerHTML = '<i class="bi bi-x-circle" style="color: red;"></i>';
+							}else{
+								status.innerHTML = '<i class="bi bi-circle" style="color: #24E082;"></i>';
+							}
+							
+							tr.append(pronum);
+							tr.append(proname);
+							tr.append(content);
+							tr.append(nickname);
+							tr.append(modifyDate);
+							tr.append(good);
+							tr.append(status);
+							
+							tbody.append(tr);
+						}
+					},
+					error: (data)=>{
+						console.log(data);
+					}
+            	});
+            }
 
             
         </script>

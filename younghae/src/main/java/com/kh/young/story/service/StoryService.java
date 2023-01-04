@@ -68,5 +68,7 @@ public class StoryService {
 		return stDAO.updateThumbnail(sqlSession, s);
 	}
 
-
+	public Story checkBook(Story s){
+		return stDAO.checkBook(sqlSession, s);
+	}
 }

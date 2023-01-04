@@ -46,10 +46,6 @@
 </head>
 
 <body>
-	<!-- Page Preloder -->
-	<div id="preloder">
-		<div class="loader"></div>
-	</div>
 
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 
@@ -438,8 +434,7 @@
 			more.addEventListener('click', ()=>{
 				const cateNum = document.getElementById('cateNum').value;
 				const cateName = document.getElementById('cateName').innerText;
-// 				console.log(cateNum);
-// 				console.log(cateName);
+				
                 location.href = '${contextPath}/productMore.su?cateNum=' + cateNum + '&cateName=' + cateName;
 			});
 			
@@ -454,7 +449,7 @@
 				
 			}
 			
-			const revieMore = document.getElementById('reviewMore');
+			const reviewMore = document.getElementById('reviewMore');
 			reviewMore.addEventListener('click', ()=>{
 				const cateNum = document.getElementById('cateNum').value;
 				const cateName = document.getElementById('cateName').innerText;

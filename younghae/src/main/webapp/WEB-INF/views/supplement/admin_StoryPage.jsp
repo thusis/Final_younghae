@@ -72,11 +72,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
-
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
     <div class="humberger__menu__wrapper">
@@ -195,7 +190,7 @@
 							<c:url var="goNext" value="${ loc }">
 								<c:param name="page" value="${ pi.currentPage+1 }"></c:param>
 							</c:url>
-							<c:if test="${ pi.currentPage <= 1 }">
+							<c:if test="${ pi.currentPage < pi.endPage }">
 							<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
 							</c:if>
 						</div>
@@ -266,11 +261,11 @@
                 $('.trashIcon').children().on('click', function(){
                 	var check = 'N';
                     if($(this).attr("class") != "bi bi-trash3-fill"){
-                        // 스크랩 버튼 활성화 됐을 때
+                        // 쓰레기통 버튼 활성화 됐을 때
                         $(this).attr("class", "bi bi-trash3-fill");
                         check = 'Y';
                     }else{
-                        // 스크랩 버튼 비활성화
+                        // 쓰레기통 버튼 비활성화
                         $(this).attr("class", "bi bi-trash3");
                         check = 'N';
                     }
@@ -282,28 +277,12 @@
                     	success:(data)=>{
                     		console.log(data);
                     		
-//                     		const div = document.getElementById('ajaxdiv');
-//                     		div.innerHTML = "";
-                    		
-//                     		for(const s of data){
-// 	                    		const content = document.createElement('div');
-// 	                    		content.innerHTML = '<div class="col-lg-5 col-md-5 col-sm-5" style="border: 1px solid #24E082; border-radius: 2em; padding-top: 1%; margin: 3%; display: inline;">'+
-// 	    	                        				'<div class="blog__item"><div class="blog__item__pic"><input type="hidden" name="boardNum" value="'+${ s.boardNum }'">'+
-// 	                               					'<input type="hidden" name="boardUserNum" value="'+${ s.userNum }'">'+'<img src="'+${ s.attachment.attachRename }+'" style="width: 100px; height: 300px; border-radius: 1.5em;" alt="">'+
-// 	                           	 					'</div><div class="blog__item__text"><ul><li><i class="fa fa-calendar-o"></i>'+${ s.boardModifyDate }+'</li>'+
-// 	                           	 					'<li><i class="fa fa-comment-o"></i>'+${ s.boardView }+'</li><c:if test="${ loginUser ne null }"><div class="trashIcon" style="display: inline; float: right; font-size: 150%; color: #CC2525;">'+
-// 			                                		'<input type="hidden" name="boardNum" value="'+${ s.boardNum }+'"><i class="bi bi-trash3"></i></div></c:if></ul>'+
-// 			                                		'<div class="title" style="font-size: 20px; font-weight: bold;">'+${ s.boardTitle }+'</div><div id="detail" style="text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+
-// 			                                		'</div></div></div></div>';
-//               					div.append(content);
-//                     		}
                     		location.reload();
                     	},
-                    	error:(data)=>{
+                    	error:(data)=>{ㄴ
                     		console.log(data);
                     	}
                     });
-//                     console.log($(this).attr("class"));
                 }); // 클래스 이름으로 비교해서 ajax 실행...인데 ajax로 삭제 후 리스트도 뿌려야하나...?
                 
                 
@@ -313,13 +292,15 @@
 					const boardNum = $(this).children('input')[0].value;
 					const userNum = $(this).children('input')[1].value;
 					
-					location.href = '${contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
+// 					location.href = '${contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});
                 
 				$('.title').on('click', function(){
 // 					console.log($(this).parents().children('.blog__item__pic').children()[0].value);
 					const boardNum = $(this).parents().children('.blog__item__pic').children()[0].value;
 					const userNum = $(this).parents().children('.blog__item__pic').children()[1].value;
+					
+					console.log(boardNum);
 					
 					location.href = '${	contextPath}/selectUpdateStory.st?boardNum='+boardNum+'&userNum='+userNum+'&page='+${pi.currentPage};
 				});

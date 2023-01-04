@@ -47,17 +47,19 @@
 </head>
 
 <body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
 
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-    
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
-                <li><a href="${ contesyPath }/category.su">영양 성분 조회</a></li>
+                <li><a href="${ contesyPath }/category.su">영양 성분 검색</a></li>
             </ul>
         </div>
     </div>
-    
     <!-- Featured Section Begin -->
 	<section class="featured spad" style="margin-left: 18%; margin-right: 18%;">
 		<div class="container">
@@ -104,32 +106,15 @@
 						<h2
 							style="position: absolute; left: 60%; right: -5%; height: 4px; width: 40%; background: #24E082; content: ''; margin: 0 auto; display: inline; margin-top: 2%"></h2>
 					</div>
-					<!-- <div class="featured__controls">
-                        <ul>
-                            <li class="active" data-filter="*">All</li>
-                            <li data-filter=".oranges">Oranges</li>
-                            <li data-filter=".fresh-meat">Fresh Meat</li>
-                            <li data-filter=".vegetables">Vegetables</li>
-                            <li data-filter=".fastfood">Fastfood</li>
-                        </ul>
-                    </div> -->
 				</div>
 			</div>
 		</div>
 		<div class="row featured__filter" id="cate">
-			<c:forEach items="${ list }" var="c">
 				<div class="col-lg-3 col-md-4 col-sm-6 mix fastfood vegetables">
-					<div class="featured__item">
-						<div class="featured__item__pic set-bg" >
-							<input type="hidden" value="${ c.cateNum }">
-							<p>${ c.cateName }</p>
-						</div>
-					</div>
 				</div>
-			</c:forEach>
 
 			<!-- 페이징 -->
-			<div class="col-lg-12 text-center" style="margin-top: 8%;">
+<!--  			<div class="col-lg-12 text-center" style="margin-top: 8%;">
 				<div class="product__pagination blog__pagination">
 					<c:url var="goBack" value="${ loc }">
 						<c:param name="page" value="${ pi.currentPage-1 }"></c:param>
@@ -156,7 +141,7 @@
 					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
 					</c:if>
 				</div>
-			</div>
+			</div>-->
 		</div>
 	</section>
 	<!-- Featured Section End -->
@@ -263,6 +248,8 @@
         
         const Allcategory = document.getElementsByClassName("featured__item__pic set-bg");
         
+        var page = "${ pi.currentPage }";
+        
         $(document).on("click", ".featured__item__pic.set-bg", function(){
                 console.log(this);
                 const cateNum = this.children[0].value;
@@ -270,7 +257,11 @@
                 console.log(cateNum);
                 console.log(cateName);
                 
-                location.href = '${contextPath}/selectCategory.su?cateName='+cateName+'&cateNum='+cateNum+'&page='+${pi.currentPage};
+                if(page == ""){
+	                location.href = '${contextPath}/selectCategory.su?cateName='+cateName+'&cateNum='+cateNum;
+                }else{
+	                location.href = '${contextPath}/selectCategory.su?cateName='+cateName+'&cateNum='+cateNum+'&page='+page;
+                }
         });
 
 		

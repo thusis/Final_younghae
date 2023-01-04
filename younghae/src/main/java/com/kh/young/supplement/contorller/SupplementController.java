@@ -69,7 +69,7 @@ public class SupplementController {
 	
 	@RequestMapping("selectCategory.su")
 	public ModelAndView selectCategory(@RequestParam("cateName") String category, @RequestParam("cateNum") int cateNum,
-								@RequestParam("page") Integer page, ModelAndView mv, HttpSession session) {
+								@RequestParam(value="page", required=false) Integer page, ModelAndView mv, HttpSession session) {
 		int currentPage = 1;
 		
 		if (page != null) {
@@ -143,6 +143,7 @@ public class SupplementController {
 		
 		if(product != null) {
 			model.addAttribute("pi", pi);
+			model.addAttribute("cateNum", cateNum);
 			model.addAttribute("cateName", cateName);
 			model.addAttribute("product", product);
 			
@@ -415,7 +416,7 @@ public class SupplementController {
 	}
 	
 	@RequestMapping("reco.su")
-	public Integer reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
+	public void reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
 		Review r = new Review();
 		System.out.println(check);
 		
@@ -425,22 +426,29 @@ public class SupplementController {
 		System.out.println(r);
 		
 		int result = 0;
+		int result1 = 0;
 		if(check.equals("R")) {
 			System.out.println("인서트");
 			result = sService.insertReco(r);
+			result1 = sService.updateReviewCount(r);
+			
 		}else if(check.equals("D")) {
 			System.out.println("삭제");
 			result = sService.deleteReco(r);
+			result1 = sService.deleteReviewCount(r);
 		}
-		
-		return result;
+	}
+	
+	@RequestMapping("searchPage.su")
+	public String searchPage() {
+		return "search_category";
 	}
 	
 //	=============================================== 관리자 ==========================================================================
 	@ResponseBody
 	@RequestMapping("adminReviewList.su")
 	public HashMap<String, Object> adminReviewList(@RequestParam(value="page", required=false) Integer page,  HttpServletResponse response,
-									@RequestParam(value="check", required=false) String check, Model model) {
+									@RequestParam(value="check", required=false) String check) {
 		System.out.println("check : " + check);
 		
 		
@@ -472,5 +480,10 @@ public class SupplementController {
 		map.put("listCount", reviewCount);
 		
 		return map;
+	}
+	
+	@RequestMapping("goAdminReviewList.su")
+	public void goAdminReviewList(@RequestParam("page") int page, Model model) {
+		adminReviewList(page, null, null);
 	}
 }

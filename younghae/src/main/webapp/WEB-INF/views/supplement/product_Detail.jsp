@@ -137,10 +137,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
 
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
     <div class="container">
@@ -168,9 +164,9 @@
                 <div class="col-lg-6 col-md-6">
                     <div class="product__details__text">
                         <h3 class="d-inline">${ product.proName }</h3>
-                        <div class="float-right" style="font-size: 150%; color: #24E082;">
-                            <i class="bi bi-bookmark-plus-fill"></i>
-                        </div>
+<!--                         <div class="float-right" style="font-size: 150%; color: #24E082;"> -->
+<!--                             <i class="bi bi-bookmark-plus-fill"></i> -->
+<!--                         </div> -->
                         <div class="product__details__rating">
                             <i class="fa fa-star"></i>
                             &nbsp;<span id="starIn">0</span>점
@@ -652,8 +648,12 @@
              	            });
 				            
 	        			}
-		        		const update  = document.getElementsByClassName('text-left');
-			            
+		        		
+	        			var login = "${ loginUser }";
+	            		var loginNum = "${ loginUser.userNum }";
+	        			
+	        			const update  = document.getElementsByClassName('text-left');
+		        		
 			            for(const up of update){
 			            	up.addEventListener('click' ,function(){
 			            		// 별점
@@ -668,8 +668,10 @@
 // 			            		console.log($(this).children().siblings()[6].innerText);
 			            		console.log($(this).parent().children().siblings()[6].innerText);
 			            		
-			            		if(${ loginUser ne null}){
-				            		if( ${ loginUser.userNum } == $(this).parent().children().children()[0].value ){
+			            		
+			            		
+			            		if(login != null){
+				            		if( loginNum == $(this).parent().children().children()[0].value ){
 			            				updateModal.style.display = "block";
 				            			
 	// 				            			닫기 버튼
@@ -697,7 +699,7 @@
 			            	});
 			            	
 			            }
-			            if(${loginUser ne null}){
+			            if(login != null){
 			            	const reco = document.getElementsByClassName('product__details__rating 1');
 			                for(var re of reco){
 			    	            re.addEventListener('click', function(){
@@ -705,6 +707,7 @@
 			    	            	var check = '';
 			    	            	
 			    	            	if($(this).attr('class') != "bi bi-hand-thumbs-up-fill"){
+			    	            		console.log($(this).parent);
 				    	            	$(this).attr('class', 'bi bi-hand-thumbs-up-fill');
 			    	            		check = 'R';
 			    	            		console.log("눌렀담");
@@ -719,7 +722,7 @@
 			    	            	console.log($(this).parent().children()[7].value);
 			    	            	$.ajax({
 			    	            		url: '${contextPath}/reco.su',
-			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: ${ loginUser.userNum },
+			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
 			    	            				check: check},
 			    	            		success:(data)=>{
 			    	            			

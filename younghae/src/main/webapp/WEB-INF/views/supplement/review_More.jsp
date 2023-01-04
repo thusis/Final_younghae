@@ -129,7 +129,7 @@
 						<c:param name="cateNum" value="${ cateNum }"/>
 						<c:param name="cateName" value="${ cateName }"/>
 					</c:url>
-					<c:if test="${ pi.currentPage <= 1 }">
+					<c:if test="${ pi.currentPage < pi.endPage }">
 					<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
 					</c:if>
 				</div>

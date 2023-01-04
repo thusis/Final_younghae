@@ -113,4 +113,12 @@ public class SupplementDAO {
 		return sqlSession.selectOne("supplementMapper.adminReviewListCount");
 	}
 
+	public int updateReviewCount(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("supplementMapper.updateReviewCount", r);
+	}
+
+	public int deleteReviewCount(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("supplementMapper.deleteReviewCount", r);
+	}
+
 }

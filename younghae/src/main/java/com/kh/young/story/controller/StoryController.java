@@ -57,6 +57,26 @@ public class StoryController {
 
 		ArrayList<Story> allList = stService.allStory(pi);
 		
+			
+		for(int i = 0; i < allList.size(); i++) {
+			if(mem != null) {
+				System.out.println("null아님");
+				Story r = stService.checkBook(allList.get(i));
+				
+				if(stService.checkBook(allList.get(i)) != null) {
+					if(allList.get(i).getBoardNum() == r.getClip().getBoardNum() && mem.getUserNum() == r.getClip().getUserNum()) {
+						allList.get(i).setCheck("Y");
+					}
+				}else {
+					allList.get(i).setCheck("N");
+				}
+			}else {
+				System.out.println("null임");
+				allList.get(i).setCheck("N");
+			}
+			System.out.println(allList.get(i).getBoardNum());
+		}
+		
 //		System.out.println(allList);
 		
 		model.addAttribute("pi", pi);
@@ -148,10 +168,15 @@ public class StoryController {
 		System.out.println(b);
 
 		Member m = (Member) session.getAttribute("loginUser");
-
-		if (m.getUserNum() != userNum) {
+		
+		if(m == null) {
 			int result = stService.updateView(boardNum);
+		}else {
+			if (m.getUserNum() != userNum) {
+				int result = stService.updateView(boardNum);
+			}
 		}
+
 
 		mv.addObject("board", b);
 		mv.addObject("loginUser", m);

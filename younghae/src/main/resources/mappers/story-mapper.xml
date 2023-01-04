@@ -14,6 +14,7 @@
 		<result column="BOARD_TYPE" property="boardType"/>
 		<association property="attachment" javaType="Attachment" resultMap="AttmResultSet"/>
 		<association property="member" javaType="Member" resultMap="memberResultSet"/>
+		<association property="clip" javaType="Clip" resultMap="ClipResultSet"/>
 	</resultMap>
 
 	<!-- member 폼 -->
@@ -46,6 +47,14 @@
 		<result column="ATTACH_STATUS" property="attachStatus"/>
 	</resultMap>
 	
+	<!-- 북마크 폼 -->
+	<resultMap type="Clip" id="ClipResultSet">
+		<id column="BOARD_NUM" property="boardNum"/>
+		<result column="USER_NUM" property="userNum"/>
+	</resultMap>
+	
+	<!-- ============================================================================================================================================= -->
+	
 	<!-- 컬럼 작성 -->
 	<insert id="insertStory">
 		insert into board
@@ -71,11 +80,10 @@
 	
 	<!-- 컬럼 리스트 가져오기 -->
 	<select id="allStory" resultMap="BoardResultSet">
-		select board_num, board_title, board_content, board_createDate, board_modifyDate, board_view, board_status, user_num, attach_rename
+		select board.board_num, board.board_type, board.board_title, board.board_content, board.board_createDate, board.board_modifyDate, board.board_view, board.board_status, board.user_num, attachment.attach_rename, attachment.SERIALNUMBER
 		from board 
-		join attachment on board_num = SERIALNUMBER
-		where board.board_type = 3 and board.board_status = 'Y'
-		order by board_num desc
+             left join attachment on (board.board_num = attachment.SERIALNUMBER)
+        WHERE board.BOARD_type=3 and attachment.board_type=3 and board_status = 'Y';
 	</select>
 	
 	<!-- 컬럼 디테일 가져오기 -->
@@ -102,6 +110,13 @@
 		delete from clip
 		where board_num = #{boardNum} and user_num = #{userNum}
 	</delete>
+	
+	<!-- 북마크 됐는지 확인하기 -->
+	<select id="checkBook" resultMap="BoardResultSet">
+        select * from clip
+        join board using(board_num)
+        where board_num = #{boardNum} and board_type = 3
+	</select>
 	
 	<!-- ========================== 관리자 =========================== -->
 	

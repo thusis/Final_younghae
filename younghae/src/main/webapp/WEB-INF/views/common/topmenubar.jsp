@@ -114,7 +114,7 @@
                           <li><a href="#">영양제</a>
                               <ul class="yh_header__menu__dropdown">
                                   <li><a href="${contextPath}/category.su">영양성분조회</a></li>
-                                  <li><a href="#">영양제 검색</a></li>
+                                  <li><a href="${contextPath}/searchPage.su">영양제 검색</a></li>
                               </ul>
                           </li>
                           <li><a href="${contextPath}/shoppingMain.sh">쇼핑</a></li>

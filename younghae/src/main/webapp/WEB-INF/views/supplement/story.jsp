@@ -72,10 +72,6 @@
 </head>
 
 <body>
-    <!-- Page Preloder -->
-    <div id="preloder">
-        <div class="loader"></div>
-    </div>
 
     <!-- Humberger Begin -->
     <div class="humberger__menu__overlay"></div>
@@ -165,7 +161,12 @@
 	                                    <c:if test="${ loginUser ne null }">
 				                            <div class="scrapIcon" style="display: inline; float: right; font-size: 150%; color: #24E082;">
 			                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
-				                                <i class="bi bi-bookmark-plus"></i>
+			                                	<c:if test="${ story.check eq 'Y'}">
+					                                <i class="bi bi-bookmark-plus-fill"></i>
+			                                	</c:if>
+			                                	<c:if test="${ story.check ne 'Y' }">
+					                                <i class="bi bi-bookmark-plus"></i>			                                		
+			                                	</c:if>
 				                            </div>
 			                            </c:if>
 	                                </ul>
@@ -204,8 +205,8 @@
 								<c:param name="cateNum" value="${ cateNum }"/>
 								<c:param name="cateName" value="${ cateName }"/>
 							</c:url>
-							<c:if test="${ pi.currentPage <= 1 }">
-							<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
+							<c:if test="${ pi.currentPage < pi.endPage }">
+								<a href="${ goNext }"><i class="fa fa-long-arrow-right"></i></a>
 							</c:if>
 						</div>
 					</div>
@@ -272,31 +273,36 @@
 
         <script>
             window.onload=()=>{
-                $('.scrapIcon').children().on('click', function(){
-                	var check = 'N';
-                    if($(this).attr("class") != "bi bi-bookmark-plus-fill"){
-                        // 스크랩 버튼 활성화 됐을 때
-                        $(this).attr("class", "bi bi-bookmark-plus-fill");
-                        check = 'Y';
-                    }else{
-                        // 스크랩 버튼 비활성화
-                        $(this).attr("class", "bi bi-bookmark-plus");
-                        check = 'N';
-                    }
-                    console.log($(this).siblings()[0].value);
-                    $.ajax({
-                    	url:'${ contextPath }/bookmark.st',
-                    	data: {userNum: ${ loginUser.userNum }, boardNum: $(this).siblings()[0].value, 
-                    			check: check},
-                    	success:(data)=>{
-                    		console.log(data);
-                    	},
-                    	error:(data)=>{
-                    		console.log(data);
-                    	}
-                    });
-                    console.log($(this).attr("class"));
-                }); // 클래스 이름으로 비교해서 ajax 실행
+            	var login = "${ loginUser }";
+            	var loginNum =  "${ loginUser.userNum }";
+            	
+            	if(login != null){
+	                $('.scrapIcon').children().on('click', function(){
+	                	var check = 'N';
+	                    if($(this).attr("class") != "bi bi-bookmark-plus-fill"){
+	                        // 스크랩 버튼 활성화 됐을 때
+	                        $(this).attr("class", "bi bi-bookmark-plus-fill");
+	                        check = 'Y';
+	                    }else{
+	                        // 스크랩 버튼 비활성화
+	                        $(this).attr("class", "bi bi-bookmark-plus");
+	                        check = 'N';
+	                    }
+	                    console.log($(this).siblings()[0].value);
+	                    $.ajax({
+	                    	url:'${ contextPath }/bookmark.st',
+	                    	data: {userNum: loginNum, boardNum: $(this).siblings()[0].value, 
+	                    			check: check},
+	                    	success:(data)=>{
+	                    		console.log(data);
+	                    	},
+	                    	error:(data)=>{
+	                    		console.log(data);
+	                    	}
+	                    });
+	                    console.log($(this).attr("class"));
+	                }); // 클래스 이름으로 비교해서 ajax 실행
+            	}
                 
                 
                 // 이미지, 제목 클릭시 상세보기로 넘기기
