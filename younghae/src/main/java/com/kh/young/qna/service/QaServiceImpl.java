@@ -124,10 +124,11 @@ public class QaServiceImpl implements QaService {
 			q.getBoard().setBoardContent(
 					boardContentToString(q.getBoard().getBoardContent())
 					);
-			
-			q.getAnswerList().get(0).getBoard().setBoardContent(
-					boardContentToString(q.getAnswerList().get(0).getBoard().getBoardContent())
-					);
+			if(q.getAnswerList().size() > 0) {
+				q.getAnswerList().get(0).getBoard().setBoardContent(
+						boardContentToString(q.getAnswerList().get(0).getBoard().getBoardContent())
+						);
+			}
 		}
 		return topTwo;
 	}
