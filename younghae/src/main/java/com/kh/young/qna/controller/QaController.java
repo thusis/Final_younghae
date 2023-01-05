@@ -251,7 +251,7 @@ public class QaController {
 	public String updateIsSolved(@RequestParam int boardNum) {
 		int result = qService.updateIsSolved(boardNum); // quest의 boardTitle로 questionNum 받아올거야
 		if(result>0) {
-			return "question.qa?boardNum="+boardNum;
+			return "redirect:question.qa?boardNum="+boardNum;
 		} else {
 			throw new Qexception("질문글 작성 실패");
 		}

@@ -207,7 +207,7 @@ private static String AddDate(String strDate, int year, int month, int day) thro
 		cal.setTime(dt);
         
 		cal.add(Calendar.YEAR,  year);
-		cal.add(Calendar.MONTH, month);
+		cal.add(Calendar.MONTH, month+2);
 		cal.add(Calendar.DATE,  day);
         
 		return dtFormat.format(cal.getTime());
