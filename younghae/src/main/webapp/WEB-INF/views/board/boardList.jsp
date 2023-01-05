@@ -84,10 +84,10 @@
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">Categories</h4>
                             <ul>
-                                <li class="ll 11">운동 (32)</li>
-                                <li class="ll 12">식단 (21)</li>
-                                <li class="ll 13">영양제 (54)</li>
-                                <li class="ll 14">자유 (47)</li>
+                                <li class="ll 11">운동🏓</li>
+                                <li class="ll 12">식단🥗</li>
+                                <li class="ll 13">영양제💊</li>
+                                <li class="ll 14">자유😀</li>
                             </ul>  
                         </div>
                         <div class="blog__sidebar__item">
@@ -129,7 +129,6 @@
 					<c:forEach items="${ bList }"  var="b" >
 						<div class="col-lg-6 col-md-6 col-sm-6" >
 						<input type="hidden" value="${b.boardType}" name="boardType" class="boardType" >
-						${b.boardNum }
 						<input type="hidden" value="${b.boardNum}" name="boardNum" class="boardNum" >
 						<input type="hidden" value="${b.userNum}" name="userNum" class="userNum" >
 							<div class="blog__item">

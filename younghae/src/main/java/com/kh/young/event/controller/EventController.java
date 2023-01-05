@@ -43,7 +43,7 @@ public class EventController {
 		
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNum = loginUser.getUserNum();
-		System.out.println(userNum);
+		
 	//출석 수 카운트
 	int atCount = eService.selectCountAttendance(userNum); 
 	System.out.println("출석 수 카운트 : " + atCount);
@@ -133,13 +133,9 @@ public class EventController {
 		  int updatePoint = eService.updatePoint(pointTable);
 		  
 		  if(attendanceAward > 0 && updatePoint > 0) {
-			  return String.valueOf("1");
-//			  return String.valueOf("포인트 지급 성공");
-//			  	return "eventAttendance";			  
+			  return String.valueOf("1");  
 		  } else {
 			  return String.valueOf("0");
-//			  return String.valueOf("포인트 지급 실패");
-//			  throw new eventException("포인트 지급 실패");
 		  }
 		  
 		  
@@ -155,7 +151,7 @@ public class EventController {
 		int userNum = loginUser.getUserNum();
 		
 		int checkBirth = eService.checkBirth(userNum);
-	
+		System.out.println("checkBirth : " + checkBirth);
 		LocalDate month = LocalDate.now();
 		int nowMonth =  month.getMonthValue();
 		System.out.println("nowMonth : " + nowMonth);
@@ -179,19 +175,14 @@ public class EventController {
 				int result = eService.insertCoupon(map);
 				
 				if(result == 1) {
-//					model.addAttribute("result", 1);
-//					return "eventBirthday";
 					return String.valueOf("1");
 				} else {
-//					throw new eventException("쿠폰 발급 실패");
 					return String.valueOf("2");
 				}
 			} else {
-//				throw new eventException("생일자가 아닙니다");
 					return String.valueOf("3");
 			}
 		} else {
-//			throw new eventException("이미 쿠폰을 발급 받으셨습니다.");
 					return String.valueOf("4");
 		}
 	}
