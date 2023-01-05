@@ -24,7 +24,7 @@
                         <ul>
                         	<li><img src="resources/img/logo.svg"></li>
                             <li>영양제를 해석하다</li>
-                            <li>팀원 : 강혜진, 송영호, 이봉은, 이주은, 조소연, </li>
+                            <li>팀원 : 강혜진, 송영호, 이봉은, 이주희, 조소연, </li>
                             <li>git : https://github.com/thusis/Final_younghae.git</li>
                         </ul>
                     </div>
