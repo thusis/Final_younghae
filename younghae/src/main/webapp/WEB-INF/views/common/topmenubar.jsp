@@ -209,9 +209,9 @@
 
 <script>
 
-	
+	var loginUser = "${loginUser.userNum}";
+
 	$(function(){
-		   const loginUser =$("#loginUser").val();
 		   if(loginUser!=""){   
 		      setInterval(() => {
 			  	getUnreadHowMany();
@@ -224,7 +224,7 @@
 		$.ajax({
 			url: '${contextPath}/unreadHowMany.ch',
 			data: { 
-				receiverNum : ${loginUser.userNum}
+				receiverNum : loginUser
 			},
 			success: (unreadHowMany)=>{
 				if(unreadHowMany>0){

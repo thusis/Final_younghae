@@ -244,9 +244,9 @@
    <div class="container2">
       <div class="main-view">
          <ul>
-            <li><a href="${contextPath }/reviewEvent.ev"><img src="resources/img/event3.PNG" style="width:100%; height:350%;" /></a></li>
-            <li><a href="${contextPath }/attendanceEvent.ev"><img src="resources/img/event1.PNG" style="width:100%; height:350%;"/></a></li>
-            <li><a href="${contextPath }/birthEvent.ev"><img src="resources/img/event/event2.PNG" style="width:100%; height:350%;"/></a></li>
+            <li><a href="${contextPath }/reviewEvent.ev"><img src="resources/img/event3.png" style="width:100%; height:350%;" /></a></li>
+            <li><a href="${contextPath }/attendanceEvent.ev"><img src="resources/img/event1.png" style="width:100%; height:350%;"/></a></li>
+            <li><a href="${contextPath }/birthEvent.ev"><img src="resources/img/event2.png" style="width:100%; height:350%;"/></a></li>
          </ul>
       </div>
    </div>
