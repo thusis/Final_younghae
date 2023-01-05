@@ -155,8 +155,8 @@
 	                            </div>
 	                            <div class="blog__item__text">
 	                                <ul>
-	                                    <li><i class="fa fa-calendar-o"></i>${ story.boardModifyDate }</li>
-	                                    <li><i class="fa fa-comment-o"></i>${ story.boardView }</li>
+	                                    <li><i class="fa fa-calendar-o"></i>&nbsp;${ story.boardModifyDate }</li>
+	                                    <li><i class="bi bi-eye"></i>&nbsp;${ story.boardView }</li>
 			                            <div class="trashIcon" style="display: inline; float: right; font-size: 150%; color: #CC2525;">
 		                                	<input type="hidden" name="boardNum" value="${ story.boardNum }">
 			                                	<i class="bi bi-trash3"></i>
@@ -279,7 +279,7 @@
                     		
                     		location.reload();
                     	},
-                    	error:(data)=>{ㄴ
+                    	error:(data)=>{
                     		console.log(data);
                     	}
                     });
