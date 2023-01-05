@@ -1,5 +1,6 @@
 package com.kh.young.shopping.dao;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -12,17 +13,44 @@ import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
-import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
+import com.kh.young.shopping.dto.SupplementResp;
 
 @Repository
 public class ShoppingDAO {
 
 	public ArrayList<Supplement> selectSupplementList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectSupplementList");
+	}
+	
+	public ArrayList<SupplementResp> selectsuppleRespList(SqlSessionTemplate sqlSession) {
+		ArrayList<Supplement> list = selectSupplementList(sqlSession);
+		ArrayList<SupplementResp> resultList = new ArrayList<>();
+		for(Supplement l : list) {
+			SupplementResp resp = new SupplementResp();
+			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+			resp.setProNum(l.getProNum());
+			resp.setProImage(l.getProImage());
+			resp.setProName(l.getProName());
+			resp.setProCompany(l.getProCompany());
+			resp.setProIngredient(l.getProIngredient());
+			resp.setProPrice(l.getProPrice());
+			resp.setProEffect(l.getProEffect());
+			resp.setProIntake(l.getProIntake());
+			resp.setProSaleStatus(l.getProSaleStatus());
+			resp.setProCreateDate(l.getProCreateDate());
+			resp.setProModifyDate(l.getProModifyDate());
+			resp.setProGrade(l.getProGrade());
+			resp.setProStatus(l.getProStatus());
+			resp.setCateNum(l.getCateNum());
+			resp.setFormatPrice(l.getFormatPrice());
+			resp.setReviewCount(reviewCount);
+			resultList.add(resp);
+		}
+		return resultList;
 	}
 
 	public ArrayList<Supplement> selectTrendList(SqlSessionTemplate sqlSession) {
@@ -128,6 +156,7 @@ public class ShoppingDAO {
 	public Coupon selectUseCoupon(SqlSessionTemplate sqlSession, int couNum) {
 		return sqlSession.selectOne("shoppingMapper.selectUseCoupon", couNum);
 	}
+
 
 
 }

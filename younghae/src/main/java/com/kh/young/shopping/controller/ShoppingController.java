@@ -30,6 +30,7 @@ import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
+import com.kh.young.shopping.dto.SupplementResp;
 import com.kh.young.shopping.service.ShoppingService;
 
 //@SessionAttributes("loginUser")
@@ -43,7 +44,8 @@ public class ShoppingController {
 	@RequestMapping("shoppingMain.sh")
 	public String shoppingMain(Model model) {
 		
-		ArrayList<Supplement> list = shService.selectSupplementList();
+//		ArrayList<Supplement> list = shService.selectSupplementList();
+		ArrayList<SupplementResp> list = shService.selectsuppleRespList();
 		ArrayList<Supplement> trendList = shService.selectTrendList();
 		ArrayList<Supplement> bestsellerList = shService.selectBestsellerList();
 		

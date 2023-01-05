@@ -15,6 +15,7 @@ import com.kh.young.model.vo.Supplement;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
+import com.kh.young.shopping.dto.SupplementResp;
 
 public interface ShoppingService {
 
@@ -70,6 +71,7 @@ public interface ShoppingService {
 	ArrayList<Supplement> selectCateList(String proEffect);
 	
 	Coupon selectUseCoupon(int couNum);
+	ArrayList<SupplementResp> selectsuppleRespList();
 	
 	
 

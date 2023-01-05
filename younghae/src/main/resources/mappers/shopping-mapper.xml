@@ -120,6 +120,9 @@
 		order by pro_num asc
 	</select>
 	
+	<select id="selectReviewCount" resultType="_int">
+		SELECT COUNT (*) FROM REVIEW JOIN PRODUCT USING (PRO_NUM) WHERE PRO_NUM = #{proNum}
+	</select>
 	
 	<select id="selectTrendList" resultMap="supplementResultSet">
 		select *

@@ -19,6 +19,7 @@ import com.kh.young.shopping.dao.ShoppingDAO;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
+import com.kh.young.shopping.dto.SupplementResp;
 
 @Service("shService")
 public class ShoppingServiceImpl implements ShoppingService{
@@ -164,6 +165,11 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Override
 	public Coupon selectUseCoupon(int couNum) {
 		return shDAO.selectUseCoupon(sqlSession, couNum);
+	}
+
+	@Override
+	public ArrayList<SupplementResp> selectsuppleRespList() {
+		return shDAO.selectsuppleRespList(sqlSession);
 	}
 
 }

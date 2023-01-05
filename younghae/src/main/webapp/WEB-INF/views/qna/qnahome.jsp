@@ -25,9 +25,9 @@
             </ul>
         </div>
 		
-		<input type="text" id="tempUserNum"/>
-		<button id="loginBtn">로그인</button>
-		<button id="logoutBtn">로그아웃</button><br>
+<!-- 		<input type="text" id="tempUserNum"/> -->
+<!-- 		<button id="loginBtn">로그인</button> -->
+<!-- 		<button id="logoutBtn">로그아웃</button><br> -->
 		
 		<c:if test="${ loginUser != null }">
         <div style="padding: 30px 0 10px 0;">
@@ -212,18 +212,18 @@
 window.onload=()=>{
 	
 	
-	const loginBtn= document.getElementById("loginBtn");
-	const logoutBtn= document.getElementById("logoutBtn");
+// 	const loginBtn= document.getElementById("loginBtn");
+// 	const logoutBtn= document.getElementById("logoutBtn");
 
-	loginBtn.addEventListener('click', function(){
-		const loginNum = document.getElementById("tempUserNum").value;
-		console.log(document.getElementById("tempUserNum").value);
-		location.href='${contextPath}/login.qa?userNum='+loginNum;
-	})
+// 	loginBtn.addEventListener('click', function(){
+// 		const loginNum = document.getElementById("tempUserNum").value;
+// 		console.log(document.getElementById("tempUserNum").value);
+// 		location.href='${contextPath}/login.qa?userNum='+loginNum;
+// 	})
 
-	logoutBtn.addEventListener('click', function() {
-	   location.href='${contextPath}/logout.qa';
-	})
+// 	logoutBtn.addEventListener('click', function() {
+// 	   location.href='${contextPath}/logout.qa';
+// 	})
 	
 	const questionTr = document.getElementsByClassName('questionTr');
 	for(const question of questionTr){
