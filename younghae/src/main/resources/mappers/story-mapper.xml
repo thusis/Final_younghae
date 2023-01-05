@@ -15,8 +15,18 @@
 		<association property="attachment" javaType="Attachment" resultMap="AttmResultSet"/>
 		<association property="member" javaType="Member" resultMap="memberResultSet"/>
 		<association property="clip" javaType="Clip" resultMap="ClipResultSet"/>
+		<association property="generalUser;" javaType="GeneralUser " resultMap="generalUserResultSet"/>
 	</resultMap>
-
+	
+	<!-- 일반 유저 폼 -->
+	   <resultMap type="GeneralUser" id="generalUserResultSet">
+      <id column="USER_NUM" property="userNum" />
+      <result column="USER_ZIPCODE" property="userZipcode"/>
+      <result column="USER_ADDRESS" property="userAddress"/>
+      <result column="USER_ADDRESS_DETAIL" property="userAddressDetail"/>
+      <result column="USER_HEALTH" property="userHealth"/>
+   </resultMap>
+   
 	<!-- member 폼 -->
 	<resultMap type="Member" id="memberResultSet">
 		<id column="USER_NUM" property="userNum" />

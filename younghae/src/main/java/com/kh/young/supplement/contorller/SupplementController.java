@@ -416,12 +416,16 @@ public class SupplementController {
 	}
 	
 	@RequestMapping("reco.su")
-	public Integer reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
+	public void reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
 		Review r = new Review();
 		System.out.println(check);
 		
 		r.setRvNum(rvnum);
 		r.setUserNum(usernum);
+		
+		
+		
+		
 		
 		System.out.println(r);
 		
@@ -437,8 +441,6 @@ public class SupplementController {
 			result = sService.deleteReco(r);
 			result1 = sService.deleteReviewCount(r);
 		}
-		
-		return result1 + result;
 	}
 	
 	@RequestMapping("searchPage.su")
