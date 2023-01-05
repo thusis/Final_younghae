@@ -27,4 +27,5 @@ public class Story {
 	private Member member;
 	private String check;
 	private Clip clip;
+	private GeneralUser generaluser;
 }

@@ -44,6 +44,10 @@ public interface BoardService {
 
 	int updateBoard(Story b);
 
+	ArrayList<Board> topBoardList();
+
+	ArrayList<Attachment> topBoardAttList();
+
 
 
 

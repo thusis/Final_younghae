@@ -5,7 +5,7 @@ import java.util.HashMap;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-@Repository
+@Repository("eDAO")
 public class EventDAO {
 
 	public int insertAttendance(SqlSessionTemplate sqlSession, int userNum) {
@@ -13,6 +13,7 @@ public class EventDAO {
 	}
 
 	public int selectCountAttendance(SqlSessionTemplate sqlSession, int userNum) {
+		System.out.println(sqlSession);
 		return sqlSession.selectOne("eventMapper.selectCountAttendance", userNum);
 	}
 

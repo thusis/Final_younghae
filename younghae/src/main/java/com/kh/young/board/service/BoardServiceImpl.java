@@ -27,7 +27,7 @@ public class BoardServiceImpl implements BoardService{
 	
 	
 	  @Override public int getBoardListCount() { 
-		return bDAO.getBoardListCount(sqlSession); 
+		return bDAO.getBoardListCount(sqlSession);
 	 }
 	 
 
@@ -111,6 +111,18 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int updateThumbnail(Story b) {
 		return bDAO.updateThumbnail(sqlSession, b);
+	}
+
+
+	@Override
+	public ArrayList<Board> topBoardList() {
+		return bDAO.topBoardList(sqlSession);
+	}
+
+
+	@Override
+	public ArrayList<Attachment> topBoardAttList() {
+		return bDAO.topBoardAttList(sqlSession);
 	}
 
 

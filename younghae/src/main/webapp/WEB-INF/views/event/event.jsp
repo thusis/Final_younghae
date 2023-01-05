@@ -33,7 +33,7 @@
 	</nav>
 	<!-- ============================================-->
 	<!-- <section> begin ============================-->
-	<section class="pb-5 pt-8">
+<%-- 	<section class="pb-5 pt-8">
 
 		<div class="eventDiv" id="eventFirst">
 			<div class="row">
@@ -58,8 +58,8 @@
 									<button type="button" class="btn btn-success" onclick="location.href='${contextPath}/reviewEvent.ev'">
 					   							<i class="fas fa-chevron-right ms-2"></i> Event View details
 					    			</button>
-<%-- 										<a class="btn btn-lg btn-primary mt-xl-6" href="#" onclick="location.href='${contextPath}/reviewEvent.ev'">Event
-											View details<i class="fas fa-chevron-right ms-2"></i> --%>
+										<a class="btn btn-lg btn-primary mt-xl-6" href="#" onclick="location.href='${contextPath}/reviewEvent.ev'">Event
+											View details<i class="fas fa-chevron-right ms-2"></i>
 										</a>
 									</div>
 								</div>
@@ -71,7 +71,7 @@
 		</div>
 		<!-- end of .container-->
 
-	</section>
+	</section> --%>
 	<!-- <section> close ============================-->
 	<!-- ============================================-->
 	<br>
@@ -211,7 +211,7 @@
 	<br>
 	
 	
-		<section class="py-0">
+	<%-- 	<section class="py-0">
 
 		<div class="eventDiv" id="eventLast">
 			<div class="row">
@@ -235,9 +235,9 @@
 									<button type="button" class="btn btn-success" onclick="location.href='${contextPath}/birthEvent.ev'">
 					   							<i class="fas fa-chevron-right ms-2"></i> Event View details
 					    			</button>															
-<%-- 										<a href="#" class="btn btn-lg btn-primary mt-xl-6"   onclick="location.href='${contextPath}/replyEvent.ev'">Event
+										<a href="#" class="btn btn-lg btn-primary mt-xl-6"   onclick="location.href='${contextPath}/replyEvent.ev'">Event
 											View details<i class="fas fa-chevron-right ms-2"></i>
-										</a> --%>
+										</a>
 									</div>
 								</div>
 							</div>
@@ -248,7 +248,7 @@
 		</div>
 		<!-- end of .container-->
 
-	</section>
+	</section> --%>
 	
 	
 <%-- 	<section class="py-0">
