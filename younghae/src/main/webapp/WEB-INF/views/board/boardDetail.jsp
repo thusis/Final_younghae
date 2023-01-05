@@ -451,9 +451,9 @@
               const boardNum = '${b.boardNum}';
               const writer = '${b.userNum}';
               const page = '${page}';
-             
+              http://localhost:8888/young/boardView.bo?boardCategory=12&boardNum=44&writer=32&page=1#
               
-              var sendUrl = "http://localhost:8080/selectBoard.bo?bNo=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page};
+              var sendUrl = "http://localhost:8888/young/boardView.bo?boardCategory=" + ${b.boardType} + "%26boardNum=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page};
               console.log(sendUrl);
               window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl, "Y2K World", "height=480px, width=600px");
             }
