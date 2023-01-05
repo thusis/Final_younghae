@@ -634,7 +634,7 @@
 
 
     <!-- 장바구니 모달창 -->
-    <div id="cartModal" class="hj_modal" >
+    <div id="cartModal" class="hj_modal" style="z-index:999">
         <!-- Modal content -->
         <div class="modal-content" style="width:60%; height:85%;">
             <div class="compareTitle">

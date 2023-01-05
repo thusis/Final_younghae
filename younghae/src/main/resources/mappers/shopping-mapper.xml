@@ -265,11 +265,11 @@
 <!-- 		from address a -->
 <!-- 		    full outer join cart c on(a.user_num = c.user_num) -->
 <!-- 		    right outer join (select * from product where pro_num = #{proNum}) p on(c.pro_num = p.pro_num) -->
-<!-- 		where a.user_num = #{userNum} and a.address_basic = 'Y' -->
+<!-- 		where a.user_num = #{userNum} and a.address_basic = 'Y' -->			
 			select  c.cart_num, c.cart_quantity, p.pro_num, p.pro_image, p.pro_name, p.pro_company, p.pro_ingredient,
 			        p.pro_price, p.pro_effect, p.pro_intake, p.pro_sale_status, p.pro_createdate, p.pro_modifydate, p.pro_grade,
 			        p.pro_status, p.cate_num
-			from cart c
+			from (select * from cart where user_num = #{userNum}) c
 			    full outer join product p on(c.pro_num = p.pro_num)
 			where p.pro_num = #{proNum}
 	</select>

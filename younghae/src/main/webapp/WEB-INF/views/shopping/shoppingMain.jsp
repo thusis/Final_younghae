@@ -334,7 +334,7 @@
                         <div>
                          	<input type="hidden" class="proNum" value="${ i.proNum }">
                             <button class="btn btn_viewCart"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
-                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
+                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;${i.reviewCount }</button>
                         </div>
 	                </div>
                 </c:forEach>
