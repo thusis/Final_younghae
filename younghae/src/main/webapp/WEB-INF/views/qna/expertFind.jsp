@@ -81,12 +81,12 @@
 	                    </span><br>
 					</div>
 					<div class="col-3 align-self-center">
-						<c:if test="${ans.eresp.eattach != null }">
+						<c:if test="${eresp.eattach != null }">
 						<div class="bn_pro-profile">
-							<img src="${contextPath}/resources/uploadFiles/${qresp.qattach.attachRename}"alt="전문가프로필">
+							<img style="border-radius:25rem;" src="${contextPath}/resources/uploadFiles/${eresp.eattach.attachRename}"alt="전문가프로필">
 						</div>
 						</c:if>
-						<c:if test="${ans.eresp.eattach == null }">
+						<c:if test="${eresp.eattach == null }">
 						<div style="vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;">
 							<img style="margin-top:2.5rem;"src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
 						</div>

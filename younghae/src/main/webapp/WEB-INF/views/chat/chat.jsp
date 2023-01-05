@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>질문게시판 - 질문하기</title>
+<title>채팅</title>
 	
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 
@@ -247,9 +247,19 @@
 		                    </span>
 	                    </span><br>
 					</div>
-					<div class="col-3 align-self-center">
-						<img src="resources/img/pro_profile1.png" class="bn_pro-profile" alt="..." style="width: 5rem; height: 5rem;">
+			        <c:if test="${nowChatroom.expert.eattach != null }">
+					<div class="bn_pro-profile">
+						<img style="border-radius:25rem; width: 5rem; height: 5rem;" src="${contextPath}/resources/uploadFiles/${nowChatroom.expert.eattach.attachRename}"alt="전문가프로필">
 					</div>
+					</c:if>
+					<c:if test="${nowChatroom.expert.eattach == null }">
+					<div  class="col-3 align-self-center">
+						<img style="margin-top:2.5rem; width: 5rem; height: 5rem;"src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
+					</div>
+					</c:if>
+<!-- 					<div class="col-3 align-self-center"> -->
+<!-- 						<img src="resources/img/pro_profile1.png" class="bn_pro-profile" alt="..." style="width: 5rem; height: 5rem;"> -->
+<!-- 					</div> -->
 					<div class="col-2 align-self-center">
 						<div class="bn_pro-icon" style="width: 2.5rem; height: 2.5rem;">
 							<span style="font-size: 0.8rem;" id="chatTopgoToProfile" onclick="location.href='${contextPath}/expertprofile.qa?expertNum='+${nowChatroom.expert.expert.userNum}">프로필 방문</span>

@@ -107,7 +107,7 @@
                         <div class="col-4 align-self-center">
                         	<c:if test="${eresp.eattach != null }">
 							<div class="bn_pro-profile">
-								<img src="${contextPath}/resources/uploadFiles/${qresp.qattach.attachRename}"alt="전문가프로필">
+								<img style="border-radius:25rem;" src="${contextPath}/resources/uploadFiles/${eresp.eattach.attachRename}"alt="전문가프로필">
 							</div>
 							</c:if>
 							<c:if test="${eresp.eattach == null }">
