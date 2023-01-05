@@ -438,6 +438,12 @@
 	                                        <img src="resources/img/product_details/${supplementDetail.proNum }_2.png" style="width: 700px; margin: auto; display: block; margin-bottom: 5%;">
 	                                        <img src="resources/img/product_details/${supplementDetail.proNum }_1.png" style="width: 700px; margin: auto; display: block; margin-bottom: 5%;">
 	                                        
+<!-- img:hover { -->
+<!--     width:400px;  /* 사진크기 조절 */ -->
+<!--     transform:scale(2, 1.5);  /* 가로2배 새로 1.5배 로 커짐 */ -->
+<!--     transition: transform.5s;  /* 커지는 시간 */ -->
+<!-- } -->
+	                                        
 	                                    </div>
 	                                </div>
 	                            </div>

@@ -304,5 +304,18 @@
 		from product
 		where pro_name like '%'||#{search}||'%'
 	</select>
+	
+	<select id="selectCateList" resultMap="supplementResultSet">
+		select *
+		from product
+		where pro_effect like '%'||#{proEffect}||'%'
+		order by pro_num asc
+	</select>
+	
+	<select id="selectUseCoupon" resultMap="couponResultSet">
+		select * 
+		from coupon
+		where cou_number = #{couNum}
+	</select>
 
 </mapper>

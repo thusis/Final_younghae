@@ -67,6 +67,10 @@ public interface ShoppingService {
 	
 	ArrayList<Supplement> searchList(String search);
 	
+	ArrayList<Supplement> selectCateList(String proEffect);
+	
+	Coupon selectUseCoupon(int couNum);
+	
 	
 
 

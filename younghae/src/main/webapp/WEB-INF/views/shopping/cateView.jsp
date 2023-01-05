@@ -287,12 +287,13 @@
 				</div>
 			</div><br><br><br><br>
 			
- 
+
+            
+            
 			<div id="searchList">
             <div class="row">
-               <button class="col-lg-2" style="color: #FD9F28; font-weight: bold; font-size: 25px; background-color: white; border: none;" onclick="location.href='${contextPath}/allView.sh'">전체 상품</button>
-               <button class="col-lg-2" style="color: #24E082; font-weight: bold; font-size: 25px; background-color: white; border: none;" onclick="location.href='${contextPath}/bestsellerView.sh'">베스트셀러</button>
-               <button class="col-lg-2" style="color: #24E082; font-weight: bold; font-size: 25px; background-color: white; border: none;" onclick="location.href='${contextPath}/trendView.sh'">실시간트렌드</button>
+               <span style="color: #FD9F28; font-weight: bold; font-size: 25px; background-color: white; border: none; margin-left: 30px;">${ proEffect }</span>
+               <span style="color: #24E082; font-weight: bold; font-size: 25px; background-color: white; border: none;">&nbsp;관련 영양제</span>
             </div>
 			<br><br>
 			
@@ -302,21 +303,64 @@
                     <div class="featured__controls">
                         <ul>
                             <li><a href="${ contextPath }/allView.sh"><img src="resources/img/categories/cate_all.png" class="cate_icon"><br>전체</a></li>
-                            <li><a href="${ contextPath }/cateView.sh?proEffect=눈 건강"><img src="resources/img/categories/cate_eye.png" class="cate_icon"><br>눈 건강</a></li>
-                            <li><a href="${ contextPath }/cateView.sh?proEffect=피부"><img src="resources/img/categories/cate_skin.png" class="cate_icon"><br>피부 건강</a></li>
-                            <li><a href="${ contextPath }/cateView.sh?proEffect=항산화"><img src="resources/img/categories/cate_fatigue.png" class="cate_icon"><br>피로감</a></li>
-                            <li><a href="${ contextPath }/cateView.sh?proEffect=장 건강"><img src="resources/img/categories/cate_intestine.png" class="cate_icon"><br>장 건강</a></li>
-                            <li><a href="${ contextPath }/cateView.sh?proEffect=간 건강"><img src="resources/img/categories/cate_liver.png" class="cate_icon"><br>간 건강</a></li>
-                            <li><a href="${ contextPath }/cateView.sh?proEffect=관절"><img src="resources/img/categories/cate_born.png" class="cate_icon"><br>관절 건강</a></li>
-                            <li><a href="${ contextPath }/cateView.sh?proEffect=임산부"><img src="resources/img/categories/cate_pregnent.png" class="cate_icon"><br>임산부 </a></li>
+                        	<c:if test="${ proEffect eq '눈 건강'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=눈 건강"><img src="resources/img/categories/cate_eye.png" class="cate_icon"
+	                            	style="border: 4px solid #FD9F28; color : #FD9F28; border-radius: 0.5em;"><br>눈 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect ne '눈 건강'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=눈 건강"><img src="resources/img/categories/cate_eye.png" class="cate_icon"><br>눈 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect eq '피부'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=피부"><img src="resources/img/categories/cate_skin.png" class="cate_icon"
+	                            	style="border: 4px solid #FD9F28; color : #FD9F28; border-radius: 0.5em;"><br>피부 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect ne '피부'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=피부"><img src="resources/img/categories/cate_skin.png" class="cate_icon"><br>피부 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect eq '항산화'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=항산화"><img src="resources/img/categories/cate_fatigue.png" class="cate_icon"
+	                            	style="border: 4px solid #FD9F28; color : #FD9F28; border-radius: 0.5em;"><br>피로감</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect ne '항산화'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=항산화"><img src="resources/img/categories/cate_fatigue.png" class="cate_icon"><br>피로감</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect eq '장 건강'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=장 건강"><img src="resources/img/categories/cate_intestine.png" class="cate_icon"
+	                            	style="border: 4px solid #FD9F28; color : #FD9F28; border-radius: 0.5em;"><br>장 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect ne '장 건강'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=장 건강"><img src="resources/img/categories/cate_intestine.png" class="cate_icon"><br>장 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect eq '간 건강'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=간 건강"><img src="resources/img/categories/cate_liver.png" class="cate_icon"
+	                            	style="border: 4px solid #FD9F28; color : #FD9F28; border-radius: 0.5em;"><br>간 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect ne '간 건강'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=간 건강"><img src="resources/img/categories/cate_liver.png" class="cate_icon"><br>간 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect eq '관절'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=관절"><img src="resources/img/categories/cate_born.png" class="cate_icon"
+	                            	style="border: 4px solid #FD9F28; color : #FD9F28; border-radius: 0.5em;"><br>관절 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect ne '관절'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=관절"><img src="resources/img/categories/cate_born.png" class="cate_icon"><br>관절 건강</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect eq '임산부'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=임산부"><img src="resources/img/categories/cate_pregnent.png" class="cate_icon"
+	                            	style="border: 4px solid #FD9F28; color : #FD9F28; border-radius: 0.5em;"><br>임산부</a></li>
+                        	</c:if>
+                        	<c:if test="${ proEffect ne '임산부'}">
+	                            <li><a href="${ contextPath }/cateView.sh?proEffect=임산부"><img src="resources/img/categories/cate_pregnent.png" class="cate_icon"><br>임산부</a></li>
+                        	</c:if>
                         </ul>
                     </div>
                 </div>
             </div>
 			
 			
+			
  			<div class="row">
-               	<c:forEach items="${ allList }" var="i">
+               	<c:forEach items="${ cateList }" var="i">
 	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
 	                    <div class="product__item" style="margin-bottom: -10px; cursor: pointer;">
 	                        <div class="product__item__pic set-bg" style="margin-bottom: -40px;">
