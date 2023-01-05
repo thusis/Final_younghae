@@ -172,14 +172,14 @@
                 </div>
                 <div class="tab-content">
                     <div class="tab-pane active" id="tabs-1" role="tabpanel">
-                        <form action="${ contextPath }/updateProfile.my" method="POST" id="updateProfile">
+                        <form action="${ contextPath }/updateProfile.my" method="POST" id="updateProfile" enctype="multipart/form-data">
                             <div class="panel-body p-3">
                                 <div style="text-align: center;">
-                                    <img src="resources/img/logo.svg" alt="" style="height: 120px; width: 120px;">
+                                	<div class="info-container d-flex flex-column align-items-center justify-content-center" id="previewImageBox"></div>
                                 </div>
-                                <div class="form-group py-2" style="text-align: center;">
-                                    <label className="input-file-button" for="input-file">사진첨부</label>
-                                    <input type="file" id="input-file" style="display: none;">
+                                <div id="fileArea" class="form-group py-2" style="text-align: center;">
+                                    <label className="input-file-button" for="addFile" class="form-label">프로필사진</label>
+                                    <input class="form-control myFiles" style="display: none;" type="file"  name="file" id="addFile" accept="image/*">
                                 </div>
                                 <div class="form-group py-2">
                                     <div>이름*</div>
@@ -270,11 +270,36 @@
             </div>
         </div>
     </div>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
     <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b2bbaed60944059872ec626adf3b7011&libraries=services"></script>
     <script>
         window.onload = () => {
-  
+        	const fileArea = document.querySelector('#fileArea');
+        	document.getElementById('addFile').addEventListener('click', ()=> {
+        	   const imgDiv = document.getElementById('previewImageBox');
+        	   imgDiv.innerHTML += '<img class="img-fluid rounded-4" id="previewImage">';
+
+        	   $('#addFile').on('change', e=> {
+        	       readImage(e.target);
+        	        });
+        	});
+
+        	function readImage(input) {
+        	    // 인풋 태그에 파일이 있는 경우
+        	    if(input.files && input.files[0]) {
+
+        	        const reader = new FileReader()
+        	        // 이미지가 로드가 된 경우
+        	        reader.onload = e => {
+        	            const previewImage = document.getElementById("previewImage")
+        	            previewImage.src = e.target.result
+        	        }
+        	        // reader가 이미지 읽도록 하기
+        	        reader.readAsDataURL(input.files[0])
+        	    }
+        	}
+        	
             document.getElementById('searchAddress').addEventListener('click', function() {
                 new daum.Postcode({
                     oncomplete: function(data) {

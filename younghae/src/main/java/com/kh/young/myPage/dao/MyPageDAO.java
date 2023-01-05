@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
@@ -118,6 +119,21 @@ public class MyPageDAO {
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		return (ArrayList)sqlSession.selectList("mypageMapper.seletAllScrap", id, rowBounds);
+	}
+
+	public int insertExpertAttm(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("mypageMapper.insertExpertAttm", map);
+	}
+
+	public void removeImage(SqlSessionTemplate sqlSession, int id) {
+		sqlSession.update("mypageMapper.removeImage", id);
+		
+	}
+
+	public Attachment selectProfile(SqlSessionTemplate sqlSession, int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("mypageMapper.selectProfile", id);
 	}
 
 }

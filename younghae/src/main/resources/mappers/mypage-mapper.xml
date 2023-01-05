@@ -120,14 +120,32 @@ where c.user_num = #{id}
 order by b.board_num desc
    </select>
    
+   	<!-- 리뷰 사진 넣기 -->
+	<insert id="insertExpertAttm">
+		insert into attachment
+		VALUES(SEQ_ATTACH.NEXTVAL, SYSDATE, #{attachName}, #{attachRename}, #{attachPath}, 6, #{userNum}, 'Y')
+	</insert>
+   
+   <update id="removeImage">
+   		update attachment
+		set ATTACH_STATUS = 'N'
+		where SERIALNUMBER=#{id} and BOARD_TYPE=6
+   </update>
+   
+      <select id="selectProfile" parameterType="map" resultMap="Attachment">
+		select *
+		from attachment 
+		where SERIALNUMBER=#{id} and BOARD_TYPE=6 and ATTACH_STATUS = 'Y'
+   </select>
+   
+   
+   
+   
    <resultMap type="ScrapDto" id="Scrap">
 		<id column="board_num" property="boardNum"/>
   		<result column="board_title" property="boardTitle"/>
   		<result column="ATTACH_NAME" property="attachName"/>
 	</resultMap>
-   
-   
-   
 	
 	<resultMap type="Attachment" id="Attachment">
 		<id column="ATTACH_NUM" property="attachNum"/>

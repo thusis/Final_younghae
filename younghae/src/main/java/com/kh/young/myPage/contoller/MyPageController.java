@@ -1,5 +1,7 @@
 package com.kh.young.myPage.contoller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,9 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.kh.young.common.Pagination;
 import com.kh.young.member.exception.MemberException;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
@@ -30,6 +34,7 @@ import com.kh.young.model.vo.Supplement;
 import com.kh.young.myPage.dto.ScrapDto;
 import com.kh.young.myPage.exception.MyPageException;
 import com.kh.young.myPage.service.MyPageService;
+import com.kh.young.supplement.exception.SupplementException;
 
 @Controller
 public class MyPageController {
@@ -97,27 +102,97 @@ public class MyPageController {
         int id = ((Member) session.getAttribute("loginUser")).getUserNum();
 
         ExpertUser eu = myService.selectExpert(id);
+        Attachment attm = myService.selectProfile(id);
 
         model.addAttribute("ExpertUser", eu);
+        model.addAttribute("ExpertImage", attm);
         return "myProfile";
     }
     // 내 프로필 수정.
     @RequestMapping("updateProfile.my")
     public String updateProfile(@ModelAttribute ExpertUser eu, HttpSession session, Model model,
-        HttpServletRequest req) {
+        HttpServletRequest req, @RequestParam("file") MultipartFile file) {
+    	
+    		int id = ((Member)session.getAttribute("loginUser")).getUserNum();
+    		
+    		Attachment attm = new Attachment();
+    		
+    		int attmResult = 0;
+    		
+    		if (file != null) {
+    			System.out.println(file.getOriginalFilename());
+    			if(!file.getOriginalFilename().equals("")) {
+    				//기존파일은 N으로
+    				myService.removeImage(id);
+    				
+    				
+    				
+    				String[] returnArr = saveFile(file, req);
+    				
+    				attm.setAttachName(file.getOriginalFilename());
+    				attm.setAttachRename(returnArr[1]);
+    				attm.setAttachPath(returnArr[0]);
+    				System.out.println(returnArr[1]);
+    				System.out.println(returnArr[0]);
+    				
+    				HashMap<String, Object> map = new HashMap<String, Object>();
+    				
+    				map.put("attachName", attm.getAttachName());
+    				map.put("attachRename", attm.getAttachRename());
+    				map.put("attachPath", attm.getAttachPath());
+    				map.put("userNum", id);
+    				
+    				attmResult = myService.insertExpertAttm(map);
+    			}
+    		}
+    		int result = 0;
+    		eu.setUserNum(id);
 
-        int result = 0;
-        int id = ((Member) session.getAttribute("loginUser")).getUserNum();
-        eu.setUserNum(id);
+    		result = myService.updateProfile(eu);
 
-        result = myService.updateProfile(eu);
-
-        if (result > 0) {
+    		if (result > 0) {
             return "../myPage/myPage";
         } else {
-            throw new MyPageException("회원 수정을 실패하였습니다.");
+        	throw new MyPageException("회원 수정을 실패하였습니다.");
         }
     }
+    
+    // attm Save
+	// saveFile 메소드 만들기
+	public String[] saveFile(MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
+//				\\는 \를 의미함
+
+		File folder = new File(savePath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+			// folder가 존재하지 않으면 make directory 폴더를 만들어줘
+		}
+
+		// 파일 저장소(물리적으로)에 저장할 수 있게끔 하는 코드
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		int ranNum = (int) (Math.random() * 100000);
+		// 파일명 변경
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + ranNum
+				+ originFileName.substring(originFileName.lastIndexOf("."));
+
+		String renamePath = folder + "\\" + renameFileName;
+
+		try {
+			file.transferTo(new File(renamePath));
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 :" + e.getMessage());
+		}
+
+		String[] returnArr = new String[2];
+
+		returnArr[0] = savePath;
+		returnArr[1] = renameFileName;
+
+		return returnArr;
+	}
     // 내 찜하기 이동.
     @RequestMapping("myWishList.my")
     public String myWishList(HttpSession session, Model model, @RequestParam(value="page", required=false) Integer page) {

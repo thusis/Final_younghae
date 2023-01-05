@@ -214,7 +214,7 @@
                         <p>관심상품으로 등록하신 상품의 목록을 보여드립니다.</p>
                     </div>
                 </div>
-                <div class="col-lg-2 col-md-2 col-sm-6 text-center" style="margin-left: 30px;" onclick="location.href='${contextPath}/myCart.my'">
+                <div class="col-lg-2 col-md-2 col-sm-6 text-center" style="margin-left: 30px;" onclick="location.href='${contextPath}/cartView.sh'">
                     <div class="contact__widget">
                         <span> <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" fill="currentColor" class="bi bi-cart-check" viewBox="0 0 16 16">
                                 <path d="M11.354 6.354a.5.5 0 0 0-.708-.708L8 8.293 6.854 7.146a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z" />
@@ -252,6 +252,7 @@
         </div>
     </section>
     </c:if>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
 
 </html>

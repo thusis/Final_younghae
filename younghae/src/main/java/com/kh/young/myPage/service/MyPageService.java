@@ -3,6 +3,7 @@ package com.kh.young.myPage.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
@@ -54,5 +55,11 @@ public interface MyPageService {
 	int getListCountScrap(int id);
 
 	ArrayList<ScrapDto> seletAllScrap(PageInfo pi, int id);
+
+	int insertExpertAttm(HashMap<String, Object> map);
+
+	void removeImage(int id);
+
+	Attachment selectProfile(int id);
 
 }
