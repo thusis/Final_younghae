@@ -34,7 +34,7 @@
             
             <div class="col-lg-6">
                 <div class="row">
-                    <div class="col-lg-6 bn_pro-infobox-top" id="infobox1" style="border-color: #24E082;">
+                    <div class="col-lg-6 bn_pro-infobox-top"  id="infobox1" style="border-color: #24E082;">
                         <button class="btn" onclick="showCareer();">경력</button>
                     </div>
                     <div class="col-lg-6 bn_pro-infobox-top" id="infobox2" style="border-color: #8496AE;">
@@ -48,13 +48,13 @@
                     	작성한 경력 내용이 없습니다
                     </c:if>
                 </div>
-                <div class=" row bn_pro-infobox-bottom" id="infoboxBottom2">
+                <div class=" row bn_pro-infobox-bottom" id="infoboxBottom2" style="z-index:50; height:200px">
                     <div class="row d-flex align-items-center ">
                         <div class="col-1">
                             <div class="d-flex align-items-center justify-content-center"style="background-color: black; color:#ffffff; width: 1.5rem; height: 1.5rem; border-radius: 3rem;"><i class="fa-solid fa-won-sign"></i></div>
                         </div>
                         <div class="col-5">
-                            <h4 class="bn_txt_strong">견적서</h4>
+                            <h4 class="bn_txt_strong" style="font-size:18px;">견적서</h4>
                         </div>
 
                         <div class="col-3">
@@ -65,18 +65,18 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="row mb-3 align-items-center">
+                    <div class="row mb-1 align-items-center">
                         <h5 class="col-3">서비스명</h5>
-                        <span class="col bn_txt_strong">복용상담</span>
+                        <span class="col bn_txt_strong" style="font-size:18px;">복용상담</span>
                     </div> 
-                    <div class="row mb-4 align-items-center">
+                    <div class="row mb-3 align-items-center">
                         <h5 class="col-3">예상금액</h5>
-                        <span class="col bn_txt_strong">
+                        <span class="col bn_txt_strong" style="font-size:18px;">
                         ${eresp.expert.expertEstimate}
                         </span>
                     </div>
                     <div class="row">
-                        <button class="col btn bn_txt_strong p-3 " style="display: inline-block; background-color: black; color:white;">상담 가능 시간 보기</button>
+                        <button class="col btn bn_txt_strong p-3 " style="display: inline-block;font-size:18px; background-color: black; color:white;">상담 가능 시간 보기</button>
                     </div>
                 </div>
             </div>
@@ -112,7 +112,7 @@
 							</c:if>
 							<c:if test="${eresp.eattach == null }">
 							<div style="vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;">
-								<img src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
+								<img style="margin-top:2.5rem;"src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
 							</div>
 							</c:if>
                         </div>

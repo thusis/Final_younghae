@@ -162,13 +162,15 @@
 	
 	<select id="getNotReadCount" resultType="int">
 		SELECT COUNT (*)
-		FROM CHAT
+		FROM CHATMESSAGE
 		WHERE CHATROOM_ID = #{chatroomId} AND IS_READ = 'N'
 	</select>
 	
 	<select id="getIsPaid" resultType="int">
 		SELECT COUNT (*)
-		FROM PAYMENT WHERE SERIALNUMBER = #{chatroomId}
+		FROM CHATRESERV
+			JOIN CHATROOM USING (CHATROOM_ID)
+		WHERE CHATROOM_ID = #{chatroomId}
 	</select>
 	
 	<!-- 전문가회원인 내가 포함된(userNum) chatRoomList 반환 -->
@@ -301,4 +303,10 @@
 		INTO ORDERS VALUES (SEQ_ORDER.CURRVAL, #{ordInsert.orderCode}, #{orderInsert.userNum},#{orderInsert.userId},#{orderInsert.orderDate},DEFAULT,#{orderInsert.orderPayAmount},#{orderInsert.orderPayAmount},#{orderInsert.orderUserName},#{orderInsert.orderPaymethod},#{orderInsert.orderCouponPrice}, #{orderInsert.orderImpCode}, #{orderInsert.orderPhone}, 0,'없음' )
 		SELECT * FROM DUAL
 	</insert>
+	
+	<select id="upreadHowMany" resultType="_int">
+		SELECT COUNT(*) FROM CHATMESSAGE WHERE RECEIVER_NUM = #{receiverNum} AND IS_READ='N'
+	</select>
+	
+	
 </mapper>

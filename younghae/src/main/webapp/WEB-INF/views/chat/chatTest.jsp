@@ -1,22 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>질문게시판 - 질문하기</title>
-	
-	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 
-    <!--내가만든 css-->
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 	<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
 
     <style>
-    	body{
-    		background-color: #f8f8fa;
-    	}
     	h1,h2,h3,h4,h5,h6,p,span{
     		font-family: 'IBM Plex Sans KR', sans-serif;
     	}
@@ -82,13 +70,12 @@
         }
       </style>
 </head>
-<body style="background-color: #f8f8fa;">
-<div class="container" style="padding:2rem;">
+<body>
 
-	<main class="d-flex flex-nowrap chatpopup">
+	<main id="chatIncludFile" class="d-flex flex-nowrap chatpopup" style="position:fixed; right:0; bottom:0;">
 
 		<!-- 첫번째 컬럼====================================================== -->
-		<div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem; height: 750px; border-top: 0.2rem solid #24E082; border-left: 0.2rem solid #24E082; border-bottom: 0.2rem solid #24E082;  border-radius: 2rem 0 0 2rem; z-index: 8;">
+		<div class="d-flex flex-column flex-shrink-0 bg-light" style="width: 4.5rem; height: 750px; border-top: 0.2rem solid #24E082; border-left: 0.2rem solid #24E082; border-radius: 2rem 0 0 0; z-index: 8;">
 			<a href="/" class="d-block p-3 link-dark text-decoration-none" title="Icon-only"> <img src="resources/img/logo.svg" alt="영해로고">
 			</a>
 			<ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
@@ -111,11 +98,7 @@
 		</div>
 
 		<!-- 두번째 컬럼 전문가목록============================================================= -->
-		<div class="flex-column align-items-stretch flex-shrink-0 bg-light" 
-		style="
-		position: relative;
-		overflow: auto; width: 300px; height: 750px; 
-		border-top: 0.2rem solid #24E082; border-bottom: 0.2rem solid #24E082; z-index: 8;">
+		<div class="flex-column align-items-stretch flex-shrink-0 bg-light" style="overflow: auto; width: 300px; height: 750px; border-top: 0.2rem solid #24E082; z-index: 8;">
 			<c:if test="${ !empty chatErrorMsg }">
 			    <div class="section-title contact" style="margin-top:3rem; padding: 1.5rem; vertical-align: middle; text-align: center;">
 				<h5 style="color:red;">${ chatErrorMsg }</h5>
@@ -150,15 +133,15 @@
 						aria-current="true">
 							<div class="d-flex w-100 align-items-center justify-content-between">
 								<strong class="mb-1 bn_pro-name position-relative">${cr.expert.member.userName }</strong>
-<%-- 								<small>${ cr.latestSendTime }</small> --%>
+	<%-- 							<small>${ cr.latestSendTime }</small> --%>
 							</div>
-<!-- 							<div class="col-10 mb-1 small chat_lastmsg"> -->
-<%-- 								${cr.lastMessage.chatContent} --%>
-<!-- 							</div> -->
+							<div class="col-10 mb-1 small chat_lastmsg">
+	<%-- 							${cr.lastMessage.chatContent} --%>
+							</div>
 							<div class="col-10">
-								<c:if test="${ room.notReadCount>0 }">
-									<span class="badge">${cr.notReadCount}</span>
-								</c:if>
+	<%-- 							<c:if test="${ room.notReadCount>0 }"> --%>
+	<%-- 								<span class="badge">${cr.notReadCount}</span> --%>
+	<%-- 							</c:if> --%>
 								<span class="badge">자리비움</span>
 								<span class="badge rounded-pill bg-success text-white">상담가능</span>
 							</div>
@@ -190,31 +173,30 @@
 						aria-current="true">
 							<div class="d-flex w-100 align-items-center justify-content-between">
 								<strong class="mb-1 bn_pro-name position-relative">${cr.general.userName }</strong>
-<%-- 								<small>${ cr.latestSendTime }</small> --%>
+	<%-- 							<small>${ cr.latestSendTime }</small> --%>
 							</div>
-<!-- 							<div class="col-10 mb-1 small chat_lastmsg"> -->
-<%-- 								${cr.lastMessage.chatContent} --%>
-<!-- 							</div> -->
+							<div class="col-10 mb-1 small chat_lastmsg">
+	<%-- 							${cr.lastMessage.chatContent} --%>
+							</div>
 							<div class="col-10">
-								<c:if test="${ room.notReadCount>0 }">
-									<span class="badge">${cr.notReadCount}</span>
-								</c:if>
-								<span class="badge">${cr.isPaid}</span>
+	<%-- 							<c:if test="${ room.notReadCount>0 }"> --%>
+	<%-- 								<span class="badge">${cr.notReadCount}</span> --%>
+	<%-- 							</c:if> --%>
+	<%-- 							<span class="badge">${cr.isPaid}</span> --%>
 							</div>
 						</a>
 						</c:forEach>
 					</c:if>
 			</div>
 			</c:if><!-- =======전문가회원의 경우 끝======= -->
-			
 		</div><!--두번째열끝========================================================  -->
 
 
 		<!-- 세 번째 열 =======================================================================================  -->
 		<div id="${nowChatroom.chatroom.chatroomId}_${nowChatroom.chatroom.expertNum}_${nowChatroom.chatroom.userNum}" 
 			class="chatMessageRoom d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
-			style="width: 500px; height: 750px; border-left: 0.1rem solid rgba(20, 49, 82, 0.247); border-top: 0.2rem solid #24E082; background-color: #f8f8fa;">
-			<div id="chatMessageRoomTop" style="display:flex; overflow: auto; flex-direction:column_reverse;padding-bottom:5rem;background-color: #f8f8fa;">
+			style="width: 500px; height: 750px; border-left: 0.1rem solid rgba(20, 49, 82, 0.247); border-top: 0.2rem solid #24E082;">
+			<div id="chatMessageRoomTop" style="display:flex; overflow: auto; flex-direction:column_reverse;">
 <!-- 			<div id="chatMessageRoomTop" style="overflow: auto; "> -->
 				<!--전문가-->
 				<c:if test="${ loginUser.userCNumber eq 1 }">
@@ -362,15 +344,15 @@
 					
 					<div id="resultBox"></div>
 					
-					
 				</div>
 				<!--채팅메세지 끝==================-->
 			</div>
+
 			<div class="chatInput">
-				<div class="input-group align-items-center row " style="padding-left:2rem;">
-<!-- 					<button class="btn col-2" style="color: orange; font-size: 2.2rem;"> -->
-<!-- 						<i class="fa-solid fa-image"></i> -->
-<!-- 					</button> -->
+				<div class="input-group align-items-center row bg-white">
+					<button class="btn col-2" style="color: orange; font-size: 2.2rem;">
+						<i class="fa-solid fa-image"></i>
+					</button>
 					<input type="text" class="form-control" id="bn_chat-input" placeholder="메세지를 입력하세요" onkeyup="if(window.event.keyCode==13){sendMessage()}">
 					<button class="btn bn_chat-inputbtn" id="send" onclick="sendMessage()">
 						<i class="fa-solid fa-paper-plane"></i>
@@ -378,13 +360,10 @@
 				</div>
 			</div>
 		</div>
-
-
 		</c:if>
 
 	</main>
 
-</div>
 	<script>
 	
 		function minimize() {

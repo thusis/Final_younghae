@@ -103,7 +103,7 @@ public class ChatServiceImpl implements ChatService {
 	public ArrayList<ChatroomDto> selectRoomList(int userNum) {
 		ArrayList<ChatroomDto> roomList = chDao.selectRoomList(sqlSession, userNum);
 		System.out.println("ch서비스 97:" + roomList);
-//		roomList = setRoomList(roomList);
+		roomList = setRoomList(roomList);
 		return roomList;
 	}
 	
@@ -119,21 +119,21 @@ public class ChatServiceImpl implements ChatService {
 	}
 	*/
 
-	/* roomList 세팅
+//	 roomList 세팅
 		private ArrayList<ChatroomDto> setRoomList(ArrayList<ChatroomDto> roomList) {
 			for(ChatroomDto r : roomList) {
-				ChatMessage lastMessage = selectLastMessage(r.getChatroom().getChatroomId());
-				r.setLastMessage(lastMessage.getChatContent());
-				r.setLatestSendTime(lastMessage.getSendTime());
+//				ChatMessage lastMessage = selectLastMessage(r.getChatroom().getChatroomId());
+//				r.setLastMessage(lastMessage.getChatContent());
+//				r.setLatestSendTime(lastMessage.getSendTime());
 				r.setNotReadCount(getNotReadCount(r.getChatroom().getChatroomId()));
 				r.setIsPaid(getIsPaid(r.getChatroom().getChatroomId()));
 			}
 			return roomList;
 		}
 	
-		private ChatMessage selectLastMessage(int chatroomId) {
-			return chDao.selectLastMessage(sqlSession, chatroomId);
-		}
+//		private ChatMessage selectLastMessage(int chatroomId) {
+//			return chDao.selectLastMessage(sqlSession, chatroomId);
+//		}
 		
 		private int getNotReadCount(int chatroomId) {
 			return chDao.getNotReadCount(sqlSession, chatroomId);
@@ -142,8 +142,8 @@ public class ChatServiceImpl implements ChatService {
 		private String getIsPaid(int chatroomId) {
 			return chDao.getIsPaid(sqlSession, chatroomId);
 		}
-	*/
 	
+		
 	@Override
 	public ArrayList<ChatMessage> selectMessageList(int chatroomId) {
 		return chDao.selectMessageList(sqlSession, chatroomId);
@@ -201,6 +201,11 @@ public class ChatServiceImpl implements ChatService {
 		paraMap.put("crInsert", crInsert);
 		paraMap.put("ordInsert", ordInsert);
 		return chDao.afterPayInsertChatReserv(sqlSession, paraMap);
+	}
+
+	@Override
+	public int upreadHowMany(int receiverNum) {
+		return chDao.upreadHowMany(sqlSession, receiverNum);
 	}
 
 

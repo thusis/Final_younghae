@@ -34,7 +34,7 @@
         
         <div class="row">
             <div class="col-lg-10">
-                <div class="row justify-content-end ">
+                <div class="row justify-content-end mb-3">
                     <div class="blog__details__widget">
                         <span style="font-size:0.5rem;">현재 페이지 공유하기</span>&nbsp;&nbsp;&nbsp;&nbsp;
                         <div class="blog__details__social d-inline">
@@ -74,8 +74,8 @@
                                 <i class="view fa-solid fa-eye m-2"></i><span class=" m-2">${qresp.board.boardView}</span>
                                 <i class="bi bi-clipboard-plus-fill"></i><span class=" m-2"><c:if test="${ empty qresp.answerList }">0</c:if><c:if test="${ !empty qresp.answerList }">${qresp.answerList.size()}</c:if></span>
                                 <i class="bi bi-chat-dots m-2"></i><span class=" m-2">${qresp.replyList.size()}</span>
-                                <i class="save fa-regular fa-bookmark m-2" onclick="deleteScrap();"></i><span class=" m-2">${qresp.scrapList.size()}</span>
-                                <i class="save fa-regular fa-bookmark m-2" onclick="setScrap();"></i><span class=" m-2">${qresp.scrapList.size()}</span>
+<%--                                 <i class="save fa-regular fa-bookmark m-2" onclick="deleteScrap();"></i><span class=" m-2">${qresp.scrapList.size()}</span> --%>
+<%--                                 <i class="save fa-regular fa-bookmark m-2" onclick="setScrap();"></i><span class=" m-2">${qresp.scrapList.size()}</span> --%>
                             </div>
                         </div>
                     </div>
@@ -90,9 +90,12 @@
 	                        <c:if test="${loginUser.userNum==qresp.board.userNum}">
 	                        	<c:if test="${ qresp.answerList.size() eq 0 }">
 		                            <li><a class="dropdown-item" onclick="updateQuestion();">수정하기</a></li>
-		                            <li><a class="dropdown-item" onclick="location.href='${contextPath}/deletequestion.qa'">삭제하기</a></li>
+		                            <li><a class="dropdown-item" onclick="location.href='${contextPath}/deletequestion.qa?boardNum=${qresp.board.boardNum}'">삭제하기</a></li>
 	                            </c:if>
 	                        	<c:if test="${ qresp.answerList.size() ne 0 }">
+	                        		<c:if test="${qresp.question.isSolved eq 'N'}">
+		                            <li><a class="dropdown-item" onclick="location.href='${contextPath}/updateIsSolved.qa?boardNum=${qresp.board.boardNum}'">✅해결되었어요</a></li>
+	                        		</c:if>
 		                            <li><a class="dropdown-item" onclick="disabledAlert();">수정하기</a></li>
 		                            <li><a class="dropdown-item" onclick="disabledAlert();">삭제하기</a></li>
 	                            </c:if>
@@ -168,11 +171,20 @@
 					</c:if>
 				</div>
                	<c:if test="${loginUser !=null && loginUser.userCNumber eq 2}">
+                	<c:if test="${qresp.question.isSolved eq 'N'}">
 	                <div class="mt-3">
 	                	<h5 style="font-family:'IBM Plex Sans KR', sans-serif;font-weight:600;">전문가세요? 관련 답변을 작성해보세요</h5>
 	                	<button class="text-left" style="border:0px; font-size:1rem;" onclick="location.href='${contextPath}/writeanswer.qa?boardNum='+'${qresp.board.boardNum}'">답변 등록</button>
 	                </div>
+	                </c:if>
+	            </c:if>
+	                
+                <c:if test="${qresp.question.isSolved ne 'N'}">
+                <div class="mt-3">
+                	<h5 style="font-family:'IBM Plex Sans KR', sans-serif;font-weight:600;">사용자가 만족하여 이미 해결된 질문이에요🤗<h5>
+                </div>
                 </c:if>
+	                
             </div>
             
             
@@ -226,7 +238,7 @@
 									</c:if>
 									<c:if test="${ans.eresp.eattach == null }">
 									<div style="vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;">
-										<img src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
+										<img style="margin-top:2.5rem;"src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
 									</div>
 									</c:if>
 		                       </div>

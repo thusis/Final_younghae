@@ -346,11 +346,6 @@ public class QaServiceImpl implements QaService {
 	}
 
 	@Override
-	public int deleteQuestion(QuestionInsertDto quest, HttpServletRequest request) {
-		return 0;
-	}
-
-	@Override
 	public ArrayList<ExpertRespDto> selectExpertList(Integer page, int listCount) {
 		int currentPage = 1;
 		if(page!=null) {
@@ -389,6 +384,16 @@ public class QaServiceImpl implements QaService {
 	
 	private Member getGeneralUser(int generalUserNum) {
 		return qdao.getGeneralUser(sqlSession, generalUserNum);
+	}
+
+	@Override
+	public int deleteQuestion(int boardNum) {
+		return qdao.deleteQuestion(sqlSession, boardNum);
+	}
+
+	@Override
+	public int updateIsSolved(int boardNum) {
+		return qdao.updateIsSolved(sqlSession, boardNum);
 	}
 	
 }

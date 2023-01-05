@@ -212,7 +212,13 @@ public class ChatController {
     	return String.valueOf(result);
     }
     
-    
+    // 몇 개 메세지 안 읽었는지 비동기 조회
+    @GetMapping("unreadHowMany.ch")
+    @ResponseBody
+    public String upreadHowMany(@RequestParam int receiverNum) {
+    	int unreadHowMany = chService.upreadHowMany(receiverNum);
+    	return String.valueOf(unreadHowMany);
+    }
     
     
     

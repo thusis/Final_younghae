@@ -49,12 +49,15 @@ public interface QaService {
 	int deleteScrap(Clip clip);
 
 	int updateQuestion(QuestionInsertDto quest, HttpServletRequest request);
-	int deleteQuestion(QuestionInsertDto quest, HttpServletRequest request);
+	int deleteQuestion(int boardNum);
 
 	int getExpertsListCount();
 	ArrayList<ExpertRespDto> selectExpertList(Integer page, int listCount);
 
 	ChatPaymentRespDto getChatPaymentResp(String info);
+
+	int updateIsSolved(int boardNum);
+
 
 
 
