@@ -153,7 +153,7 @@
 												style="font-size: 100%; display: inline;">갑각류 알레르기 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-										<c:if test="${ fn:contains( c.cateIcon, '신장')}">
+										<c:if test="${ fn:contains( w, '신장')}">
 											<div class="d-inline"
 												style="font-size: 150%; color: #BC3838;">
 												<img src="resources/img/warning/kidney.png"
@@ -164,7 +164,7 @@
 												고칼슘혈증으로 인해 신장 기능 저하</div>
 													&nbsp;&nbsp;
 											</c:if>
-										<c:if test="${ fn:contains( c.cateIcon, '요로')}">
+										<c:if test="${ fn:contains( w, '요로')}">
 											<div class="d-inline"
 												style="font-size: 150%; color: #BC3838;">
 												<img src="resources/img/warning/body_wraning.png"
@@ -174,7 +174,7 @@
 												style="font-size: 100%; display: inline;">요로결석 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-										<c:if test="${ fn:contains( c.cateIcon, '저혈압')}">
+										<c:if test="${ fn:contains( w, '저혈압')}">
 											<div class="d-inline"
 												style="font-size: 150%; color: #BC3838;">
 												<img src="resources/img/warning/body_wraning.png"
@@ -184,7 +184,7 @@
 												style="font-size: 100%; display: inline;">저혈압 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-										<c:if test="${ fn:contains( c.cateIcon, '석류')}">
+										<c:if test="${ fn:contains( w, '석류')}">
 											<div class="d-inline"
 												style="font-size: 150%; color: #BC3838;">
 												<img src="resources/img/warning/body.png"
@@ -194,7 +194,7 @@
 												style="font-size: 100%; display: inline;">석류 알레르기 주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-										<c:if test="${ fn:contains( c.cateIcon, '여성호르몬')}">
+										<c:if test="${ fn:contains( w, '여성호르몬')}">
 											<div class="d-inline"
 												style="font-size: 150%; color: #BC3838;">
 												<img src="resources/img/warning/body.png"
@@ -205,7 +205,7 @@
 												주의</div>
 													&nbsp;&nbsp;
 											</c:if>
-										<c:if test="${ fn:contains( c.cateIcon, '장기')}">
+										<c:if test="${ fn:contains( w, '장기')}">
 											<div class="d-inline"
 												style="font-size: 150%; color: #BC3838;">
 												<img src="resources/img/warning/body.png"
@@ -216,7 +216,7 @@
 												손상 우려</div>
 													&nbsp;&nbsp;
 											</c:if>
-										<c:if test="${ fn:contains( c.cateIcon, '철')}">
+										<c:if test="${ fn:contains( w, '철')}">
 											<div class="d-inline"
 												style="font-size: 150%; color: #BC3838;">
 												<img src="resources/img/warning/body_wraning.png"
@@ -260,7 +260,7 @@
 												<div name="getItemName"
 													class="text-left fs-5 font-weight-bold pl-2">&nbsp;
 													${ item.proName }</div>
-												<div class="fs-5 text-left pr-3 pt-1 mb-3">&nbsp; ${ item.proEffect }
+												<div class="fs-5 text-left pr-3 pt-1 mb-3" style="white-space:nowrap; text-overflow:ellipsis; overflow:hidden;">&nbsp; ${ item.proEffect }
 												</div>
 												<div class="text-left pr-2">
 													<div class="product__details__rating"
@@ -303,34 +303,37 @@
 									</div>
 									<c:forEach items="${ review }" var="re" end="2">
 										<div class="product__details__quantity"
-											style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 3%; padding-bottom: 5%;">
+											style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300%; margin-right: 3%; padding: 3%; padding-bottom: 5%;">
 											<div name="reviewDetail">
-												<div name="reviewImg"
-													style="float: left; padding-right: -20%;">
-													<i class="bi bi-person-circle"
-														style="font-size: 350%; color: #24E082;"></i>
+												<div class="row">
+													<div name="reviewImg"
+														style="float: left; padding-right: -20%;">
+														<i class="bi bi-person-circle"
+															style="font-size: 350%; color: #24E082;"></i>
+													</div>
+													<div name="reviewNickName"
+														style="float: left; padding-top: 3.5%; padding-left: 1%;">
+														<p style="font-weight: 600;">${ re.member.userNickname }</p>
+													</div>
+													<div class="product__details__rating"
+														style="float: left; padding-top: 3.5%; padding-left: 20%;">
+														<i class="fa fa-star"
+															style="color: rgb(247, 247, 75); font-size: 130%;"></i>
+													</div>
+													<div name="reviewRank"
+														style="float: left; padding-top: 3.5%; padding-left: 1%;">
+														<p style="color: black; font-size: 130%;">${ re.rvStar }</p>
+													</div>
 												</div>
-												<div name="reviewNickName"
-													style="float: left; padding-top: 3.5%; padding-left: 1%;">
-													<p style="font-weight: 600;">${ re.member.userNickname }</p>
-												</div>
-												<div class="product__details__rating"
-													style="float: left; padding-top: 3.5%; padding-left: 20%;">
-													<i class="fa fa-star"
-														style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-												</div>
-												<div name="reviewRank"
-													style="float: left; padding-top: 3.5%; padding-left: 1%;">
-													<p style="color: black; font-size: 130%;">${ re.rvStar }</p>
-												</div>
-												<div name="reviewImg"
-													style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 4%;">
+												<div class="row">
 													<c:if test="${ re.image  ne '없음' }">
-														<img src="resources/uploadFiles/${ re.image }" class=".img-fluid">
+														<div name="reviewImg">
+															<img src="resources/uploadFiles/${ re.image }" style="height: 200px; width: 200px; float: right; margin-right: 5%; padding-top: 4%;" class=".img-fluid">
+														</div>
 													</c:if>
+													<div name="reviewContent" class="text-left"
+														style="padding-top: 5%;">${ re.rvContent }</div>
 												</div>
-												<div name="reviewContent" class="text-left"
-													style="padding-top: 9%;">${ re.rvContent }</div>
 											</div>
 										</div>
 									<br>
