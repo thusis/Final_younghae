@@ -257,7 +257,8 @@
 		FROM ATTACHMENT
 		WHERE 
 		ATTACHMENT.BOARD_TYPE = 6 AND
-		SERIALNUMBER = #{userNum}
+		SERIALNUMBER = #{userNum} AND
+		ATTACH_STATUS = 'Y'
 	</select>
 	
 	<select id="selectAnswerListSize" resultType="_int">
