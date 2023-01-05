@@ -13,7 +13,7 @@
 <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 <!-- 추가 CSS -->
 <link rel="stylesheet" href="resources/css/soyeon.css" type="text/css">
-<link rel="stylesheet" href="css/bn_style.css" type="text/css">
+<link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
 <!-- 부트 스트랩 -->
 <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous"> -->
 <style>
@@ -84,21 +84,28 @@
 <body>
 	<section class="blog spad">
 		<div class="container">
+			<div class="bn_index mt-5">
+				<ul>
+					<li>건강 이야기</li>
+					<li><b>/</b></li>
+					<li><a href="#">게시글 상세</a></li>
+				</ul>
+			</div>
 			<div class="row">
 				<div class="col-lg-4 col-md-5">
-                    <div class="blog__sidebar">
+                    <div class="blog__sidebar/">
                         <div class="blog__sidebar__search">
-                            <form action="#">
-	                            <select class="boardselect" id="searchCondition">
-									  <option value="1">작성자</option>
-									  <option value="2">제목</option>
-									  <option value="3">내용</option>
-									  <option value="4">해시태그</option>
-								</select>
-                                <br><br>
-                                <input type="text" placeholder="Search...">
-                                <button type="submit"><br><br><i class="fa-solid fa-magnifying-glass"></i></button>
-                            </form>
+<!--                             <form action="#">
+                            <select class="boardselect" id="searchCondition">
+							  <option value="1">작성자</option>
+							  <option value="2">제목</option>
+							  <option value="3">내용</option>
+							  <option value="4">해시태그</option>
+							</select>
+                                <br>
+                                <input type="search" placeholder="Search..." id="searchValue" name="searchValue">
+                                <button type="button" onclick="searchBoard();"><br><br><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </form> -->
                         </div>
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">Categories</h4>
@@ -112,51 +119,22 @@
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">TOP5 게시글</h4>
                             <div class="blog__sidebar__recent">
+                            
+                            <c:forEach items="${topBoardList }" var="t">
                                 <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="img/blog/sidebar/sr-1.jpg" alt="">
-                                    </div>
+                           			<div class="blog__sidebar__recent__item__pic">
+                           			<c:forEach items="${topBoardAttList}" var="ta">
+                           				<c:if test="${ t.boardNum eq ta.serialNumber }">
+                                         <img src="${ta.attachRename }"  style="width:90px; height:90px;"alt=""> 
+                                         </c:if>
+                                    </c:forEach>
+                                    </div> 
                                     <div class="blog__sidebar__recent__item__text">
-                                        <h6>09 Kinds Of Vegetables<br /> Protect The Liver</h6>
-                                        <span>MAR 05, 2019</span>
+                                        <h6>${t.boardTitle }</h6>
+                                        <span style="color:#24E082;">${t.boardCreateDate }</span>
                                     </div>
                                 </a>
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="img/blog/sidebar/sr-2.jpg" alt="">
-                                    </div>
-                                    <div class="blog__sidebar__recent__item__text">
-                                        <h6>Tips You To Balance<br /> Nutrition Meal Day</h6>
-                                        <span>MAR 05, 2019</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="img/blog/sidebar/sr-3.jpg" alt="">
-                                    </div>
-                                    <div class="blog__sidebar__recent__item__text">
-                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
-                                        <span>MAR 05, 2019</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="img/blog/sidebar/sr-3.jpg" alt="">
-                                    </div>
-                                    <div class="blog__sidebar__recent__item__text">
-                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
-                                        <span>MAR 05, 2019</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="img/blog/sidebar/sr-3.jpg" alt="">
-                                    </div>
-                                    <div class="blog__sidebar__recent__item__text">
-                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
-                                        <span>MAR 05, 2019</span>
-                                    </div>
-                                </a>
+                            </c:forEach>
                             </div>
                         </div>
                         <div class="blog__sidebar__item">
@@ -208,8 +186,8 @@
 										<img src="resources/img/blog/details/profile.jpg" alt="">
 									</div>
 									<div class="blog__details__author__text">
-										<h6>튼튼한 위장</h6>
-										<span>회원</span>
+										<h6 style="color:#24E082">${b.member.userNickname }</h6>
+										<span>${b.generaluser.userHealth }</span>
 									</div>
 								</div>
 							</div>
@@ -220,8 +198,15 @@
 										<li><span>Tags:</span> PT, 오운완, 버핏테스트, 인바디</li>
 									</ul>
 									<div class="blog__details__social">
-										<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-											class="fa fa-twitter"></i></a> <a href="#"><i
+										<a href="#" onclick="fn_sendFB('facebook');return false;" id="facebook"
+												target="_self" title="페이스북 새창열림">
+												<i class="fa fa-facebook"></i>
+										</a> 
+										<a href="#" onclick="fn_sendFB('twitter');return false;" id="twitter"
+												target="_self" title="트위터 새창열림">
+												<i class="fa fa-twitter"></i>
+										</a> 
+										<a href="#"><i
 											class="fa fa-google-plus"></i></a> <a href="#"><i
 											class="fa fa-linkedin"></i></a> <a href="#"><i
 											class="fa fa-envelope"></i></a>
@@ -394,6 +379,8 @@
 
 	<!--소셜공유-->
 	 		<script>	
+	 		
+	 		
 	 		 /**댓글작성*/
 	 		document.getElementById('replySubmit').addEventListener('click', ()=>{
 
@@ -436,6 +423,23 @@
 	     				}
 	     		   });
 	     	   });
+	 		 
+			//댓글 삭제
+			$(".deleteReply").click(function(){
+			       let params={
+				             replyNum : $(this).next().val(),
+				             boardNum : ${b.boardNum}
+			       }
+			       
+			       $.ajax({
+			    	   url: '${contextPath}/deleteReply.bo',
+			    	   data: params,
+			    	   success:function(res){
+			    		   console.log("댓글삭제 에작스");
+			    		   window.location.reload();
+			    	   }
+			       });
+			});
 	 		
             function shareFacebook() {
               var sendUrl = "http://www.google.com";
@@ -443,7 +447,7 @@
             }
             
             function shareTwitter() {
-              var sendText = "Y2K World의 게시글을 공유합니다 :)";
+              var sendText = "영해의 건강이야기 게시글을 공유합니다 :)";
               const boardNum = '${b.boardNum}';
               const writer = '${b.userNum}';
               const page = '${page}';
@@ -498,22 +502,7 @@
 					 }
 			});
      	   
-			//댓글 삭제
-			$(".deleteReply").click(function(){
-			       let params={
-				             replyNum : $(this).next().val(),
-				             boardNum : ${b.boardNum}
-			       }
-			       
-			       $.ajax({
-			    	   url: '${contextPath}/deleteReply.bo',
-			    	   data: params,
-			    	   success:function(res){
-			    		   console.log("댓글삭제 에작스");
-			    		   window.location.reload();
-			    	   }
-			       });
-			});
+
      	   
             </script>
 

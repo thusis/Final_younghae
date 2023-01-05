@@ -18,7 +18,6 @@
 
     <!--내가만든 css-->
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
-    
     <!-- 써머 노트 :CDN방식 -->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-bs4.min.js"></script>
@@ -71,7 +70,13 @@
 	.order-1 {
 		text-align: center;
 	}
-	
+	#map{
+		border:none;
+		background:white;
+		font-size:25px;
+		font-weight: bold;
+		color:#24E082;
+	}
 </style>
 </head>
 <body>
@@ -227,16 +232,12 @@
                         for="title">제목</label>
                         <input type="text" name="boardTitle" id="boardTitle" placeholder="제목을 입력하세요" required style="width: 60%; padding: 0.5%;  border: none; ">
 
-<!-- 						<label for="title" style="font-weight:900; line-height:1.5rem; font-size:1.25rem;color: #24E082;">제목</label> -->
-<!-- 						<input type="text" class="col-lg-9" name="boardTitle" id="boardTitle"> -->
-<!-- 				 <div class="filebox row m-3">
-                    <button type="button" class="site-btn" id="addFile"><i class="bi bi-paperclip"></i></button>
-                    <input class="upload-name" value="첨부파일" placeholder="첨부파일" readonly>
-                    <label for="file">파일찾기</label> 
-                    <input type="file" id="file" name="attachment">
-                	</div> -->
 					</div>
 					<hr style="border: 1px solid #c9ffe4;" noshade />
+<!-- 					<button type="button" id="map"><i class="bi bi-pin-map"></i></button>
+					<span style="color:gold; font-weight:bold;">위치 : </span>
+					<input type="text"  id="mapValue"  name="mapValue" readonly> -->
+					<!-- 이거 리퀘스트파람으로 보내서 디비에 인서트... 그러려면 컬럼이 있어야겠다 -->
 <!-- 					<input type="file" class="form-control form-control-lg" name="file"> -->
 					<!--  <input type="file" style="float: right;" id="fileUpload" name="file"> -->
 	<!-- 				<button type="button" class="btn btn-outline-warning" id="addFile" name="file" onclick="onClickUpload();">파일 추가</button>  -->
@@ -537,6 +538,12 @@
 			  form.submit();
 		   });
 		   
+		    $("#map").click(function(){
+				var url = "map.bo";
+				var name = "map popup"
+				var option = "width= 610, height= 560"
+				window.open(url, name, option);
+			});
 		   
 	</script>
 	

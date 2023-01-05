@@ -36,7 +36,7 @@
 
 	<!--이벤트 버튼-->
 	<div id="eventBirthdayBtn">
-		<a href="#" class="btn-3d yellow"  id="birthAward">생일 보상받기</a>
+		<a href="#" class="btn-3d yellow" data-bs-toggle="modal"   id="birthAward">생일 보상받기</a>
 	</div>
 	
 		<!-- 생일보상 / 1 -->
@@ -47,8 +47,8 @@
                     <h5 class="modal-title" id="exampleModalLabel"> </h5>
                     </div>
                     <div class="modal-body">                                     
-                        <img src="resources/img/event/sweat.png" style="width: 150px; margin-left: 160px;" ><br><br>
-                        <b style="margin-left: 80px; color:orange;" >출석이벤트는 하루에 한번만 참여 가능합니다😥</b>
+                        <img src="resources/img/event/cake.png" style="width: 150px; margin-left: 160px;" ><br><br>
+                        <b style="margin-left: 80px; color:orange;" >🎂생일기념 쿠폰이 지급되었습니다🎂</b>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -66,7 +66,7 @@
                     </div>
                     <div class="modal-body">                                     
                         <img src="resources/img/event/sweat.png" style="width: 150px; margin-left: 160px;" ><br><br>
-                        <b style="margin-left: 80px; color:orange;" >출석이벤트는 하루에 한번만 참여 가능합니다😥</b>
+                        <b style="margin-left: 80px; color:orange;" >생일쿠폰 발급 실패😥</b>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="modal-body">                                     
                         <img src="resources/img/event/sweat.png" style="width: 150px; margin-left: 160px;" ><br><br>
-                        <b style="margin-left: 80px; color:orange;" >출석이벤트는 하루에 한번만 참여 가능합니다😥</b>
+                        <b style="margin-left: 140px; color:orange;" >생일자가 아닙니다 😥</b>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -102,7 +102,7 @@
                     </div>
                     <div class="modal-body">                                     
                         <img src="resources/img/event/sweat.png" style="width: 150px; margin-left: 160px;" ><br><br>
-                        <b style="margin-left: 80px; color:orange;" >출석이벤트는 하루에 한번만 참여 가능합니다😥</b>
+                        <b style="margin-left: 80px; color:orange;" >이미 쿠폰을 발급 받으셨습니다😥</b>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -198,11 +198,19 @@
 	<!-- Footer Section End -->
 
 	<script>
+	
+	
+	
+	<!-- 보상받기 버튼 효과 -->
+		$('.yellow').click(function(event) {
+			event.preventDefault();
+		});
+	
 	<!-- 생일보상 -->
 	document.getElementById('birthAward').addEventListener('click', function() {
 		console.log("생일보상버튼");
 		$.ajax({
-			url:'${contextPath}/birthdayEvent.ev';
+			url:'${contextPath}/birthdayEvent.ev',
 		 	data: {userNum:'${loginUser.userNum}'},
 		 	success: (data) => {
 		 		if(data == 1) {
@@ -220,16 +228,15 @@
 		 		} 
 		 	},
 		 	error: (data) => {
-		 		
-		 	}
+		 		console.log("생일보상 요청 실패")
+		 		alert("요청 실패하였습니다")
+		 	},
+			 complete : (data)=>{
+				 console.log("생일보상 요청완료")
+			 }
 		});
 	});
-	
-	
-	<!-- 보상받기 버튼 효과 -->
-		$('a').click(function(event) {
-			event.preventDefault();
-		});
+
 	</script>
 
 

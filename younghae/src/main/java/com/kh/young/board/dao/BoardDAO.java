@@ -92,6 +92,14 @@ public class BoardDAO {
 		return sqlSession.update("boardMapper.updateThumbnail", b);
 	}
 
+	public ArrayList<Board> topBoardList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.topBoardList");
+	}
+
+	public ArrayList<Attachment> topBoardAttList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.topBoardAttList");
+	}
+
 
 
 	

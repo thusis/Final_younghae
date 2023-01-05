@@ -39,8 +39,17 @@ public class EventController {
 	}
 	//출석 이벤트 뷰
 	@RequestMapping("attendanceEvent.ev")
-	public String attendanceEventView() {
-		return "eventAttendance";
+	public String attendanceEventView(HttpSession session, Model model) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNum = loginUser.getUserNum();
+		System.out.println(userNum);
+	//출석 수 카운트
+	int atCount = eService.selectCountAttendance(userNum); 
+	System.out.println("출석 수 카운트 : " + atCount);
+	
+	model.addAttribute("atCount", atCount);
+	return "eventAttendance";
 	}
 	//생일 이벤트 뷰
 	@RequestMapping("birthEvent.ev")
@@ -91,7 +100,7 @@ public class EventController {
 	
 	@RequestMapping("attendanceEventAward.ev")
 	@ResponseBody
-	public String eventAward(HttpSession session, HttpServletResponse response) {
+	public String eventAward(HttpSession session, HttpServletResponse response, Model model) {
 //		int userNum = ((Member)session.getAttribute("loginUser")).getUserNum();
 
 		Member loginUser = (Member)session.getAttribute("loginUser");
@@ -99,7 +108,7 @@ public class EventController {
 		
 		//출석 수 카운트
 		int atCount = eService.selectCountAttendance(userNum); 
-	
+
 		int point = 0;
 		String point_amount = null;
 		  if(atCount >= 5 && atCount < 15) { // 500포인트 추가
@@ -132,6 +141,7 @@ public class EventController {
 //			  return String.valueOf("포인트 지급 실패");
 //			  throw new eventException("포인트 지급 실패");
 		  }
+		  
 		  
 	}
 	

@@ -71,7 +71,7 @@
 		insert into event_attendance values(seq_att.nextval, sysdate, #{userNum}, 2)
 	</insert>
 	
-	<select id="selectCountAttendance">
+	<select id="selectCountAttendance" resultType="_int">
 		select count(*) from event_attendance where user_num = #{userNum}
 	</select>
 	

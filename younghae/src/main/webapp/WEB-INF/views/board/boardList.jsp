@@ -30,7 +30,8 @@
 		cursor: pointer;
 	}	
 	.col-lg-12{
-	color: green; }
+	color: green; 
+	}
 	#boardView{
 		background: white;
 		color: #24E082;
@@ -58,11 +59,11 @@
 	<section class="blog spad">
 		<div class="container">
 					    <div>
-<%-- 					    <c:if test="${loginUser != null }"> --%>
+ 					    <c:if test="${loginUser != null }"> 
 					    <button type="button" class="btn btn-success"  onclick="location.href='${contextPath}/boardWrite.bo'">
 					    <i class="bi bi-pencil-square"></i> Write
 					    </button>
-<%-- 					    </c:if> --%>
+					    </c:if>
 					    </div>  	
 			<div class="row">
 				<div class="col-lg-4 col-md-5">
@@ -92,51 +93,22 @@
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">TOP5 게시글</h4>
                             <div class="blog__sidebar__recent">
+                            
+                            <c:forEach items="${topBoardList }" var="t">
                                 <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="resources/img/blog/sidebar/sr-1.jpg" alt="">
-                                    </div>
+                           			<div class="blog__sidebar__recent__item__pic">
+                           			<c:forEach items="${topBoardAttList}" var="ta">
+                           				<c:if test="${ t.boardNum eq ta.serialNumber }">
+                                         <img src="${ta.attachRename }"  style="width:90px; height:90px;"alt=""> 
+                                         </c:if>
+                                    </c:forEach>
+                                    </div> 
                                     <div class="blog__sidebar__recent__item__text">
-                                        <h6>09 Kinds Of Vegetables<br /> Protect The Liver</h6>
-                                        <span>MAR 05, 2019</span>
+                                        <h6>${t.boardTitle }</h6>
+                                        <span style="color:#24E082;">${t.boardCreateDate }</span>
                                     </div>
                                 </a>
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="resources/img/blog/sidebar/sr-2.jpg" alt="">
-                                    </div>
-                                    <div class="blog__sidebar__recent__item__text">
-                                        <h6>Tips You To Balance<br /> Nutrition Meal Day</h6>
-                                        <span>MAR 05, 2019</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="resources/img/blog/sidebar/sr-2.jpg"  alt="">
-                                    </div>
-                                    <div class="blog__sidebar__recent__item__text">
-                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
-                                        <span>MAR 05, 2019</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="resources/img/blog/sidebar/sr-3.jpg" alt="">
-                                    </div>
-                                    <div class="blog__sidebar__recent__item__text">
-                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
-                                        <span>MAR 05, 2019</span>
-                                    </div>
-                                </a>
-                                <a href="#" class="blog__sidebar__recent__item">
-                                    <div class="blog__sidebar__recent__item__pic">
-                                        <img src="resources/img/blog/sidebar/sr-3.jpg" alt="">
-                                    </div>
-                                    <div class="blog__sidebar__recent__item__text">
-                                        <h6>4 Principles Help You Lose <br />Weight With Vegetables</h6>
-                                        <span>MAR 05, 2019</span>
-                                    </div>
-                                </a>
+                            </c:forEach>
                             </div>
                         </div>
                         <div class="blog__sidebar__item">
@@ -152,8 +124,7 @@
                         </div>
                     </div>
 				</div>
-				<div class="col-lg-8 col-md-7">
-				
+				<div class="col-lg-8 col-md-7">	
 					<div class="row">
 					<c:forEach items="${ bList }"  var="b" >
 						<div class="col-lg-6 col-md-6 col-sm-6" >
@@ -168,7 +139,7 @@
 								</div>
 									<ul>
 										<li><i class="fa fa-calendar-o"></i>&nbsp;${b.boardCreateDate}</li>
-										<li><i class="fa fa-comment-o"></i> 댓글수</li>
+										<li><i class="fa fa-comment-o"></i> 17</li>
 										<li><i class="fa-regular fa-heart"></i> 10</li>
 										<li><i class="fa-regular fa-eye"></i>&nbsp;${b.boardView}</li>
 									</ul>
@@ -181,126 +152,9 @@
 							</div>
 						</div>
 						</c:forEach>
-<!-- 						<div class="col-lg-6 col-md-6 col-sm-6">
-							<div class="blog__item">
-								<div class="blog__item__pic">
-									<img src="resources/img/blog/blog-3.jpg" alt="">
-								</div>
-								<div class="blog__item__text">
-									<ul>
-										<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-										<li><i class="fa fa-comment-o"></i> 5</li>
-										<li><i class="fa-regular fa-heart"></i> 17</li>
-										<li><i class="fa-regular fa-eye"></i> 78</li>
-									</ul>
-									<h5>
-										<a href="#">Visit the clean farm in the US</a>
-									</h5>
-									<p>Sed quia non numquam modi tempora indunt ut labore et
-										dolore magnam aliquam quaerat</p>
-									<a href="#" class="blog__btn">READ MORE <span
-										class="arrow_right"></span></a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6">
-							<div class="blog__item">
-								<div class="blog__item__pic">
-									<img src="resources/img/blog/blog-1.jpg" alt="">
-								</div>
-								<div class="blog__item__text">
-									<ul>
-										<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-										<li><i class="fa fa-comment-o"></i> 5</li>
-										<li><i class="fa-regular fa-heart"></i> 17</li>
-										<li><i class="fa-regular fa-eye"></i> 78</li>
-									</ul>
-									<h5>
-										<a href="#">Cooking tips make cooking simple</a>
-									</h5>
-									<p>Sed quia non numquam modi tempora indunt ut labore et
-										dolore magnam aliquam quaerat</p>
-									<a href="#" class="blog__btn">READ MORE <span
-										class="arrow_right"></span></a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6">
-							<div class="blog__item">
-								<div class="blog__item__pic">
-									<img src="resources/img/blog/blog-4.jpg" alt="">
-								</div>
-								<div class="blog__item__text">
-									<ul>
-										<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-										<li><i class="fa fa-comment-o"></i> 5</li>
-										<li><i class="fa-regular fa-heart"></i> 17</li>
-										<li><i class="fa-regular fa-eye"></i> 78</li>
-									</ul>
-									<h5>
-										<a href="#">Cooking tips make cooking simple</a>
-									</h5>
-									<p>Sed quia non numquam modi tempora indunt ut labore et
-										dolore magnam aliquam quaerat</p>
-									<a href="#" class="blog__btn">READ MORE <span
-										class="arrow_right"></span></a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6">
-							<div class="blog__item">
-								<div class="blog__item__pic">
-									<img src="resources/img/blog/blog-4.jpg" alt="">
-								</div>
-								<div class="blog__item__text">
-									<ul>
-										<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-										<li><i class="fa fa-comment-o"></i> 5</li>
-										<li><i class="fa-regular fa-heart"></i> 17</li>
-										<li><i class="fa-regular fa-eye"></i> 78</li>
-									</ul>
-									<h5>
-										<a href="#">The Moment You Need To Remove Garlic From The
-											Menu</a>
-									</h5>
-									<p>Sed quia non numquam modi tempora indunt ut labore et
-										dolore magnam aliquam quaerat</p>
-									<a href="#" class="blog__btn">READ MORE <span
-										class="arrow_right"></span></a>
-								</div>
-							</div>
-						</div>
-						<div class="col-lg-6 col-md-6 col-sm-6">
-							<div class="blog__item">
-								<div class="blog__item__pic">
-									<img src="resources/img/blog/blog-4.jpg" alt="">
-								</div>
-								<div class="blog__item__text">
-									<ul>
-										<li><i class="fa fa-calendar-o"></i> May 4,2019</li>
-										<li><i class="fa fa-comment-o"></i> 5</li>
-										<li><i class="fa-regular fa-heart"></i> 17</li>
-										<li><i class="fa-regular fa-eye"></i> 78</li>
-									</ul>
-									<h5>
-										<a href="#">The Moment You Need To Remove Garlic From The
-											Menu</a>
-									</h5>
-									<p>Sed quia non numquam modi tempora indunt ut labore et
-										dolore magnam aliquam quaerat</p>
-									<a href="#" class="blog__btn">READ MORE <span
-										class="arrow_right"></span></a>
-								</div>
-							</div>
-						</div> -->
+						
+						<!-- 페이징 시작 -->						
 						<div class="col-lg-12">
-							<!-- <div class="product__pagination blog__pagination"> -->
-<!-- 								<a href="#"><i class="fas fa-long-arrow-left"></i></a>
- 								<a href="#">1</a> <a href="#">2</a> <a href="#">3</a> <a
-									href="#">4</a> <a href="#">5</a> <a href="#">6</a> <a href="#">
-									<i class="fa fa-long-arrow-right"></i></a>  -->
-									
-									
 					<div class="col-lg-12 text-center" style="margin-top: 8%;">
 						<div class="product__pagination blog__pagination">
 							<c:url var="goBack" value="${ loc }">
@@ -310,9 +164,9 @@
 				                  <c:if test="${ searchValue != null }">
 				                      <c:param name="searchValue" value="${ searchValue }"/>
 				                  </c:if>
-				                  <c:if test="${boardType != null}">
-				                  	<c:param name="boardType" value="${boardType}"/>
-				                  </c:if>
+			                  <c:if test="${boardCategory != null}">
+			                  	<c:param name="boardCategory" value="${boardCategory}"/>
+			                  </c:if>
 				                  <c:param name="page" value="${ pi.currentPage-1 }"/>
 							</c:url>
 							<c:if test="${ pi.currentPage > 1 }">
@@ -328,8 +182,8 @@
 			                  <c:if test="${ searchValue != null }">
 			                      <c:param name="searchValue" value="${ searchValue }"/>
 			                  </c:if>
-			                  <c:if test="${boardType != null}">
-			                  	<c:param name="boardType" value="${boardType}"/>
+			                  <c:if test="${boardCategory != null}">
+			                  	<c:param name="boardCategory" value="${boardCategory}"/>
 			                  </c:if>
 			                  <c:param name="page" value="${ p }"/>
 							</c:url>
@@ -339,12 +193,12 @@
  					 <c:if test="${ boardNum != null }">
                       <c:param name="boardNum" value="${ boardNum }"/>
                   </c:if>
-                  <c:if test="${ searchValue != null }">
-                      <c:param name="searchValue" value="${ searchValue }"/>
-                  </c:if>
-                  <c:if test="${boardType != null}">
-                  	<c:param name="boardType" value="${boardType}"/>
-                  </c:if>
+		                  <c:if test="${ searchValue != null }">
+		                      <c:param name="searchValue" value="${ searchValue }"/>
+		                  </c:if>
+		                  <c:if test="${boardCategory != null}">
+		                  	<c:param name="boardCategory" value="${boardCategory}"/>
+		                  </c:if>
                   <c:param name="page" value="${ pi.currentPage+1 }"/>
 							</c:url>
 							<c:if test="${ pi.currentPage <= 1 }">

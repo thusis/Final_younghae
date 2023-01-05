@@ -69,11 +69,17 @@ public class BoardController {
 		System.out.println("boardCategory : " +  boardCategory);
 		
 		ArrayList<Board> bList = bService.selectBoardList(pi, boardCategory);
+		ArrayList<Board> topBoardList = bService.topBoardList();
+		ArrayList<Attachment> topBoardAttList = bService.topBoardAttList();
+		
 		System.out.println("AllbList : " + bList);
 		if(bList != null) {
+			model.addAttribute("boardCategory", boardCategory);
 			model.addAttribute("pi", pi);
 			model.addAttribute("bList", bList);
 			model.addAttribute("loginUser", loginUser);
+			model.addAttribute("topBoardList", topBoardList);
+			model.addAttribute("topBoardAttList", topBoardAttList);
 			return "boardList";
 		} else {
 			throw new boardException("Can't find BoardList");
@@ -85,7 +91,6 @@ public class BoardController {
 	public String boardWrite(){
 		return "boardWrite";
 	}
-	
 	//게시글 작성
 	@RequestMapping("insertBoard.bo")
 	public String insertFile( HttpSession session,
@@ -165,7 +170,11 @@ public class BoardController {
 			
 			//b 모든 요소 뽑아오기 (attach까지 같이)
 			Story b = bService.boardView(boardNum);
-			System.out.println("게시글 상세 : " + b);
+			System.out.println("게시글 상세보기 b : " + b);
+			//탑 리스트
+			ArrayList<Board> topBoardList = bService.topBoardList();
+			ArrayList<Attachment> topBoardAttList = bService.topBoardAttList();
+			//댓글
 			ArrayList<Reply> rList = bService.replyList(boardNum);
 			//댓글 수
 			int replyCount = bService.replyCount(boardNum);
@@ -178,6 +187,8 @@ public class BoardController {
 				model.addAttribute("page", page);
 				model.addAttribute("rList", rList);
 				model.addAttribute("replyCount", replyCount);
+				model.addAttribute("topBoardList", topBoardList);
+				model.addAttribute("topBoardAttList", topBoardAttList);
 //				model.addAttribute("likeCount", likeCount);
 				return "boardDetail";
 			} else {

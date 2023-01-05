@@ -17,7 +17,25 @@
 		board.board_type = #{boardCategory}
 		</if>
 		order by board_num desc
-	</select>
+	 </select>
+	 
+	 <select id="topBoardList" resultMap="boardResultSet" >
+		select * from (select * from board
+			join attachment on(board_num = serialnumber)
+		where board_status = 'Y' and
+		board.board_type in (11,12,13,14)
+		order by board_view desc) 
+        where rownum <![CDATA[<=]]> 5
+	 </select>
+	 
+	 <select id="topBoardAttList" resultMap="attachmentResultSet">
+	 	select * from (select * from attachment
+			join board on(serialnumber = board_num)
+		where board_status = 'Y' 
+				    	and board.board_type in (11,12,13,14)
+		order by board_view desc) 
+        where rownum <![CDATA[<=]]> 5
+	 </select>
 	
 <!-- 	<select id="selectPhotoList" resultMap="attachmentResultSet">
 		select * from attachment 
@@ -32,10 +50,16 @@
 			order by serialNumber desc
 	</select> -->
 	
-	<insert id="insertBoard">
-		insert into board values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, sysdate, default, default, 2, #{boardType})
-	</insert>
-
+		<insert id="insertBoard">
+		insert into board values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, sysdate, default, default, #{userNum}, #{boardType})
+		</insert>
+	
+<!-- 	<insert id="insertBoard">
+		insert all
+		into board values(seq_board.nextval, #{boardTitle}, #{boardContent}, sysdate, sysdate, default, default, #{userNum}, #{boardType})
+		into boardMap values(seq_boardmap.nextval, seq_board.currval, #{mapValue})
+		select * from dual
+	</insert> -->
 <!-- 	<insert id="insertPhoto">
 		insert into attachment values(seq_attach.nextval, sysdate, #{attachName}, #{attachRename}, #{attachPath}, #{boardType}, seq_board.currval, 'Y')
 	</insert>
@@ -53,16 +77,16 @@
 	<!-- 게시글 업데이트 -->
 	<update id="updateBoard">
 		update board 
-		set board_title = #{boardTitle}, board_content = ${boardContent}, 
+		set board_title = #{boardTitle}, board_content = #{boardContent}, 
 			  board_type = #{boardType}, board_modifydate = sysdate
 		where board_status = 'Y' and board_num = #{boardNum}
 	</update>
 	<!-- 썸네일 업데이트 -->
 	<update id="updateThumbnail">
 		update attachment 
-		set attach_rename = ${attachment.attachrename},
+		set attach_rename = #{attachment.attachrename},
 			  attach_name = #{attachment.attachName}, attach_path = #{attachment.attachPath},
-			  board_type = #{boardType} where serialnumber = #{boardnum}
+			  board_type = #{boardType} where serialnumber = #{boardNum}
 	</update>
 	<!-- 게시글 조회수 -->
 	<update id="viewCount">
@@ -74,6 +98,7 @@
 		select * from board
 			join attachment on(board_num = serialnumber)
 			left join member using(user_num)
+			left join general_user using(user_num)
 		where board_status = 'Y' 
 				    and board_num = #{boardNum}
 	</select>
@@ -174,6 +199,7 @@
 		<result column="BOARD_TYPE" property="boardType"/>
 		<association property="attachment" javaType="Attachment" resultMap="attachmentResultSet" />
 		<association property="member" javaType="Member" resultMap="memberResultSet" />
+		<association property="generaluser" javaType="GeneralUser" resultMap="generalUserResultSet" />
 	</resultMap>
 	
 	<resultMap type="Reply" id="replyResultSet">
@@ -197,6 +223,22 @@
 		<result column="SERIALNUMBER" property="serialNumber"/>
 		<result column="ATTACH_STATUS" property="attachStatus"/>		
 	</resultMap>
+	
+	<resultMap type="BoardMap" id="boardmapResultSet">
+		<id column="BOARDMAP_NUM" property="boardmapNum"/>
+		<result column="BOARD_NUM" property="boardNum"/>
+		<result column="MAP_VALUE" property="mapValue"/>
+		<association property="boardmap" javaType="BoardMap" resultMap="boardResultSet" />
+	</resultMap>
+	
+	<resultMap type="GeneralUser" id="generalUserResultSet">
+		<id column="USER_NUM" property="userNum" />
+		<result column="USER_ZIPCODE" property="userZipcode"/>
+		<result column="USER_ADDRESS" property="userAddress"/>
+		<result column="USER_ADDRESS_DETAIL" property="userAddressDetail"/>
+		<result column="USER_HEALTH" property="userHealth"/>
+	</resultMap>
+
 	
 	
 </mapper>
