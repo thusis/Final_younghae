@@ -83,7 +83,7 @@
 	</nav>
 	<div class="bn_index mt-5 col-lg-3 d-flex justify-content-end">
 		<ul>
-			<li><a href="#" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>
+			<li><a href="${contextPath }/myPage.my" onclick="location.href='${contextPath}/myPage.my'">마이페이지</a></li>
 			<li>/</li>
 			<li><a href="#">장바구니</a></li>
 		</ul>
@@ -92,6 +92,18 @@
 		<div class="container">
 			<div class="checkout__form mt-5">
 				<h3 class="mb-4">장바구니</h3>
+				<c:if test="${ empty cartViewList }">
+		        	<section class="contact spad" style="width:60%; margin: auto; margin-top:-70px;">
+			               <div class="section-title" style="padding: 5rem 5rem 5rem 5rem; border:0.5rem solid #24E082; ">
+			                   <h2> 장바구니에 담긴 상품이<br>존재하지 않습니다<br></h2>
+			                   <a href="${contextPath}/shoppingMain.sh">
+			                   쇼핑을 통해 장바구니를 채워보세요<br>
+			                   <img src="resources/img/logo_pill_white.svg" alt="흰로고">
+			                   </a>
+			               </div>
+					</section>
+				</c:if>	
+				<c:if test="${ !empty cartViewList }">
 				<form action="${contextPath }/payment.sh" method="post">
 					<div class="row">
 						<div class="col-lg-8 col-md-6">
@@ -107,19 +119,6 @@
 							<hr><br>
 							
 							<!-- 장바구니 상품 -->
-				        	<section class="contact spad">
-								<c:if test="${ empty cartViewList }">
-					               <div class="section-title" style="padding: 5rem 5rem 5rem 5rem; border:0.5rem solid #24E082; ">
-					                   <h2> 병원/약국 정보를<br> 설정하지 않은<br> 전문가회원입니다 </h2>
-					                   <a href="${contextPath}/expertfind.qa">
-					                   좀 더 안전한 영해 이용을 위해<br> 
-					                   프로필을 설정한 다른 회원을 만나보세요<br>
-					                   <img src="resources/img/logo_pill_white.svg" alt="흰로고">
-					                   </a>
-					               </div>
-								</c:if>	
-							</section>
-							<c:if test="${ !empty cartViewList }">
 								<c:forEach items="${cartViewList}" var="c">
 								<div class="row" style="margin-bottom: 1.5rem;">
 									<div class="col-lg-1" style="margin-right: -1rem; margin-top:-5px;">
@@ -189,8 +188,7 @@
 							<!-- /주문 상품 -->
 						
 							
-<!-- 						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto;"> -->
-						<div>
+						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto;">
 							<div class="checkout__order" style="width: 80%">
 								<h4>결제 금액</h4>
 								<ul>
@@ -212,10 +210,10 @@
 								</button>
 							</div>
 						</div>
-						</c:if>
 					</div>
 					</div>
 				</form>
+				</c:if>
 			</div>		
 		</div>
 	</section>
@@ -352,7 +350,7 @@
 					deliveryPrice = 2500;
 				}
 						
-				point = Math.round(allTotalPrice * 0.005);
+				point = Math.round(allTotalPrice * 0.01);
 
 				payTotal = allTotalPrice + deliveryPrice;
 			}

@@ -303,13 +303,12 @@
 							</div>
 							<hr>
 							
-							${loginUser }
 							<div class="row">
 								<div class="col" style="margin-right: -5rem;">
 									<input id="pointUse" class="inputBox" style="width: 80%; padding: 10px;" placeholder="0" >
 								</div>
 								<div class="col">
-									<button id="allPointUse" class="btn_pointAll">전액사용</button>
+									<button type="button" id="allPointUse" class="btn_pointAll">전액사용</button>
 								</div>
 							</div>
 							<div class="container">
@@ -323,7 +322,8 @@
 							</div>
 						</div>
 						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto; ">
-							<div class="checkout__order" style="height: 37rem;">
+<!-- 							<div class="checkout__order" style="height: 37rem;">  -->
+							<div class="checkout__order" style="height: 30rem;"> 
 								<h4 style="margin-top:-5px;">결제 금액</h4>
 								<ul style="margin-top:-10px;">
 									<li>총 상품 금액 <span name=""><fmt:formatNumber value="${ totalPrice }" type="number"/> 원</span></li>
@@ -343,7 +343,7 @@
 										<fmt:formatNumber value="${ totalPrice }" type="number"/></span></span><br>
 									<span style="font-size: 0.6rem;">P적립 예정&nbsp;</span>
 									<span id="savePoint" style="font-size: 0.6rem; color: #24E082; font-weight: 500;">
-										<fmt:formatNumber value="${ totalPrice * 0.01}" type="number"/>
+										<fmt:parseNumber value="${ totalPrice * 0.01}" integerOnly="true"/>
 									</span>
 								</div>
 								<input type="hidden" name="orderTotalPrice" value="${ totalPrice }">
@@ -366,7 +366,7 @@
 									</div>
 								</div>
 								<button type="button" class="site-btn" onclick="requestPay()">
-									<span>0</span>원 결제하기
+									<span id = "totalPayBtn"><fmt:formatNumber value="${ totalPrice }" type="number"/></span>원 결제하기
 								</button>
 							</div>
 						</div>
@@ -379,7 +379,7 @@
 
 
 	<!-- Modal1(배송지 리스트 출력) -->
-	<div id="addressListModal" class="hj_modal">
+	<div id="addressListModal" class="hj_modal" style="z-index:999;">
 		<!-- Modal content -->
 		<div class="modal-content" style="height: 90%; width: 28%">
 			<div class="modal-header" style="height: 10%; border-bottom-color: white; margin-top: -15px; text-align: center">
@@ -402,7 +402,7 @@
 
 
 	<!-- Modal2(배송지 추가) -->
-	<div id="addAdressModal" class="hj_modal">
+	<div id="addAdressModal" class="hj_modal" style="z-index:999;">
 		<!-- Modal content -->
 		<div class="modal-content" style="height: 90%; width: 28%">
 			<div class="modal-header" style="height:10%; border-bottom-color: white; margin-top:-15px;">
@@ -433,7 +433,7 @@
 							style="margin-right: 1rem; color: #5B555C; margin-top: 5px;">연락처</label>
 						<input type="text" name="addressPhone" id="addressPhone"
 							style="width: 70%; height: 20%; border: 1px solid #D9D9D9; border-radius: 0.3em; float: right;"
-							placeholder="ex)&nbsp;010-1234-5678">
+							placeholder="(-)없이 입력">
 					</div>
 					<div style="margin-bottom: 0.5rem;">
 						<label for="addressZipcode"
@@ -479,7 +479,7 @@
 
 
 	<!-- Modal3(배송지 수정) -->
-	<div id="changeAddressModal" class="hj_modal">
+	<div id="changeAddressModal" class="hj_modal" style="z-index:999;">
 		<!-- Modal content -->
 		<div class="modal-content" style="height: 90%; width: 28%">
 			<div class="modal-header" style="height: 10%; border-bottom-color: white; margin-top: -15px;">
@@ -800,13 +800,16 @@
                    
                    
 //		결제 금액 영역
-		var totalPayPrice = 0;
 		var couDiscount = 0;
 		var useCouponAmount = 0;
 		var usePoint = 0;
 		var totalPayPrice = 0;
-		
+// 		사용 포인트
+		var usePointAmount = 0;
+		var totalPayPriceSpan = document.getElementById('totalPayPrice');
 		var useCoupon = document.getElementById("useCoupon");
+		var totalPayBtn = document.getElementById("totalPayBtn");
+		
 		useCoupon.addEventListener('change',function(){
 			var couNum = this.value;
 			$.ajax({
@@ -815,52 +818,70 @@
 				success :(data)=>{
 					console.log(data);
 					couDiscount = data;
-					console.log("couDiscount : " + couDiscount);
-					console.log("토탈페이 : " + ${ totalPrice } );
 					
 					useCouponAmount = Math.round(couDiscount * ${ totalPrice } / 100);
 					console.log("useCouponAmount : " + useCouponAmount);
 					document.getElementById('useCouponPrice').innerText = useCouponAmount.toLocaleString();
+					
+					totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
+					console.log("최최최종 금액 :" +totalPayPrice);
+					totalPayPriceSpan.innerText = totalPayPrice.toLocaleString();
+					totalPayBtn.innerText = totalPayPrice.toLocaleString();
 				},
 				error: (data)=>{
 					console.log(data);
 				}
 			})
 		document.getElementById('orderCouponPrice').value= useCouponAmount;
-		console.log("couDiscount2 : " + couDiscount);
-		console.log("토탈페이2 : " + ${ totalPrice } );
-		console.log("useCouponAmount2 : " + useCouponAmount);
+
 		})
 		
 // 		총금액 변경 = ${ totalPrice } - useCouponPrice; 
 		
-
-
-var savePoint = Math.round(totalPayPrice / 100);
-			document.getElementById('savePoint').innerText = savePoint.toLocaleString();
-		
+// 		포인트 전액사용 버튼
 		var allPointBtn = document.getElementById('allPointUse');
+// 		포인트 인풋
 		var pointUse = document.getElementById('pointUse');
+// 		보유 포인트
 		var userPoint =  ${loginUser.userPoint};
+// 		결제 포인트 영역
 		var totalUsePoint = document.getElementById('totalUsePoint');
+
+// 		전액사용 버튼 이벤트
 		allPointBtn.addEventListener('click', function(){
-			pointUse.value = userPoint.toLocaleString();
-			totalUsePoint.innerText = pointUse.value;
+			pointUse.value = userPoint;
+			usePointAmount = pointUse.value;
+			totalUsePoint.innerText = usePointAmount.toLocaleString();
+			totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
+			console.log("최최최종 금액 :" +totalPayPrice);
+			totalPayPriceSpan.innerText = totalPayPrice.toLocaleString();
+			totalPayBtn.innerText = totalPayPrice.toLocaleString();
 		})
-		
+
 		pointUse.addEventListener("keyup", function (e) {
-    		$(this).val($(this).val().replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
-		});
-		pointUse.addEventListener("change", function (e) {
-			totalUsePoint.innerText = $(this).val();
-			var numberTotalUse = Number(($(this).val()).replace(/\D/g, ''));
-			var totalPointPrice = ${ totalPrice } - numberTotalUse; 
-			console.log(totalPointPrice);
-			var savePoint2 = Math.round(totalPointPrice / 100);
-			document.getElementById('totalPayPrice').innerText = totalPointPrice.toLocaleString();
-			document.getElementById('savePoint').innerText = savePoint2.toLocaleString();
+			usePointAmount = 0;
+			usePointAmount = this.value;
+			totalUsePoint.innerText = usePointAmount.toLocaleString();
+			totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
+			console.log("최최최종 금액 :" +totalPayPrice);
+			totalPayPriceSpan.innerText = totalPayPrice.toLocaleString();
+			totalPayBtn.innerText = totalPayPrice.toLocaleString();
 		});
 		
+		totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
+		
+// 			totalUsePoint.innerText = $(this).val();
+// 			var numberTotalUse = Number(($(this).val()).replace(/\D/g, ''));
+// 			var totalPointPrice = ${ totalPrice } - numberTotalUse; 
+// 			console.log(totalPointPrice);
+// 			var savePoint2 = Math.round(totalPointPrice / 100);
+// 			document.getElementById('totalPayPrice').innerText = totalPointPrice.toLocaleString();
+// 			document.getElementById('savePoint').innerText = savePoint2.toLocaleString();
+
+// var savePoint = Math.round(totalPayPrice / 100);
+// 			document.getElementById('savePoint').innerText = savePoint.toLocaleString();
+		
+
 
 //      주소찾기API
 		let width = 400;
@@ -955,13 +976,15 @@ var savePoint = Math.round(totalPayPrice / 100);
     const orderImpCode = document.getElementById('orderImpCode');
     const orderStatus = document.getElementById('orderStatus');
     orderDate.value = today.toLocaleString();
+    var totalPayPriceSpan2 = Number(document.getElementById('totalPayPrice').innerText.replace(/\D/g, ''));
+    console.log("totalPayPriceSpan2" + totalPayPriceSpan2);
     
     function requestPay() {
  	      IMP.request_pay({ // param
  	          pg: "html5_inicis",
  	          merchant_uid: 'YOUNG_' + new Date().getTime(),
  	          name: "${ infoList[0].cart.supplement.proName }" + overProduct,
- 	          amount: 100,
+ 	          amount: totalPayPriceSpan2,
  	          buyer_email: "${loginUser.email}" ,
  	          buyer_name: orderName.value ,
  	          buyer_tel: oderPhone.value ,

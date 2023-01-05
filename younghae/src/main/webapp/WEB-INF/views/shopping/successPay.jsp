@@ -139,10 +139,20 @@
 				</ul>
 			</div>
 
+        	<section class="contact spad" style="width:60%; margin: auto; margin-top:-70px;">
+	               <div class="section-title" style="padding: 5rem 5rem 5rem 5rem; border:0.5rem solid #24E082; ">
+	                   <h2>주문이 완료되었습니다<br><br></h2>
+<%-- 	                   ${ orderList.Orders.orderCode } --%>
+<%-- 	                   <a href="${contextPath}/shoppingMain.sh"> --%>
+<!-- 	                   쇼핑을 통해 장바구니를 채워보세요<br> -->
+<!-- 	                   <img src="resources/img/logo_pill_white.svg" alt="흰로고"> -->
+	                   </a>
+	               </div>
+			</section>
 
-			결제 완료페이지
+<!-- 			결제 완료페이지 -->
 			
-			${ orderList }
+<%-- 			${ orderList } --%>
 		
 
 
