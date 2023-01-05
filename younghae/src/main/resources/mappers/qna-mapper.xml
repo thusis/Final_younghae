@@ -97,6 +97,7 @@
   	
   	<resultMap type="ExpertRespDto" id="ExpertRespDto">
   		<id column="USER_NUM" property="member.userNum"/>
+  		<result column="ANSWERLISTSIZE" property="answerListSize"/>
 		<association property="member" javaType="Member" resultMap="Member"/>
 		<association property="expert" javaType="ExpertUser" resultMap="ExpertUser"/>
 		<association property="eattach" javaType="Attachment" resultMap="Attachment"/>
@@ -248,8 +249,7 @@
 		SELECT * 
 		FROM MEMBER
 		JOIN EXPERT_USER USING (USER_NUM)
-		LEFT JOIN ATTACHMENT ON (USER_NUM=SERIALNUMBER)
-		WHERE USER_NUM = #{userNum}
+		WHERE USER_NUM = #{userNum} 
 	</select>
 	
 	<select id="selectEattach" resultMap="Attachment" >

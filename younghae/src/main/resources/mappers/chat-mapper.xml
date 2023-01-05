@@ -61,6 +61,7 @@
   		<result column="USER_CNUMBER" property="userCNumber"/>
   		<result column="USER_STATUS" property="userStatus"/>
   		<result column="USER_MODIFYDATE" property="userModifyDate"/>
+  		<result column="USER_POINT" property="userPoint"/>
   	</resultMap>
   	
   	<resultMap type="ExpertUser" id="ExpertUser">

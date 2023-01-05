@@ -93,7 +93,7 @@
                             </span></h5>
                             <span style="display: inline-block; width: 3.5rem;">답변수 </span><span>: ${ eresp.answerListSize }개</span><br>
                             <span style="display: inline-block; width: 3.5rem;">전문과목 </span><span>: ${ eresp.expert.expertMedi}</span><br>
-                            <span style="display: inline-block; width: 3.5rem;">소속
+                            <span style="display: inline-block; width: 3.5rem;">소속</span><span>
 		                     <c:if test="${eresp.expert.expertDept.trim() eq 'N' }">선택안함</c:if>
 		                     <c:if test="${eresp.expert.expertDept.trim() ne 'N' }">${eresp.expert.expertDept}&nbsp;&nbsp;</c:if>
                             </span>

@@ -106,7 +106,10 @@ public class QaDao {
 
 	public ExpertRespDto selectExpertResp(SqlSessionTemplate sqlSession, int userNum) {
 		ExpertRespDto eresp = sqlSession.selectOne("qnaMapper.selectExpertResp", userNum);
+		System.out.println(eresp);
 		eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, userNum));
+		eresp.setEattach(sqlSession.selectOne("qnaMapper.selectEattach", userNum));
+		System.out.println(eresp);
 		return eresp;
 	}
 
