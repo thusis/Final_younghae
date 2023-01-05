@@ -800,9 +800,14 @@
                    
                    
 //		결제 금액 영역
+		
+// 		할인율
 		var couDiscount = 0;
+// 		쿠폰 할인 금액
 		var useCouponAmount = 0;
+// 		사용 포인트
 		var usePoint = 0;
+// 		쿠폰 & 포인트 사용 후 총 결제 금액
 		var totalPayPrice = 0;
 // 		사용 포인트
 		var usePointAmount = 0;
@@ -836,7 +841,6 @@
 
 		})
 		
-// 		총금액 변경 = ${ totalPrice } - useCouponPrice; 
 		
 // 		포인트 전액사용 버튼
 		var allPointBtn = document.getElementById('allPointUse');
@@ -868,7 +872,13 @@
 			totalPayBtn.innerText = totalPayPrice.toLocaleString();
 		});
 		
-		totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
+		
+		
+		
+		
+		
+		
+// 		totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
 		
 // 			totalUsePoint.innerText = $(this).val();
 // 			var numberTotalUse = Number(($(this).val()).replace(/\D/g, ''));
@@ -976,10 +986,10 @@
     const orderImpCode = document.getElementById('orderImpCode');
     const orderStatus = document.getElementById('orderStatus');
     orderDate.value = today.toLocaleString();
-    var totalPayPriceSpan2 = Number(document.getElementById('totalPayPrice').innerText.replace(/\D/g, ''));
-    console.log("totalPayPriceSpan2" + totalPayPriceSpan2);
     
     function requestPay() {
+	    var totalPayPriceSpan2 = Number(document.getElementById('totalPayPrice').innerText.replace(/\D/g, ''));
+	    console.log("totalPayPriceSpan2" + totalPayPriceSpan2);
  	      IMP.request_pay({ // param
  	          pg: "html5_inicis",
  	          merchant_uid: 'YOUNG_' + new Date().getTime(),
@@ -1000,29 +1010,11 @@
 				orderPaymethod.value = rsp.pay_method;
 				orderImpCode.value = rsp.imp_uid;
 				orderStatus.value = '결제완료';
-				
-//                 $.ajax({
-//                     type: 'post',
-//                     url: '${contextPath}/successPay.sh',
-//                     data: {
-//                         orderCode : rsp.merchant_uid,
-//                         userNum : ${ loginUser.userNum },
-//                         userId : ${ loginUser.userId },
-//                         orderDate : today.toLocaleString(),
-//                         orderStaus : rsp.status,
-//                         orderPayAmount : rsp.paid_amount,
-//                         orderUserName : rsp.buyer_name,
-//                         orderPaymethod : rsp.pay_method,
-//                         orderImpCode : rsp.imp_uid,
-//                         orderPhone : res.buyer_tel,
-//                     }
-//                 });
+
                 $('#paymentForm').submit();
 				
  	          } else {
- 	        	alert(`결제에 실패하였습니다. 에러 내용: ${rsp.error_msg}`);
-				console.log(rsp);
-				console.log("실패");
+				console.log("실패 :" + rsp);
 //  	              ...,
  	              // 결제 실패 시 로직,
 //  	              ...
