@@ -55,10 +55,6 @@ public class HomeController {
 		   
 		   
 		   
-		   System.out.println("h컨트롤러47:supplementList"+supplementList);
-		   System.out.println("h컨트롤러47:jhSupplmentList"+jhSupplmentList);
-		   System.out.println("h컨트롤러47:columnlist"+columnlist.size());
-		   
 		   model.addAttribute("supplementList",supplementList);
 		   model.addAttribute("jhSupplmentList",jhSupplmentList);
 		   model.addAttribute("columnlist",columnlist);
