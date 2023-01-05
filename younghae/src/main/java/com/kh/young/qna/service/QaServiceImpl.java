@@ -103,8 +103,8 @@ public class QaServiceImpl implements QaService {
 		
 		String gender = ((String) paramap.get("USER_GENDER")).trim().toString();
 		
-		if(gender.equals("F")) { info += " / 남"; }
-		else if(gender.equals("M")) { info += " / 여"; }
+		if(gender.equals("M")) { info += " / 남"; }
+		else if(gender.equals("F")) { info += " / 여"; }
 		
 		return info;
 	}
