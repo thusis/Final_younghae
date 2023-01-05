@@ -38,10 +38,11 @@
 	
 </head>
 
-<body>
+<body style="height:100vh;">
 
   <!-- Header Section Begin -->
-  <header class="header">
+  <div id="yhFixedTopMenubar" style="position: sticky; top:0; left:0; right:0; z-index:15;">
+  <header class="header bg-white" style="color:white;">
       <div class="container">
           <div class="row">
               <div class="col-lg-1">
@@ -134,6 +135,7 @@
           </div>
       </div>
   </nav>
+  </div>
   <!-- Header Section End -->
 
 	<!-- Js Plugins -->
