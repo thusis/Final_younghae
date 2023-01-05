@@ -36,6 +36,51 @@
 	<!--fontawesome 아이콘-->
 	<script src="https://kit.fontawesome.com/25fd41a4c0.js" crossorigin="anonymous"></script>
 	
+	<style>
+	#goToTopBtn{
+		position: fixed;
+		bottom:30px;
+		right:30px;
+		z-index:997;
+		color: orange;
+		font-size:2.5rem;
+	}
+	#goToChatBtn{
+		position: fixed;
+		bottom:90px;
+		right:30px;
+		z-index:997;
+		color: #24E082;
+		font-size:2.5rem;
+	}
+	#unreadHowManyBadge{
+		text-align:center;
+		width: 15px; height: 15px;
+		position : fixed;
+		bottom:126px;
+		right:28px;
+		z-index:998;
+		background-color: orange;
+		color: white;
+		border-radius: 10px;
+		font-size: 8px;
+	}
+	#unreadHowManyBadge{
+		padding-left: -3px;
+		text-align:center;
+		width: 23px; height: 23px;
+		position : fixed;
+		bottom:126px;
+		right:28px;
+		z-index:998;
+		background-color: orange;
+		color: white;
+		border-radius: 10px;
+		font-size: 8px;
+ 		display: none; 
+	}
+	</style>
+	
 </head>
 
 <body style="height:100vh;">
@@ -122,7 +167,6 @@
                           <li><a href="${contextPath}/home.qa">Q&A</a>
                               <ul class="yh_header__menu__dropdown">
                                   <li><a href="${contextPath}/home.qa">둘러보기</a></li>
-                                  <li><a href="${contextPath}/writequestion.qa">질문하기</a></li>
                                   <li><a href="${contextPath}/expertfind.qa">전문가 찾기</a></li>
                               </ul>
                           </li>
@@ -135,6 +179,18 @@
           </div>
       </div>
   </nav>
+  
+  	<button type="button" id="goToTopBtn" class="btn"  onclick="location.href='#'">
+  		<i class="bi bi-arrow-up-circle-fill"></i>
+  	</button>
+	<c:if test="${loginUser != null }">  	
+  	<button type="button" id="goToChatBtn" class="btn"  onclick="location.href='${contextPath}/open.ch'">
+  		<i class="bi bi-wechat"></i>
+  	</button>
+  	</c:if>
+
+	<button type="button" class="btn" id="unreadHowManyBadge"></button>
+  
   </div>
   <!-- Header Section End -->
 
@@ -151,6 +207,37 @@
 
 	<script src="resources/js/main.js"></script>	
 
-</body>
+<script>
 
+	
+	$(function(){
+		   const loginUser =$("#loginUser").val();
+		   if(loginUser!=""){   
+		      setInterval(() => {
+			  	getUnreadHowMany();
+		      }, 5000);
+		   }
+	});
+		
+
+	function getUnreadHowMany(){
+		$.ajax({
+			url: '${contextPath}/unreadHowMany.ch',
+			data: { 
+				receiverNum : ${loginUser.userNum}
+			},
+			success: (unreadHowMany)=>{
+				if(unreadHowMany>0){
+					console.log(unreadHowMany);
+					document.getElementById('unreadHowManyBadge').style.display = 'block';
+					document.getElementById('unreadHowManyBadge').innerText = unreadHowMany;
+				}else{
+					document.getElementById('unreadHowManyBadge').style.display = 'none';
+				}
+			}
+		});
+	}
+</script>
+	
+</body>
 </html>
