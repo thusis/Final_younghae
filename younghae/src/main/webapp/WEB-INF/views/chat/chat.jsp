@@ -223,7 +223,8 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		<div id="${nowChatroom.chatroom.chatroomId}_${nowChatroom.chatroom.expertNum}_${nowChatroom.chatroom.userNum}" 
 			class="chatMessageRoom d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
 			style="width: 500px; height: 750px; border-left: 0.1rem solid rgba(20, 49, 82, 0.247); border-top: 0.2rem solid #24E082;">
-			<div id="chatMessageRoomTop" style="overflow: auto;">
+			<div id="chatMessageRoomTop" style="display:flex; height: 750px; overflow: auto; flex-direction:column_reverse;">
+<!-- 			<div id="chatMessageRoomTop" style="overflow: auto; "> -->
 				<!--전문가-->
 				<c:if test="${ loginUser.userCNumber eq 1 }">
 				<div class="row bn_pro-box m-1" style="position: fixed; z-index: 10; width: 465px;">
@@ -379,8 +380,8 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 					<button class="btn col-2" style="color: orange; font-size: 2.2rem;">
 						<i class="fa-solid fa-image"></i>
 					</button>
-					<input type="text" class="form-control" id="bn_chat-input" placeholder="메세지를 입력하세요">
-					<button class="btn bn_chat-inputbtn" id="send">
+					<input type="text" class="form-control" id="bn_chat-input" placeholder="메세지를 입력하세요" onkeyup="if(window.event.keyCode==13){sendMessage()}">
+					<button class="btn bn_chat-inputbtn" id="send" onclick="sendMessage()">
 						<i class="fa-solid fa-paper-plane"></i>
 					</button>
 				</div>
@@ -433,7 +434,6 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		const sendBtn = document.getElementById("send");
 		var chatInput = document.getElementById("bn_chat-input");
 		
-		
 		//참고==================https://bbo-blog.tistory.com/39===========================
 		var chattingSock;
 		connectSockJs();
@@ -454,7 +454,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 		
 		sendBtn.addEventListener('click', function(){
 			sendMessage();
-		})		
+		})
 		
 		//목록에서 채팅방 선택 
 		// -> 해당 채팅방의 ArrayList<ChatMessage>를 isRead로 update 해야한다
@@ -546,7 +546,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 								location.href='${contextPath}/expertprofile.qa?expertNum='+jsonData.nowChatroom.expert.expert.userNum;
 							}
 							
-							if( jsonData.nowChatroom.expert.expert.expertProfile != undefined ){
+							if( jsonData.nowChatroom.expert.expert.expertProfile != 'N' ){
 								document.getElementById('chatDefaultMsg1').innerText = jsonData.nowChatroom.expert.expert.expertProfile;
 							}else{
 								document.getElementById('chatDefaultMsg1').innerText = "안녕하세요. 반갑습니다 😉";
@@ -567,16 +567,25 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 						//메세지리스트 변경 ==========================================================================
 						// 3-(1) 만약 이미 chatMsgListDiv 있으면 삭제
 						if(	document.getElementById('chatMsgListDiv') != null ){
+							document.getElementById('chatMsgListDiv').innerHTML = "";
 							document.getElementById('chatMsgListDiv').remove();
+							document.getElementById('resultBox').innerHTML="";
+							document.getElementById('resultBox').remove();
 						}
 						// 3-(2) 메세지요소 하나하나 추가
 						if(jsonData.messageList.length==0){
 							const chatMsgListDiv = document.createElement('div');
+							const resultBox = document.createElement('div');
+							resultBox.id = "resultBox";
 					    	chatMsgListDiv.innerHTML == '첫 메세지를 작성해보세요';
+					    	chatMsgListDiv.id = "chatMsgListDiv";
 						}else{
 							var msgList = jsonData.messageList;
 
 							const chatMsgListDiv = document.createElement('div');
+							const resultBox = document.createElement('div');
+							resultBox.innerHTML == '';
+							resultBox.id = "resultBox";
 					    	chatMsgListDiv.innerHTML == '';
 							chatMsgListDiv.id = "chatMsgListDiv";
 					    	
@@ -608,6 +617,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 						    	chatMsgListDiv.append(chatMsgDiv);
 							}
 							document.getElementsByClassName('chat_wrap')[0].append(chatMsgListDiv);
+							document.getElementsByClassName('chat_wrap')[0].append(resultBox);
 						}
 						
 					},
@@ -620,7 +630,7 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 			
 		function sendMessage(){
 // 			console.log(chatInput.value);
-			
+			document.getElementById('chatMessageRoomTop').scrollTo(0,770);
 			if (chatInput.value.trim().length == 0) {
 				alert("채팅을 입력해주세요.");
 				chatInput.value = "";
@@ -658,9 +668,11 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 			console.log(msgUserNum+" 이 보낸 메세지 : "+ msgChatContent);
 			console.log(jsonData);
 			
+// 			document.getElementById("resultBox").innerHTML = "";
+			
 		    if(chatroomId == msgChatroomId){
 		    	const chat_wrap = document.getElementsByClassName('chat_wrap')[0];
-		    	const resultBox = document.getElementById("resultBox");
+		    	var resultBox = document.getElementById("resultBox");
 		    	
 		    	if(msgUserNum ==loginUserNum){ // 내가 보낸 메세지면
 		    		str = '<div class="chat ch2"><div class="textbox">'
@@ -697,7 +709,6 @@ x<%@ page language="java" contentType="text/html; charset=UTF-8"
 	 		}else{
 	 			window.location.href="${contextPath}/goToChatPayment.qa?info="+nowChatroomInfo;
 	 		}
-			
 	 	}
 	 	
 		//=============================================

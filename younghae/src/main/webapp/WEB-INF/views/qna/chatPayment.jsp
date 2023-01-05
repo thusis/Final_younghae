@@ -393,7 +393,7 @@
 			                     success : (data)=>{
 			                    	 if(data != 0){
 			                    		 console.log('예약 및 결제 정보 정상 처리');
-			                    		 document.location.href="${contextPath}/home.qa";
+			             	 			 window.location.href="${contextPath}/home.qa";
 			                    	 }else{
 			                    		 console.log('예약 및 결제 정보 처리 중 에러 발생');
 			                    	 }
