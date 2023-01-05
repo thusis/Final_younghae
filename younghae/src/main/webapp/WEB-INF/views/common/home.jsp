@@ -144,7 +144,7 @@
 
    <div class="container2">
       <div class="main-view">
-           <a href="${contextPath }/reviewEvent.ev"><img src="resources/img/mainbanner1.png" style="width:100%; height:350px;" /></a>
+           <a href="#"><img src="resources/img/home1.png" style="width:100%; height:350px;"/></a>
 <!--          <ul> -->
 <%--             <li><a href="${contextPath }/reviewEvent.ev"><img src="resources/img/event/Review1.PNG" style="width:100%; height:350%;" /></a></li> --%>
 <%--             <li><a href="${contextPath }/attendanceEvent.ev"><img src="resources/img/event/attend3.png" style="width:100%; height:350%;"/></a></li> --%>

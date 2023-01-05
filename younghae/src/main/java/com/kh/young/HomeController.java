@@ -59,13 +59,31 @@ public class HomeController {
 		   model.addAttribute("jhSupplmentList",jhSupplmentList);
 		   model.addAttribute("columnlist",columnlist);
 		   
-		   
-		   
 	      return "/common/home";
 	   }
 	   
 	   @RequestMapping(value = "/home.do", method = RequestMethod.GET)
-	   public String home() {
+	   public String home(Model model) {
+		   /**쇼핑===============================================================**/
+		   ArrayList<Supplement> supplementList = shService.selectSupplementList();
+		   /**쇼핑===============================================================**/
+
+		   /**영양제===============================================================**/
+		   PageInfo pi =  Pagination.getPageInfo(1, 50, 12);
+		   ArrayList<ProCategory> jhSupplmentList = sService.allCategory(pi);
+		   /**영양제===============================================================**/
+		   
+		   /**컬럼리스트===============================================================**/
+		   PageInfo pi2 =  Pagination.getPageInfo(1, 10, 10);
+		   ArrayList<Story> columnlist = stService.allStory(pi2);
+		   /**컬럼리스트===============================================================**/
+		   
+		   
+		   
+		   model.addAttribute("supplementList",supplementList);
+		   model.addAttribute("jhSupplmentList",jhSupplmentList);
+		   model.addAttribute("columnlist",columnlist);
+		   
 	      return "/common/home";
 	   }
 	
