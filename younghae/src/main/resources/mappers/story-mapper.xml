@@ -15,7 +15,7 @@
 		<association property="attachment" javaType="Attachment" resultMap="AttmResultSet"/>
 		<association property="member" javaType="Member" resultMap="memberResultSet"/>
 		<association property="clip" javaType="Clip" resultMap="ClipResultSet"/>
-		<association property="generalUser;" javaType="GeneralUser " resultMap="generalUserResultSet"/>
+		<association property="generaluser" javaType="GeneralUser" resultMap="generalUserResultSet" />
 	</resultMap>
 	
 	<!-- 일반 유저 폼 -->
