@@ -155,5 +155,15 @@ public class ShoppingServiceImpl implements ShoppingService{
 	public ArrayList<Supplement> searchList(String search) {
 		return shDAO.searchList(sqlSession, search);
 	}
+	
+	@Override
+	public ArrayList<Supplement> selectCateList(String proEffect) {
+		return shDAO.selectCateList(sqlSession, proEffect);
+	}
+	
+	@Override
+	public Coupon selectUseCoupon(int couNum) {
+		return shDAO.selectUseCoupon(sqlSession, couNum);
+	}
 
 }

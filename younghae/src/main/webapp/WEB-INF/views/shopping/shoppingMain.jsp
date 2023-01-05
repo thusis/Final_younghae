@@ -227,6 +227,12 @@
             color: rgb(0, 123, 255);
             font-weight: bold;
         }
+        
+        .featured__controls>ul>li>a>img:hover{
+        	border: 3px solid #FD9F28;
+        	color : #FD9F28;
+        	border-radius: 0.5em;
+        }
     </style> 
     <link rel="stylesheet" href="resources/css/hj_style.css" type="text/css">  
 </head>
@@ -296,14 +302,14 @@
                 <div class="col-lg-12">
                     <div class="featured__controls">
                         <ul>
-                            <li data-filter="*"><a href="#"><img src="resources/img/categories/cate_all.png" class="cate_icon"><br>전체</a></li>
-                            <li data-filter=".oranges"><a href="#"><img src="resources/img/categories/cate_eye.png" class="cate_icon"><br>눈 건강</a></li>
-                            <li data-filter=".fresh-meat"><a href="#"><img src="resources/img/categories/cate_skin.png" class="cate_icon"><br>피부 건강</a></li>
-                            <li data-filter=".vegetables"><a href="#"><img src="resources/img/categories/cate_fatigue.png" class="cate_icon"><br>피로감</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_intestine.png" class="cate_icon"><br>장 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_liver.png" class="cate_icon"><br>간 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_born.png" class="cate_icon"><br>관절 건강</a></li>
-                            <li data-filter=".fastfood"><a href="#"><img src="resources/img/categories/cate_pregnent.png" class="cate_icon"><br>임산부 </a></li>
+                            <li><a href="${ contextPath }/allView.sh"><img src="resources/img/categories/cate_all.png" class="cate_icon"><br>전체</a></li>
+                            <li><a href="${ contextPath }/cateView.sh?proEffect=눈 건강"><img src="resources/img/categories/cate_eye.png" class="cate_icon"><br>눈 건강</a></li>
+                            <li><a href="${ contextPath }/cateView.sh?proEffect=피부"><img src="resources/img/categories/cate_skin.png" class="cate_icon"><br>피부 건강</a></li>
+                            <li><a href="${ contextPath }/cateView.sh?proEffect=항산화"><img src="resources/img/categories/cate_fatigue.png" class="cate_icon"><br>피로감</a></li>
+                            <li><a href="${ contextPath }/cateView.sh?proEffect=장 건강"><img src="resources/img/categories/cate_intestine.png" class="cate_icon"><br>장 건강</a></li>
+                            <li><a href="${ contextPath }/cateView.sh?proEffect=간 건강"><img src="resources/img/categories/cate_liver.png" class="cate_icon"><br>간 건강</a></li>
+                            <li><a href="${ contextPath }/cateView.sh?proEffect=관절"><img src="resources/img/categories/cate_born.png" class="cate_icon"><br>관절 건강</a></li>
+                            <li><a href="${ contextPath }/cateView.sh?proEffect=임산부"><img src="resources/img/categories/cate_pregnent.png" class="cate_icon"><br>임산부 </a></li>
                         </ul>
                     </div>
                 </div>

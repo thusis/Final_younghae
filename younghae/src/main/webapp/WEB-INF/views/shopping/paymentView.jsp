@@ -249,6 +249,7 @@
 											<div style="color: gray; font-weight: bold; font-size: 15px;">
 											${ i.cart.supplement.proName }</div>
 											<input type="hidden" name="proName" value="${ i.cart.supplement.proName }">
+											<input type="hidden" name="proNumList" value="${ i.cart.supplement.proNum }">
 											<div style="font-weight: bold; font-size: 15px;">
 												<div style="color: black; font-weight: bold; font-size: 15px;">수량 &nbsp;
 													<span>${ i.cart.cartQuantity }</span><span>&nbsp;개</span>
@@ -279,14 +280,14 @@
 							</div>
 							<hr>
 
-							<select id="useCoupon" class="inputBox" style="width: 100%; padding-left: 5px;">
+							<select id="useCoupon" name="useCoupon" class="inputBox" style="width: 100%; padding-left: 5px;">
 								<c:if test="${ empty couponList }">
-									<option value="0">사용가능한 쿠폰이 없습니다.</option>
+									<option>사용가능한 쿠폰이 없습니다.</option>
 								</c:if>
 								<c:if test="${ !empty couponList }">
 									<option value="0">쿠폰을 선택해주세요</option>
 									<c:forEach items="${ couponList }" var="c">
-										<option value=${ c.couDiscount }>${ c.couIntro }</option>
+										<option value=${ c.couNumber }>${ c.couIntro }</option>
 									</c:forEach>
 								</c:if>
 							</select>
@@ -301,7 +302,8 @@
 								</div>
 							</div>
 							<hr>
-
+							
+							${loginUser }
 							<div class="row">
 								<div class="col" style="margin-right: -5rem;">
 									<input id="pointUse" class="inputBox" style="width: 80%; padding: 10px;" placeholder="0" >
@@ -796,40 +798,68 @@
 		});
 	});
                    
+                   
 //		결제 금액 영역
+		var totalPayPrice = 0;
+		var couDiscount = 0;
+		var useCouponAmount = 0;
+		var usePoint = 0;
+		var totalPayPrice = 0;
+		
 		var useCoupon = document.getElementById("useCoupon");
 		useCoupon.addEventListener('change',function(){
-			var useCouponPrice = Math.round(this.value * ${ totalPrice }/100);
-			const orderCouponPrice = document.getElementById('orderCouponPrice');
-			orderCouponPrice.value = useCouponPrice;
-			var totalPayPrice = ${ totalPrice } - useCouponPrice; 
-			var savePoint = Math.round(totalPayPrice / 100);
-			document.getElementById('useCouponPrice').innerText = useCouponPrice.toLocaleString();
-			document.getElementById('totalPayPrice').innerText = totalPayPrice.toLocaleString();
-			document.getElementById('savePoint').innerText = savePoint.toLocaleString();
+			var couNum = this.value;
+			$.ajax({
+				url: '${contextPath}/useCoupon.sh',
+				data: {couNum : couNum},
+				success :(data)=>{
+					console.log(data);
+					couDiscount = data;
+					console.log("couDiscount : " + couDiscount);
+					console.log("토탈페이 : " + ${ totalPrice } );
+					
+					useCouponAmount = Math.round(couDiscount * ${ totalPrice } / 100);
+					console.log("useCouponAmount : " + useCouponAmount);
+					document.getElementById('useCouponPrice').innerText = useCouponAmount.toLocaleString();
+				},
+				error: (data)=>{
+					console.log(data);
+				}
+			})
+		document.getElementById('orderCouponPrice').value= useCouponAmount;
+		console.log("couDiscount2 : " + couDiscount);
+		console.log("토탈페이2 : " + ${ totalPrice } );
+		console.log("useCouponAmount2 : " + useCouponAmount);
 		})
 		
-// 		var allPointBtn = document.getElementById('allPointUse');
-// 		var pointUse = document.getElementById('pointUse');
-// 		var userPoint =  ${loginUser.userPoint};
-// 		var totalUsePoint = document.getElementById('totalUsePoint');
-// 		allPointBtn.addEventListener('click', function(){
-// 			pointUse.value = userPoint.toLocaleString();
-// 			totalUsePoint.innerText = pointUse.value;
-// 		})
+// 		총금액 변경 = ${ totalPrice } - useCouponPrice; 
 		
-// 		pointUse.addEventListener("keyup", function (e) {
-//     		$(this).val($(this).val().replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
-// 		});
-// 		pointUse.addEventListener("change", function (e) {
-// 			totalUsePoint.innerText = $(this).val();
-// 			var numberTotalUse = Number(($(this).val()).replace(/\D/g, ''));
-// 			var totalPointPrice = ${ totalPrice } - numberTotalUse; 
-// 			console.log(totalPointPrice);
-// 			var savePoint2 = Math.round(totalPointPrice / 100);
-// 			document.getElementById('totalPayPrice').innerText = totalPointPrice.toLocaleString();
-// 			document.getElementById('savePoint').innerText = savePoint2.toLocaleString();
-// 		});
+
+
+var savePoint = Math.round(totalPayPrice / 100);
+			document.getElementById('savePoint').innerText = savePoint.toLocaleString();
+		
+		var allPointBtn = document.getElementById('allPointUse');
+		var pointUse = document.getElementById('pointUse');
+		var userPoint =  ${loginUser.userPoint};
+		var totalUsePoint = document.getElementById('totalUsePoint');
+		allPointBtn.addEventListener('click', function(){
+			pointUse.value = userPoint.toLocaleString();
+			totalUsePoint.innerText = pointUse.value;
+		})
+		
+		pointUse.addEventListener("keyup", function (e) {
+    		$(this).val($(this).val().replace(/\,/g, '').replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,'));
+		});
+		pointUse.addEventListener("change", function (e) {
+			totalUsePoint.innerText = $(this).val();
+			var numberTotalUse = Number(($(this).val()).replace(/\D/g, ''));
+			var totalPointPrice = ${ totalPrice } - numberTotalUse; 
+			console.log(totalPointPrice);
+			var savePoint2 = Math.round(totalPointPrice / 100);
+			document.getElementById('totalPayPrice').innerText = totalPointPrice.toLocaleString();
+			document.getElementById('savePoint').innerText = savePoint2.toLocaleString();
+		});
 		
 
 //      주소찾기API

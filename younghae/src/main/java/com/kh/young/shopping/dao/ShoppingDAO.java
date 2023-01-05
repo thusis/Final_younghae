@@ -121,5 +121,13 @@ public class ShoppingDAO {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectSearchList", search);
 	}
 
+	public ArrayList<Supplement> selectCateList(SqlSessionTemplate sqlSession, String proEffect) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectCateList", proEffect);
+	}
+
+	public Coupon selectUseCoupon(SqlSessionTemplate sqlSession, int couNum) {
+		return sqlSession.selectOne("shoppingMapper.selectUseCoupon", couNum);
+	}
+
 
 }
