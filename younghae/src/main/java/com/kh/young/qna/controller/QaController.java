@@ -66,7 +66,7 @@ public class QaController {
 		}
 		
 		model.addAttribute("qlist", getQuestionList(1, 1));
-		model.addAttribute("topTwo", getTopTwo());
+//		model.addAttribute("topTwo", getTopTwo());
 
 		return "qnahome";
 	}
