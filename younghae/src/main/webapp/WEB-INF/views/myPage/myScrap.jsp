@@ -128,6 +128,7 @@ h1, h2, h3, h4, h5{
          </c:if>
          </div>
     </section>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
     <script>
     window.onload=()=>{
     	// 이미지, 제목 클릭시 상세보기로 넘기기

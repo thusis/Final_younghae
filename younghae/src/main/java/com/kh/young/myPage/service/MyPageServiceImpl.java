@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
@@ -123,4 +124,17 @@ public class MyPageServiceImpl implements MyPageService{
 		return myDAO.seletAllScrap(sqlSession, pi,id);
 	}
 	
+	@Override
+	public int insertExpertAttm(HashMap<String, Object> map) {
+		return myDAO.insertExpertAttm(sqlSession, map);
+	}
+	
+	@Override
+	public void removeImage(int id) {
+		myDAO.removeImage(sqlSession, id);
+	}
+	@Override
+	public Attachment selectProfile(int id) {
+		return myDAO.selectProfile(sqlSession, id);
+	}
 }

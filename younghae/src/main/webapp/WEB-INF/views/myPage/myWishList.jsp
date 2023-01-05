@@ -129,6 +129,7 @@
          </c:if>
          </div>
     </section>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
     <script>
     window.onload=()=>{
     	const dives = document.getElementsByClassName('product__item');

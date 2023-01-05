@@ -138,6 +138,7 @@
             </div>
         </div>
     </div>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
     <!-- jQuery -->
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <!-- iamport.payment.js -->
