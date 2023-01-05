@@ -158,6 +158,7 @@ public class QaDao {
 		ArrayList<ExpertRespDto> erespList = (ArrayList)sqlSession.selectList("qnaMapper.selectExpertList", null, rowBounds);
 		for(ExpertRespDto eresp : erespList) {
 			eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, eresp.getMember().getUserNum()));
+			eresp.setEattach(sqlSession.selectOne("qnaMapper.selectEattach", eresp.getMember().getUserNum()));
 		}
 		return erespList;
 	}
