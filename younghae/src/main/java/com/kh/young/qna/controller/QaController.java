@@ -247,17 +247,26 @@ public class QaController {
 	}
 	/*******************************************************************/
 	/**게시글 삭제**/
-	@PostMapping("deletequestion.qa")
-	public String deleteQuestion(@ModelAttribute QuestionInsertDto quest, HttpServletRequest request, Model model) {
-		int result = qService.deleteQuestion(quest, request); // quest의 boardTitle로 questionNum 받아올거야
+	@GetMapping("updateIsSolved.qa")
+	public String updateIsSolved(@RequestParam int boardNum) {
+		int result = qService.updateIsSolved(boardNum); // quest의 boardTitle로 questionNum 받아올거야
 		if(result>0) {
-			return "redirect:question.qa";
+			return "question.qa?boardNum="+boardNum;
 		} else {
-			throw new Qexception("답변 작성 실패");
+			throw new Qexception("질문글 작성 실패");
 		}
 	}
-	
-	
+	/*******************************************************************/
+	/**게시글 삭제**/
+	@GetMapping("deletequestion.qa")
+	public String deleteQuestion(@RequestParam int boardNum) {
+		int result = qService.deleteQuestion(boardNum); // quest의 boardTitle로 questionNum 받아올거야
+		if(result>0) {
+			return "redirect:home.qa";
+		} else {
+			throw new Qexception("질문글 작성 실패");
+		}
+	}
 	
 	/*******************************************************************/
 	/**게시글 검색**/

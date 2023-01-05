@@ -293,12 +293,12 @@
 		            	<h3 class="text-start" style="display:inline-block; font-weight: 700;">건강해지는 이야기</h3>
 		            <hr style="border:1px solid #24E082; background-color: #24E082;">
 		        </div>
-				        <div class="bn_boardlist mt-2" style="background-color: #ffffff;">
+				        <div class="bn_boardlist mt-2" style="background-color: #ffffff; height:60%">
 			            <table class="table" >
 			                <thead>
 			                  <tr class="text-teal-100">
-			                    <th scope="col" class="col-lg-4">제목</th>
-			                    <th scope="col">조회수</th>
+			                    <th scope="col" class="col-lg-10">제목</th>
+			                    <th scope="col" class="col-lg-2">조회수</th>
 			                  </tr>
 			                </thead>
 			                <tbody>
@@ -333,6 +333,8 @@
 	                </div>
 	            </div><!-- 2열 -->
 			</div>
+			
+			
 			</div>
         </div>
     </section>

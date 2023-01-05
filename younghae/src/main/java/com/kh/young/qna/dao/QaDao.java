@@ -167,4 +167,12 @@ public class QaDao {
 		return sqlSession.selectOne("chatMapper.getGeneralUser", generalUserNum);
 	}
 
+	public int deleteQuestion(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.update("qnaMapper.deleteQuestion", boardNum);
+	}
+
+	public int updateIsSolved(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.update("qnaMapper.updateIsSolved", boardNum);
+	}
+
 }

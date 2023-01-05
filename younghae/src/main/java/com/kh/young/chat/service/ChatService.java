@@ -38,5 +38,7 @@ public interface ChatService {
 //	ArrayList<ChatReserv> selectReservList(int loginUserNum);
 
 	int afterPayInsertChatReserv(ChatReserv crInsert, Orders ordInsert);
+	
+	int upreadHowMany(int receiverNum);
 
 }

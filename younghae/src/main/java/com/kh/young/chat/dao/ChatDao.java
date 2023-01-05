@@ -116,6 +116,10 @@ public class ChatDao {
 		return sqlSession.insert("chatMapper.afterPayInsertChatReserv", paraMap);
 	}
 
+	public int upreadHowMany(SqlSessionTemplate sqlSession, int receiverNum) {
+		return sqlSession.selectOne("chatMapper.upreadHowMany", receiverNum);
+	}
+
 	
 	
 	

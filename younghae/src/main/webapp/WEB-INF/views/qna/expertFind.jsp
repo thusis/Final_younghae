@@ -88,7 +88,7 @@
 						</c:if>
 						<c:if test="${ans.eresp.eattach == null }">
 						<div style="vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;">
-							<img src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
+							<img style="margin-top:2.5rem;"src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
 						</div>
 						</c:if>
 					</div>
