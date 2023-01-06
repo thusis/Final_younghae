@@ -278,95 +278,10 @@
 	<!-- board Detail End -->
 	<br>
 	<br>
-<!-- 	</section> -->
-	<!-- Blog Section End -->
-
-
-	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="#"><img src="resources/img/logo.svg" alt=""></a>
-						</div>
-						<ul>
-							<li>Address: 60-49 Road 11378 New York</li>
-							<li>Phone: +65 11.188.888</li>
-							<li>Email: hello@colorlib.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-					<div class="footer__widget">
-						<h6>Useful Links</h6>
-						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">About Our Shop</a></li>
-							<li><a href="#">Secure Shopping</a></li>
-							<li><a href="#">Delivery infomation</a></li>
-							<li><a href="#">Privacy Policy</a></li>
-							<li><a href="#">Our Sitemap</a></li>
-						</ul>
-						<ul>
-							<li><a href="#">Who We Are</a></li>
-							<li><a href="#">Our Services</a></li>
-							<li><a href="#">Projects</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Innovation</a></li>
-							<li><a href="#">Testimonials</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-12">
-					<div class="footer__widget">
-						<h6>Join Our Newsletter Now</h6>
-						<p>Get E-mail updates about our latest shop and special
-							offers.</p>
-						<form action="#">
-							<input type="text" placeholder="Enter your mail">
-							<button type="submit" class="site-btn">Subscribe</button>
-						</form>
-						<div class="footer__widget__social">
-							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-								class="fa fa-instagram"></i></a> <a href="#"><i
-								class="fa fa-twitter"></i></a> <a href="#"><i
-								class="fa fa-pinterest"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="resources/img/payment-item.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- Footer Section End -->
+	
+ 		<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
 	<script>
-	
-	
-	
 	
 	/** 파일관련 */
 /* 		function onClickUpload() {
@@ -390,76 +305,6 @@
 		}
 	}); */
 
-		/** 해시태그 */
-		$(document)
-				.ready(
-						function() {
-
-							var tag = {};
-							var counter = 0;
-
-							// 태그추가
-							function addTag(value) {
-								tag[counter] = value;
-								counter++;
-							}
-
-							function marginTag() {
-								return Object.values(tag).filter(
-										function(word) {
-											return word !== "";
-										});
-							}
-
-							$("#tag")
-									.on(
-											"keyup",
-											function(e) {
-												var self = $(this);
-												console.log("keypress");
-
-												// input 에 focus 되있을 때 엔터 및 스페이스바 입력시 구동
-												if (e.key === "Enter"
-														|| e.keyCode == 32) {
-
-													var tagValue = self.val(); // 값 가져오기
-
-													// 값이 없으면 동작 안합니다.
-													if (tagValue !== "") {
-
-														// 같은 태그가 있는지 검사한다. 있다면 해당값이 array 로 return 된다.
-														var result = Object
-																.values(tag)
-																.filter(
-																		function(
-																				word) {
-																			return word === tagValue;
-																		})
-
-														// 태그 중복 검사
-														if (result.length == 0) {
-															$("#tag-list")
-																	.append(
-																			"<li class='tag-item'>"
-																					+ tagValue
-																					+ "<span class='del-btn' idx='" + counter + "'>x</span></li>");
-															addTag(tagValue);
-															self.val("");
-														} else {
-															alert("태그값이 중복됩니다.");
-														}
-													}
-													e.preventDefault();
-												}
-											});
-
-							// 삭제 버튼
-							$(document).on("click", ".del-btn", function(e) {
-								var index = $(this).attr("idx");
-								tag[index] = "";
-								$(this).parent().remove();
-							});
-						})
 						
 		<!-- 카테고리 -->
 		   const categorys = document.getElementsByClassName('ll');

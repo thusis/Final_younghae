@@ -133,9 +133,30 @@
                 </div>
             </div>
         </div>
+        
+        <!-- 출석보상 / 3 -->
+        <div class="modal fade" id="modal6" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"> </h5>
+                    </div>
+                    <div class="modal-body">                                     
+                        <img src="resources/img/event/sad.png" style="width: 150px; margin-left: 160px;" ><br><br>
+                        <b style="margin-left: 100px; color:#24E082;">이미 포인트 지급이 완료되었습니다</b>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 	
 	<br>
 	<br>
+	
+	 <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+	
 	<script type="text/javascript" >
 	
 				<!-- 보상받기 버튼 효과 -->
@@ -158,6 +179,7 @@
 						} else if (data == 2) {
 							$('#modal2').modal('show');
 							console.log("출석체크 완료");
+							window.location.reload();
 						} else if (data == 3) {
 							$('#modal3').modal('show');
 							console.log("출석체크 실패");
@@ -182,10 +204,12 @@
 						 if(data == 1){
 							 $('#modal4').modal('show');
 							 console.log("포인트 지급 성공")
-						 }else if(date == 0){
+						 }else if(data == 0){
 							 $('#modal5').modal('show');
 							 console.log("포인트 지급 실패")
-						 }
+						 } else if(data == 2 )
+							 //이미 포인트 지급된 경우
+							 $('#modal6').modal('show');
 					 },
 					 error: (data)=>{
 						 console.log("출석보상 요청실패")

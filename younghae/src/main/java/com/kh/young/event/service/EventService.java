@@ -22,6 +22,8 @@ public interface EventService {
 
 	int birthCheck(int userNum);
 
+	int attAwardCheck(int userNum);
+
 
 
 

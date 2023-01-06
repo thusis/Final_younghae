@@ -2664,8 +2664,9 @@ ol {
 }
 
 .blog__details__author__pic {
-   float: left;
+    float: left; 
    margin-right: 15px;
+   
 }
 
 .blog__details__author__pic img {
@@ -2673,7 +2674,7 @@ ol {
    width: 92px;
    border-radius: 50%;
 }
-
+ 
 .blog__details__author__text {
    overflow: hidden;
    padding-top: 30px;

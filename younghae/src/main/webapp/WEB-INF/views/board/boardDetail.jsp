@@ -181,23 +181,25 @@
 					<div class="blog__details__content">
 						<div class="row">
 							<div class="col-lg-6">
-								<div class="blog__details__author">
-									<div class="blog__details__author__pic">
-										<img src="resources/img/blog/details/profile.jpg" alt="">
+								<div class="row blog__details__author">
+									<div class="col align-self-center">
+                  						<div style="vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;">
+                     						<img style="margin-top:2.5rem;"src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
+                  						</div>
 									</div>
-									<div class="blog__details__author__text">
+									<div class="col blog__details__author__text" style="margin-left: -35px;" >
 										<h6 style="color:#24E082">${b.member.userNickname }</h6>
 										<span>${b.generaluser.userHealth }</span>
 									</div>
 								</div>
 							</div>
 							<div class="col-lg-6">
-								<div class="blog__details__widget">
+								<div class="blog__details__widget" style="margin-top: 10px; margin-left: 30px;">
 									<ul>
-										<li><span>Categories:</span> 운동</li>
-										<li><span>Tags:</span> PT, 오운완, 버핏테스트, 인바디</li>
+										<li><span style="color:gold;">Categories:</span> 운동</li>
+										<li><span style="color:gold;">Tags:</span> PT, 오운완, 버핏테스트, 인바디</li>
 									</ul>
-									<div class="blog__details__social">
+									<div class="blog__details__social" style="margin-top: 10px;">
 										<a href="#" onclick="fn_sendFB('facebook');return false;" id="facebook"
 												target="_self" title="페이스북 새창열림">
 												<i class="fa fa-facebook"></i>
@@ -206,10 +208,15 @@
 												target="_self" title="트위터 새창열림">
 												<i class="fa fa-twitter"></i>
 										</a> 
-										<a href="#"><i
-											class="fa fa-google-plus"></i></a> <a href="#"><i
-											class="fa fa-linkedin"></i></a> <a href="#"><i
-											class="fa fa-envelope"></i></a>
+										
+										<a href="#" onclick="fn_sendFB('band');return false;" id="band"
+												target="_self" title="네이버밴드 새창열림">
+										<i class="fa-solid fa-b"></i>
+										</a>
+										<a href="#"><i class="fa-solid fa-link"></i></a> 
+										<a href="#">
+											
+										</a>
 									</div>
 								</div>
 							</div>
@@ -257,7 +264,7 @@
 		<div id="replyContent">
 			<textarea id="replyTextarea"></textarea>
 			&nbsp;&nbsp;
-			<button class="btn bn_btn_search2" id="replySubmit" type="button">SUBMIT</button>
+			<button class="btn bn_btn_search2" id="replySubmit" type="button" style="color:white; ">SUBMIT</button>
 		</div>
 		<hr style="border: 1px solid #8bffc5; width:1250px; " noshade />
 		<table id="replyTable">
@@ -296,86 +303,7 @@
 	<!-- Blog Section End -->
 
 
-	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="#"><img src="resources/img/logo.svg" alt=""></a>
-						</div>
-						<ul>
-							<li>Address: 60-49 Road 11378 New York</li>
-							<li>Phone: +65 11.188.888</li>
-							<li>Email: hello@colorlib.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-					<div class="footer__widget">
-						<h6>Useful Links</h6>
-						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">About Our Shop</a></li>
-							<li><a href="#">Secure Shopping</a></li>
-							<li><a href="#">Delivery infomation</a></li>
-							<li><a href="#">Privacy Policy</a></li>
-							<li><a href="#">Our Sitemap</a></li>
-						</ul>
-						<ul>
-							<li><a href="#">Who We Are</a></li>
-							<li><a href="#">Our Services</a></li>
-							<li><a href="#">Projects</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Innovation</a></li>
-							<li><a href="#">Testimonials</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-12">
-					<div class="footer__widget">
-						<h6>Join Our Newsletter Now</h6>
-						<p>Get E-mail updates about our latest shop and special
-							offers.</p>
-						<form action="#">
-							<input type="text" placeholder="Enter your mail">
-							<button type="submit" class="site-btn">Subscribe</button>
-						</form>
-						<div class="footer__widget__social">
-							<a href="#n" onclick="fn_sendFB('facebook');return false;" id="facebook" target="_self" title="페이스북 새창열림"><i class="fa fa-facebook"></i></a> 
-							<a href="#"><i class="fa fa-instagram"></i></a> 
-							<a href="#n" onclick="fn_sendFB('twitter');return false;" id="twitter" target="_self" title="트위터 새창열림"><i class="fa fa-twitter"></i></a> 
-							<a href="#"><i class="fa fa-pinterest"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>
-									document.write(new Date().getFullYear());
-								</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="resources/img/payment-item.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
-	<!-- Footer Section End -->
+ <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
 	<!--소셜공유-->
 	 		<script>	
@@ -417,6 +345,7 @@
 	     						tbody.append(tr);
 	     					}
 	     					document.getElementById('replyTextarea').value='';
+	     					window.location.reload();
 	     				},
 	     				error:(data) => {
 	     					console.log(data);
