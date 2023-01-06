@@ -407,7 +407,7 @@
 											<div style="border: 2px solid #24E082; border-radius: 1em;"
 												name="rvContent">
 												<textarea name="rvContent" id="rvContent"
-													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;">1</textarea>
+													style="border: none; margin: 1%; height: 200px; width: 97%;resize: none;"></textarea>
 											</div>
 											<div>
 												<div name="writeReview"

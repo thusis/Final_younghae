@@ -322,8 +322,8 @@
 							</div>
 						</div>
 						<div class="col-lg-4 col-md-6" style="position:fixed; top: 20%; left: 65%; overflow:auto; ">
-<!-- 							<div class="checkout__order" style="height: 37rem;">  -->
-							<div class="checkout__order" style="height: 30rem;"> 
+							<div class="checkout__order" style="height: 37rem;"> 
+<!-- 							<div class="checkout__order" style="height: 30rem;">  -->
 								<h4 style="margin-top:-5px;">결제 금액</h4>
 								<ul style="margin-top:-10px;">
 									<li>총 상품 금액 <span name=""><fmt:formatNumber value="${ totalPrice }" type="number"/> 원</span></li>
