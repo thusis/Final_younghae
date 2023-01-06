@@ -155,13 +155,13 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public ChatroomDto selectExpertChatroomByChatroomId(int chatroomId) {
-		return chDao.selectExpertChatroomByChatroomId(sqlSession, chatroomId);
+	public ChatroomDto selectExpertuserChatroomByChatroomId(int chatroomId) {
+		return chDao.selectExpertuserChatroomByChatroomId(sqlSession, chatroomId);
 	}
 
 	@Override
-	public ChatroomDto selectGeneralChatroomByChatroomId(int chatroomId) {
-		return chDao.selectGeneralChatroomByChatroomId(sqlSession, chatroomId);
+	public ChatroomDto selectGeneraluserChatroomByChatroomId(int chatroomId) {
+		return chDao.selectGeneraluserChatroomByChatroomId(sqlSession, chatroomId);
 	}
 
 	@Override

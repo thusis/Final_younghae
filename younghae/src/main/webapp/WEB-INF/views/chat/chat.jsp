@@ -613,6 +613,8 @@
 						alert("실패!");
 					}
 				})//==메세지리스트 선택 끝==
+				var chatWrapHeight = document.getElementById('chatMessageRoomTop').scrollHeight;
+				document.getElementById('chatMessageRoomTop').scrollTo(0,chatWrapHeight);
 			})
 		}
 			

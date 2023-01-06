@@ -123,9 +123,9 @@ public class ChatController {
     	int loginUserNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
     	ChatroomDto nowChatroom;
     	if ( loginUserNum == expertNum	) {
-    		nowChatroom = chService.selectExpertChatroomByChatroomId(chatroomId);
+    		nowChatroom = chService.selectExpertuserChatroomByChatroomId(chatroomId);
     	} else {
-    		nowChatroom = chService.selectGeneralChatroomByChatroomId(chatroomId);
+    		nowChatroom = chService.selectGeneraluserChatroomByChatroomId(chatroomId);
     	}
     	ArrayList<ChatMessage> messageList = chService.selectMessageList(chatroomId);
     	

@@ -99,13 +99,13 @@ public class ChatDao {
 	
 	/**=================================================================== */
 	/** -----내가 일반회원이면 상대는 >>EXPERT<< ----- **/
-	public ChatroomDto selectExpertChatroomByChatroomId(SqlSessionTemplate sqlSession, int chatroomId) {
-		return sqlSession.selectOne("chatMapper.selectExpertChatroomByChatroomId", chatroomId);
+	public ChatroomDto selectExpertuserChatroomByChatroomId(SqlSessionTemplate sqlSession, int chatroomId) {
+		return sqlSession.selectOne("chatMapper.selectExpertuserChatroomByChatroomId", chatroomId);
 	}
 
 	/** -----내가 전문가면 상대는 >>GENERAL<< ----- **/
-	public ChatroomDto selectGeneralChatroomByChatroomId(SqlSessionTemplate sqlSession, int chatroomId) {
-		return sqlSession.selectOne("chatMapper.selectGeneralChatroomByChatroomId", chatroomId);
+	public ChatroomDto selectGeneraluserChatroomByChatroomId(SqlSessionTemplate sqlSession, int chatroomId) {
+		return sqlSession.selectOne("chatMapper.selectGeneraluserChatroomByChatroomId", chatroomId);
 	}
 
 	public int fullMessageListCount(SqlSessionTemplate sqlSession, int loginUserNum) {

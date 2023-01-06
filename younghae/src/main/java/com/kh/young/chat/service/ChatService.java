@@ -29,8 +29,8 @@ public interface ChatService {
 	int fullMessageListCount(int loginUserNum);
 	ArrayList<ChatMessage> selectMessageList(int chatroomId);
 
-	ChatroomDto selectExpertChatroomByChatroomId(int chatroomId);
-	ChatroomDto selectGeneralChatroomByChatroomId(int chatroomId);
+	ChatroomDto selectExpertuserChatroomByChatroomId(int chatroomId);
+	ChatroomDto selectGeneraluserChatroomByChatroomId(int chatroomId);
 	
 	int insertMessage(ChatMessage msg);
 	int updateIsRead(Map<String, Object> paramMap);
