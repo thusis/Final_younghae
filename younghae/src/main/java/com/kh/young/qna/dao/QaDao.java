@@ -8,6 +8,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Member;
@@ -106,15 +107,16 @@ public class QaDao {
 
 	public ExpertRespDto selectExpertResp(SqlSessionTemplate sqlSession, int userNum) {
 		ExpertRespDto eresp = sqlSession.selectOne("qnaMapper.selectExpertResp", userNum);
-		System.out.println(eresp);
 		eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, userNum));
-		eresp.setEattach(sqlSession.selectOne("qnaMapper.selectEattach", userNum));
-		System.out.println(eresp);
 		return eresp;
 	}
 
 	private int selectExpertAnswerListSize(SqlSessionTemplate sqlSession, int userNum) {
 		return sqlSession.selectOne("qnaMapper.selectAnswerListSize", userNum);
+	}
+	
+	private Attachment selectEattach(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("qnaMapper.selectEattach", userNum);
 	}
 
 	public ArrayList<QuestionRespDto> selectExpertQuestionList(SqlSessionTemplate sqlSession, int expertNum) {
@@ -157,8 +159,8 @@ public class QaDao {
 		
 		ArrayList<ExpertRespDto> erespList = (ArrayList)sqlSession.selectList("qnaMapper.selectExpertList", null, rowBounds);
 		for(ExpertRespDto eresp : erespList) {
-			eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, eresp.getMember().getUserNum()));
-			eresp.setEattach(sqlSession.selectOne("qnaMapper.selectEattach", eresp.getMember().getUserNum()));
+			int userNum = eresp.getMember().getUserNum();
+			eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, userNum));
 		}
 		return erespList;
 	}
