@@ -55,10 +55,16 @@ public class EventServiceImpl implements EventService {
 	public int checkEvent(int userNum) {
 		return eDAO.checkEvent(sqlSession, userNum);
 	}
-
+	
+	//생일 쿠폰 지급내역 있는지 없는지 확인
 	@Override
 	public int birthCheck(int userNum) {
 		return eDAO.birthCheck(sqlSession, userNum);
+	}
+	//출석이벤트 포인트 지급내역 있는지 없는지 확인
+	@Override
+	public int attAwardCheck(int userNum) {
+		return eDAO.attAwardCheck(sqlSession, userNum);
 	}
 
 

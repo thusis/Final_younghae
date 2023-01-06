@@ -108,7 +108,7 @@ public class EventController {
 		
 		//출석 수 카운트
 		int atCount = eService.selectCountAttendance(userNum); 
-
+		System.out.println("출석 카운트 : " + atCount);
 		int point = 0;
 		String point_amount = null;
 		  if(atCount >= 5 && atCount < 15) { // 500포인트 추가
@@ -125,17 +125,25 @@ public class EventController {
 		  HashMap<String, Object> pointTable = new HashMap<>();
 		  pointTable.put("point", point);
 		  pointTable.put("userNum", userNum);
-		  pointTable.put("content", "출석이벤트");
+		  pointTable.put("content", "1월 출석이벤트");
 		  pointTable.put("point_amount", point_amount);
 		  
 		  //포인트 테이블 내역 추가, 회원 포인트 업데이트
 		  int attendanceAward = eService.attendanceAward(pointTable);
 		  int updatePoint = eService.updatePoint(pointTable);
 		  
-		  if(attendanceAward > 0 && updatePoint > 0) {
-			  return String.valueOf("1");  
+		  //포인트 지급내역이 있는지 없는지 확인
+		  int attAwardCheck = eService.attAwardCheck(userNum);
+		  
+		  if(attAwardCheck == 0) {
+			  
+			  if(attendanceAward > 0 && updatePoint > 0) {
+				  return String.valueOf("1");  
+			  } else {
+				  return String.valueOf("0");
+			  }
 		  } else {
-			  return String.valueOf("0");
+			  return String.valueOf("2");
 		  }
 		  
 		  
@@ -164,8 +172,9 @@ public class EventController {
 		String couponTimeLimit = AddDate(coupon, 0, 1, 0);
 		 HashMap<String, Object> map = new HashMap<>();
 		
-		 int birthCheck = eService.birthCheck(userNum);
-		if(birthCheck == 0) {
+		 //쿠폰 지급내역이 있는지 없는지 확인
+		int couponCheck = eService.birthCheck(userNum);
+		if(couponCheck == 0) {
 			if(checkBirth == nowMonth) {
 				map.put("userNum", userNum);
 				map.put("couponTimeLimit", couponTimeLimit);

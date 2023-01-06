@@ -45,4 +45,8 @@ public class EventDAO {
 		return sqlSession.selectOne("eventMapper.birthCheck", userNum);
 	}
 
+	public int attAwardCheck(SqlSessionTemplate sqlSession, int userNum) {
+		return sqlSession.selectOne("eventMapper.attAwardCheck", userNum);
+	}
+
 }

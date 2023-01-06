@@ -61,6 +61,13 @@
    			where att_date like TO_CHAR(SYSDATE, 'YY/MM/DD') and user_Num = #{userNum}
    	</select>
    	
+   	 <!-- 유저의 생일달 -->	
+	<select id="checkBirth" resultType="_int">
+		select substr(to_char(user_birth, 'yyyymmdd'), 5, 2)
+			from member
+		where user_num = #{userNum}
+	</select>
+   	<!-- 유저의 쿠폰발급 유무 -->
    	<select id="birthCheck" resultType="_int">
    		select count(*)
         from coupon
@@ -84,18 +91,18 @@
  		set user_point = user_point + #{point}
  		where user_num = #{userNum}
  	</update>
- 	
-	<select id="checkBirth" resultType="_int">
-		select substr(to_char(user_birth, 'yyyymmdd'), 5, 2)
-			from member
-		where user_num = #{userNum}
-	</select>
+
 	
 	<insert id="insertCoupon">
 		insert into coupon values
 		(seq_cou.nextval, sysdate, #{couponTimeLimit}, default, #{disCount}, #{disCountContent}, #{userNum}, #{couponRegister})
 	</insert>
  	
- 	
+ 	<!-- 유저 출석체크 포인트 지급 여부 -->
+ 	<select id="attAwardCheck" resultType="_int">
+ 		select count(*)
+ 			from point
+ 		where point_content = '출석이벤트' and user_num = #{userNum}
+ 	</select>
 </mapper>
 
