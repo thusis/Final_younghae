@@ -67,6 +67,7 @@ public class ChatController {
     			model.addAttribute("chatErrorMsg", "채팅 가능한 방이 없습니다.");
     		} else {
     			ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
+    			updateRead(nowChatroom, 1);
     			model.addAttribute("nowChatroom", nowChatroom);
     			model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
     			model.addAttribute("roomList", roomList);
@@ -78,6 +79,7 @@ public class ChatController {
     		ChatroomDto nowChatroom = chService.getExpertChatroom(paraChatroom);
     		if( nowChatroom == null ) {
     			nowChatroom = chService.createChatroom(paraChatroom);
+    			updateRead(nowChatroom, 1);
     		}
 			model.addAttribute("nowChatroom", nowChatroom);
 			model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
@@ -93,6 +95,7 @@ public class ChatController {
     			int msgCount = chService.fullMessageListCount(loginUserNum);
     			if(msgCount>0) {
     				ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
+    				updateRead(nowChatroom, 2);
     				model.addAttribute("nowChatroom", nowChatroom);
     				model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
     			}else {
@@ -154,6 +157,17 @@ public class ChatController {
     public int updateRead(@RequestParam Map<String, Object> paraMap) { // "chatroomId" ,"userNum"
     	System.out.println("ch컨트롤러136: " + paraMap);
         return chService.updateIsRead(paraMap);
+    }
+    
+    public int updateRead(ChatroomDto nowChatroom, int cNum) {
+    	Map<String, Object> paraMap = new HashMap<>();
+    	paraMap.put("chatroomId", nowChatroom.getChatroom().getChatroomId());
+    	if(cNum == '1') {
+    		paraMap.put("userNum", nowChatroom.getChatroom().getUserNum());
+    	} else {
+    		paraMap.put("userNum", nowChatroom.getChatroom().getExpertNum());
+    	}
+    	return chService.updateIsRead(paraMap);
     }
 
 	/**

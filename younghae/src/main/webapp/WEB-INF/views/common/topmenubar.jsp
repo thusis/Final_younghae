@@ -111,6 +111,7 @@
               <div class="col-lg-4">
                   <div class="header__cart">
                       <c:if test="${ !empty loginUser && loginUser.userCNumber ne '3'}">
+                          	  <p style="font-size: 12px; display: inline; margin-right:25px; ">${ loginUser.userName} 님 안녕하세요!</p>
                           <ul>
                               <li><a href="#" onclick="location.href='${contextPath}/cartView.sh'">
                                       <p style="font-size: 12px; display: inline;">장바구니</p>&nbsp;&nbsp;<i class="fa fa-shopping-bag"></i>
