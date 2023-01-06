@@ -617,13 +617,6 @@
 		}
 			
 		function sendMessage(){
-// 			var chatWrapHeight = document.getElementsByClassName('chatMessageRoom')[0].height;
-			var chatWrapHeight = document.getElementById('chatMessageRoomTop').scrollHeight;
-			console.log(chatWrapHeight);
-
-			document.getElementById('chatMessageRoomTop').scrollTo(0,chatWrapHeight);
-// 			document.getElementById('chatMessageRoomTop').scrollTo(0,770);
-			
 			if (chatInput.value.trim().length == 0) {
 				alert("채팅을 입력해주세요.");
 				chatInput.value = "";
@@ -684,6 +677,8 @@
 		    } else {
 		    	
 		    }
+			var chatWrapHeight = document.getElementById('chatMessageRoomTop').scrollHeight;
+			document.getElementById('chatMessageRoomTop').scrollTo(0,chatWrapHeight);
 		}
 		
 		
@@ -700,6 +695,7 @@
 	 		if(loginUserNum == expertNum){
 	 			alert("일반회원만 접근 가능합니다!");
 	 		}else{
+	 			//만약 상담일정이 이미 잡혀있으면 결제 disabled 처리하고 전체적으로 블럭처리하자
 	 			window.location.href="${contextPath}/goToChatPayment.qa?info="+nowChatroomInfo;
 	 		}
 	 	}
