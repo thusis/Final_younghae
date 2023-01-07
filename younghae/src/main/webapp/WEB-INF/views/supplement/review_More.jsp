@@ -11,8 +11,8 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
 <title>리뷰 더보기</title>
 
-<style>
 
+<style>
 /*목차*/
 .bn_index ul li {
 	list-style: none;
@@ -70,48 +70,50 @@
 			<div class="product__details__quantity"
 				style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">
 				<div name="reviewDetail">
-					<div name="reviewImg" style="float: left; padding-right: -20%;">
-						<i class="bi bi-person-circle"
-							style="font-size: 350%; color: #24E082;"></i>
-					</div>
-					<div name="reviewNickName"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="font-weight: 600;">${ r.member.userNickname }</p>
-					</div>
-					<div class="product__details__rating"
-						style="float: left; padding-top: 3.5%; padding-left: 20%;">
-						<i class="fa fa-star"
-							style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-					</div>
-					<div name="reviewRank"
-						style="float: left; padding-top: 3.5%; padding-left: 1%;">
-						<p style="color: black; font-size: 130%;">${ r.rvStar }</p>
-					</div>
-					<c:if test="${ loginUser ne null}">
+					<div class="row" style="margin-left: 10px;">
+						<div name="reviewImg" style="float: left; padding-right: -20%;">
+							<img src="resources/img/profile_yh.png" style="height: 70px; width: 70px; margin-top: 10%;">
+						</div>
+						<div name="reviewNickName"
+							style="float: left; padding-top: 3.5%; padding-left: 1%;">
+							<p style="font-weight: 600;">${ r.member.userNickname }</p>
+						</div>
 						<div class="product__details__rating"
-							style="float: left; padding-top: 3.2%; padding-left: 5%;">
-							<i class="bi bi-hand-thumbs-up"
-								style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-							<input type="hidden" name="rvNum" value="${ r.rvNum }">
+							style="float: left; padding-top: 3.5%; padding-left: 20%;">
+							<i class="fa fa-star"
+								style="color: rgb(247, 247, 75); font-size: 130%;"></i>
 						</div>
 						<div name="reviewRank"
 							style="float: left; padding-top: 3.5%; padding-left: 1%;">
-							<p style="color: black; font-size: 130%;">${ r.rvRecommend }</p>
+							<p style="color: black; font-size: 130%;">${ r.rvStar }</p>
 						</div>
-					</c:if>
-					<div name="reviewImg"
-						style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-						<c:if test="${ r.image ne '없음'}">
-							<img src="resources/uploadFiles/${ r.image }"
-								class=".img-fluid">
+						<c:if test="${ loginUser ne null}">
+							<div class="product__details__rating"
+								style="float: left; padding-top: 3.2%; padding-left: 5%;">
+								<i class="bi bi-hand-thumbs-up"
+									style="color: rgb(0, 0, 0); font-size: 130%;"></i>
+								<input type="hidden" name="rvNum" value="${ r.rvNum }">
+							</div>
+							<div name="reviewRank"
+								style="float: left; padding-top: 3.5%; padding-left: 1%;">
+								<p style="color: black; font-size: 130%;">${ r.rvRecommend }</p>
+							</div>
 						</c:if>
 					</div>
-					<div name="reviewContent" style="padding-top: 9%;">${ r.rvContent }</div>
+					<div class="row" style="margin-top: 1%; padding-left: 2%;">
+						<c:if test="${ r.image  ne '없음' }">
+								<div name="reviewContent" class="col-9 text-left" >${ r.rvContent }</div>
+								<div name="reviewImg" class="col-3">
+									<img src="resources/uploadFiles/${ r.image }" style="height: 200px; width: 200px; float: right; margin-right: 3%; margin-top: -10%;" class=".img-fluid">
+								</div>
+						</c:if>
+						<c:if test="${ r.image eq '없음' }">
+								<div name="reviewContent" class="col-12 text-left" style="padiing-right: 5%;">${ r.rvContent }</div>								
+						</c:if>
+					</div>
 				</div>
 			</div>
-			<br>
-			<br>
-			<br>
+			<br><br><br>
 			</c:forEach>
 			
 		<!-- 페이징 -->
@@ -143,6 +145,7 @@
 					</c:if>
 				</div>
 			</div>
+		</div>
 	</section>
 
     <!-- 리뷰쓰기 Modal -->
@@ -224,88 +227,12 @@
 
 
 	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="./index.html"><img src="img/logo.png" alt=""></a>
-						</div>
-						<ul>
-							<li>Address: 60-49 Road 11378 New York</li>
-							<li>Phone: +65 11.188.888</li>
-							<li>Email: hello@colorlib.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-					<div class="footer__widget">
-						<h6>Useful Links</h6>
-						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">About Our Shop</a></li>
-							<li><a href="#">Secure Shopping</a></li>
-							<li><a href="#">Delivery infomation</a></li>
-							<li><a href="#">Privacy Policy</a></li>
-							<li><a href="#">Our Sitemap</a></li>
-						</ul>
-						<ul>
-							<li><a href="#">Who We Are</a></li>
-							<li><a href="#">Our Services</a></li>
-							<li><a href="#">Projects</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Innovation</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-12">
-					<div class="footer__widget">
-						<h6>Join Our Newsletter Now</h6>
-						<p>Get E-mail updates about our latest shop and special
-							offers.</p>
-						<form action="#">
-							<input type="text" placeholder="Enter your mail">
-							<button type="submit" class="site-btn">Subscribe</button>
-						</form>
-						<div class="footer__widget__social">
-							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-								class="fa fa-instagram"></i></a> <a href="#"><i
-								class="fa fa-twitter"></i></a> <a href="#"><i
-								class="fa fa-pinterest"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>document.write(new Date().getFullYear());</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="img/payment-item.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-
-	</footer>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer Section End -->
 
 </body>
 <script>
 	window.onload=()=>{
-		
 		var login = "${ loginUser }";
 		var loginNum = "${ loginUser.userNum }";
 		
@@ -336,17 +263,17 @@
 				
 				console.log($(this).parent().children()[1].value);
 				console.log(loginNum);
-				$.ajax({
-            		url: '${contextPath}/reco.su',
-            		data: {rvNum: $(this).parent().children()[1].value ,userNum: loginNum,
-            				check: check},
-            		success:(data)=>{
-            			console.log(data);
-            		},
-            		error:(data)=>{
-            			console.log(data);
-            		}
-            	});
+// 				$.ajax({
+//             		url: '${contextPath}/reco.su',
+//             		data: {rvNum: $(this).parent().children()[1].value ,userNum: loginNum,
+//             				check: check},
+//             		success:(data)=>{
+//             			console.log(data);
+//             		},
+//             		error:(data)=>{
+//             			console.log(data);
+//             		}
+//             	});
 			});
 		}
 	}

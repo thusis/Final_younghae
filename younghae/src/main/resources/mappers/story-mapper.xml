@@ -93,7 +93,7 @@
 		select board.board_num, board.board_type, board.board_title, board.board_content, board.board_createDate, board.board_modifyDate, board.board_view, board.board_status, board.user_num, attachment.attach_rename, attachment.SERIALNUMBER
 		from board 
              left join attachment on (board.board_num = attachment.SERIALNUMBER)
-        WHERE board.BOARD_type=3 and attachment.board_type=3 and board_status = 'Y'
+        WHERE board.BOARD_type= 3 and attachment.board_type=3 and board_status = 'Y'
         order by board.board_num desc
 	</select>
 	
