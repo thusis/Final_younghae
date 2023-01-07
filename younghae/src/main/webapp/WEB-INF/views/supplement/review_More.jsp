@@ -263,17 +263,17 @@
 				
 				console.log($(this).parent().children()[1].value);
 				console.log(loginNum);
-				$.ajax({
-            		url: '${contextPath}/reco.su',
-            		data: {rvNum: $(this).parent().children()[1].value ,userNum: loginNum,
-            				check: check},
-            		success:(data)=>{
-            			console.log(data);
-            		},
-            		error:(data)=>{
-            			console.log(data);
-            		}
-            	});
+// 				$.ajax({
+//             		url: '${contextPath}/reco.su',
+//             		data: {rvNum: $(this).parent().children()[1].value ,userNum: loginNum,
+//             				check: check},
+//             		success:(data)=>{
+//             			console.log(data);
+//             		},
+//             		error:(data)=>{
+//             			console.log(data);
+//             		}
+//             	});
 			});
 		}
 	}

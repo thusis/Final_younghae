@@ -541,44 +541,36 @@
 		        			rateIn.value = Math.floor(a*10)/10;
 		            		
 		            		var first = "";
+		            		var loginCheck = "";
 		            		var imageYN = "";
 		            		
-// 		            		first = '<div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
-// 		            				'<div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
-// 		            				'<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
+		            		first = '<br><br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
+		            				'<div class="row" style="margin-left: 10px;"><div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
+		            				'<img src="resources/img/profile_yh.png" style="height: 70px; width: 70px; margin-top: 10%;"></div>'+
+		            				'<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname + '</p></div>' +
+		            				'<div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
+		            				'<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
+		            				'<div id="reviewRank star" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +'</p></div>';
 		            				
+  							loginCheck = '<div class="product__details__rating 1" style="float: left; margin-top: 3.2%; margin-left: 5%;">'+
+		            					 '<i name="reIcon" class="bi bi-hand-thumbs-up" style="color: rgb(0, 0, 0); font-size: 150%;"></i></div>'+
+		            					 '<input type="hidden" name="rvNum" value="${ r.rvNum }">'
+		            					 '<div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">'+
+		            					 '<p style="color: black; font-size: 130%;">'+ r.rvRecommend +'</p></div></div>';
 		            		
-									        			
-		        			if(r.image == "없음"){
-		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
-								  				  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
-                  			  					  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
-                  			  					  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
-                  			  					  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
-					                  			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
-					                  			  '<div id="reviewRank star" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="color: black; font-size: 130%;">'+ r.rvStar +
-					                  			  '</p></div><c:if test="${ loginUser.userNum eq null}"><div class="product__details__rating" style="float: left; margin-top: 3.2%; margin-left: 5%;">'+ 
-					                  			  '<i name="reIcon" class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 150%;"></i>'+
-					                  			  '</div></c:if><c:if test="${ loginUser.userNum ne null}"><div class="product__details__rating 1" style="float: left; margin-top: 3.2%; margin-left: 5%;"><i name="reIcon" class="bi bi-hand-thumbs-up" style="color: rgb(0, 0, 0); font-size: 150%;"></i></div></c:if><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">'+ r.rv+'</p>'+
-					                  			  '</div><div id="reviewContent" class="text-left" style="margin-top: 9%;">'+ r.rvContent +'</div>'+'<input type="hidden" name="rvNum" value="'+r.rvNum+'"></div>'
-					                  			  +'</div><br><br>';
-		        			}else{
-		        				form.innerHTML  = '<br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
-		        								  '<div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
-	                                			  '<i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i></div>'+
-	                                			  '<div id="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p style="font-weight: 600;">'+ r.userNickname +
-	                                			  '</p></div><div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">'+
-	                                			  '<i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i></div>'+
-	                                			  '<div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"> <p id="rvstar" style="color: black; font-size: 130%;">'+ r.rvStar +
-	                                			  '</p></div><c:if test="${ loginUser.userNum eq null}"><div class="product__details__rating" style="float: left; margin-top: 3.2%; margin-left: 5%;">'+ 
-	                                			  '<i name="reIcon" class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 150%;"></i>'+
-	                                			  '</div></c:if><c:if test="${ loginUser.userNum ne null}"><div class="product__details__rating 1" style="float: left; margin-top: 3.2%; margin-left: 5%;"><i name="reIcon" class="bi bi-hand-thumbs-up" style="color: rgb(0, 0, 0); font-size: 150%;"></i></div></c:if><div id="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;"><p style="color: black; font-size: 130%;">10</p>'+
-	                                			  '</div><div id="reviewContent" class="text-left" style="margin-top: 9%;">'+ r.rvContent +'</div></div>'+
-	                                			  '<div name="reviewImg" style="height: 200px; width: 200px; float: right; margin-right: 3%; margin-top: -20%;"><img style="height: 199px; width: 199px;" src="resources/uploadFiles/'+r.image+'" class=".img-fluid">'+
-	                                			  '<input type="hidden" name="rvNum" value="'+r.rvNum+'"></div>'+'<br><br>';
-		        				
-		        			}
-                             div.append(form);
+		            		imageYN = '<div class="row" style="margin-top: 1%; padding-left: 2%;">';
+		            		
+		            		if(r.image != "없음"){
+			            		imageYN = '<div name="reviewContent" class="col-9 text-left" >'+ r.rvContent +'</div>'+
+			            				  '<div name="reviewImg" class="col-3"><img src="resources/uploadFiles/'+ r.image +'" style="height: 200px; width: 200px; float: right; margin-right: 3%; margin-top: -10%;" class=".img-fluid"></div><br><br>';
+		            		}else{
+		            			imageYN = '<div name="reviewContent" class="col-12 text-left" style="padiing-right: 5%;">'+ r.rvContent +'</div><br><br>';
+		            		}
+		            		
+		            				
+		            		form.innerHTML = first + loginCheck + imageYN;		
+		            		
+                            div.append(form);
                              
                             $.ajax({
              	            	url:'${ contextPath }/rateUpdate.su',
@@ -620,12 +612,14 @@
 				            	        upspan.onclick = function () {
 				            	        	updateModal.style.display = "none";
 				            	        }
+				            	        
 				            	    	// modal 밖에 클릭했을 때 모달창 꺼지는 스크립트
 				            	        window.onclick = function (event) {
 				            	            if (event.target == modal) {
 				            	                updateModal.style.display = "none";
 				            	            }
 				            	        }
+				            	    	
 				            	        const rating = document.getElementById("updaterating");
 				            	        rating.innerText = $(this).parent().children().children()[4].innerText;
 				            	        

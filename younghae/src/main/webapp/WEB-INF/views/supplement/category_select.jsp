@@ -325,14 +325,16 @@
 														style="float: left; padding-top: 3.5%; padding-left: 20%;">
 														<i class="bi bi-hand-thumbs-up"
 															style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-														<input type="hidden" name="rvNum" value="${ r.rvNum }">
+														<input type="hidden" name="rvNum" value="${ re.rvNum }">
 													</div>
 													<div name="reviewRank"
 														style="float: left; padding-top: 3.5%; padding-left: 1%;">
 														<p style="color: black; font-size: 130%;">${ re.rvRecommend }</p>
 													</div>
 												</div>
-												<div class="row" style="margin-top: 1%; padding-left: 2%;">
+												<div class="row reviewContent" style="margin-top: 1%; padding-left: 2%;">
+													<input type="hidden" name="productNum" value="${ re.rvNum }">
+													<input type="hidden" name="userNum" value="${ re.userNum }">
 													<c:if test="${ re.image  ne '없음' }">
 														<div name="reviewContent" class="col-9 text-left">${ re.rvContent }</div>
 														<div name="reviewImg" class="col-3">
@@ -389,7 +391,6 @@
 					
 					location.href = '${contextPath}/selectProduct.su?proNum='+productSelect;
 				});
-				
 			}
 		}
 	</script>
