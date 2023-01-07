@@ -117,7 +117,7 @@ public class StoryController {
 
 		if (result + attm >= 1) {
 //			return null;
-			return "redirect:storyList.st";
+			return "redirect:AdminStoryList.st";
 		} else {
 			throw new StoryException("컬럼 쓰기 실패");
 		}

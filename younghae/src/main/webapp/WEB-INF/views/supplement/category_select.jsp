@@ -275,8 +275,7 @@
 													<div class="text-right font-weight-bold pr-2% pt--3 mb-1 mt-1">
 														<fmt:formatNumber type="number" maxFractionDigits="3" value="${ item.proPrice }" />&nbsp;원&nbsp;&nbsp;</div>
 												</div>
-												<br>
-												<br>
+												<br><br>
 											</div>
 										</div>
 									</c:forEach>
@@ -306,10 +305,8 @@
 											style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300%; margin-right: 3%; padding: 3%; padding-bottom: 5%;">
 											<div name="reviewDetail">
 												<div class="row">
-													<div name="reviewImg"
-														style="float: left; padding-right: -20%;">
-														<i class="bi bi-person-circle"
-															style="font-size: 350%; color: #24E082;"></i>
+													<div name="reviewImg" style="float: left; padding-right: -20%; margin-left: 2%;">
+														<img src="resources/img/profile_yh.png" style="height: 70px; width: 70px; margin-top: 10%;">
 													</div>
 													<div name="reviewNickName"
 														style="float: left; padding-top: 3.5%; padding-left: 1%;">
@@ -324,21 +321,30 @@
 														style="float: left; padding-top: 3.5%; padding-left: 1%;">
 														<p style="color: black; font-size: 130%;">${ re.rvStar }</p>
 													</div>
+													<div class="product__details__rating_1"
+														style="float: left; padding-top: 3.5%; padding-left: 20%;">
+														<i class="bi bi-hand-thumbs-up"
+															style="color: rgb(0, 0, 0); font-size: 130%;"></i>
+														<input type="hidden" name="rvNum" value="${ r.rvNum }">
+													</div>
+													<div name="reviewRank"
+														style="float: left; padding-top: 3.5%; padding-left: 1%;">
+														<p style="color: black; font-size: 130%;">${ re.rvRecommend }</p>
+													</div>
 												</div>
-												<div class="row">
+												<div class="row" style="margin-top: 1%; padding-left: 2%;">
 													<c:if test="${ re.image  ne '없음' }">
-														<div name="reviewImg">
-															<img src="resources/uploadFiles/${ re.image }" style="height: 200px; width: 200px; float: right; margin-right: 5%; padding-top: 4%;" class=".img-fluid">
+														<div name="reviewContent" class="col-9 text-left">${ re.rvContent }</div>
+														<div name="reviewImg" class="col-3">
+															<img src="resources/uploadFiles/${ re.image }" style="height: 200px; width: 200px; float: right; margin-right: 3%; padding-top: 4%;" class=".img-fluid">
 														</div>
 													</c:if>
-													<div name="reviewContent" class="text-left"
-														style="padding-top: 5%;">${ re.rvContent }</div>
+													<c:if test="${ re.image eq '없음' }">
+														<div name="reviewContent" class="col-12 text-left">${ re.rvContent }</div>								
+													</c:if>
 												</div>
 											</div>
-										</div>
-									<br>
-									<br>
-									
+										</div><br><br>
 									</c:forEach>
 								</div>
 							</div>
@@ -353,93 +359,26 @@
 
 
 	<!-- Footer Section Begin -->
-	<footer class="footer spad">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-3 col-md-6 col-sm-6">
-					<div class="footer__about">
-						<div class="footer__about__logo">
-							<a href="./index.html"><img src="img/logo.png" alt=""></a>
-						</div>
-						<ul>
-							<li>Address: 60-49 Road 11378 New York</li>
-							<li>Phone: +65 11.188.888</li>
-							<li>Email: hello@colorlib.com</li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-					<div class="footer__widget">
-						<h6>Useful Links</h6>
-						<ul>
-							<li><a href="#">About Us</a></li>
-							<li><a href="#">About Our Shop</a></li>
-							<li><a href="#">Secure Shopping</a></li>
-							<li><a href="#">Delivery infomation</a></li>
-							<li><a href="#">Privacy Policy</a></li>
-							<li><a href="#">Our Sitemap</a></li>
-						</ul>
-						<ul>
-							<li><a href="#">Who We Are</a></li>
-							<li><a href="#">Our Services</a></li>
-							<li><a href="#">Projects</a></li>
-							<li><a href="#">Contact</a></li>
-							<li><a href="#">Innovation</a></li>
-							<li><a href="#">Testimonials</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-12">
-					<div class="footer__widget">
-						<h6>Join Our Newsletter Now</h6>
-						<p>Get E-mail updates about our latest shop and special
-							offers.</p>
-						<form action="#">
-							<input type="text" placeholder="Enter your mail">
-							<button type="submit" class="site-btn">Subscribe</button>
-						</form>
-						<div class="footer__widget__social">
-							<a href="#"><i class="fa fa-facebook"></i></a> <a href="#"><i
-								class="fa fa-instagram"></i></a> <a href="#"><i
-								class="fa fa-twitter"></i></a> <a href="#"><i
-								class="fa fa-pinterest"></i></a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="footer__copyright">
-						<div class="footer__copyright__text">
-							<p>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-								Copyright &copy;
-								<script>document.write(new Date().getFullYear());</script>
-								All rights reserved | This template is made with <i
-									class="fa fa-heart" aria-hidden="true"></i> by <a
-									href="https://colorlib.com" target="_blank">Colorlib</a>
-								<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-							</p>
-						</div>
-						<div class="footer__copyright__payment">
-							<img src="img/payment-item.png" alt="">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</footer>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 	<!-- Footer Section End -->
 
 </body>
 	<script>
 		window.onload=()=>{
-			const more = document.getElementById("productMore");
-			more.addEventListener('click', ()=>{
+			const productmore = document.getElementById("productMore");
+			productmore.addEventListener('click', ()=>{
 				const cateNum = document.getElementById('cateNum').value;
 				const cateName = document.getElementById('cateName').innerText;
 				
                 location.href = '${contextPath}/productMore.su?cateNum=' + cateNum + '&cateName=' + cateName;
+			});
+			
+			const reviewMore = document.getElementById('reviewMore');
+			reviewMore.addEventListener('click', ()=>{
+				const cateNum = document.getElementById('cateNum').value;
+				const cateName = document.getElementById('cateName').innerText;
+				
+                location.href = '${contextPath}/reviewMore.su?cateNum=' + cateNum + '&cateName=' + cateName + '&page=' + 1;
 			});
 			
 			const product = document.getElementsByClassName('product__details__quantity_1');
@@ -452,16 +391,6 @@
 				});
 				
 			}
-			
-			const reviewMore = document.getElementById('reviewMore');
-			reviewMore.addEventListener('click', ()=>{
-				const cateNum = document.getElementById('cateNum').value;
-				const cateName = document.getElementById('cateName').innerText;
-				
-                location.href = '${contextPath}/reviewMore.su?cateNum=' + cateNum + '&cateName=' + cateName + '&page=' + 1;
-			});
-			
-			
 		}
 	</script>
 </html>
