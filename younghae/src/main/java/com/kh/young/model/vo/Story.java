@@ -28,4 +28,7 @@ public class Story {
 	private String check;
 	private Clip clip;
 	private GeneralUser generaluser;
+	private Reply reply;
+	private Likes like;
+	
 }

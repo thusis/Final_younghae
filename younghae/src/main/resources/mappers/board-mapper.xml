@@ -199,7 +199,10 @@
 		<result column="BOARD_TYPE" property="boardType"/>
 		<association property="attachment" javaType="Attachment" resultMap="attachmentResultSet" />
 		<association property="member" javaType="Member" resultMap="memberResultSet" />
+		<association property="clip" javaType="Clip" resultMap="replyResultSet"/>
 		<association property="generaluser" javaType="GeneralUser" resultMap="generalUserResultSet" />
+		<association property="reply" javaType="Reply" resultMap="replyResultSet"/>
+		<association property="like" javaType="LIke" resultMap="likeResultSet"/>
 	</resultMap>
 	
 	<resultMap type="Reply" id="replyResultSet">
@@ -238,7 +241,11 @@
 		<result column="USER_ADDRESS_DETAIL" property="userAddressDetail"/>
 		<result column="USER_HEALTH" property="userHealth"/>
 	</resultMap>
-
 	
+	<resultMap type="Like" id="likeResultSet">
+		<id column="USER_NUM"  property="user_num"/>
+		<result column="BOARD_NUM" property="board_num"/>
+		<result column="BOARD_TYPE" property="board_type"/>
+	</resultMap>
 	
 </mapper>

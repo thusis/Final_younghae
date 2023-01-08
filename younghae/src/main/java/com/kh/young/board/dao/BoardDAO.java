@@ -24,6 +24,7 @@ public class BoardDAO {
 	public ArrayList<Board> selectBoardList(SqlSessionTemplate sqlSession, PageInfo pi, Integer boardCategory) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
 		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", boardCategory, rowBounds);
 	}
 

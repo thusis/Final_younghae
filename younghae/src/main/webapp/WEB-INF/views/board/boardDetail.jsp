@@ -110,10 +110,10 @@
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">Categories</h4>
                             <ul>
-                                <li class="ll 11">운동 (32)</li>
-                                <li class="ll 12">식단 (21)</li>
-                                <li class="ll 13">영양제 (54)</li>
-                                <li class="ll 14">자유 (47)</li>
+                                <li class="ll 11">운동🏓</li>
+                                <li class="ll 12">식단🥗</li>
+                                <li class="ll 13">영양제💊</li>
+                                <li class="ll 14">자유😀</li>
                             </ul>  
                         </div>
                         <div class="blog__sidebar__item">
@@ -213,7 +213,7 @@
 												target="_self" title="네이버밴드 새창열림">
 										<i class="fa-solid fa-b"></i>
 										</a>
-										<a href="#"><i class="fa-solid fa-link"></i></a> 
+										<a href="#" onclick="clip(); return false;"><i class="fa-solid fa-link"></i></a> 
 										<a href="#">
 											
 										</a>
@@ -305,7 +305,6 @@
 
  <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
-	<!--소셜공유-->
 	 		<script>	
 	 		
 	 		
@@ -376,7 +375,7 @@
             }
             
             function shareTwitter() {
-              var sendText = "영해의 건강이야기 게시글을 공유합니다 :)";
+              var sendText = "영해💊의 건강이야기 게시글을 공유합니다 :)";
               const boardNum = '${b.boardNum}';
               const writer = '${b.userNum}';
               const page = '${page}';
@@ -387,6 +386,12 @@
               window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl, "Y2K World", "height=480px, width=600px");
             }
             
+            function shareBand() {
+                var sendText = "http://localhost:8888/young/boardView.bo?boardCategory=" + ${b.boardType} + "%26boardNum=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page};
+                var sendUrl = "http://localhost:8888/young/boardView.bo?boardCategory=" + ${b.boardType} + "%26boardNum=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page};
+                window.open("http://www.band.us/plugin/share?body=" + sendText + "&url=" + sendUrl, "영해💊", "height=450px, width=350px");  
+              }
+            
            //button click action
             $(document).ready(function() {
             	
@@ -395,6 +400,10 @@
 			            });
 			            $("#twitter").click(function() {
 			                shareTwitter();
+			            });
+			            
+			            $("#band").click(function() {
+			            	shareBand();
 			            });
           });
     		/** boardCategories Bar */						
@@ -434,6 +443,24 @@
 
      	   
             </script>
+            
+            <!-- 링크복사 -->
+            <script type="text/javascript">
 
+			function clip(){
+			
+				var url = '';
+				var textarea = document.createElement("textarea");
+				document.body.appendChild(textarea);
+				url = window.document.location.href;
+				textarea.value = url;
+				textarea.select();
+				document.execCommand("copy");
+				document.body.removeChild(textarea);
+				alert("URL이 복사되었습니다.")
+			}
+
+		</script>
+<textarea></textarea>
 </body>
 </html>
