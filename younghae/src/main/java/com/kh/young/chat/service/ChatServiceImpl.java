@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.young.chat.dao.ChatDao;
 import com.kh.young.chat.dto.ChatroomDto;
+import com.kh.young.chat.dto.ChatroomListDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
@@ -28,7 +29,7 @@ public class ChatServiceImpl implements ChatService {
 	public ChatroomDto selectNowChatroom(Integer expertNum, int loginUserNum) {
 		 
 		if( expertNum == loginUserNum ) {
-			ArrayList<ChatroomDto> rl = selectExpertsRoomList(loginUserNum);
+			ArrayList<ChatroomListDto> rl = selectExpertsRoomList(loginUserNum);
 			if( rl != null ) {
 				return selectRecentChatroom(loginUserNum); 
 			} else {
@@ -100,15 +101,15 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public ArrayList<ChatroomDto> selectRoomList(int userNum) {
-		ArrayList<ChatroomDto> roomList = chDao.selectRoomList(sqlSession, userNum);
+	public ArrayList<ChatroomListDto> selectRoomList(int userNum) {
+		ArrayList<ChatroomListDto> roomList = chDao.selectRoomList(sqlSession, userNum);
 		System.out.println("ch서비스 97:" + roomList);
 		roomList = setRoomList(roomList);
 		return roomList;
 	}
 	
 	@Override
-	public ArrayList<ChatroomDto> selectExpertsRoomList(int loginUserNum) {
+	public ArrayList<ChatroomListDto> selectExpertsRoomList(int loginUserNum) {
 		return chDao.selectExpertRoomList(sqlSession, loginUserNum);
 	}
 
@@ -120,28 +121,45 @@ public class ChatServiceImpl implements ChatService {
 	*/
 
 //	 roomList 세팅
-		private ArrayList<ChatroomDto> setRoomList(ArrayList<ChatroomDto> roomList) {
-			for(ChatroomDto r : roomList) {
-//				ChatMessage lastMessage = selectLastMessage(r.getChatroom().getChatroomId());
-//				r.setLastMessage(lastMessage.getChatContent());
-//				r.setLatestSendTime(lastMessage.getSendTime());
-				r.setNotReadCount(getNotReadCount(r.getChatroom().getChatroomId()));
-				r.setIsPaid(getIsPaid(r.getChatroom().getChatroomId()));
+		private ArrayList<ChatroomListDto> setRoomList(ArrayList<ChatroomListDto> roomList) {
+			for(ChatroomListDto r : roomList) {
+				int chatroomId = r.getChatroom().getChatroomId();
+				r.setNotReadCount(getNotReadCount(chatroomId));
+				r.setLastMessage(selectLastMessage(chatroomId));
+				r.setReserv(getIfReserv(chatroomId));
+				
 			}
 			return roomList;
 		}
-	
-//		private ChatMessage selectLastMessage(int chatroomId) {
-//			return chDao.selectLastMessage(sqlSession, chatroomId);
-//		}
 		
+		/** 일단 필요없는 메소드 **/
+		private String getIsPaid(int chatroomId) {
+			return chDao.getIsPaid(sqlSession, chatroomId);
+		}/** 일단 필요없는 메소드 **/
+		
+		private ChatReserv getIfReserv(int chatroomId) {
+			ChatReserv reserv = chDao.getIfReserv(sqlSession, chatroomId);
+			System.out.println(reserv);
+			if( reserv == null ) {
+				reserv.setReservId(0); // reserv 내역이 없으면 id 를 0으로 처리할 것
+			}
+			
+			return reserv;
+		}
+
+		private ChatMessage selectLastMessage(int chatroomId) {
+			ChatMessage lastMessage = chDao.selectLastMessage(sqlSession, chatroomId);
+			System.out.println(lastMessage);
+			if(lastMessage == null) {
+				lastMessage.setChatId(0); // lastMessage 내역이 없으면 id 를 0으로 처리할 것
+			}
+			return lastMessage;
+		}
+
 		private int getNotReadCount(int chatroomId) {
 			return chDao.getNotReadCount(sqlSession, chatroomId);
 		}
-	
-		private String getIsPaid(int chatroomId) {
-			return chDao.getIsPaid(sqlSession, chatroomId);
-		}
+
 	
 		
 	@Override
@@ -204,8 +222,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public int upreadHowMany(int receiverNum) {
-		return chDao.upreadHowMany(sqlSession, receiverNum);
+	public int unreadHowMany(int receiverNum) {
+		return chDao.unreadHowMany(sqlSession, receiverNum);
 	}
 
 

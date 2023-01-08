@@ -7,11 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.young.chat.dto.ChatroomDto;
+import com.kh.young.chat.dto.ChatroomListDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
-import com.kh.young.model.vo.Member;
-import com.kh.young.qna.dto.ExpertRespDto;
 
 @Repository("chDao")
 public class ChatDao {
@@ -28,7 +27,7 @@ public class ChatDao {
 		return sqlSession.insert("chatMapper.insertMessage", msg);
 	}
 
-	public ArrayList<ChatroomDto> selectRoomList(SqlSessionTemplate sqlSession, int userNum) {
+	public ArrayList<ChatroomListDto> selectRoomList(SqlSessionTemplate sqlSession, int userNum) {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectRoomList", userNum);
 	}
 	
@@ -50,6 +49,7 @@ public class ChatDao {
 		return sqlSession.selectOne("chatMapper.getNotReadCount", chatroomId);
 	}
 	
+	/** 일단 필요없는 메소드 **/
 	public String getIsPaid(SqlSessionTemplate sqlSession, int chatroomId) {
 		int result = sqlSession.selectOne("chatMapper.getIsPaid", chatroomId);
 		String str = "";
@@ -62,13 +62,13 @@ public class ChatDao {
 		return str;
 	}
 
-	public ArrayList<ChatroomDto> selectExpertRoomList(SqlSessionTemplate sqlSession, int loginUserNum) {
+	public ArrayList<ChatroomListDto> selectExpertRoomList(SqlSessionTemplate sqlSession, int loginUserNum) {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectExpertRoomList", loginUserNum);
 	}
 
-	public ArrayList<ChatReserv> selectReservList(SqlSessionTemplate sqlSession, int loginUserNum) {
-		return (ArrayList)sqlSession.selectList("chatMapper.selectReservList",loginUserNum);
-	}
+//	public ArrayList<ChatReserv> selectReservList(SqlSessionTemplate sqlSession, int loginUserNum) {
+//		return (ArrayList)sqlSession.selectList("chatMapper.selectReservList",loginUserNum);
+//	}
 
 	 // 메세지가 존재하는 경우에만 사용 가능하다
 	public ChatroomDto selectRecentChatroom(SqlSessionTemplate sqlSession, int loginUserNum){
@@ -116,8 +116,12 @@ public class ChatDao {
 		return sqlSession.insert("chatMapper.afterPayInsertChatReserv", paraMap);
 	}
 
-	public int upreadHowMany(SqlSessionTemplate sqlSession, int receiverNum) {
-		return sqlSession.selectOne("chatMapper.upreadHowMany", receiverNum);
+	public int unreadHowMany(SqlSessionTemplate sqlSession, int receiverNum) {
+		return sqlSession.selectOne("chatMapper.unreadHowMany", receiverNum);
+	}
+
+	public ChatReserv getIfReserv(SqlSessionTemplate sqlSession, int chatroomId) {
+		return sqlSession.selectOne("chatMapper.getIfReserv", chatroomId);
 	}
 
 	

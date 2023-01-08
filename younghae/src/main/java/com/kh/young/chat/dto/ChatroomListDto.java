@@ -19,15 +19,18 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ChatroomDto {
+public class ChatroomListDto {
 
 	private Chatroom chatroom;
-	/*
-	 * CHATROOM_ID CHATROOM_TIME EXPERT_NUM USER_NUM CHATROOM_STATUS
-	 */
+	/*CHATROOM_ID CHATROOM_TIME EXPERT_NUM USER_NUM CHATROOM_STATUS*/
 	
 	private ExpertRespDto expert; // 대답하는 전문가 -> expert.getMember().getUserNum() 이 expertNum
 	private Member general;
+	
+	private int notReadCount; //loginUserNum 기준
+	private ChatMessage lastMessage;
+	/*CHAT_ID CHAT_CONTENT lastMessageContent SEND_TIME lastMessageSendTime IS_READ
+	 *CHATROOM_ID SENDER_NUM RECEIVER_NUM */
 	
 	private ChatReserv reserv;
 	/*
@@ -35,6 +38,4 @@ public class ChatroomDto {
 	 * String reservSchedule; private String isApproved; private String isCompleted;
 	 * private int reservHowLong;
 	 */
-	
-	private ArrayList<ChatMessage> messageList;
 }

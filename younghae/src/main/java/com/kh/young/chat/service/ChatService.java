@@ -3,12 +3,10 @@ package com.kh.young.chat.service;
 import java.util.ArrayList;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Service;
 
-import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.chat.dto.ChatroomDto;
+import com.kh.young.chat.dto.ChatroomListDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
@@ -17,8 +15,8 @@ import com.kh.young.model.vo.Orders;
 @Service
 public interface ChatService {
 
-	ArrayList<ChatroomDto> selectRoomList(int userNum);
-	ArrayList<ChatroomDto> selectExpertsRoomList(int loginUserNum);
+	ArrayList<ChatroomListDto> selectRoomList(int userNum);
+	ArrayList<ChatroomListDto> selectExpertsRoomList(int loginUserNum);
 
 	ChatroomDto selectNowChatroom(Integer expertNum, int loginUserNum);
 	ChatroomDto selectRecentChatroom(int loginUserNum);
@@ -39,6 +37,6 @@ public interface ChatService {
 
 	int afterPayInsertChatReserv(ChatReserv crInsert, Orders ordInsert);
 	
-	int upreadHowMany(int receiverNum);
+	int unreadHowMany(int receiverNum);
 
 }

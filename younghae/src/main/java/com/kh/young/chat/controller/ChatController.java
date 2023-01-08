@@ -42,20 +42,6 @@ public class ChatController {
     		HttpServletRequest request, 
 			@RequestParam(value="expertNum", required=false) Integer expertNum,
     		Model model) {
-    	/**
-    	 * [[ 고려해야할 경우의 수 ]]
-    	 * 1. 로그인 유저가 일반유저인가? - member.getUserCNumber == 2 인지
-    	 * 		일반유저라면  -> ArrayList<chatroomDto (+ expert)>
-    	 * 		전문가유저라면 -> ArrayList<chatroomDto (+ member)> + ArrayList<ChatReserv>
-    	 * 2. expertNum 이 있는가? - 전문가회원의 채팅뱃지를 통해 채팅창을 켰는지, topmenubar를 통해 켰는지
-    	 * 		있다면 
-    	 * 		(1) 챗룸 있는지 조회 후 없으면 create
-    	 * 		(2) nowChatroom, ArrayList<ChatMessage> 을 반환하는데,  
-    	 * 		-> loginUserNum!=expertNum 
-    	 * 		-> loginUserNum==expertNum 이라면 
-    	 * 
-    	 * 		없다면 nowChatroom = recentChatroom
-    	 */
 
     	int loginUserNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
     	int cNum = ((Member)request.getSession().getAttribute("loginUser")).getUserCNumber();
@@ -229,8 +215,8 @@ public class ChatController {
     // 몇 개 메세지 안 읽었는지 비동기 조회
     @GetMapping("unreadHowMany.ch")
     @ResponseBody
-    public String upreadHowMany(@RequestParam int receiverNum) {
-    	int unreadHowMany = chService.upreadHowMany(receiverNum);
+    public String unreadHowMany(@RequestParam int receiverNum) {
+    	int unreadHowMany = chService.unreadHowMany(receiverNum);
     	return String.valueOf(unreadHowMany);
     }
     

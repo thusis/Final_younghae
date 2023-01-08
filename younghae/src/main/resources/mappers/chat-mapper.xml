@@ -305,9 +305,14 @@
 		SELECT * FROM DUAL
 	</insert>
 	
-	<select id="upreadHowMany" resultType="_int">
+	<select id="unreadHowMany" resultType="_int">
 		SELECT COUNT(*) FROM CHATMESSAGE WHERE RECEIVER_NUM = #{receiverNum} AND IS_READ='N'
 	</select>
 	
+	<select id="getIfReserv" resultMap="ChatReserv">
+		SELECT *
+		FROM CHATRESERV
+		WHERE CHATROOM_ID = #{chatroomId}
+	</select>	
 	
 </mapper>
