@@ -213,7 +213,7 @@
 	var loginUser = "${loginUser.userNum}";
 
 	$(function(){
-		   if(loginUser!=""){   
+		   if(loginUser!=""){
 		      setInterval(() => {
 			  	getUnreadHowMany();
 		      }, 5000);
@@ -224,7 +224,7 @@
 	function getUnreadHowMany(){
 		$.ajax({
 			url: '${contextPath}/unreadHowMany.ch',
-			data: { 
+			data: {
 				receiverNum : loginUser
 			},
 			success: (unreadHowMany)=>{

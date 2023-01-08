@@ -145,7 +145,7 @@
 		SELECT CHAT_ID, CHAT_CONTENT, TO_CHAR(SEND_TIME, 'YYYY.MM.DD HH24:MI') SEND_TIME, IS_READ, CHATROOM_ID, SENDER_NUM, RECEIVER_NUM
 		FROM CHATMESSAGE
 		WHERE CHATROOM_ID  = #{chatroomId}
-		ORDER BY CHAT_ID
+		ORDER BY CHAT_ID DESC
 		)
 		WHERE ROWNUM = 1
 	</select>
@@ -300,8 +300,14 @@
 
 	<insert id="afterPayInsertChatReserv">
 		INSERT ALL
-		INTO CHATRESERV VALUES (SEQ_CHATRESERV.NEXTVAL, #{crInsert.chatroomId},SEQ_ORDER.NEXTVAL,TO_DATE(#{crInsert.reservSchedule}, 'YYYY/MM/DD HH:MI'),DEFAULT, DEFAULT,#{crInsert.reservHowLong}*10 )
-		INTO ORDERS VALUES (SEQ_ORDER.CURRVAL, #{ordInsert.orderCode}, #{orderInsert.userNum},#{orderInsert.userId},#{orderInsert.orderDate},DEFAULT,#{orderInsert.orderPayAmount},#{orderInsert.orderPayAmount},#{orderInsert.orderUserName},#{orderInsert.orderPaymethod},#{orderInsert.orderCouponPrice}, #{orderInsert.orderImpCode}, #{orderInsert.orderPhone}, 0,'없음' )
+		INTO CHATRESERV VALUES 
+		(SEQ_CHATRESERV.NEXTVAL, #{crInsert.chatroomId},SEQ_ORDER.NEXTVAL,TO_DATE(#{crInsert.reservSchedule}, 'YYYY/MM/DD HH24:MI'),
+		DEFAULT, DEFAULT,#{crInsert.reservHowLong} )
+		
+		INTO ORDERS VALUES (SEQ_ORDER.CURRVAL, #{ordInsert.orderCode}, #{ordInsert.userNum},#{ordInsert.userId},#{ordInsert.orderDate},
+		DEFAULT,#{ordInsert.orderPayAmount},#{ordInsert.orderPayAmount},#{ordInsert.orderUserName},
+		#{ordInsert.orderPaymethod},#{ordInsert.orderCouponPrice}, #{ordInsert.orderImpCode}, #{ordInsert.orderPhone}, 0,'없음' )
+		
 		SELECT * FROM DUAL
 	</insert>
 	
@@ -314,5 +320,8 @@
 		FROM CHATRESERV
 		WHERE CHATROOM_ID = #{chatroomId}
 	</select>	
+	
+	<update id="reservApprove">UPDATE CHATRESERV SET IS_APPROVED='Y' WHERE CHATROOM_ID= #{chatroomId} AND IS_APPROVED='N'</update>
+	<update id="reservDeny">UPDATE CHATRESERV SET IS_APPROVED='D' WHERE CHATROOM_ID= #{chatroomId} AND IS_APPROVED='N'</update>
 	
 </mapper>

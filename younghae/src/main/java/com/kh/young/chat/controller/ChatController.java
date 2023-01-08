@@ -227,6 +227,22 @@ public class ChatController {
     	return String.valueOf(unreadHowMany);
     }
     
+    @GetMapping("reservApprove.ch")
+    @ResponseBody
+    public String reservApprove(@RequestParam int chatroomId) {
+    	int result = chService.reservApprove(chatroomId);
+    	return String.valueOf(result);
+    }
+    
+    @GetMapping("reservDeny.ch")
+    @ResponseBody
+    public String reservDeny(@RequestParam int chatroomId) {
+    	int result = chService.reservDeny(chatroomId);
+    	return String.valueOf(result);
+    }
+    
+    
+    
     
     
     

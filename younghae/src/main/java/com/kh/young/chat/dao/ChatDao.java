@@ -6,8 +6,6 @@ import java.util.Map;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.kh.young.chat.dto.ChatroomDto;
-import com.kh.young.chat.dto.ChatroomListDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
@@ -136,6 +134,14 @@ public class ChatDao {
 
 	public ChatReserv getIfReserv(SqlSessionTemplate sqlSession, int chatroomId) {
 		return sqlSession.selectOne("chatMapper.getIfReserv", chatroomId);
+	}
+
+	public int reservApprove(SqlSessionTemplate sqlSession, int chatroomId) {
+		return sqlSession.update("chatMapper.reservApprove", chatroomId);
+	}
+
+	public int reservDeny(SqlSessionTemplate sqlSession, int chatroomId) {
+		return sqlSession.update("chatMapper.reservDeny", chatroomId);
 	}
 
 

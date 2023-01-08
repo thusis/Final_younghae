@@ -210,6 +210,16 @@ public class ChatServiceImpl implements ChatService {
 		return chDao.unreadHowMany(sqlSession, receiverNum);
 	}
 
+	@Override
+	public int reservApprove(int chatroomId) {
+		return chDao.reservApprove(sqlSession, chatroomId);
+	}
+
+	@Override
+	public int reservDeny(int chatroomId) {
+		return chDao.reservDeny(sqlSession, chatroomId);
+	}
+
 
 
 
