@@ -20,6 +20,7 @@ import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Clip;
+import com.kh.young.model.vo.Declaration;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
@@ -395,6 +396,11 @@ public class QaServiceImpl implements QaService {
 	@Override
 	public int updateIsSolved(int boardNum) {
 		return qdao.updateIsSolved(sqlSession, boardNum);
+	}
+
+	@Override
+	public int insertDeclare(Declaration declare) {
+		return qdao.insertDeclare(sqlSession, declare);
 	}
 	
 }

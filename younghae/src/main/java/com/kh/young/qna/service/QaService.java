@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.model.vo.Clip;
+import com.kh.young.model.vo.Declaration;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
@@ -57,6 +58,8 @@ public interface QaService {
 	ChatPaymentRespDto getChatPaymentResp(String info);
 
 	int updateIsSolved(int boardNum);
+
+	int insertDeclare(Declaration declare);
 
 
 

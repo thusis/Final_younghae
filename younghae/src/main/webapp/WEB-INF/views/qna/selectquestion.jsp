@@ -21,6 +21,54 @@
 </head>
 <body>
 
+<!-- 신고 모달창 -->
+	<div class="modal fade" id="declareModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header text-end" style="justify-content: flex-end;">
+	        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-circle"></i></button>
+	      </div>
+		
+		<div class="modal-body" id="declareModalBody1">
+			<form action="${contextPath}/declare.qa" method="post" id="declareForm">
+	        <h4 class="modal-title fs-5">신고하기</h4>
+	                <h5>작성자 : ${qresp.writerInfo}</h5>
+	                <h5>글 제목 : ${qresp.board.boardTitle}</h5>
+	                <input type="hidden" name="boardNum" value="${qresp.board.boardNum}">
+	            <hr>
+	            <div class="declareReason">
+	                <h4>신고 사유</h4>
+	                <div><input type="radio" name="declContent" id="1" value="1" class="declareReason">
+	                <label for="1"><h6>스팸홍보/도배글입니다.</h6></label></div>
+	                
+	                <div><input type="radio" name="declContent" id="2"  value="2" class="declareReason">
+	                <label for="2"><h6>음란물입니다</h6></label></div>
+	                
+	                <div><input type="radio" name="declContent" id="3"  value="3" class="declareReason">
+	                <label for="3"><h6>욕설/생명경시/혐오/차별적 표현입니다</h6></label></div>
+	                
+	                <div><input type="radio" name="declContent" id="4"  value="4" class="declareReason">
+	                <label for="4"><h6>불쾌한 표현이 있습니다</h6></label></div>
+	                
+	                <div><input type="radio" name="declContent" id="5"  value="5" class="declareReason">
+	                <label for="5"><h6>기타</h6></label></div>
+	            </div>
+	            <hr>
+	            <button type="button" class="btn btn-secondary" onclick="declare();">신고하기</button>
+			</form>
+       	</div>
+       	
+       	<div class="modal-body" id="declareModalBody2" style="display:none;">
+     		<h3 id="declaredMessage"></h3>
+		 	<button type="button" class="btn btn-secondary text-end" data-bs-dismiss="modal" style="justify-content: flex-end;">닫기</button>
+	    </div>
+      </div>
+	    </div>
+	  </div>
+	</div>
+
+
+
     <div class="container">
         <div class="bn_index mt-5">
             <ul>
@@ -102,7 +150,7 @@
 	                         </c:if>
 	                         
 	                        <c:if test="${loginUser.userNum!=qresp.board.userNum}">
-	                            <li><a class="dropdown-item" onclick="openPopUp();" >신고하기</a></li>
+	                            <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#declareModal">신고하기</a></li>
 	                        </c:if>
                         </ul>
                         </c:if>
@@ -324,7 +372,9 @@
 		                		<li><a class="dropdown-item" onclick="deleteBoard();">삭제하기</a></li>
 		                	</c:if>
 		                	<c:if test="${loginUser.userNum ne ans.board.userNum}">
-		                		<li><a class="dropdown-item" onclick="openPopUp();" >신고하기</a></li>
+<!-- 	                            <li><a class="dropdown-item" onclick="declareAnswer(ans.board.boardNum);" data-bs-toggle="modal" data-bs-target="#declareModal">신고하기</a></li> -->
+	                            <li><a class="dropdown-item" onclick='declareAnswer("${ans.board.boardNum}");' >신고하기</a></li>
+	                            
 		                	</c:if>
 		                	</ul>
 		               </div>
@@ -374,13 +424,8 @@
 		console.log(document.getElementsByClassName('replySubmits')[0]);
 		
 		const replyBtns = document.getElementsByClassName('replySubmits');
-		var loginUserNum = 0;
-		if(${loginUser != null}){
-			loginUserNum = ${loginUser.userNum}+"";
-		} else {
-			loginUserNum = 0;
-		}
-		
+		var loginUserNum = "${loginUser.userNum}";
+
 		console.log(loginUserNum);
 		
 		for(const btn of replyBtns){//댓글달기===================================================================================
@@ -389,10 +434,8 @@
 				const replyContent = btn.parentNode.parentNode.querySelector('input').value;
 				var boardNum = this.querySelector('span').innerText;
 				const boardType = this.querySelector('h6').innerText;
-				if(loginUserNum != 0){
+				if(loginUserNum != ""){
 					var userNum = loginUserNum;
-				}else{
-					var userNum = 0;
 				}
 				
 				console.log(btn.parentNode.parentNode.querySelector('input').value);
@@ -458,16 +501,37 @@
 		}//댓글달기 끝===================================================================================
 
 			
-		//====게시글 수정
-		function updateQuestion(){
-			console.log("수정");
-			
-		}
+	//====게시글 수정
+	function updateQuestion(){
+		console.log("수정");
 		
-		//====수정/삭제 불가
-		function disabledAlert(){
-			alert('이미 답글이 달린 게시글은 수정/삭제가 불가능합니다‼‼');
-		}
+	}
+		
+	//====수정/삭제 불가
+	function disabledAlert(){
+		alert('이미 답글이 달린 게시글은 수정/삭제가 불가능합니다‼‼');
+	}
+		
+	//====신고하기
+	function declare(){
+		var declareForm = $("#declareForm").serialize();
+		$.ajax({
+			type:"post",
+ 			url:'${contextPath}/declare.qa',
+ 			data :declareForm,
+ 			dataType: 'json',
+ 			success : (data)=>{
+ 				document.getElementById('declareModalBody1').style.display = 'none';
+ 				document.getElementById('declareModalBody2').style.display = 'block';
+ 				document.getElementById('declaredMessage').innerText = data;
+ 			}
+		})
+	}
+	
+	function declareAnswer(boardNum){
+		$("#declareModal").show();
+// 		document.getElementById('declareModal').style.display = 'show';
+	}
 		
 		//====스크랩불러오기
 		var boardNum = "${qresp.board.boardNum}";
@@ -499,32 +563,7 @@
 	  			}); // ajax 스크랩 추가
 			}
 		
-// 		function changeScrap(){
-//			if(isScrap==1){
-//	   			$.ajax({
-//	   				url:'${contextPath}/deleteScrap.qa',
-//	   				data :{ boardNum : boardNum , userNum : userNum },
-//	   				success : (data)=>{
-//	   					console.log("스크랩취소");
-//// 						document.getElementById('isScrap').innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
-//	// 					this.innerHTML = '<h2><i class="save fa-regular fa-bookmark"></i></h2>';
-//// 						document.getElementById('scrapCount').innerHTML = '<i class="save fa-regular fa-bookmark"></i>' + data;
-//// 	    				isScrap = 0;
-//	   				}
-//	   			}); // ajax 스크랩 취소
-//			} else {
-//				$.ajax({
-//	  				url:'${contextPath}/setScrap.qa',
-//	   				data :{boardId:boardId,userId:userId},
-//	   				success : (data)=>{
-//	   					console.log("스크랩함");
-//// 	   					document.getElementById('isScrap').innerHTML = '<h2><i class="fa-solid fa-bookmark"></i></h2>';
-//// 						document.getElementById('scrapCount').innerHTML = '<i class="fa-solid fa-bookmark"></i>' + data;
-//// 	    				isScrap = 1;
-//	  				}
-//	  			}); // ajax 스크랩 추가
-//			}
-//		}
+
 	</script>
 </body>
 </html>

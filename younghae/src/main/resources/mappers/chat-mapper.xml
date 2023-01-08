@@ -323,5 +323,7 @@
 	
 	<update id="reservApprove">UPDATE CHATRESERV SET IS_APPROVED='Y' WHERE CHATROOM_ID= #{chatroomId} AND IS_APPROVED='N'</update>
 	<update id="reservDeny">UPDATE CHATRESERV SET IS_APPROVED='D' WHERE CHATROOM_ID= #{chatroomId} AND IS_APPROVED='N'</update>
-	
+
+
+
 </mapper>

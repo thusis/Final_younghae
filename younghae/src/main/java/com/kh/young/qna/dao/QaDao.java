@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Clip;
+import com.kh.young.model.vo.Declaration;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
@@ -179,6 +180,10 @@ public class QaDao {
 
 	public int updateIsSolved(SqlSessionTemplate sqlSession, int boardNum) {
 		return sqlSession.update("qnaMapper.updateIsSolved", boardNum);
+	}
+
+	public int insertDeclare(SqlSessionTemplate sqlSession, Declaration declare) {
+		return sqlSession.insert("qnaMapper.insertDeclare", declare);
 	}
 
 }
