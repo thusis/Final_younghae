@@ -2,105 +2,36 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
 
-	<select id="checkId" resultType="_int">
-		select count(*)
-		from member
-		where user_id = #{id}
-	</select>
-	
-	<select id="checkNickName" resultType="_int">
-		select count(*)
-		from member
-		where user_nickname=#{nickName}
-	</select>
-	
-	<select id="searchEmail" resultType="_int">
-		select count(*)
-		from member
-		where user_Email=#{memberEmail} and user_status='Y'
-	</select>
-	
-	<insert id="insertMember">
-		insert into member
-		values(seq_user.nextval, #{userId}, #{userPwd}, #{userName}, #{userNickname},
-			 #{email}, #{gender}, #{userBirth}, #{userPhone},#{userRecommend},SYSDATE,#{userCNumber},DEFAULT,SYSDATE)
-	</insert>
-	
-	<select id="selectMember" resultType="_int">
-		select user_num
-		from member
-		where user_id = #{userId}
-	</select>
-	
-	<insert id="insertMemberAddress">
-	<if test="category == 'general'">
-		insert into general_user
-		values(#{userNum},#{userZipcode},#{userAddress},#{userAddressDetail},#{userHealth})
-	</if>
-	<if test="category == 'export'">			
-		insert into expert_user
-		values(#{userNum},#{userZipcode},#{userAddress},#{userAddressDetail},'N','N','N','N','N','N',DEFAULT,'N','N')
-	</if>	
-	</insert>
-	
-	<select id="login" resultMap="loginResultMap">
-		select * 
-		from member 
-		where user_id=#{userId} and user_status='Y'
-	</select>
-	
-	<update id="updateMember">
-		update member
-		set  user_name=#{userName},
-			user_nickname=#{userNickname}, user_email=#{email}, user_gender=#{gender}, user_birth=#{userBirth}
-		where user_id=#{userId}
-	</update>
-	<insert id="updateMemberAddress">
-	<if test="category == 'general'">
-		update general_user
-		set user_zipcode=#{userZipcode}, user_address=#{userAddress}, user_Address_detail=#{userAddressDetail}, user_health=#{userHealth}
-		where user_Num=#{userNum}
-	</if>
-	<if test="category == 'export'">			
-		update expert_user
-		set expert_postadd=#{userZipcode}, expert_address=#{userAddress}, expert_Add_detail=#{userAddressDetail}
-		where user_Num=#{userNum}
-	</if>	
-	</insert>
-	
-	<select id="searchId" resultMap="loginResultMap">
-		select *
-		from member
-		where USER_NAME=#{userName} and USER_EMAIL=#{email} and user_status='Y'
-	</select>
-	
-	<select id="checkIdEmail" resultMap="loginResultMap">
-		select *
-		from member
-		where USER_Id=#{userId} and user_status='Y'
-	</select>
-	
-	<update id="updatePwd">
-		update member
-		set USER_PWD=#{encPwd}
-		where USER_ID=#{memberId}
-	</update>
+   <select id="selectAdminCoupon" parameterType="map" resultMap="couponResultMap">
+      select *
+      from Coupon
+      where USER_num = #{id}
+   </select>
+   
+   <update id="alertCouponCa">
+      update Coupon 
+      set COU_USED = 'N'
+	  where COU_REGISTER = #{couRegister} and USER_NUM=#{id}
+   </update>
+   
+   <update id="alertCouponRe">
+      update Coupon 
+      set COU_USED = 'A'
+	  where COU_REGISTER = #{couRegister} and USER_NUM=#{id}
+   </update>
 	
 	
-	<resultMap type="Member" id="loginResultMap">
-		<id column="USER_NUM" property="userNum"/>
-		<result column="USER_ID" property="userId"/>
-		<result column="USER_PWD" property="userPwd"/>
-		<result column="USER_NAME" property="userName"/>
-		<result column="USER_NICKNAME" property="userNickname"/>
-		<result column="USER_EMAIL" property="email"/>
-		<result column="USER_GENDER" property="gender"/>
-		<result column="USER_BIRTH" property="userBirth"/>
-		<result column="USER_PHONE" property="userPhone"/>
-		<result column="USER_RECOMMEND" property="userRecommend"/>
-		<result column="USER_ENROLLDATE" property="userEnrollDate"/>
-		<result column="USER_CNUMBER" property="userCNumber"/>
-		<result column="USER_STATUS" property="userStatus"/>
-		<result column="USER_MODIFYDATE" property="userModifyDate"/>
+	<resultMap type="Coupon" id="couponResultMap">
+		<id column="COU_NUMBER" property="couNumber"/>
+		<result column="COU_PUBLISHDATE" property="couPublishDate"/>
+		<result column="COU_ENDDATE" property="couEndDate"/>
+		<result column="COU_USED" property="couUsed"/>
+		<result column="COU_DISCOUNT" property="couDiscount"/>
+		<result column="COU_INTRO" property="couIntro"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="COU_REGISTER" property="couRegister"/>
 	</resultMap>
+	
+	
+	
 </mapper>
