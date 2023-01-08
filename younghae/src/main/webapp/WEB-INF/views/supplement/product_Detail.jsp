@@ -477,6 +477,9 @@
 		        // 리뷰쓰러가기 버튼
 		        btn.onclick = function () {
 		        	console.log("리뷰쓰러가기 버튼");
+		        	
+		        	// 처음쓰는 사용자 체크하고 넘어가는 곳
+		        	
 		            modal.style.display = "block";
 		        }
 	        }
@@ -495,8 +498,6 @@
 	                modal.style.display = "none";
 	            }
 	        }
-			
-	       
 	        
             // 파일 이름 등록
             $('#file').on('change', function(){
@@ -650,17 +651,17 @@
 // 			    	            	console.log(this);
 			    	            	// rvNum
 			    	            	console.log($(this).parent().children()[7].value);
-			    	            	$.ajax({
-			    	            		url: '${contextPath}/reco.su',
-			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
-			    	            				check: check},
-			    	            		success:(data)=>{
+// 			    	            	$.ajax({
+// 			    	            		url: '${contextPath}/reco.su',
+// 			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
+// 			    	            				check: check},
+// 			    	            		success:(data)=>{
 			    	            			
-			    	            		},
-			    	            		error:(data)=>{
-			    	            			console.log(data);
-			    	            		}
-			    	            	});
+// 			    	            		},
+// 			    	            		error:(data)=>{
+// 			    	            			console.log(data);
+// 			    	            		}
+// 			    	            	});
 			    	            });
 			                }
 			            }

@@ -500,4 +500,23 @@ public class SupplementController {
 	public String AdminReview() {
 		return "admin_ReviewPage";
 	}
+	
+	@RequestMapping("insertPage.su")
+	public String insertProductPage() {
+		return "insertProduct";
+	}
+	
+	@RequestMapping("insertProduct.su")
+	public String insertProduct(@ModelAttribute Supplement supple) {
+		System.out.println(supple);
+		
+//		int result = sService.insertProduct(supple);
+		
+//		if(result > 0) {
+//			return "redirect:insertPage.su";
+//		}else {
+//			throw new SupplementException("insertProduct 오류");
+//		}
+		return null;
+	}
 }

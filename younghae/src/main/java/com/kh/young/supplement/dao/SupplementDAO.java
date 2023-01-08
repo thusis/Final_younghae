@@ -121,4 +121,8 @@ public class SupplementDAO {
 		return sqlSession.update("supplementMapper.deleteReviewCount", r);
 	}
 
+	public int insertProduct(SqlSessionTemplate sqlSession, Supplement supple) {
+		return sqlSession.insert("supplementMapper.insertProduct", supple);
+	}
+
 }

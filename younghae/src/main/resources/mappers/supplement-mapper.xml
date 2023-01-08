@@ -195,6 +195,12 @@
 		where rv_num = #{rvNum}
 	</update>
 	
+	<!-- 영양제 insert -->
+	<insert id="insertProduct">
+		insert product
+		values(seq_pro.nextval, #{proImage}, #{proName}, #{proCompany}, #{proIngredient}, #{proPrice}, #{proEffect}, #{proIntake}, #{proSaleStatus}, sysdate, sysdate, 0, 'Y' ,#{cateNum} )
+	</insert>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>

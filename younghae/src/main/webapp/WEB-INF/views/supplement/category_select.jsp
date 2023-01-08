@@ -322,19 +322,19 @@
 														<p style="color: black; font-size: 130%;">${ re.rvStar }</p>
 													</div>
 													<div class="product__details__rating_1"
-														style="float: left; padding-top: 3.5%; padding-left: 20%;">
+														style="float: left; margin-top: 3.5%; margin-left: 20%;">
 														<i class="bi bi-hand-thumbs-up"
 															style="color: rgb(0, 0, 0); font-size: 130%;"></i>
 														<input type="hidden" name="rvNum" value="${ re.rvNum }">
 													</div>
-													<div name="reviewRank"
+													<div class="product__details__rating_1" name="reviewRank"
 														style="float: left; padding-top: 3.5%; padding-left: 1%;">
 														<p style="color: black; font-size: 130%;">${ re.rvRecommend }</p>
 													</div>
 												</div>
 												<div class="row reviewContent" style="margin-top: 1%; padding-left: 2%;">
 													<input type="hidden" name="productNum" value="${ re.rvNum }">
-													<input type="hidden" name="userNum" value="${ re.userNum }">
+													<input type="hidden" name="userNum" value="${ re.member.userNum }">
 													<c:if test="${ re.image  ne '없음' }">
 														<div name="reviewContent" class="col-9 text-left">${ re.rvContent }</div>
 														<div name="reviewImg" class="col-3">
@@ -392,6 +392,20 @@
 					location.href = '${contextPath}/selectProduct.su?proNum='+productSelect;
 				});
 			}
+			
+			const good = document.getElementsByClassName('product__details__rating_1');
+			for(const g of good){
+				g.addEventListener('click', function(){
+					console.log($(this).parents().find('div[class="row reviewContent"]').children()[1]);
+					
+					// 제품번호
+					const pnum = $(this).children()[1].value;
+					
+					// 유저번호
+					const unum = $(this);
+				});
+			}
+			
 		}
 	</script>
 </html>
