@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.young.chat.dao.ChatDao;
+import com.kh.young.chat.dao.ExpertcrDto;
+import com.kh.young.chat.dao.GeneralcrDto;
 import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.chat.dto.ChatroomListDto;
 import com.kh.young.model.vo.ChatMessage;
@@ -26,73 +28,47 @@ public class ChatServiceImpl implements ChatService {
 	private ChatDao chDao;
 
 	@Override
-	public ChatroomDto selectNowChatroom(Integer expertNum, int loginUserNum) {
-		 
-		if( expertNum == loginUserNum ) {
-			ArrayList<ChatroomListDto> rl = selectExpertsRoomList(loginUserNum);
-			if( rl != null ) {
-				return selectRecentChatroom(loginUserNum); 
-			} else {
-				return null; // 채팅방은 있는데 보낸 메세지가 없으면 null 만! 전문가회원은 자기가 새로운 채팅방 못 만들어
-			}
+	public ExpertChatroomDto selectGeneralRecentChatroom(int loginUserNum) {
+		int[] a = chDao.searchLatestChats(sqlSession, loginUserNum);
+		if(a[0]==0 && a[1]==0) {
+			return null;
 		} else {
-			if(expertNum==0) {
-				return null;  // 일반유저가 expertNum이라는 parameter 없이 채팅방 들어온 경우 아무것도 생성되선 안 됨. 새로고침도 마찬가지
-			}else {
-				Chatroom paraChatroom = new Chatroom();
-				paraChatroom.setExpertNum(expertNum);
-				paraChatroom.setUserNum(loginUserNum);
-				ChatroomDto expertChatroom = getExpertChatroom(paraChatroom); //나와 전문가 유저와의 챗 목록 확인
-				
-				System.out.println("c서비스39"+paraChatroom);
-				System.out.println("c서비스40"+expertChatroom);
-				
-				if (expertChatroom == null || expertChatroom.getChatroom().getChatroomId() == 0) {
-					ChatroomDto newChatroom = createChatroom(paraChatroom);
-					System.out.println("c서비스45: 새로운챗룸생성"+newChatroom);
-					
-					/*
-				String defaultMsg = newChatroom.getExpert().getExpert().getExpertProfile();
-				if(defaultMsg.trim().equals("") || defaultMsg.trim() == null) {
-					defaultMsg = "설정된 기본 메세지가 없습니다.";
-				}
-				sendBotMessage(paraChatroom, defaultMsg); //전문가 프로필 = 기본메세지
-					 */
-					return newChatroom;
-				} else {
-					return expertChatroom;
-				}
-			}
+			ExpertcrDto e = chDao.selectGeneralRecentChatroom(sqlSession, Math.max(a[0], a[1]));
+			ExpertChatroomDto ex = new ExpertChatroomDto(e);
+			ex.setReserv(getIfReserv(ex.getChatroomId()));
+			ex.setMessageList(selectMessageList(ex.getChatroomId()));
+			return ex;
 		}
 	}
 	
 	@Override
-	public ChatroomDto selectRecentChatroom(int loginUserNum){
-		return chDao.selectRecentChatroom(sqlSession, loginUserNum);
+	public GeneralChatroomDto selectExpertsRecentChatroom(int loginUserNum) {
+		int[] a = chDao.searchLatestChats(sqlSession, loginUserNum);
+		if(a[0]==0 && a[1]==0) {
+			return null;
+		} else {
+			GeneralcrDto g= chDao.selectExpertsRecentChatroom(sqlSession, Math.max(a[0], a[1]));
+			GeneralChatroomDto gn = new GeneralChatroomDto(g);
+			gn.setReserv(getIfReserv(gn.getChatroomId()));
+			gn.setMessageList(selectMessageList(gn.getChatroomId()));
+			return gn;
+		}
 	}
 
 	// 전문가와 채팅방 조회 / 없으면 []
 	@Override
-	public ChatroomDto getExpertChatroom(Chatroom paraChatroom) {
-		return chDao.getExpertChatroom(sqlSession, paraChatroom);
+	public ExpertChatroomDto getExpertChatroomByMemberNums(Chatroom paraChatroom) {
+		ExpertChatroomDto ex = new ExpertChatroomDto(chDao.getExpertChatroomByMemberNums(sqlSession, paraChatroom));
+		ex.setMessageList(selectMessageList(ex.getChatroomId()));
+		ex.setReserv(getIfReserv(ex.getChatroomId()));
+		return ex;
 	}
 
 	// 없으면 새로 만든 후 반환
 	@Override
-	public ChatroomDto createChatroom(Chatroom paraChatroom) {
+	public ExpertChatroomDto createChatroom(Chatroom paraChatroom) {
 		chDao.createChatroom(sqlSession, paraChatroom);
-		return getExpertChatroom(paraChatroom);
-	}
-	
-	//생성 직후에는 bot메세지 보낸다
-	private int sendBotMessage(Chatroom paraChatroom, String msg) {
-		ChatMessage botMsg = new ChatMessage();
-		
-		botMsg.setSenderNum(paraChatroom.getExpertNum());
-		botMsg.setChatroomId(paraChatroom.getChatroomId());
-		botMsg.setChatContent(msg);
-
-		return chDao.insertMessage(sqlSession, botMsg);
+		return getExpertChatroomByMemberNums(paraChatroom);
 	}
 
 	@Override
@@ -100,67 +76,67 @@ public class ChatServiceImpl implements ChatService {
 		return chDao.insertMessage(sqlSession, msg);
 	}
 
-	@Override
-	public ArrayList<ChatroomListDto> selectRoomList(int userNum) {
-		ArrayList<ChatroomListDto> roomList = chDao.selectRoomList(sqlSession, userNum);
+	@Override /**ok**/
+	public ArrayList<ExpertChatroomListDto> selectRoomList(int userNum) {
+		ArrayList<ExpertcrDto> roomList = chDao.selectRoomList(sqlSession, userNum);
 		System.out.println("ch서비스 97:" + roomList);
-		roomList = setRoomList(roomList);
-		return roomList;
-	}
-	
-	@Override
-	public ArrayList<ChatroomListDto> selectExpertsRoomList(int loginUserNum) {
-		return chDao.selectExpertRoomList(sqlSession, loginUserNum);
-	}
+		
+		ArrayList<ExpertChatroomListDto> resultRoomList = new ArrayList<>();
 
-	/*
-	@Override
-	public ArrayList<ChatReserv> selectReservList(int loginUserNum) {
-		return chDao.selectReservList(sqlSession, loginUserNum);
-	}
-	*/
-
-//	 roomList 세팅
-		private ArrayList<ChatroomListDto> setRoomList(ArrayList<ChatroomListDto> roomList) {
-			for(ChatroomListDto r : roomList) {
-				int chatroomId = r.getChatroom().getChatroomId();
-				r.setNotReadCount(getNotReadCount(chatroomId));
-				r.setLastMessage(selectLastMessage(chatroomId));
-				r.setReserv(getIfReserv(chatroomId));
-				
-			}
-			return roomList;
+		for(ExpertcrDto e : roomList) {
+			ExpertChatroomListDto ex = new ExpertChatroomListDto(e);
+			ex.setLastMessage(selectLastMessage(ex.getChatroomId()));
+			ex.setReserv(getIfReserv(ex.getChatroomId()));
+			ex.setNotReadCount(getNotReadCount(ex.getChatroomId()));
+			resultRoomList.add(ex);
 		}
 		
-		/** 일단 필요없는 메소드 **/
-		private String getIsPaid(int chatroomId) {
-			return chDao.getIsPaid(sqlSession, chatroomId);
-		}/** 일단 필요없는 메소드 **/
-		
-		private ChatReserv getIfReserv(int chatroomId) {
-			ChatReserv reserv = chDao.getIfReserv(sqlSession, chatroomId);
-			System.out.println(reserv);
-			if( reserv == null ) {
-				reserv.setReservId(0); // reserv 내역이 없으면 id 를 0으로 처리할 것
-			}
-			
-			return reserv;
-		}
-
-		private ChatMessage selectLastMessage(int chatroomId) {
-			ChatMessage lastMessage = chDao.selectLastMessage(sqlSession, chatroomId);
-			System.out.println(lastMessage);
-			if(lastMessage == null) {
-				lastMessage.setChatId(0); // lastMessage 내역이 없으면 id 를 0으로 처리할 것
-			}
-			return lastMessage;
-		}
-
-		private int getNotReadCount(int chatroomId) {
-			return chDao.getNotReadCount(sqlSession, chatroomId);
-		}
-
+		System.out.println("ch서비스118:"+resultRoomList);
+		return resultRoomList;
+	}
 	
+	@Override /**ok**/
+	public ArrayList<GeneralChatroomListDto> selectExpertsRoomList(int loginUserNum) {
+		ArrayList<GeneralcrDto> roomList = chDao.selectExpertRoomList(sqlSession, loginUserNum);
+		System.out.println("ch서비스 97:" + roomList);
+		
+		ArrayList<GeneralChatroomListDto> resultRoomList = new ArrayList<>();
+
+		for(GeneralcrDto g : roomList) {
+			GeneralChatroomListDto gn = new GeneralChatroomListDto(g);
+			gn.setLastMessage(selectLastMessage(gn.getChatroomId()));
+			gn.setReserv(getIfReserv(gn.getChatroomId()));
+			gn.setNotReadCount(getNotReadCount(gn.getChatroomId()));
+			resultRoomList.add(gn);
+		}
+		
+		System.out.println("ch서비스137:"+resultRoomList);
+		return resultRoomList;
+	}
+
+	private ChatReserv getIfReserv(int chatroomId) {/**ok**/
+		ChatReserv reserv = chDao.getIfReserv(sqlSession, chatroomId);
+		System.out.println(reserv);
+		if( reserv == null ) {
+			reserv = new ChatReserv(); // reserv 내역이 없으면 id 를 0으로 처리할 것
+//			reserv = new ChatReserv(0, 0, 0, null, null, null, 0 );// reserv 내역이 없으면 id 를 0으로 처리할 것
+		}
+		return reserv;
+	}
+
+	private ChatMessage selectLastMessage(int chatroomId) {/**ok**/
+		ChatMessage lastMessage = chDao.selectLastMessage(sqlSession, chatroomId);
+		System.out.println(lastMessage);
+		if(lastMessage == null) {
+			lastMessage = new ChatMessage(0, null, null, null, 0, 0, 0);
+		}
+		return lastMessage;
+	}
+
+	private int getNotReadCount(int chatroomId) {/**ok**/
+		return chDao.getNotReadCount(sqlSession, chatroomId);
+	}
+
 		
 	@Override
 	public ArrayList<ChatMessage> selectMessageList(int chatroomId) {
@@ -173,13 +149,21 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public ChatroomDto selectExpertuserChatroomByChatroomId(int chatroomId) {
-		return chDao.selectExpertuserChatroomByChatroomId(sqlSession, chatroomId);
+	public GeneralChatroomDto selectExpertuserChatroomByChatroomId(int chatroomId) {
+		GeneralcrDto g=  chDao.selectExpertuserChatroomByChatroomId(sqlSession, chatroomId);
+		GeneralChatroomDto gn = new GeneralChatroomDto(g);
+		gn.setReserv(getIfReserv(gn.getChatroomId()));
+		gn.setMessageList(selectMessageList(gn.getChatroomId()));
+		return gn;
 	}
 
 	@Override
-	public ChatroomDto selectGeneraluserChatroomByChatroomId(int chatroomId) {
-		return chDao.selectGeneraluserChatroomByChatroomId(sqlSession, chatroomId);
+	public ExpertChatroomDto selectGeneraluserChatroomByChatroomId(int chatroomId) {
+		ExpertcrDto e = chDao.selectGeneraluserChatroomByChatroomId(sqlSession, chatroomId);
+		ExpertChatroomDto ex = new ExpertChatroomDto(e);
+		ex.setReserv(getIfReserv(ex.getChatroomId()));
+		ex.setMessageList(selectMessageList(ex.getChatroomId()));
+		return ex;
 	}
 
 	@Override

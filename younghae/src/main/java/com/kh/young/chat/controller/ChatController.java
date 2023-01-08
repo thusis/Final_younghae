@@ -1,6 +1,5 @@
 package com.kh.young.chat.controller;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -21,6 +20,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.google.gson.Gson;
 import com.kh.young.chat.dto.ChatroomDto;
 import com.kh.young.chat.service.ChatService;
+import com.kh.young.chat.service.ExpertChatroomDto;
+import com.kh.young.chat.service.ExpertChatroomListDto;
+import com.kh.young.chat.service.GeneralChatroomDto;
+import com.kh.young.chat.service.GeneralChatroomListDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
@@ -37,8 +40,8 @@ public class ChatController {
 	@Autowired
 	private QaService qService;
 	
-    @GetMapping("open.ch") // 채팅창 켰을 때
-    public String chatting(
+    @GetMapping("open.ch") // 채팅창 켰을 때 
+    public String chatting( /**ok**/
     		HttpServletRequest request, 
 			@RequestParam(value="expertNum", required=false) Integer expertNum,
     		Model model) {
@@ -47,46 +50,48 @@ public class ChatController {
     	int cNum = ((Member)request.getSession().getAttribute("loginUser")).getUserCNumber();
     	
     	if(cNum==1 && expertNum == null) {
-    		ArrayList<ChatroomDto> roomList = chService.selectRoomList(loginUserNum);
+    		ArrayList<ExpertChatroomListDto> roomList = chService.selectRoomList(loginUserNum);
     		System.out.println("ch컨트롤62"+roomList);
     		if ( roomList.size() == 0 ) {
     			model.addAttribute("chatErrorMsg", "채팅 가능한 방이 없습니다.");
     		} else {
-    			ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
-    			updateRead(nowChatroom, 1);
+//    			ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
+    			ExpertChatroomDto nowChatroom = chService.selectGeneralRecentChatroom(loginUserNum);
+    			updateRead(nowChatroom, null);
     			model.addAttribute("nowChatroom", nowChatroom);
-    			model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
+    			model.addAttribute("messageList",nowChatroom.getMessageList());
     			model.addAttribute("roomList", roomList);
     		}
     	} else if (cNum==1 && expertNum != null ) {
 			Chatroom paraChatroom = new Chatroom();
 			paraChatroom.setExpertNum(expertNum);
 			paraChatroom.setUserNum(loginUserNum);
-    		ChatroomDto nowChatroom = chService.getExpertChatroom(paraChatroom);
+			ExpertChatroomDto nowChatroom = chService.getExpertChatroomByMemberNums(paraChatroom);
     		if( nowChatroom == null ) {
-    			nowChatroom = chService.createChatroom(paraChatroom);
-    			updateRead(nowChatroom, 1);
+    			nowChatroom = chService.createChatroom(paraChatroom);// 새로 만들었기 때문에 MessageList도 없고, chatreserv도 없음
     		}
+    		updateRead(nowChatroom, null);
 			model.addAttribute("nowChatroom", nowChatroom);
-			model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
+			model.addAttribute("messageList",nowChatroom.getMessageList());
 			model.addAttribute("roomList", chService.selectRoomList(loginUserNum)); // 일반 -> 상대는 expert 객체 보유
     	} else if ( cNum == 2 
     			&& ((expertNum != null && expertNum == loginUserNum) || expertNum == null ) ) {
     		//전문회원이면서 내 이름의 채팅방 조회한 경우
     		//전문회원이면서 그냥 채팅방 조회한 경우
-    		ArrayList<ChatroomDto> roomList = chService.selectExpertsRoomList(loginUserNum);
+    		ArrayList<GeneralChatroomListDto> roomList = chService.selectExpertsRoomList(loginUserNum);
     		if( roomList == null || roomList.size() == 0 ) {
     			model.addAttribute("chatErrorMsg", "채팅 가능한 방이 없습니다. 열심히 활동해서 인지도를 쌓아보세요");
     		} else {
     			int msgCount = chService.fullMessageListCount(loginUserNum);
     			if(msgCount>0) {
-    				ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
-    				updateRead(nowChatroom, 2);
+//    				ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
+    				GeneralChatroomDto nowChatroom = chService.selectExpertsRecentChatroom(loginUserNum);
+    				updateRead(null, nowChatroom);
     				model.addAttribute("nowChatroom", nowChatroom);
-    				model.addAttribute("messageList",chService.selectMessageList(nowChatroom.getChatroom().getChatroomId()));
+    				model.addAttribute("messageList", nowChatroom.getMessageList());
     			}else {
     				model.addAttribute("nowChatroom", roomList.get(0));
-    				model.addAttribute("messageList",null);
+    				model.addAttribute("messageList", null);
     			}
     			model.addAttribute("roomList", roomList);
     		}
@@ -105,24 +110,25 @@ public class ChatController {
     		@RequestParam int expertNum, 
     		@RequestParam int generalUserNum) {
     	
-//    	response.setContentType("application/json; charset=UTF-8");
     	int loginUserNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
-    	ChatroomDto nowChatroom;
-    	if ( loginUserNum == expertNum	) {
-    		nowChatroom = chService.selectExpertuserChatroomByChatroomId(chatroomId);
-    	} else {
-    		nowChatroom = chService.selectGeneraluserChatroomByChatroomId(chatroomId);
-    	}
-    	ArrayList<ChatMessage> messageList = chService.selectMessageList(chatroomId);
-    	
     	Map<String, Object> resultMap = new HashMap<>();
-    	resultMap.put("nowChatroom", nowChatroom);
-    	resultMap.put("messageList", messageList);
+    	
+    	if ( loginUserNum == expertNum	) {
+    		GeneralChatroomDto nowChatroom = chService.selectExpertuserChatroomByChatroomId(chatroomId);
+        	resultMap.put("nowChatroom", nowChatroom);
+        	resultMap.put("reserv", nowChatroom.getReserv());
+        	resultMap.put("messageList", nowChatroom.getMessageList());
+    	} else {
+    		ExpertChatroomDto nowChatroom = chService.selectGeneraluserChatroomByChatroomId(chatroomId);
+    		resultMap.put("nowChatroom", nowChatroom);
+    		resultMap.put("reserv", nowChatroom.getReserv());
+    		resultMap.put("messageList", nowChatroom.getMessageList());
+    	}
         
         return new Gson().toJson(resultMap);
     }
 
-    // 채팅방 목록을 비동기 조회
+    // 채팅방 목록을 비동기 조회 // 를 조회할 일이 없는데??????????????? (2023-01-08 20시 기준)
     @GetMapping("roomList.ch")
     @ResponseBody
     public String selectRoomList(HttpServletRequest request) {
@@ -145,13 +151,14 @@ public class ChatController {
         return chService.updateIsRead(paraMap);
     }
     
-    public int updateRead(ChatroomDto nowChatroom, int cNum) {
+    public int updateRead(ExpertChatroomDto ex, GeneralChatroomDto gn) {
     	Map<String, Object> paraMap = new HashMap<>();
-    	paraMap.put("chatroomId", nowChatroom.getChatroom().getChatroomId());
-    	if(cNum == '1') {
-    		paraMap.put("userNum", nowChatroom.getChatroom().getUserNum());
+    	if(gn == null) {
+    		paraMap.put("chatroomId", ex.getChatroomId());
+    		paraMap.put("userNum", ex.getChatroom().getUserNum());
     	} else {
-    		paraMap.put("userNum", nowChatroom.getChatroom().getExpertNum());
+    		paraMap.put("chatroomId", gn.getChatroomId());
+    		paraMap.put("userNum", gn.getChatroom().getExpertNum());
     	}
     	return chService.updateIsRead(paraMap);
     }

@@ -190,16 +190,24 @@
 						aria-current="true">
 							<div class="d-flex w-100 align-items-center justify-content-between">
 								<strong class="mb-1 bn_pro-name position-relative">${cr.general.userName }</strong>
-<%-- 								<small>${ cr.latestSendTime }</small> --%>
-							</div>
-<!-- 							<div class="col-10 mb-1 small chat_lastmsg"> -->
-<%-- 								${cr.lastMessage.chatContent} --%>
-<!-- 							</div> -->
-							<div class="col-10">
-								<c:if test="${ room.notReadCount>0 }">
-									<span class="badge">${cr.notReadCount}</span>
+								<c:if test="${cr.lastMessage.chatId ne 0 }">
+									<span>${cr.lastMessage.chatContent}</span>
+									<span>${cr.lastMessage.sendTime }</span>
 								</c:if>
-								<span class="badge">${cr.isPaid}</span>
+								<c:if test="${cr.lastMessage.chatId eq 0 }">
+									<span>아직 나눈 대화가 없어요</span>
+								</c:if>
+							</div>
+							<div class="col-10">
+								<c:if test="${ cr.notReadCount>0 }">
+									<span class="badge" style="backgroundcolor:red; color:white;">${cr.notReadCount}</span>
+								</c:if>
+								<c:if test="${ cr.reserv.reservId eq 0}">
+									<span class="badge">예약 내역이 없습니다</span>
+								</c:if>
+								<c:if test="${ cr.reserv.reservId ne 0}">
+									<span class="badge">${ cr.reserv.reservSchedule }</span>
+								</c:if>
 							</div>
 						</a>
 						</c:forEach>
@@ -216,6 +224,7 @@
 			style="width: 500px; height: 750px; border-left: 0.1rem solid rgba(20, 49, 82, 0.247); border-top: 0.2rem solid #24E082; background-color: #f8f8fa;">
 			<div id="chatMessageRoomTop" style="display:flex; overflow: auto; flex-direction:column_reverse;padding-bottom:5rem;background-color: #f8f8fa;">
 <!-- 			<div id="chatMessageRoomTop" style="overflow: auto; "> -->
+
 				<!--전문가-->
 				<c:if test="${ loginUser.userCNumber eq 1 }">
 				<div class="row bn_pro-box m-1" style="position: fixed; z-index: 10; width: 465px;">
@@ -276,6 +285,14 @@
 					<div class="col-lg-7  align-self-center">
 						<span id="generalUserNum" hidden>${nowChatroom.general.userNum }</span>
 	                    <h5 class="bn_pro-name"> ${nowChatroom.general.userName} 님&nbsp;과 채팅 중입니다 😉 &nbsp;</h5>
+	                    <c:if test="${nowChatroom.reserv.reservId eq 0}"><h5 style="color:red;">예약 내역이 없습니다</h5></c:if>
+	                    <c:if test="${nowChatroom.reserv.reservId ne 0}">
+	                    <h5 class="bn_pro-name">
+	                    상담예정일 : ${nowChatroom.reserv.reservSchedule}(${nowChatroom.reserv.reservHowLong}분) <br>
+	                    승인상태 : <c:if test="${nowChatroom.reserv.isApproved eq 'Y'}">승인 완료</c:if>
+	                    <c:if test="${nowChatroom.reserv.isApproved eq 'Y'}">승인하지않음</c:if> <br>
+	                    </h5>
+	                    </c:if>
 					</div>
 				</div>
 				</c:if>
@@ -283,6 +300,8 @@
 
 				<div class="chat_wrap bg-light" style="margin-top: 170px;">
 					<!--채팅메세지-->
+					<!-- ==========기본메세지와 견적서 일반유저에게만============ -->
+					<c:if test="${loginUser.userCNumber eq 1}">
 					<div class="chat ch1"><!-- ==========기본메세지============ -->
 						<div class="icon">
 							<i class="fa-solid fa-user"></i>
@@ -331,6 +350,7 @@
 							<span class="sendtime">오전 9:28</span>
 						</div><!-- ==========견적서============ -->
 					</div>
+					</c:if>
 
 					<div class="chat ch1mng chatDefaultBoxFromYH">
 						<div class="icon">
@@ -614,7 +634,11 @@
 					}
 				})//==메세지리스트 선택 끝==
 				var chatWrapHeight = document.getElementById('chatMessageRoomTop').scrollHeight;
-				document.getElementById('chatMessageRoomTop').scrollTo(0,chatWrapHeight);
+				if(chatWrapHeight>744){
+					document.getElementById('chatMessageRoomTop').scrollTo(0,chatWrapHeight);
+				}else{
+					document.getElementById('chatMessageRoomTop').scrollTo(0,744);
+				}
 			})
 		}
 			

@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="chatMapper">
 
-  	<resultMap type="ChatroomDto" id="GeneralChatroomDto">
+  	<resultMap type="GeneralcrDto" id="GeneralChatroomDto">
   		<association property="general" javaType="Member" resultMap="Member"/>
   		<association property="chatroom" javaType="Chatroom" resultMap="Chatroom"/>
   	</resultMap>
   	
-  	<resultMap type="ChatroomDto" id="ExpertsChatroomDto">
+  	<resultMap type="ExpertcrDto" id="ExpertChatroomDto">
   		<association property="expert" javaType="ExpertRespDto" resultMap="ExpertRespDto"/>
   		<association property="chatroom" javaType="Chatroom" resultMap="Chatroom"/>
   	</resultMap>
@@ -92,7 +92,7 @@
 	</resultMap>
 
 	<!-- 전문가번호와 회원번호로 챗룸 조회 // 없으면 []  -->
-	<select id="getExpertChatroom" resultMap="GeneralChatroomDto">
+	<select id="getExpertChatroomByMemberNums" resultMap="ExpertChatroomDto">
 		SELECT *
 		FROM CHATROOM
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
@@ -112,7 +112,7 @@
 	</insert>
 	
 	<!-- 일반유저인 내가 포함된(userNum) Chatroom 리스트 반환 -->
-	<select id="selectRoomList" resultMap="GeneralChatroomDto">
+	<select id="selectRoomList" resultMap="ExpertChatroomDto">
 		SELECT *
 		FROM CHATROOM
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
@@ -244,7 +244,7 @@
 	</select>
 	
 	<!-- 최신 챗방 : 내가 일반유저면 상대는 >>전문가<< -->
-	<select id="selectGeneralRecentChatroom" resultMap="ExpertsChatroomDto">
+	<select id="selectGeneralRecentChatroom" resultMap="ExpertChatroomDto">
 		SELECT * FROM CHATROOM 
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
 			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
@@ -266,7 +266,7 @@
 	</select>
 	
 	<!-- 내가 일반유저면 상대는 >>전문가<< -->
-	<select id="selectGeneralChatroomByChatroomId" resultMap="ExpertsChatroomDto">
+	<select id="selectGeneralChatroomByChatroomId" resultMap="ExpertChatroomDto">
 		SELECT * FROM CHATROOM 
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
 			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
