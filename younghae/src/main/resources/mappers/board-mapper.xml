@@ -199,7 +199,6 @@
 		<result column="BOARD_TYPE" property="boardType"/>
 		<association property="attachment" javaType="Attachment" resultMap="attachmentResultSet" />
 		<association property="member" javaType="Member" resultMap="memberResultSet" />
-		<association property="clip" javaType="Clip" resultMap="replyResultSet"/>
 		<association property="generaluser" javaType="GeneralUser" resultMap="generalUserResultSet" />
 		<association property="reply" javaType="Reply" resultMap="replyResultSet"/>
 		<association property="like" javaType="LIke" resultMap="likeResultSet"/>

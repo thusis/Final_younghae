@@ -235,7 +235,7 @@
 
 			<div class="col-lg-10">
 				<div class="row justify-content-end bn_board-meta">
-					<i class="bi bi-heart"></i><span class=" m-2">12</span>&nbsp;&nbsp;
+					<i class="fa-regular fa-pills" id="likeButton"></i><span class=" m-2">12</span>&nbsp;&nbsp;
 					<i class="fa-regular fa-eye"></i><span class=" m-2">${b.boardView }</span>&nbsp;&nbsp;
 					<i class="bi bi-chat-dots m-2"></i><span class=" m-2">${replyCount}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 				</div>
@@ -459,7 +459,15 @@
 				document.body.removeChild(textarea);
 				alert("URL이 복사되었습니다.")
 			}
-
+			
+			//좋아요
+			
+			document.getElementById('likeButton').addEventListener('click', ()=> {
+				$.ajax({
+					url: '${contextPath}/likeCheck.bo',
+				});
+			})
+			
 		</script>
 <textarea></textarea>
 </body>
