@@ -154,6 +154,16 @@
 
         <br>
         <br>
+        
+        <div class="bn_boardlist mt-2">
+            <table class="table">
+                <thead></thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <br>
+        <br>
 
         <!-- 전문가가 작성한 글 목록 ================================= -->
         <div class="bn_boardlist mt-2">
