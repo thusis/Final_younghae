@@ -319,4 +319,16 @@
 	
 	<insert id="insertDeclare">INSERT INTO DECLARATION VALUES (SEQ_DECL.NEXTVAL, #{boardNum}, #{declContent}, DEFAULT)</insert>
 	
+	<!-- expertNum만으로 예약된 스케줄 모두 조회 -->
+	<select id="selectAllReservSchedule" resultType="HashMap">
+	SELECT 
+	TO_CHAR(RESERV_SCHEDULE, 'YYYY.MM.DD HH24:MI') FROMTIME,
+	TO_CHAR(RESERV_SCHEDULE+(TO_NUMBER(RESERV_HOW_LONG)/(24*60)),'YYYY.MM.DD HH24:MI') TOTIME,
+	RESERV_HOW_LONG, IS_APPROVED, IS_COMPLETED
+	FROM CHATRESERV 
+	WHERE CHATROOM_ID IN (SELECT CHATROOM_ID FROM CHATROOM WHERE EXPERT_NUM = #{expertNum})
+	ORDER BY FROMTIME
+	</select>
+	
+	
 </mapper>
