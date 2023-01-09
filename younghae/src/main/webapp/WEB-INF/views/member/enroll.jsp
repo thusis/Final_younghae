@@ -145,7 +145,7 @@
                 <div class="tab-content">
                     <div class="tab-pane active" id="tabs-1" role="tabpanel">
                         <!-- 일반 회원가입시작 -->
-                        <form action="${ contextPath }/insertMember.me" method="POST" id='insertForm'>
+                        <form action="${ contextPath }/insertMember.me" method="POST" id='insertForm' enctype="multipart/form-data">
                             <input type="hidden" name="category" value="general">
                             <div class="panel-body p-3">
                                 <div class="form-group py-2">
@@ -259,7 +259,7 @@
 
                     <!-- 전문가 회원가입시작 -->
                     <div class="tab-pane" id="tabs-2" role="tabpanel">
-                        <form action="${ contextPath }/insertMember.me" method="POST" id='insertFormExpert'>
+                        <form action="${ contextPath }/insertMember.me" method="POST" id='insertFormExpert' enctype="multipart/form-data">
                             <input type="hidden" name="category" value="export">
                             <div class="panel-body p-3">
                                 <div class="form-group py-2">
@@ -353,8 +353,15 @@
                                     </div>
                                     <div class="form-group py-2">
                                         <div>
-                                            전문가 인증* <label class="input-file-button" for="input-file" style="float: right;">사진첨부</label> <input type="file" id="input-file" style="display: none;" required>
+                                            전문가 인증*
                                         </div>
+                                                                        <div style="text-align: center;">
+                                	<div class="info-container d-flex flex-column align-items-center justify-content-center" id="previewImageBox"></div>
+                                </div>
+                                <div id="fileArea" class="form-group py-2" style="text-align: center;">
+                                    <label className="input-file-button" for="addFile" class="form-label">사진첨부</label>
+                                    <input class="form-control myFiles" style="display: none;" type="file"  name="file" id="addFile" accept="image/*">
+                                </div>
                                     </div>
                                     <button class="btn btn-primary btn-block mt-3 " style="background-color: rgb(0, 179, 0); border-color: rgb(0, 179, 0);" id="enrollBtnExport">회원가입</button>
                                 </div>
@@ -902,7 +909,30 @@
 
             });
             //사진첨부
+			const fileArea = document.querySelector('#fileArea');
+        	document.getElementById('addFile').addEventListener('click', ()=> {
+        	   const imgDiv = document.getElementById('previewImageBox');
+        	   imgDiv.innerHTML += '<img class="img-fluid rounded-4" id="previewImage">';
 
+        	   $('#addFile').on('change', e=> {
+        	       readImage(e.target);
+        	        });
+        	});
+
+        	function readImage(input) {
+        	    // 인풋 태그에 파일이 있는 경우
+        	    if(input.files && input.files[0]) {
+
+        	        const reader = new FileReader()
+        	        // 이미지가 로드가 된 경우
+        	        reader.onload = e => {
+        	            const previewImage = document.getElementById("previewImage")
+        	            previewImage.src = e.target.result
+        	        }
+        	        // reader가 이미지 읽도록 하기
+        	        reader.readAsDataURL(input.files[0])
+        	    }
+        	}
 
 
             // 회원가입 버튼 활성화

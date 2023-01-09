@@ -177,6 +177,16 @@
                                 <div style="text-align: center;">
                                 	<div class="info-container d-flex flex-column align-items-center justify-content-center" id="previewImageBox"></div>
                                 </div>
+                                <c:if test="${ ExpertImage eq null }">
+                                <div style="text-align: center;">
+                                	<img id="img" src="resources/img/logo.svg" style="height: 60px; width: 80px;">
+                                </div>
+                                </c:if>
+                                <c:if test="${ ExpertImage ne null }">
+                                <div style="text-align: center;">
+                                	<img id="img" src="resources/uploadFiles/${ ExpertImage.attachRename }" style="height: 200px; width: 200px;">
+                                </div>
+                                </c:if>
                                 <div id="fileArea" class="form-group py-2" style="text-align: center;">
                                     <label className="input-file-button" for="addFile" class="form-label">프로필사진</label>
                                     <input class="form-control myFiles" style="display: none;" type="file"  name="file" id="addFile" accept="image/*">
@@ -287,6 +297,7 @@
 
         	function readImage(input) {
         	    // 인풋 태그에 파일이 있는 경우
+        	    document.getElementById("img").style.display='none';
         	    if(input.files && input.files[0]) {
 
         	        const reader = new FileReader()

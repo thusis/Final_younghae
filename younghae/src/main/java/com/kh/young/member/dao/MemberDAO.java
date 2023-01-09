@@ -98,6 +98,11 @@ public class MemberDAO {
 		return sqlSession.selectOne("memberMapper.searchMyUserNum", userId);
 	}
 
+	public int insertExpertAttmCheck(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("memberMapper.insertExpertAttmCheck", map);
+	}
+
 
 
 

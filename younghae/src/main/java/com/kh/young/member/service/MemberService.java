@@ -43,4 +43,6 @@ public interface MemberService {
 
 	Member searchMyUserNum(String userId);
 
+	int insertExpertAttmCheck(HashMap<String, Object> map);
+
 }

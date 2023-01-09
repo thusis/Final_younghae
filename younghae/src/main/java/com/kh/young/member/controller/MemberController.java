@@ -1,7 +1,9 @@
 package com.kh.young.member.controller;
 
 
-import java.util.ArrayList;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -25,11 +27,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.young.member.exception.MemberException;
 import com.kh.young.member.service.KakaoService;
 import com.kh.young.member.service.MemberService;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.Point;
 import com.kh.young.myPage.service.MyPageService;
@@ -113,8 +117,14 @@ public class MemberController {
 
         if (loginUser != null) {
             if (bcrypt.matches(m.getUserPwd(), loginUser.getUserPwd())) {
-                model.addAttribute("loginUser", loginUser);
-                return "redirect:home.do";
+            	if(loginUser.getUserStatus().equals("Y")) {
+            		model.addAttribute("loginUser", loginUser);
+                    return "redirect:home.do";
+            	}else {
+            		model.addAttribute("temp", loginUser);
+            		return "loginDelay";
+            	}
+                
             } else {
                 throw new MemberException("로그인에 실패하였습니다.");
             }
@@ -130,8 +140,7 @@ public class MemberController {
 
     // 회원가입
     @RequestMapping("insertMember.me")
-    public String insertMember(@ModelAttribute Member m, HttpServletRequest req) {
-        System.out.println(m);
+    public String insertMember(@ModelAttribute Member m, HttpServletRequest req,  @RequestParam(value="file", required=false) MultipartFile file) {
 
         if (m.getUserPwd() == null) {
             m.setUserPwd("1111");
@@ -176,13 +185,43 @@ public class MemberController {
             m.setUserCNumber(1);
 
         } else {
-            m.setUserCNumber(2);
+
+        	m.setUserCNumber(2);
+            
         }
         // 회원가입.
         int result = mService.insertMember(m);
-
+        
         String userId = m.getUserId();
         int selectMember = mService.selectMember(userId);
+        
+        //사진첨부
+        Attachment attm = new Attachment();
+        int attmResult = 0;
+    	if (file != null) {
+			System.out.println(file.getOriginalFilename());
+			if(!file.getOriginalFilename().equals("")) {
+				String[] returnArr = saveFile(file, req);
+				
+				attm.setAttachName(file.getOriginalFilename());
+				attm.setAttachRename(returnArr[1]);
+				attm.setAttachPath(returnArr[0]);
+				System.out.println(returnArr[1]);
+				System.out.println(returnArr[0]);
+				
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				
+				map.put("attachName", attm.getAttachName());
+				map.put("attachRename", attm.getAttachRename());
+				map.put("attachPath", attm.getAttachPath());
+				map.put("userNum", selectMember);
+				
+				attmResult = mService.insertExpertAttmCheck(map);
+			}
+		}
+        
+
+
 
         String userHealth = null;
         if (req.getParameter("userHealth") != null) {
@@ -258,7 +297,11 @@ public class MemberController {
  			}
  		}
         if (result > 0 && resultGenral > 0) {
-            return "enrollSuccess";
+        	if(attmResult>0) {
+        		return "enrollDelay";
+        	}else {
+        		return "enrollSuccess";
+        	}
         } else {
             return "enrollFail";
         }
@@ -528,4 +571,40 @@ public class MemberController {
  		}
  		
  	}
+    // attm Save
+	// saveFile 메소드 만들기
+	public String[] saveFile(MultipartFile file, HttpServletRequest request) {
+		String root = request.getSession().getServletContext().getRealPath("resources");
+		String savePath = root + "\\uploadFiles";
+//				\\는 \를 의미함
+
+		File folder = new File(savePath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+			// folder가 존재하지 않으면 make directory 폴더를 만들어줘
+		}
+
+		// 파일 저장소(물리적으로)에 저장할 수 있게끔 하는 코드
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		int ranNum = (int) (Math.random() * 100000);
+		// 파일명 변경
+		String originFileName = file.getOriginalFilename();
+		String renameFileName = sdf.format(new Date(System.currentTimeMillis())) + ranNum
+				+ originFileName.substring(originFileName.lastIndexOf("."));
+
+		String renamePath = folder + "\\" + renameFileName;
+
+		try {
+			file.transferTo(new File(renamePath));
+		} catch (Exception e) {
+			System.out.println("파일 전송 에러 :" + e.getMessage());
+		}
+
+		String[] returnArr = new String[2];
+
+		returnArr[0] = savePath;
+		returnArr[1] = renameFileName;
+
+		return returnArr;
+	}
 }
