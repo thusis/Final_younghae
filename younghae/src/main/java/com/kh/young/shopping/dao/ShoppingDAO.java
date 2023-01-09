@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
@@ -14,6 +15,7 @@ import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
@@ -118,7 +120,7 @@ public class ShoppingDAO {
 		return resultList;
 	}
 
-	public Supplement selectDetail(SqlSessionTemplate sqlSession, int proNum) {
+	public SupplementResp selectDetail(SqlSessionTemplate sqlSession, int proNum) {
 		return sqlSession.selectOne("shoppingMapper.selectDetail", proNum);
 	}
 
@@ -272,6 +274,18 @@ public class ShoppingDAO {
 	public SupplementResp checkZzim(SqlSessionTemplate sqlSession, SupplementResp supplementResp) {
 		return sqlSession.selectOne("shoppingMapper.checkZzim", supplementResp);
 		
+	}
+
+	public ArrayList<Review> selectReview(SqlSessionTemplate sqlSession, int proNum) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectReview", proNum);
+	}
+
+	public Attachment imageSelect(SqlSessionTemplate sqlSession, int rvNum) {
+		return sqlSession.selectOne("shoppingMapper.imageSelect", rvNum);
+	}
+
+	public int getReviewListCount(SqlSessionTemplate sqlSession, int proNum) {
+		return sqlSession.selectOne("shoppingMapper.getReviewListCount", proNum);
 	}
 
 

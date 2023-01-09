@@ -433,14 +433,14 @@
     <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
    	<script>
 		window.onload =()=>{
-// 			const dives = document.getElementsByClassName('product__item');
-// 			for(const div of dives){
-// 				div.addEventListener('click',function(){
-// 					console.log($(this).siblings().children()[0].value);
-// 					const proNum = $(this).siblings().children()[0].value;
-// 					location.href='${contextPath}/supplementDetail.sh?proNum=' + proNum;
-// 				});
-// 			}
+			const dives = document.getElementsByClassName('product__item');
+			for(const div of dives){
+				div.addEventListener('click',function(){
+					console.log($(this).siblings().children()[0].value);
+					const proNum = $(this).siblings().children()[0].value;
+					location.href='${contextPath}/supplementDetail.sh?proNum=' + proNum;
+				});
+			}
 			
 // 			const listCartBtns = document.getElementsByClassName('btn_viewZzim');
 // 			for(const cartBtn of listCartBtns){

@@ -125,37 +125,34 @@
 </head>
 
 <body>
-	<!-- Checkout Section Begin -->
-	<section class="checkout spad">
-		<div class="container">
-
-			<div class="bn_index mt-n2">
-				<ul>
-					<li><a href="#">쇼핑</a></li>
-					<li><b>/</b></li>
-					<li><a href="#">영양제 상세보기</a></li>
-					<li><b>/</b></li>
-					<li><a href="#">상품 결제하기</a></li>
-				</ul>
-			</div>
-
-        	<section class="contact spad" style="width:60%; margin: auto; margin-top:-70px;">
-	               <div class="section-title" style="padding: 5rem 5rem 5rem 5rem; border:0.5rem solid #24E082; ">
-	                   <h2>주문이 완료되었습니다</h2>
-<%-- 	                   ${ orderList.Orders.orderCode } --%>
-<%-- 	                   <a href="${contextPath}/shoppingMain.sh"> --%>
-<!-- 	                   쇼핑을 통해 장바구니를 채워보세요<br> -->
-<!-- 	                   <img src="resources/img/logo_pill_white.svg" alt="흰로고"> -->
-	                   </a>
-	               </div>
-			</section>
-
-<!-- 			결제 완료페이지 -->
-			
-<%-- 			${ orderList } --%> 
-		
-
+		<section class="featured spad" style="margin-left: 30%; margin-right: 30%;">
+	        <div class="row align-items-center">
+	            <div class="text-center" >
+	                <label style="font-size: 180%; font-weight: 800; padding-bottom: 10%; color: #24E082;">주문 완료</label>
+	            </div>
+	            <div class="col-lg-12 col-md-12" style="border: 2px solid #24E082; padding: 3%; border-radius: 2em;">
+	                <div class="text-center" id="column">
+	                	<h2>고객님의 주문이 완료되었습니다.</h2>
+	                	<br><br>
+							<h4>주문번호 : ${ orderList[0].orders.orderCode } </h4>
+							<h4>주문일자 : ${ orderList[0].orders.orderDate } </h4>
+	                    <br><br>
+	                </div>
+	                <div class="text-center" id="Btn" style="margin-top: 2%;">
+	                    <button type="button"
+	                    style="height: 50px; width: 20%; background-color: #24E082; border: none; border-radius: 5em; color: #ffffff;"
+	                    onclick="toGoList()">쇼핑 계속하기</button>
+	                </div>
+	            </div>
+	        </div>
+	    </section>
+		<br><br><br><br>
+ 	   <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+	    <script>
+			const toGoList = () =>{
+				location.href="${ contextPath }/shoppingMain.sh";
+			}
+	    </script>
 
 </body>
-    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 </html>

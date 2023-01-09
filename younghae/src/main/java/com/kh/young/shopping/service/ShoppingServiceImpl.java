@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
@@ -14,6 +15,7 @@ import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dao.ShoppingDAO;
@@ -59,7 +61,7 @@ public class ShoppingServiceImpl implements ShoppingService{
 	
 	
 	@Override
-	public Supplement selectDetail(int proNum) {
+	public SupplementResp selectDetail(int proNum) {
 		return shDAO.selectDetail(sqlSession, proNum);
 	}
 	
@@ -216,6 +218,21 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Override
 	public ArrayList<SupplementResp> selectsuppleRespBestCateList(String proEffect) {
 		return shDAO.selectsuppleRespBestCateList(sqlSession, proEffect);
+	}
+	
+	@Override
+	public ArrayList<Review> selectReview(int proNum) {
+		return shDAO.selectReview(sqlSession, proNum);
+	}
+	
+	@Override
+	public Attachment imageSelect(int rvNum) {
+		return shDAO.imageSelect(sqlSession, rvNum);
+	}
+	
+	@Override
+	public int getReviewListCount(int proNum) {
+		return shDAO.getReviewListCount(sqlSession, proNum);
 	}
 
 }

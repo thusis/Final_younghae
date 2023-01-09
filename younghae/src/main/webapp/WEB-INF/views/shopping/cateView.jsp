@@ -398,29 +398,29 @@
 				});
 			}
 			
-			const listCartBtns = document.getElementsByClassName('btn_viewCart');
-			for(const cartBtn of listCartBtns){
-				cartBtn.addEventListener('click',function(){
-					var loginUser = "${loginUser.userNum}";
-					if(loginUser == ""){
-						alert('로그인 후 이용해주세요');
-					}else{
-	    				$.ajax({
-	    		    		url: '${contextPath}/insertCart.sh',
-				    		data: {userNum : loginUser,
-			    				proNum: $(this).siblings()[0].value,
-			    				cartQuantity : 1},
-	    	    			success:(data)=>{
-	    	    				if(data == 'YES'){
-	    	    					alert('이미 장바구니에 있는 상품입니다');
-	    	    				}else{
-		    	    				alert('상품이 장바구니에 추가되었습니다.');
-	    	    				}
-	    	    			}
-	    				})
-					}
-				});
-			}
+// 			const listCartBtns = document.getElementsByClassName('btn_viewCart');
+// 			for(const cartBtn of listCartBtns){
+// 				cartBtn.addEventListener('click',function(){
+// 					var loginUser = "${loginUser.userNum}";
+// 					if(loginUser == ""){
+// 						alert('로그인 후 이용해주세요');
+// 					}else{
+// 	    				$.ajax({
+// 	    		    		url: '${contextPath}/insertCart.sh',
+// 				    		data: {userNum : loginUser,
+// 			    				proNum: $(this).siblings()[0].value,
+// 			    				cartQuantity : 1},
+// 	    	    			success:(data)=>{
+// 	    	    				if(data == 'YES'){
+// 	    	    					alert('이미 장바구니에 있는 상품입니다');
+// 	    	    				}else{
+// 		    	    				alert('상품이 장바구니에 추가되었습니다.');
+// 	    	    				}
+// 	    	    			}
+// 	    				})
+// 					}
+// 				});
+// 			}
 			
 	        $('#searchInput').on('keyup', ()=>{
 				console.log($('#searchInput').val());

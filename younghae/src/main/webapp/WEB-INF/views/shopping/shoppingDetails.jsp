@@ -292,6 +292,11 @@
         .table th:first-child{
             background: #DCFFE9;
         }
+        
+        .btn_viewZzim{
+      	  background: white;
+      	  border: none;
+        }
 
     </style>   
 
@@ -340,14 +345,24 @@
 	                        <h5 style="color: gray;">${ supplementDetail.proCompany }</h5>
 	                        <h3 style="display: inline;">${ supplementDetail.proName }</h3>
 	                        <div style="display: inline; float: right; font-size: 150%;">
-	                            <i class="fa-regular fa-heart"></i>&nbsp;
-	                            <i class="bi bi-share"></i>
+	                        	<c:if test="${ empty loginUser }">
+			                       	<button class="btn_viewZzim"><i class="fa-regular fa-heart"></i></button>
+	                         	</c:if>
+	                         	<c:if test="${ !empty loginUser }">
+	                     			<c:if test="${ supplementDetail.check eq 'Y'}">
+			                           <button class="btn_viewZzim"><i class="fa-solid fa-heart"></i></button>
+	                               	</c:if>
+	                               	<c:if test="${ supplementDetail.check ne 'Y' }">
+			                           <button class="btn_viewZzim"><i class="fa-regular fa-heart"></i></button>
+	                               	</c:if>
+	                         	</c:if>
 	                        </div><br><br>
 	                        <div class="product__details__rating" style="display: inline; font-size: 150%;">
 	                            <i class="fa-solid fa-star star"></i>&nbsp;&nbsp;${ supplementDetail.proGrade }
 	                        </div>
-	                        <div class="product__details" style="display: inline; font-size: 100%; float: right; margin-top: 2.5%;">
-	                            <span style="color: orange; text-decoration: underline;">153개의 리뷰&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>&nbsp;&nbsp;&nbsp;
+	                        <div class="product__details" style="display: inline; float:right; font-size: 100%; margin-top: 2.5%;">
+	                            <a href="#tabs-3" aria-selected="false">
+	                            <span style="color: orange; text-decoration: underline;">${ reviewCount }개의 리뷰&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span></a>&nbsp;&nbsp;&nbsp;
 	                            <span id="compareproduct" style="color: rgb(242, 67, 230); text-decoration: underline;">상품 비교&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>
 	                        </div>
 	
@@ -408,7 +423,7 @@
 	                            </li>
 	                            <li class="nav-item">
 	                                <a class="nav-link" href="#tabs-3" 
-	                                    aria-selected="false">리뷰<span>(1)</span></a>
+	                                    aria-selected="false">리뷰<span>(${ reviewCount })</span></a>
 	                            </li>
 	                        </ul><br><br>
 	                        
@@ -448,121 +463,69 @@
 	                                </div>
 	                            </div>
 	                            <!-- /상품상세사진 탭 -->
-	
-	                            <!-- 리뷰 -->
+<!-- 	            ----------------------------------------------------------리뷰 -----------------------------------------------------                 -->
 	                            <div class="" id="tabs-3" role="tabpanel">
-	                                <div style="color: #24E082; font-weight: bold; font-size: 30px; display: inline; margin-bottom: 50px;">리뷰&nbsp;<span>153</span></div>
-	                                <div style="color: #FD9F28; font-weight: bold; font-size: 20px; display: inline; float: right; margin-right: 35px;">리뷰작성</div><br><br>
-	
-	                                <div class="col-lg-12" style="margin-bottom: 10%; text-align: center; margin-left: -1.5%;">
-	                                    <div class="product_info" style=" border-radius: 1em; padding: 5%; margin-bottom: 5%;">
-	                                        <table style="text-align: center; width: 100%;">
-	                                            <tr>
-	                                                <td style="font-size: 30px;">
-	                                                    <i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;4.32
-	                                                </td>
-	                                                <td style="font-size: 20px;">
-	                                                    <div>
-	                                                        <div style="display: inline;">5점</div><div class="rating-count"></div><div style="display: inline;">15</div><br>
-	                                                        <div style="display: inline;">4점</div><div class="rating-count"></div><div style="display: inline;">18</div><br>
-	                                                        <div style="display: inline;">3점</div><div class="rating-count"></div><div style="display: inline;">10</div><br>
-	                                                        <div style="display: inline;">2점</div><div class="rating-count"></div><div style="display: inline;">10</div><br>
-	                                                        <div style="display: inline;">1점</div><div class="rating-count"></div><div style="display: inline;">11</div><br>
-	                                                    </div>
-	                                                </td>
-	                                            </tr>
-	                                        </table>
-	                                    </div> 
-	
-	
-	                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
-	                                        <div name="reviewDetail">
-	                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-	                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
-	                                            </div>
-	                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="font-weight: 600;">학원이너무좋다</p>
-	                                            </div>
-	                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
-	                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-	                                            </div>
-	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="color: black; font-size: 130%;">4.8</p>
-	                                            </div>
-	                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
-	                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-	                                            </div>
-	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="color: black; font-size: 130%;">10</p>
-	                                            </div>
-	                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-	                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20221119/7377cf67-da5e-4008-b194-67aaafdcf321/l.jpeg" class=".img-fluid" style="margin: 5%;">
-	                                            </div>
-	                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
-	                                                안 좋은 콜레스테롤을 낮춰 혈관 건강, 심장 질환, 눈 건강에도 좋다고 하여 구매하여 온 가족이 먹고 있어요, 품질 좋은 생선 오일을 식품으로 채우려면 비용도 많이 들고 한계가 있는데 저렴하게 효능 좋은 제품 먹을 수 있어 좋습니다. 생물학 박사님이 필수로 챙겨 먹는 영양제 중 하나가 오메가3 라고 추천해 주셔서 믿고 먹고 있습니다. 다 먹으면 재구매 할 거에요
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
-	                                        <div name="reviewDetail">
-	                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-	                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
-	                                            </div>
-	                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="font-weight: 600;">코딩너무좋다</p>
-	                                            </div>
-	                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
-	                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-	                                            </div>
-	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="color: black; font-size: 130%;">4.8</p>
-	                                            </div>
-	                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
-	                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-	                                            </div>
-	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="color: black; font-size: 130%;">10</p>
-	                                            </div>
-	                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-	                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20220929/f7b13f35-8481-4662-996c-ff1ccef87f67/l.jpeg" class=".img-fluid" style="margin: 5%;">
-	                                            </div>
-	                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
-	                                                자주 먹던 오메가3가 품절이라 대안으로 구매했습니다. 성분이 나쁘지 않고 믿을만한 회사라 주문했습니다. 개별 포장이면 더 좋겠지만, 직구 제품은 대부분 이런 형태라 아쉽긴 합니다. 하지만 가성비 생각하면 아주 최고!
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                    <div class="product__details__quantity" style="border: 2px solid #24E082; border-radius: 10px; width: 100%;  margin-bottom: 3%; height: 300px; padding: 2%;">
-	                                        <div name="reviewDetail">
-	                                            <div name="reviewImg" style="float: left; padding-right: -20%;">
-	                                                <i class="bi bi-person-circle" style="font-size: 350%; color: #24E082;"></i>
-	                                            </div>
-	                                            <div name="reviewNickName" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="font-weight: 600;">코딩천재깡혜찐</p>
-	                                            </div>
-	                                            <div class="product__details__rating" style="float: left; padding-top: 3.5%; padding-left: 20%;">
-	                                                <i class="fa fa-star" style="color: rgb(247, 247, 75); font-size: 130%;"></i>
-	                                            </div>
-	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="color: black; font-size: 130%;">4.8</p>
-	                                            </div>
-	                                            <div class="product__details__rating" style="float: left; padding-top: 3.2%; padding-left: 5%;">
-	                                                <i class="bi bi-hand-thumbs-up-fill" style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-	                                            </div>
-	                                            <div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">
-	                                                <p style="color: black; font-size: 130%;">10</p>
-	                                            </div>
-	                                            <div name="reviewImg"  style="height: 200px; width: 200px; float: right; margin-right: 1%; padding-top: 5%;">
-	                                                <img src="https://s3-eu-west-1.amazonaws.com/ugc-images.images-iherb.com/ugc/20220926/c9eeb673-082a-43cd-a6d5-a46b99c0c9aa/l.jpeg" class=".img-fluid" style="margin: 5%;">
-	                                            </div>
-	                                            <div name="reviewContent" class="text-left" style="padding-top: 9%;">
-	                                                2021.8.1 (일) 주문. 8.5 (목) 배송받음. 180정 이라서 오늘까지 다 먹었습니다. 오메가-3 는 꼭 챙겨 먹기에 아주 잘 먹었습니다. 비린내는 나지 않고 알약 사이즈가 커서 목 넘김이 쫌 불편하긴 합니다. 잘못 먹으면 목에 걸리기도 합니다. 꾸준히 영양제 잘 챙겨 먹겠습니다.
-	                                            </div>
-	                                        </div>
-	                                    </div>
-	                                </div>
-	                            </div>
-	                            <!-- 리뷰 -->
-	                        </div>
+	                                <div style="color: #24E082; font-weight: bold; font-size: 30px; display: inline; margin-bottom: 50px;">리뷰&nbsp;<span>(${ reviewCount })</span></div>
+									<button type="button" style="margin-left: 75%; color: #24E082; font-weight: 700;  background-color: white; border: none; display: inline;"
+										id="reviewMore">더보기 &gt; &gt;</button>
+								</div>
+	                <div class="col-lg-12">
+					
+								<div class="product__details__tab__desc">
+									<div class="mb-3" name="pillItem">
+									</div>
+									<c:forEach items="${ review }" var="re" end="2">
+										<div class="product__details__quantity"
+											style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300%; margin-right: 3%; padding: 3%; padding-bottom: 5%;">
+											<div name="reviewDetail">
+												<div class="row">
+													<div name="reviewImg" style="float: left; padding-right: -20%; margin-left: 2%;">
+														<img src="resources/img/profile_yh.png" style="height: 70px; width: 70px; margin-top: 10%;">
+													</div>
+													<div name="reviewNickName"
+														style="float: left; padding-top: 3.5%; padding-left: 1%;">
+														<p style="font-weight: 600;">${ re.userNickname }</p>
+													</div>
+													<div class="product__details__rating"
+														style="float: left; padding-top: 3.5%; padding-left: 20%;">
+														<i class="fa fa-star"
+															style="color: rgb(247, 247, 75); font-size: 130%;"></i>
+													</div>
+													<div name="reviewRank"
+														style="float: left; padding-top: 3.5%; padding-left: 1%;">
+														<p style="color: black; font-size: 130%;">${ re.rvStar }</p>
+													</div>
+													<div class="product__details__rating_1"
+														style="float: left; padding-top: 3.5%; padding-left: 20%;">
+														<i class="bi bi-hand-thumbs-up"
+															style="color: rgb(0, 0, 0); font-size: 130%;"></i>
+														<input type="hidden" name="rvNum" value="${ re.rvNum }">
+													</div>
+													<div name="reviewRank"
+														style="float: left; padding-top: 3.5%; padding-left: 1%;">
+														<p style="color: black; font-size: 130%;">${ re.rvRecommend }</p>
+													</div>
+												</div>
+												<div class="row reviewContent" style="margin-top: 1%; padding-left: 2%;">
+													<input type="hidden" name="productNum" value="${ re.rvNum }">
+													<input type="hidden" name="userNum" value="${ re.userNum }">
+													<c:if test="${ re.image  ne '없음' }">
+														<div name="reviewContent" class="col-9 text-left">${ re.rvContent }</div>
+														<div name="reviewImg" class="col-3">
+															<img src="resources/uploadFiles/${ re.image }" style="height: 200px; width: 200px; float: right; margin-right: 3%; padding-top: 4%;" class=".img-fluid">
+														</div>
+													</c:if>
+													<c:if test="${ re.image eq '없음' }">
+														<div name="reviewContent" class="col-12 text-left">${ re.rvContent }</div>								
+													</c:if>
+												</div>
+											</div>
+										</div><br><br>
+									</c:forEach>
+								</div>
+				</div>
+<!-- 	            ----------------------------------------------------------리뷰 -----------------------------------------------------                 -->
+	                            
 	                    </div>
 	                </div>
 	            </div>
@@ -720,9 +683,7 @@
 			    		    				proNum: ${supplementDetail.proNum},
 			    		    				cartQuantity : quantity.value},
 			    	    			success:(data)=>{
-			    	    				if(confirm('상품이 추가되었습니다.')){
-									    	cartList();
-			    	    				}
+									    cartList();
 			    	    			}
 			    				})
 		    				}
@@ -853,6 +814,46 @@
 			}
     	});
     	
+		const reviewMore = document.getElementById('reviewMore');
+		reviewMore.addEventListener('click', ()=>{
+			const proNum = ${supplementDetail.proNum};
+			
+            location.href = '${contextPath}/selectProduct.su?proNum=' + proNum;
+		});
+    	
+		const viewZzim = document.getElementsByClassName('btn_viewZzim');
+        for(const zzim of viewZzim){
+        	zzim.addEventListener('click',function(){
+        		console.log($(this).children());
+        		var loginUser = "${loginUser.userNum}";
+				if(loginUser == ""){
+					alert('로그인 후 이용해주세요');
+				}else{
+                	var check = 'N';
+                    if($(this).children().attr("class") != "fa-solid fa-heart"){
+                        // 스크랩 버튼 활성화 됐을 때
+                        $(this).children().attr("class", "fa-solid fa-heart");
+                        check = 'Y';
+                    }else{
+                        // 스크랩 버튼 비활성화
+                       $(this).children().attr("class", "fa-regular fa-heart");
+                        check = 'N';
+                    }
+    				$.ajax({
+    		    		url: '${contextPath}/insertZzim.sh',
+			    		data: {userNum : loginUser,
+		    				proNum: ${ supplementDetail.proNum },
+		    				check: check},
+    	    			success:(data)=>{
+    	    				console.log(data);
+    	    			},
+    	    			error:(data)=>{
+    	    				console.log(data);
+    	    			}
+    				})
+				}
+        	})
+        }
     }
     
     </script>

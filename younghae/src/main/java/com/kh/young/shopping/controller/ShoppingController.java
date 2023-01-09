@@ -21,12 +21,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
-import com.kh.young.model.vo.Story;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
@@ -212,17 +213,50 @@ public class ShoppingController {
 	@RequestMapping("supplementDetail.sh")
 	public String supplementDetail(@RequestParam("proNum") int proNum, Model model,HttpSession session) {
 		
-		Supplement supplementDetail = shService.selectDetail(proNum);
+		SupplementResp supplementDetail = shService.selectDetail(proNum);
 		
 		System.out.println(supplementDetail);
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		String price = formatter.format(supplementDetail.getProPrice());
 		supplementDetail.setFormatPrice(price);
 		
-		model.addAttribute("supplementDetail", supplementDetail);
+		ArrayList<Review> rv = shService.selectReview(proNum);
+		
+		for(int i =  0; i < rv.size(); i++) {
+			Member m = shService.selectMember(rv.get(i).getUserNum());
+			Attachment image= shService.imageSelect(rv.get(i).getRvNum());
+
+			if(image == null) {
+				rv.get(i).setImage("없음");
+			}else {
+				rv.get(i).setImage(image.getAttachRename());
+			}
+			rv.get(i).setUserNickname(m.getUserNickname());
+		}
+		
+		int listCount = shService.getReviewListCount(proNum);
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		
+		if(mem != null) {
+			SupplementResp s = shService.checkZzim(supplementDetail);
+             if(shService.checkZzim(supplementDetail) != null) {
+                if(supplementDetail.getProNum() == s.getZzim().getProNum() && mem.getUserNum() == s.getZzim().getUserNum()) {
+                	supplementDetail.setCheck("Y");
+                }
+             }else {
+            	 supplementDetail.setCheck("N");
+             }
+		}
+		
 		Member m = (Member)session.getAttribute("loginUser");
+		model.addAttribute("supplementDetail", supplementDetail);
 		model.addAttribute("user", m);
+		model.addAttribute("review", rv);
+		model.addAttribute("reviewCount", listCount);
+		
 		return "shoppingDetails";
+		
 	}
 	
 	// 결제페이지 가기
@@ -411,7 +445,7 @@ public class ShoppingController {
 	@RequestMapping("selectCartDetail.sh")
 	public void selectCartDetail(@RequestParam("proNum") int proNum, HttpServletResponse response) {
 		System.out.println(proNum);
-		Supplement cartDetail = shService.selectDetail(proNum);
+		SupplementResp cartDetail = shService.selectDetail(proNum);
 		System.out.println(cartDetail);
 		
 		response.setContentType("application/json; charset=UTF-8");
