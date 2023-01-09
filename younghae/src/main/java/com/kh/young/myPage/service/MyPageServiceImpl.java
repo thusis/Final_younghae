@@ -13,12 +13,14 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.myPage.dao.MyPageDAO;
+import com.kh.young.myPage.dto.OrderDto;
 import com.kh.young.myPage.dto.ScrapDto;
 
 @Service("myService")
@@ -137,4 +139,10 @@ public class MyPageServiceImpl implements MyPageService{
 	public Attachment selectProfile(int id) {
 		return myDAO.selectProfile(sqlSession, id);
 	}
+	
+	@Override
+	public ArrayList<OrderDto> selectMyOrders(int id) {
+		return myDAO.selectMyOrders(sqlSession, id);
+	}
+	
 }
