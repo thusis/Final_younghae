@@ -28,6 +28,7 @@
 	<select id="selectAllMember" parameterType="map" resultMap="loginResultMap">
 		select *
 		from member
+		order by user_num desc
 	</select>
 	
 	<select id="selectMember" resultMap="loginResultMap">

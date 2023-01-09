@@ -100,7 +100,15 @@
                                                     <tr>
                                                         <td>${ memberList[i].userNum }</td>
                                                         <td>${ memberList[i].userId }</td>
-                                                        <td>${ memberList[i].userStatus }</td>
+                                                        <c:if test="${ memberList[i].userCNumber eq 1}">
+                                                        <td>일반회원</td>
+                                                        </c:if>
+                                                        <c:if test="${ memberList[i].userCNumber eq 2}">
+                                                        <td>전문회원</td>
+                                                        </c:if>
+                                                        <c:if test="${ memberList[i].userCNumber eq 3}">
+                                                        <td>관리자</td>
+                                                        </c:if>
                                                         <td>${ memberList[i].email }</td>
                                                         <td>${ memberList[i].userEnrollDate }</td>
                                                     </tr>
