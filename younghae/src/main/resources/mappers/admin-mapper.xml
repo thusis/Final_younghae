@@ -20,6 +20,11 @@
 	  where COU_REGISTER = #{couRegister} and USER_NUM=#{id}
    </update>
 	
+	<insert id="createCoupon" parameterType="Coupon">
+		insert into Coupon
+      values(seq_cou.nextval,SYSDATE, #{couEndDate}, 'A',#{couDiscount},#{couIntro},#{userNum},#{couRegister})
+	</insert>
+	
 	
 	<resultMap type="Coupon" id="couponResultMap">
 		<id column="COU_NUMBER" property="couNumber"/>

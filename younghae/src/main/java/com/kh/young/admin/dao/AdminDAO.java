@@ -26,4 +26,9 @@ public class AdminDAO {
 		
 	}
 
+	public int createCoupon(SqlSessionTemplate sqlSession, Coupon c) {
+		// TODO Auto-generated method stub
+		return sqlSession.insert("adminMapper.createCoupon", c);
+	}
+
 }

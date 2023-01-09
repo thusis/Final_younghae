@@ -24,6 +24,42 @@
 </head>
 
 <body>
+	                    	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+						      <div class="modal-header">
+						        <h5 class="modal-title" id="exampleModalLabel">쿠폰등록하기</h5>
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						          <span aria-hidden="true">&times;</span>
+						        </button>
+						      </div>
+						      <div class="modal-body">
+						       <form action="${contextPath}/insertCoupon.ad" method="get" id="creatCoupon">
+						          <div class="form-group">
+						            <label for="recipient-number" class="col-form-label">쿠폰번호</label>
+						            <input type="text" class="form-control" name="couRegister" placeholder="미입력시 랜덤6글자코드">
+						          </div>
+						          <div class="form-group">
+						            <label for="recipient-content" class="col-form-label">쿠폰내용</label>
+						            <input type="text" class="form-control" name="couIntro" placeholder="쿠폰내용">
+						          </div>
+						          <div class="form-group">
+						            <label for="recipient-discount" class="col-form-label">할인액</label>
+						            <input type="number" class="form-control" name="couDiscount" min="0" max="30" value="5">
+						          </div>
+						          <div class="form-group">
+						            <label for="recipient-endDate" class="col-form-label">만료날짜</label>
+						            <input type="date" id="currentDate"class="form-control" name="couEndDate" placeholder="미입력시 한달">
+						          </div>
+						          <div class="modal-footer">
+							        <button type="submit" class="btn btn-secondary" form="creatCoupon">쿠폰생성하기</button>
+							        <button type="button" class="btn btn-primary" data-dismiss="modal">취소</button>
+						     	  </div>
+						        </form>
+						      </div>
+						    </div>
+						  </div>
+						</div>
     <section>
         <div class="container">
             <div class="row">
@@ -56,35 +92,7 @@
             <div class="product__details__tab" style="padding-top: 0px;">
                 <div class="tab-content">
                     <div class="tab-pane active" id="tabs" role="tabpanel">
-                    	<button type="button" style="border: 0; float:right;" data-toggle="modal" data-target="#exampleModal" onclick="couponRegist()">쿠폰등록하기</button>
-                    	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-						  <div class="modal-dialog" role="document">
-						    <div class="modal-content">
-						      <div class="modal-header">
-						        <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						          <span aria-hidden="true">&times;</span>
-						        </button>
-						      </div>
-						      <div class="modal-body">
-						        <form>
-						          <div class="form-group">
-						            <label for="recipient-name" class="col-form-label">Recipient:</label>
-						            <input type="text" class="form-control" id="recipient-name">
-						          </div>
-						          <div class="form-group">
-						            <label for="message-text" class="col-form-label">Message:</label>
-						            <textarea class="form-control" id="message-text"></textarea>
-						          </div>
-						        </form>
-						      </div>
-						      <div class="modal-footer">
-						        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						        <button type="button" class="btn btn-primary">Send message</button>
-						      </div>
-						    </div>
-						  </div>
-						</div>
+                    	<button type="button" style="border: 0; float:right;" data-toggle="modal" data-target="#exampleModal">쿠폰등록하기</button>
                         <div class="product__details__tab__desc" style="padding-top: 0px;">
                             <div class="bn_boardlist mt-2">
                                 <table class="table" id="dataTable">
@@ -247,16 +255,7 @@
             
 		});
         
-        $('#staticBackdrop').on('show.bs.modal', function (event) {
-        	  var button = $(event.relatedTarget) // Button that triggered the modal
-        	  var recipient = button.data('whatever') // Extract info from data-* attributes
-        	  // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        	  // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
-        	  var modal = $(this)
-        	  modal.find('.modal-title').text('New message to ' + recipient)
-        	  modal.find('.modal-body input').val(recipient)
-        	})
-        
+        document.getElementById('currentDate').value = new Date().toISOString().substring(0, 10);
     </script>
 </body>
 

@@ -7,9 +7,11 @@ import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -91,4 +93,29 @@ public class AdminController {
         return "adminCoupon";
     }
     
+    @RequestMapping("insertCoupon.ad")
+    public String insertCoupon(HttpSession session, Model model, @ModelAttribute Coupon C) {
+    	
+    	//추천인코드자동부여
+        String generatedString = RandomStringUtils.randomAlphanumeric(12);
+        
+        System.out.println(generatedString);
+
+    	int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+    	
+    	if(C.getCouRegister().equals(null)||C.getCouRegister().equals("")) {
+    		C.setCouRegister(generatedString);
+    	}
+    	C.setCouUsed("A");
+    	if(C.getCouIntro().equals(null)||C.getCouIntro().equals("")) {
+    		C.setCouIntro("임시발급쿠폰입니다.");
+    	}
+    	C.setUserNum(id);
+    	
+    	int result = aService.createCoupon(C);
+    
+        return "redirect:adminCoupon.ad";
+    }
+    
+
 }
