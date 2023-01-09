@@ -1,11 +1,13 @@
 package com.kh.young.qna.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonElement;
 import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Declaration;
@@ -60,6 +62,9 @@ public interface QaService {
 	int updateIsSolved(int boardNum);
 
 	int insertDeclare(Declaration declare);
+
+	ArrayList<HashMap> selectAllReservSchedule(int expertNum);
+
 
 
 

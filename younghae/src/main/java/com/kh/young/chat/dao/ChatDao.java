@@ -43,8 +43,8 @@ public class ChatDao {
 		return sqlSession.selectOne("chatMapper.selectLastMessage", chatroomId);
 	}
 	
-	public int getNotReadCount(SqlSessionTemplate sqlSession, int chatroomId) {
-		return sqlSession.selectOne("chatMapper.getNotReadCount", chatroomId);
+	public int getNotReadCount(SqlSessionTemplate sqlSession, Map<String, Object> paraMap) {
+		return sqlSession.selectOne("chatMapper.getNotReadCount", paraMap);
 	}
 	
 	/** 일단 필요없는 메소드 **/

@@ -58,9 +58,18 @@ public class ChatServiceImpl implements ChatService {
 	// 전문가와 채팅방 조회 / 없으면 []
 	@Override
 	public ExpertChatroomDto getExpertChatroomByMemberNums(Chatroom paraChatroom) {
-		ExpertChatroomDto ex = new ExpertChatroomDto(chDao.getExpertChatroomByMemberNums(sqlSession, paraChatroom));
-		ex.setMessageList(selectMessageList(ex.getChatroomId()));
-		ex.setReserv(getIfReserv(ex.getChatroomId()));
+		ExpertcrDto e = chDao.getExpertChatroomByMemberNums(sqlSession, paraChatroom);
+		System.out.println(e);
+		
+		ExpertChatroomDto ex = new ExpertChatroomDto();
+		if(e != null) {
+			ex = new ExpertChatroomDto(e);
+			ex.setMessageList(selectMessageList(ex.getChatroomId()));
+			ex.setReserv(getIfReserv(ex.getChatroomId()));
+			System.out.println("ch서비스:"+ex);
+		} else {
+			ex = null;
+		}
 		return ex;
 	}
 
@@ -77,8 +86,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override /**ok**/
-	public ArrayList<ExpertChatroomListDto> selectRoomList(int userNum) {
-		ArrayList<ExpertcrDto> roomList = chDao.selectRoomList(sqlSession, userNum);
+	public ArrayList<ExpertChatroomListDto> selectRoomList(int loginUserNum) {
+		ArrayList<ExpertcrDto> roomList = chDao.selectRoomList(sqlSession, loginUserNum);
 		System.out.println("ch서비스 97:" + roomList);
 		
 		ArrayList<ExpertChatroomListDto> resultRoomList = new ArrayList<>();
@@ -87,7 +96,7 @@ public class ChatServiceImpl implements ChatService {
 			ExpertChatroomListDto ex = new ExpertChatroomListDto(e);
 			ex.setLastMessage(selectLastMessage(ex.getChatroomId()));
 			ex.setReserv(getIfReserv(ex.getChatroomId()));
-			ex.setNotReadCount(getNotReadCount(ex.getChatroomId()));
+			ex.setNotReadCount(getNotReadCount(ex.getChatroomId(), loginUserNum));
 			resultRoomList.add(ex);
 		}
 		
@@ -106,7 +115,7 @@ public class ChatServiceImpl implements ChatService {
 			GeneralChatroomListDto gn = new GeneralChatroomListDto(g);
 			gn.setLastMessage(selectLastMessage(gn.getChatroomId()));
 			gn.setReserv(getIfReserv(gn.getChatroomId()));
-			gn.setNotReadCount(getNotReadCount(gn.getChatroomId()));
+			gn.setNotReadCount(getNotReadCount(gn.getChatroomId(), loginUserNum));
 			resultRoomList.add(gn);
 		}
 		
@@ -133,10 +142,12 @@ public class ChatServiceImpl implements ChatService {
 		return lastMessage;
 	}
 
-	private int getNotReadCount(int chatroomId) {/**ok**/
-		return chDao.getNotReadCount(sqlSession, chatroomId);
+	private int getNotReadCount(int chatroomId, int loginUserNum) {/**ok**/
+		Map<String, Object> paraMap = new HashMap<>();
+		paraMap.put("chatroomId", chatroomId);
+		paraMap.put("loginUserNum", loginUserNum);
+		return chDao.getNotReadCount(sqlSession, paraMap);
 	}
-
 		
 	@Override
 	public ArrayList<ChatMessage> selectMessageList(int chatroomId) {

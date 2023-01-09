@@ -1,6 +1,7 @@
 package com.kh.young.qna.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -184,6 +185,13 @@ public class QaDao {
 
 	public int insertDeclare(SqlSessionTemplate sqlSession, Declaration declare) {
 		return sqlSession.insert("qnaMapper.insertDeclare", declare);
+	}
+
+	public ArrayList<HashMap> selectAllReservSchedule(SqlSessionTemplate sqlSession, int expertNum) {
+//		return (ArrayList)sqlSession.selectList("qnaMapper.selectAllReservSchedule",expertNum);
+		ArrayList<HashMap> result =  (ArrayList)sqlSession.selectList("qnaMapper.selectAllReservSchedule",expertNum);
+		System.out.println("q다오193:"+result);
+		return result;
 	}
 
 }

@@ -8,6 +8,12 @@
 <title>질문게시판 - 전문가 상세 프로필</title>
 
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
+	
+	<!-- fullcalendar CDN -->
+	<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.min.css' rel='stylesheet' />
+	<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.0.2/index.global.js"></script>
+	<!-- fullcalendar 언어 CDN -->
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/locales-all.min.js'></script>	
 
     <!--내가만든 css-->
     <link rel="stylesheet" href="resources/css/bn_style.css" type="text/css">
@@ -48,7 +54,7 @@
                     	작성한 경력 내용이 없습니다
                     </c:if>
                 </div>
-                <div class=" row bn_pro-infobox-bottom" id="infoboxBottom2" style="z-index:50; height:200px">
+                <div class=" row bn_pro-infobox-bottom" id="infoboxBottom2" style="z-index:50; padding-top:15px;">
                     <div class="row d-flex align-items-center ">
                         <div class="col-1">
                             <div class="d-flex align-items-center justify-content-center"style="background-color: black; color:#ffffff; width: 1.5rem; height: 1.5rem; border-radius: 3rem;"><i class="fa-solid fa-won-sign"></i></div>
@@ -59,8 +65,7 @@
 
                         <div class="col-3">
                         	<c:if test="${eresp.member.userNum eq loginUser.userNum}">
-                           		<button class="btn bn_btn_search2" style="font-size:small; padding: 0.5rem; background-color: #cacfd4;">수정하기</button>
-                            	<button class="btn bn_btn_search2" style="font-size:small; padding: 0.5rem; background-color: #cacfd4;">스케줄보기</button>
+                           		<button class="btn" style="font-size:small; padding: 0.5rem; background-color: #cacfd4;">수정하기</button>
                         	</c:if>
                         </div>
                     </div>
@@ -74,9 +79,6 @@
                         <span class="col bn_txt_strong" style="font-size:18px;">
                         ${eresp.expert.expertEstimate}
                         </span>
-                    </div>
-                    <div class="row">
-                        <button class="col btn bn_txt_strong p-3 " style="display: inline-block;font-size:18px; background-color: black; color:white;">상담 가능 시간 보기</button>
                     </div>
                 </div>
             </div>
@@ -155,17 +157,15 @@
         <br>
         <br>
         
-        <div class="bn_boardlist mt-2">
-            <table class="table">
-                <thead></thead>
-                <tbody></tbody>
-            </table>
-        </div>
+	    <div id="fullCalendarContainer">
+	        <div id="reservCalendar"></div>
+	    </div>
 
         <br>
         <br>
 
         <!-- 전문가가 작성한 글 목록 ================================= -->
+        <h4>활동 내역 보기</h4><br>
         <div class="bn_boardlist mt-2">
             <table class="table">
                 <thead>
@@ -208,12 +208,6 @@
                 </tbody>
             </table>
         </div>
-            <div class="product__pagination blog__pagination d-flex justify-content-center mt-3 ">
-              <a href="#">1</a>
-              <a href="#">2</a>
-              <a href="#">3</a>
-              <a href="#"><i class="fa fa-long-arrow-right"></i></a>
-            </div>
     </div>
 
 <br>
@@ -237,6 +231,73 @@
 
 
 <script>
+console.log(${reservList});
+var testReserv = JSON.stringify(${reservList});
+console.log(testReserv);
+if(testReserv!="[]"){
+	makeCalendar();
+}
+
+function makeCalendar(){
+	
+	var reservList = ${ reservList };
+	// console.log(reservList);
+	// console.log(reservList.length);
+	// console.log(reservList[0]);
+	// console.log(reservList[0]['DAYR']);
+	// console.log(reservList[0]['STARTR']);
+	// console.log(reservList[0]['ENDR']);
+	// console.log(reservList[0]['RESERV_HOW_LONG']);
+	// console.log(reservList[0]['IS_COMPLETED']);
+	// console.log(reservList[0]['IS_APPROVED']);
+	
+	var eventArray = new Array();
+	var reservEvent = {};
+	for(var i=0; i<reservList.length; i++){
+		var str = "";
+		if(reservList[i]['IS_APPROVED']=='N'){
+			str = "승인 필요";
+		} else if(reservList[i]['IS_APPROVED']=='Y'){
+			str = "확정";
+		} else if(reservList[i]['IS_APPROVED']=='D'){
+			str = "거절됨";
+		}
+		
+		reservEvent = {
+		title : '상담'+str,
+		start : reservList[i]['DAYR']+"T"+reservList[i]['STARTR'],
+		end : reservList[i]['DAYR']+"T"+reservList[i]['ENDR']
+		}
+		console.log("들어갈 값:"+reservEvent);
+		eventArray.push(reservEvent);
+	}
+
+	document.addEventListener('DOMContentLoaded', function() {
+		var calendarEl = document.getElementById('reservCalendar');
+		var calendar = new FullCalendar.Calendar(calendarEl, {
+			height: '400px', // calendar 높이 설정
+			expandRows: true, // 화면에 맞게 높이 재설정
+			slotMinTime: '09:00', // Day 캘린더에서 시작 시간
+			slotMaxTime: '21:00', // Day 캘린더에서 종료 시간
+			locale: 'ko', // 한국어 설정
+			
+			initialView: 'timeGridWeek',
+			events: eventArray,
+			eventColor: '#378006',
+			eventBackgroundColor: 'orange',
+			eventBorderColor: 'blue',
+			eventTextColor: 'black',
+			eventTimeFormat: { // like '14:30:00'
+				hour: '2-digit',
+				minute: '2-digit',
+				hour12: false
+			}
+		});
+		calendar.render();
+	});
+}
+
+
         document.getElementById('infoboxBottom2').style.display = 'none';
     
         function showCareer(){

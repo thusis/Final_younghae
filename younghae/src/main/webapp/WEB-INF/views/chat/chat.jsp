@@ -161,26 +161,27 @@
 								<c:if test="${cr.lastMessage.chatId eq 0 }">
 									<span style="color:grey;">아직 나눈 대화가 없어요</span>
 								</c:if>
+								<c:if test="${ cr.notReadCount>0 }">
+									<span style="display:inline-block; width:18px; height:18px; border-radius:12px; background-color:orange; color:white; font-size:13px; font-weight:800; line-height:18px; text-align:center;">${cr.notReadCount}</span>
+								</c:if>
 							
 							</div>
-							<div class="col-10">
-								<c:if test="${ cr.notReadCount>0 }">
-									<span style="backgroundcolor:red; color:white;">${cr.notReadCount}</span>
-								</c:if>
+							<div class="col-12">
 								<c:if test="${ cr.reserv.reservId eq 0}">
-									<span class="badge">예약을 통해 맞춤형 상담을 받아보세요!</span>
+									<span class="badge" style="display:inline;">예약을 통해 맞춤형 상담을 받아보세요!</span>
 								</c:if>
 								<c:if test="${ cr.reserv.reservId ne 0}">
 									<c:if test="${ cr.reserv.isApproved eq 'N'}">
-									<span class="badge" style="color:red; font-weight:700;">확인하지 않은 예약 내역이 있습니다</span>
+									<span class="badge" style="display:inline-block; color:red; font-weight:700;">확인하지 않은 예약 내역이 있습니다</span>
 									</c:if>
 									<c:if test="${ cr.reserv.isApproved eq 'D'}">
-									<span class="badge" style="color:grey; font-weight:700;">거절한 예약 일정입니다</span>
+									<span class="badge" style="display:inline-block; color:grey; font-weight:700;">거절한 예약 일정입니다</span>
 									</c:if>
 									<c:if test="${ cr.reserv.isApproved eq 'Y'}">
-									<span class="badge" style="color:blue; font-weight:700;">${ cr.reserv.reservSchedule }에 상담예정입니다</span>
+									<span class="badge" style="display:inline-block; color:blue; font-weight:700;">${ cr.reserv.reservSchedule }에 상담예정입니다</span>
 									</c:if>
 								</c:if>
+
 							</div>
 						</a>
 						</c:forEach>
@@ -224,22 +225,22 @@
 							
 							</div>
 							<div class="col-10">
-								<c:if test="${ cr.notReadCount>0 }">
-									<span style="backgroundcolor:red; color:white;">${cr.notReadCount}</span>
-								</c:if>
 								<c:if test="${ cr.reserv.reservId eq 0}">
-									<span class="badge">예약 내역이 없습니다</span>
+									<span class="col badge">예약 내역이 없습니다</span>
 								</c:if>
 								<c:if test="${ cr.reserv.reservId ne 0}">
 									<c:if test="${ cr.reserv.isApproved eq 'N'}">
-									<span class="badge" style="color:red; font-weight:700;">확인하지 않은 예약 내역이 있습니다</span>
+									<span class="col badge" style="color:red; font-weight:700;">확인하지 않은 예약 내역이 있습니다</span>
 									</c:if>
 									<c:if test="${ cr.reserv.isApproved eq 'Y'}">
-									<span class="badge" style="color:blue; font-weight:700;">${ cr.reserv.reservSchedule }에 상담예정입니다</span>
+									<span class="col badge" style="color:blue; font-weight:700;">${ cr.reserv.reservSchedule }에 상담예정입니다</span>
 									</c:if>
 									<c:if test="${ cr.reserv.isApproved eq 'N'}">
-									<span class="badge" style="color:grey; font-weight:700;">거절한 예약 일정입니다</span>
+									<span class="col badge" style="color:grey; font-weight:700;">거절한 예약 일정입니다</span>
 									</c:if>
+								</c:if>
+								<c:if test="${ cr.notReadCount>0 }">
+									<span class="col badge" style="width:8px; height:8px; border-radius:8px; background-color:#24E082; color:white;">${cr.notReadCount}</span>
 								</c:if>
 							</div>
 						</a>
@@ -289,19 +290,18 @@
 		                    </span>
 	                    </span><br>
 					</div>
+			        <div id="chatProfileImg">
 			        <c:if test="${nowChatroom.expert.eattach != null }">
-					<div class="bn_pro-profile">
-						<img style="border-radius:25rem; width: 5rem; height: 5rem;" src="${contextPath}/resources/uploadFiles/${nowChatroom.expert.eattach.attachRename}"alt="전문가프로필">
+					<div class="bn_pro-profile" id="chatProfileImg">
+						<img style="border-radius:25rem; width: 7rem; height: 7rem;" src="${contextPath}/resources/uploadFiles/${nowChatroom.expert.eattach.attachRename}"alt="전문가프로필">
 					</div>
 					</c:if>
 					<c:if test="${nowChatroom.expert.eattach == null }">
-					<div  class="col-3 align-self-center">
-						<img style="margin-top:2.5rem; width: 5rem; height: 5rem;"src="resources/img/logo_white.svg" style="width:6rem;"alt="흰로고">
+					<div  class="align-self-center" style="vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;" id="chatProfileImg">
+						<img style="margin-top:1rem; width: 5rem; height: 5rem;"src="resources/img/logo_white.svg" style="width:6rem;" alt="흰로고">
 					</div>
 					</c:if>
-<!-- 					<div class="col-3 align-self-center"> -->
-<!-- 						<img src="resources/img/pro_profile1.png" class="bn_pro-profile" alt="..." style="width: 5rem; height: 5rem;"> -->
-<!-- 					</div> -->
+					</div>
 					<div class="col-2 align-self-center">
 						<div class="bn_pro-icon" style="width: 2.5rem; height: 2.5rem; padding-top:-2rem; line-height:2.5rem;">
 							<span style="font-size:1.7rem;" id="chatTopgoToProfile" onclick="location.href='${contextPath}/expertprofile.qa?expertNum='+${nowChatroom.expert.expert.userNum}"><i class="bi bi-house-door-fill"></i></span>
@@ -393,7 +393,6 @@
 								결제 후 채팅 시작하기
 								</button>
 							</div>
-							<span class="sendtime">오전 9:28</span>
 						</div><!-- ==========견적서============ -->
 					</div>
 					</c:if>
@@ -404,7 +403,7 @@
 						</div>
 						<div class="textbox">
 							위 메세지는 자동수신 메세지입니다. 결제를 진행하신 후 전문가와 상담 시작 시간을 협의해주세요. 상호 동의하에 상담이
-							시작됩니다.<span class="sendtime">오전 9:28</span>
+							시작됩니다.
 						</div>
 					</div>
 					
@@ -536,7 +535,7 @@
 						userNum : loginUserNum
 					},
 					success: (data)=>{
-						console.log(chatroomId+"방의 isRead를 업데이트 완료");
+// 						console.log(chatroomId+"방의 isRead를 업데이트 완료");
 					}
 				})
 				
@@ -550,7 +549,7 @@
 					},
 					success: (data)=>{
 						var jsonData = JSON.parse(data);
-						console.log(jsonData.messageList);
+// 						console.log(jsonData.messageList);
 						console.log(jsonData.nowChatroom);
 						
 						// 1. 두번째 열 선택처리==========================================================================
@@ -569,15 +568,12 @@
 							document.getElementById('chatTopExpertName').innerText = jsonData.nowChatroom.expert.member.userName;
 							
 							var chatTopGoToExpertHospital = '<a style="text-decoration:none; color:white;" href="${contextPath}/experthospital.qa?expertNum='+expertNum+'">';
-							console.log(chatTopGoToExpertHospital);
 							
 							if(jsonData.nowChatroom.expert.expert.expertSort.trim() == 'D'){
-								console.log("의사");
 								document.getElementById('chatTopExpertSort').innerText = "의사";
 								document.getElementById('chatTopExpertSortPlace').innerHTML = chatTopGoToExpertHospital+'병원정보 보기</a>';
 								
 							}else if(jsonData.nowChatroom.expert.expert.expertSort.trim() == 'C'){
-								console.log("약사");
 								document.getElementById('chatTopExpertSort').innerText = "약사";
 								document.getElementById('chatTopExpertSortPlace').innerHTML = chatTopGoToExpertHospital+'약국정보 보기</a>';
 								
@@ -585,7 +581,6 @@
 								document.getElementById('chatTopExpertSort').innerText = "선택안함";
 								document.getElementById('chatTopExpertSortPlace').innerHTML = chatTopGoToExpertHospital+'선택안함 정보 보기</a>';
 							}
-							
 							
 							document.getElementsByClassName('bn_pro-info')[0].innertText = "답변수" + jsonData.nowChatroom.expert.answerListSize ;
 							document.getElementsByClassName('bn_pro-info')[1].innertText = "전문과목" + jsonData.nowChatroom.expert.expert.expertMedi ;
@@ -596,6 +591,11 @@
 								document.getElementById('chatTopExpertDept').innerText = "소속 : " + jsonData.nowChatroom.expert.expert.expertDept ;
 							}
 							
+							if(jsonData.nowChatroom.expert.eattach != null){
+								document.getElementById('chatProfileImg').innerHTML = '<div class="bn_pro-profile"><img style="border-radius:25rem; width: 7rem; height: 7rem;" src="${contextPath}/resources/uploadFiles/'+jsonData.nowChatroom.expert.eattach.attachRename+'"alt="전문가프로필">';
+							} else {
+								document.getElementById('chatProfileImg').innerHTML = '<div  class="align-self-center" style="display:inline-block; vertical-align:middle; width:7rem; height:7rem; border-radius: 25rem; background-color:#DBE2EA; text-align:center; vertical-align:middle;"><img style="margin-top:1rem; width: 5rem; height: 5rem;"src="resources/img/logo_white.svg" alt="흰로고"></div>';
+							}
 							
 							document.getElementById('chatTopgoToProfile').onclick = () =>{
 								location.href='${contextPath}/expertprofile.qa?expertNum='+jsonData.nowChatroom.expert.expert.userNum;
@@ -640,7 +640,7 @@
 						
 						//세번째 열 상단의 nowChatroomInfo의 아이디에서 chatroomId,expertNum, generalUserNum을 가져오므로 id 변경해야 한다.
 						nowChatroomInfo = jsonData.nowChatroom.chatroom.chatroomId + "_" + jsonData.nowChatroom.chatroom.expertNum + "_" + jsonData.nowChatroom.chatroom.userNum;
-						console.log("현재 선택된 방의 정보(세번쨰열):" + nowChatroomInfo);
+// 						console.log("현재 선택된 방의 정보(세번쨰열):" + nowChatroomInfo);
 						chatroomId = nowChatroomInfo.split('_')[0];
 						expertNum = nowChatroomInfo.split('_')[1];
 						generalUserNum = nowChatroomInfo.split('_')[2];

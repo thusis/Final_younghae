@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -401,6 +402,11 @@ public class QaServiceImpl implements QaService {
 	@Override
 	public int insertDeclare(Declaration declare) {
 		return qdao.insertDeclare(sqlSession, declare);
+	}
+
+	@Override
+	public ArrayList<HashMap> selectAllReservSchedule(int expertNum) {
+		return qdao.selectAllReservSchedule(sqlSession, expertNum);
 	}
 	
 }

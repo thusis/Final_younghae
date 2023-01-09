@@ -216,7 +216,7 @@
 		   if(loginUser!=""){
 		      setInterval(() => {
 			  	getUnreadHowMany();
-		      }, 5000);
+		      }, 2400);
 		   }
 	});
 		

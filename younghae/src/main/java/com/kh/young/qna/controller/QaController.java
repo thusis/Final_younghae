@@ -2,6 +2,7 @@ package com.kh.young.qna.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -305,6 +306,9 @@ public class QaController {
 		model.addAttribute("eresp",eresp);
 		if(eresp.getAnswerListSize()!=0) {
 			ArrayList<QuestionRespDto> qlist = qService.selectExpertQuestionList(expertNum);
+			ArrayList<HashMap> result = qService.selectAllReservSchedule(expertNum);
+			model.addAttribute("reservList", new Gson().toJson(result));
+//			Gson result = new Gson().toJson(qService.selectAllReservSchedule(expertNum));
 			model.addAttribute("qlist",qlist);
 		}
 		return "expertProfile";
