@@ -16,7 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.young.admin.service.AdminService;
+import com.kh.young.member.exception.MemberException;
 import com.kh.young.model.vo.Coupon;
+import com.kh.young.model.vo.ExpertUser;
+import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.myPage.service.MyPageService;
 
@@ -43,6 +46,9 @@ public class AdminController {
     @RequestMapping("adminMember.ad")
     public String adminMember(Model model) {
     	
+    	ArrayList < Member > ML = aService.selectAllMember();
+    	
+    	model.addAttribute("memberList",ML);
     	
         return "adminMember";
     }
@@ -117,5 +123,59 @@ public class AdminController {
         return "redirect:adminCoupon.ad";
     }
     
+    
+ // 내 정보 이동.
+    @RequestMapping("otherDetail.ad")
+    public String otherDetail(HttpSession session, Model model, @RequestParam("id") int id) {
+    	
+    	Member m = aService.selectMember(id);
+    	int sort = m.getUserCNumber();
+    	if(sort==2) {
+        	
+            ExpertUser eu = aService.selectExpert(id);
+            model.addAttribute("ExpertUser", eu);
+            model.addAttribute("Member",m);
+            return "adminMemberInfo";
+    	}else {
 
+    		GeneralUser gu = aService.selectGeneral(id);
+    		
+    		model.addAttribute("GeneralUser", gu);
+    		model.addAttribute("Member",m);
+    		return "adminMemberInfo";
+    	}
+    }
+    
+    //회원강제탈퇴
+    @RequestMapping("deleteMember.ad")
+    public String deleteMember(HttpSession session, Model model, @RequestParam("id") int id) {
+    	
+    	Member m = aService.selectMember(id);
+        
+    	int result = aService.deleteMember(id);
+
+        return "redirect:adminMember.ad";
+    }
+    
+    //회원복구
+    @RequestMapping("updateMember.ad")
+    public String updateMember(HttpSession session, Model model, @RequestParam("id") int id) {
+    	
+    	Member m = aService.selectMember(id);
+        
+    	int result = aService.updateMember(id);
+
+        return "redirect:adminMember.ad";
+    }
+    
+    //관리자인증
+    @RequestMapping("confirmExpert.ad")
+    public String confirmExpert(HttpSession session, Model model, @RequestParam("id") int id) {
+    	
+    	Member m = aService.selectMember(id);
+        
+    	
+
+        return "confirmExpert";
+    }
 }

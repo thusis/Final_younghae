@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.kh.young.model.vo.Coupon;
+import com.kh.young.model.vo.ExpertUser;
+import com.kh.young.model.vo.GeneralUser;
+import com.kh.young.model.vo.Member;
 
 public interface AdminService {
 
@@ -14,5 +17,17 @@ public interface AdminService {
 	int alertCouponRe(HashMap<String, Object> map);
 
 	int createCoupon(Coupon c);
+
+	ArrayList<Member> selectAllMember();
+
+	Member selectMember(int id);
+
+	ExpertUser selectExpert(int id);
+
+	GeneralUser selectGeneral(int id);
+
+	int deleteMember(int id);
+
+	int updateMember(int id);
 
 }

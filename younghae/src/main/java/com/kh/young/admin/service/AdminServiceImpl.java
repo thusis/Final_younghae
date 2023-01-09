@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.kh.young.admin.dao.AdminDAO;
 import com.kh.young.model.vo.Coupon;
+import com.kh.young.model.vo.ExpertUser;
+import com.kh.young.model.vo.GeneralUser;
+import com.kh.young.model.vo.Member;
 import com.kh.young.myPage.dao.MyPageDAO;
 
 @Service("aService")
@@ -37,4 +40,35 @@ public class AdminServiceImpl implements AdminService{
 	public int createCoupon(Coupon c) {
 		return aDAO.createCoupon(sqlSession, c);
 	}
+	
+	@Override
+	public ArrayList<Member> selectAllMember() {
+		return aDAO.selectAllMember(sqlSession);
+	}
+	
+	@Override
+	public Member selectMember(int id) {
+		return aDAO.selectMember(sqlSession,id);
+	}
+	
+	@Override
+	public ExpertUser selectExpert(int id) {
+		return aDAO.selectExpert(sqlSession,id);
+	}
+	
+	@Override
+	public GeneralUser selectGeneral(int id) {
+		return aDAO.selectGeneral(sqlSession,id);
+	}
+	
+	@Override
+	public int deleteMember(int id) {
+		return aDAO.deleteMember(sqlSession,id);
+	}
+	
+	@Override
+	public int updateMember(int id) {
+		return aDAO.updateMember(sqlSession,id);
+	}
+	
 }
