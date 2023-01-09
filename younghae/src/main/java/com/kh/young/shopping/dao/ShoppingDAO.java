@@ -14,6 +14,7 @@ import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
@@ -286,6 +287,18 @@ public class ShoppingDAO {
 
 	public int getReviewListCount(SqlSessionTemplate sqlSession, int proNum) {
 		return sqlSession.selectOne("shoppingMapper.getReviewListCount", proNum);
+	}
+
+	public int updateCoupon(SqlSessionTemplate sqlSession, int couNum) {
+		return sqlSession.update("shoppingMapper.updateCoupon", couNum);
+	}
+
+	public int insertUsedPointAmount(SqlSessionTemplate sqlSession, Point p) {
+		return sqlSession.insert("shoppingMapper.insertUsedPointAmount", p);
+	}
+
+	public int updateMemberPoint(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("shoppingMapper.updateMemberPoint", m);
 	}
 
 

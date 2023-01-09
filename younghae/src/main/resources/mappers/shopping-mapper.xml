@@ -439,6 +439,21 @@
 		from attachment
 		where BOARD_TYPE= 7 and SERIALNUMBER = #{rvNum}
 	</select>
-
-
+	
+	<update id="updateCoupon">
+		update coupon
+		set cou_used = 'Y'
+		where cou_number = #{couNum}
+	</update>
+	
+	<insert id="insertUsedPointAmount">
+		insert into point
+		values (seq_point.nextval, '영양제 구매 포인트 차감', #{pointAmount}, sysdate, #{userNum})
+	</insert>
+	
+	<update id="updateMemberPoint">
+		update member
+		set user_point = user_point - #{userPoint}
+		where user_num = #{userNum}
+	</update>
 </mapper>

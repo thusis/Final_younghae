@@ -11,6 +11,7 @@ import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
@@ -89,6 +90,9 @@ public interface ShoppingService {
 	ArrayList<Review> selectReview(int proNum);
 	Attachment imageSelect(int rvNum);
 	int getReviewListCount(int proNum);
+	int updateCoupon(int couNum);
+	int insertUsedPointAmount(Point p);
+	int updateMemberPoint(Member m);
 	
 	
 	

@@ -305,7 +305,7 @@
 							
 							<div class="row">
 								<div class="col" style="margin-right: -5rem;">
-									<input id="pointUse" class="inputBox" style="width: 80%; padding: 10px;" placeholder="0" >
+									<input id="pointUse" name="usedPointAmount" class="inputBox" style="width: 80%; padding: 10px;" placeholder="0" >
 								</div>
 								<div class="col">
 									<button type="button" id="allPointUse" class="btn_pointAll">전액사용</button>

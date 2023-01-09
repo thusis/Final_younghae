@@ -125,14 +125,14 @@
 </head>
 
 <body>
-		<section class="featured spad" style="margin-left: 30%; margin-right: 30%;">
+		<section class="featured spad" style="margin-left: 25%; margin-right: 25%;">
 	        <div class="row align-items-center">
 	            <div class="text-center" >
 	                <label style="font-size: 180%; font-weight: 800; padding-bottom: 10%; color: #24E082;">주문 완료</label>
 	            </div>
 	            <div class="col-lg-12 col-md-12" style="border: 2px solid #24E082; padding: 3%; border-radius: 2em;">
 	                <div class="text-center" id="column">
-	                	<h2>고객님의 주문이 완료되었습니다.</h2>
+	                	<h3>고객님의 주문이 완료되었습니다.</h3>
 	                	<br><br>
 							<h4>주문번호 : ${ orderList[0].orders.orderCode } </h4>
 							<h4>주문일자 : ${ orderList[0].orders.orderDate } </h4>

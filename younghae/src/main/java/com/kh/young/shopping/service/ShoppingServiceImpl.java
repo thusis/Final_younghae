@@ -14,6 +14,7 @@ import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
@@ -233,6 +234,21 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Override
 	public int getReviewListCount(int proNum) {
 		return shDAO.getReviewListCount(sqlSession, proNum);
+	}
+	
+	@Override
+	public int updateCoupon(int couNum) {
+		return shDAO.updateCoupon(sqlSession, couNum);
+	}
+	
+	@Override
+	public int insertUsedPointAmount(Point p) {
+		return shDAO.insertUsedPointAmount(sqlSession, p);
+	}
+	
+	@Override
+	public int updateMemberPoint(Member m) {
+		return shDAO.updateMemberPoint(sqlSession, m);
 	}
 
 }

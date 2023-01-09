@@ -27,6 +27,7 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
 import com.kh.young.model.vo.Zzim;
@@ -504,51 +505,81 @@ public class ShoppingController {
 	@RequestMapping("successPay.sh")
 	public String successPay(@ModelAttribute Orders orders, @RequestParam(value="proNumList",required=false) String[] proNumList, 
 			@RequestParam(value="quantityList",required=false) String[] quantityList, @RequestParam(value="proName",required=false) String[] proNames,
-			@RequestParam(value="useCoupon",required=false) int couNum,
-			Model model) {
+			@RequestParam(value="useCoupon",required=false) int couNum, @RequestParam(value="usedPointAmount", required=false) int usedPointAmount,
+			HttpSession session, Model model) {
 		System.out.println("couNum : "+couNum);
 		System.out.println(orders);
 		System.out.println(Arrays.toString(proNumList));
 		System.out.println(Arrays.toString(quantityList));
+		System.out.println("사용포인트 : " +usedPointAmount);
 		
+		Member m = (Member)session.getAttribute("loginUser");
 //		주문 테이블 insert
+		
+		ArrayList<OrderListDTO> orderList = null;
 		int insertOrder = shService.insertOrders(orders);
 		if(insertOrder > 0) {
 			System.out.println("주문 인서트 성공");
+			OrderDetails od = new OrderDetails();
+			String orderCode = orders.getOrderCode();
+			for(int i = 0; i < proNumList.length; i++) {
+				int proNum = Integer.parseInt(proNumList[i]);
+				String proName = proNames[i];
+				int orderQuantity = Integer.parseInt(quantityList[i]);
+				od.setOrderCode(orderCode);
+				od.setProNum(proNum);
+				od.setProName(proName);
+				od.setOrderQuantity(orderQuantity);
+				
+				System.out.println(od);
+				
+				int insertOrderDetails = shService.insertOrderDetails(od);
+				if(insertOrderDetails > 0) {
+					System.out.println("주문상세 insert 성공");
+				}else {
+					System.out.println("주문상세 insert 실패");
+				}
+				
+				int deleteCart = shService.deleteCart(proNum);
+				if(deleteCart>0) {
+					System.out.println("카트 삭제 성공");
+				}else {
+					System.out.println("카트 삭제 실패");
+				}
+			}
+			orderList = shService.selectOrderList(orderCode);
+			
+			int updateCoupon = shService.updateCoupon(couNum);
+			if(updateCoupon>0) {
+				System.out.println("쿠폰 사용 수정 성공");
+			}else {
+				System.out.println("쿠폰 사용 수정 실패");
+			}
+			
+			Point p = new Point();
+			p.setPointAmount("-"+usedPointAmount);
+			p.setUserNum(m.getUserNum());
+			
+			int insertPoint = shService.insertUsedPointAmount(p);
+			if(insertPoint>0) {
+				System.out.println("포인트 사용내역 insert 성공");
+			}else {
+				System.out.println("포인트 사용내역 insert 실패");
+			}
+			
+			m.setUserPoint(usedPointAmount);
+			int updateMemberPoint = shService.updateMemberPoint(m);
+			
+			if(updateMemberPoint>0) {
+				System.out.println("포인트 사용내역 업데이트 성공");
+			}else {
+				System.out.println("포인트 사용내역 업데이트 실패");
+			}
 		}else {
 			System.out.println("주문 인서트 실패");
 		}
 		
-		OrderDetails od = new OrderDetails();
-		String orderCode = orders.getOrderCode();
-		for(int i = 0; i < proNumList.length; i++) {
-			int proNum = Integer.parseInt(proNumList[i]);
-			String proName = proNames[i];
-			int orderQuantity = Integer.parseInt(quantityList[i]);
-			od.setOrderCode(orderCode);
-			od.setProNum(proNum);
-			od.setProName(proName);
-			od.setOrderQuantity(orderQuantity);
-			
-			System.out.println(od);
-			
-			int insertOrderDetails = shService.insertOrderDetails(od);
-			if(insertOrderDetails > 0) {
-				System.out.println("주문상세 insert 성공");
-			}else {
-				System.out.println("주문상세 insert 실패");
-			}
-			
-			int deleteCart = shService.deleteCart(proNum);
-			if(deleteCart>0) {
-				System.out.println("카트 삭제 성공");
-			}else {
-				System.out.println("카트 삭제 실패");
-			}
-			
-		}
-		ArrayList<OrderListDTO> orderList = shService.selectOrderList(orderCode);
-		System.out.println(orderList);
+		
 		
 		model.addAttribute("orderList", orderList);
 		
