@@ -42,7 +42,7 @@
                 <div class="col-lg-2" style="margin-left:-100px; margin-top:50px;">
                     <div class="hero__categories">
                         <ul>
-                            <li><a href="#">상품관리</a></li>
+                            <li><a href="#" onclick="location.href='${contextPath}/insertPage.su'">상품관리</a></li>
                             <li><a href="#">주문관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/adminMember.ad'">회원관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/adminCoupon.ad'">쿠폰관리</a></li>
