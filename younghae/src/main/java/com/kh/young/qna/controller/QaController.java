@@ -2,6 +2,7 @@ package com.kh.young.qna.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Clip;
+import com.kh.young.model.vo.Declaration;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
@@ -106,6 +108,7 @@ public class QaController {
 		int listCount = getListCount();
 		ArrayList<QuestionRespDto> questionList = getQuestionList(page, listCount);
 		model.addAttribute("qlist", questionList);
+		model.addAttribute("pi", getPageInfo(page, listCount, 10));
 
 		return "recentList";
 	}
@@ -281,7 +284,7 @@ public class QaController {
 	public String findExpertList( @RequestParam(value="page", required=false) Integer page, Model model) {
 		int listCount = qService.getExpertsListCount();
 
-		model.addAttribute("pi", getPageInfo(page, listCount, 10));
+		model.addAttribute("pi", getPageInfo(page, listCount, 12));
 		model.addAttribute("erespList", qService.selectExpertList(page, listCount));
 		
 		return "expertFind";
@@ -303,6 +306,9 @@ public class QaController {
 		model.addAttribute("eresp",eresp);
 		if(eresp.getAnswerListSize()!=0) {
 			ArrayList<QuestionRespDto> qlist = qService.selectExpertQuestionList(expertNum);
+			ArrayList<HashMap> result = qService.selectAllReservSchedule(expertNum);
+			model.addAttribute("reservList", new Gson().toJson(result));
+//			Gson result = new Gson().toJson(qService.selectAllReservSchedule(expertNum));
 			model.addAttribute("qlist",qlist);
 		}
 		return "expertProfile";
@@ -325,4 +331,17 @@ public class QaController {
     	}
     	return "chatPayment";
     }
+    
+    @PostMapping("declare.qa")
+    @ResponseBody
+    public String declare(@ModelAttribute Declaration declare, HttpServletResponse response) {
+    	System.out.println("334컨트롤러:" + declare);
+    	int result = qService.insertDeclare(declare);
+    	if(result>0) {
+    		return String.valueOf("신고가 정상적으로 처리되었습니다.");
+    	}else {
+    		return String.valueOf("잘못된 경로입니다.");
+    	}
+    }
+    
 }

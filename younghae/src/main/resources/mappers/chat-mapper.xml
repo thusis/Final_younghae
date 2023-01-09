@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="chatMapper">
 
-  	<resultMap type="ChatroomDto" id="GeneralChatroomDto">
-  		<association property="expert" javaType="ExpertRespDto" resultMap="ExpertRespDto"/>
+  	<resultMap type="GeneralcrDto" id="GeneralChatroomDto">
+  		<association property="general" javaType="Member" resultMap="Member"/>
   		<association property="chatroom" javaType="Chatroom" resultMap="Chatroom"/>
   	</resultMap>
   	
-  	<resultMap type="ChatroomDto" id="ExpertsChatroomDto">
-  		<association property="general" javaType="Member" resultMap="Member"/>
+  	<resultMap type="ExpertcrDto" id="ExpertChatroomDto">
+  		<association property="expert" javaType="ExpertRespDto" resultMap="ExpertRespDto"/>
   		<association property="chatroom" javaType="Chatroom" resultMap="Chatroom"/>
   	</resultMap>
   	
@@ -92,7 +92,7 @@
 	</resultMap>
 
 	<!-- 전문가번호와 회원번호로 챗룸 조회 // 없으면 []  -->
-	<select id="getExpertChatroom" resultMap="GeneralChatroomDto">
+	<select id="getExpertChatroomByMemberNums" resultMap="ExpertChatroomDto">
 		SELECT *
 		FROM CHATROOM
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
@@ -112,7 +112,7 @@
 	</insert>
 	
 	<!-- 일반유저인 내가 포함된(userNum) Chatroom 리스트 반환 -->
-	<select id="selectRoomList" resultMap="GeneralChatroomDto">
+	<select id="selectRoomList" resultMap="ExpertChatroomDto">
 		SELECT *
 		FROM CHATROOM
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
@@ -145,7 +145,7 @@
 		SELECT CHAT_ID, CHAT_CONTENT, TO_CHAR(SEND_TIME, 'YYYY.MM.DD HH24:MI') SEND_TIME, IS_READ, CHATROOM_ID, SENDER_NUM, RECEIVER_NUM
 		FROM CHATMESSAGE
 		WHERE CHATROOM_ID  = #{chatroomId}
-		ORDER BY CHAT_ID
+		ORDER BY CHAT_ID DESC
 		)
 		WHERE ROWNUM = 1
 	</select>
@@ -164,7 +164,7 @@
 	<select id="getNotReadCount" resultType="int">
 		SELECT COUNT (*)
 		FROM CHATMESSAGE
-		WHERE CHATROOM_ID = #{chatroomId} AND IS_READ = 'N'
+		WHERE CHATROOM_ID = #{chatroomId} AND IS_READ = 'N' AND RECEIVER_NUM = #{loginUserNum}
 	</select>
 	
 	<select id="getIsPaid" resultType="int">
@@ -174,8 +174,8 @@
 		WHERE CHATROOM_ID = #{chatroomId}
 	</select>
 	
-	<!-- 전문가회원인 내가 포함된(userNum) chatRoomList 반환 -->
-	<select id="selectExpertRoomList" resultMap="ExpertsChatroomDto">
+	<!-- 전문가회원인 내가 포함된(userNum), 상대가 일반유저인 chatRoomList 반환 -->
+	<select id="selectExpertRoomList" resultMap="GeneralChatroomDto">
 		SELECT *
 		FROM CHATROOM
 	        LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
@@ -243,8 +243,8 @@
 		)
 	</select>
 	
-	<!-- 내가 일반유저면 상대는 >>전문가<< -->
-	<select id="selectGeneralRecentChatroom" resultMap="GeneralChatroomDto">
+	<!-- 최신 챗방 : 내가 일반유저면 상대는 >>전문가<< -->
+	<select id="selectGeneralRecentChatroom" resultMap="ExpertChatroomDto">
 		SELECT * FROM CHATROOM 
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
 			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
@@ -255,8 +255,8 @@
 			)
 	</select>
 	
-	<!-- 내가 전문가면 상대는 >>GENERAL<< -->
-	<select id="selectExpertRecentChatroom" resultMap="ExpertsChatroomDto">
+	<!-- 최신 챗방 : 내가 전문가면 상대는 >>GENERAL<< -->
+	<select id="selectExpertRecentChatroom" resultMap="GeneralChatroomDto">
 		SELECT * FROM CHATROOM 
 			LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
 		WHERE CHATROOM_ID =
@@ -266,7 +266,7 @@
 	</select>
 	
 	<!-- 내가 일반유저면 상대는 >>전문가<< -->
-	<select id="selectGeneralChatroomByChatroomId" resultMap="GeneralChatroomDto">
+	<select id="selectGeneralChatroomByChatroomId" resultMap="ExpertChatroomDto">
 		SELECT * FROM CHATROOM 
 	        LEFT JOIN MEMBER ON (CHATROOM.EXPERT_NUM = MEMBER.USER_NUM)
 			LEFT JOIN EXPERT_USER ON (MEMBER.USER_NUM = EXPERT_USER.USER_NUM)
@@ -275,7 +275,7 @@
 	</select>
 
 	<!-- 내가 전문가면 상대는 >>GENERAL<< -->
-	<select id="selectExpertChatroomByChatroomId" resultMap="ExpertsChatroomDto">
+	<select id="selectExpertChatroomByChatroomId" resultMap="GeneralChatroomDto">
 		SELECT * FROM CHATROOM 
 			LEFT JOIN MEMBER ON (CHATROOM.USER_NUM = MEMBER.USER_NUM)
 		WHERE CHATROOM_ID = #{chatroomId}
@@ -300,14 +300,41 @@
 
 	<insert id="afterPayInsertChatReserv">
 		INSERT ALL
-		INTO CHATRESERV VALUES (SEQ_CHATRESERV.NEXTVAL, #{crInsert.chatroomId},SEQ_ORDER.NEXTVAL,TO_DATE(#{crInsert.reservSchedule}, 'YYYY/MM/DD HH:MI'),DEFAULT, DEFAULT,#{crInsert.reservHowLong}*10 )
-		INTO ORDERS VALUES (SEQ_ORDER.CURRVAL, #{ordInsert.orderCode}, #{orderInsert.userNum},#{orderInsert.userId},#{orderInsert.orderDate},DEFAULT,#{orderInsert.orderPayAmount},#{orderInsert.orderPayAmount},#{orderInsert.orderUserName},#{orderInsert.orderPaymethod},#{orderInsert.orderCouponPrice}, #{orderInsert.orderImpCode}, #{orderInsert.orderPhone}, 0,'없음' )
+		INTO CHATRESERV VALUES 
+		(SEQ_CHATRESERV.NEXTVAL, #{crInsert.chatroomId},SEQ_ORDER.NEXTVAL,TO_DATE(#{crInsert.reservSchedule}, 'YYYY/MM/DD HH24:MI'),
+		DEFAULT, DEFAULT,#{crInsert.reservHowLong} )
+		
+		INTO ORDERS VALUES (SEQ_ORDER.CURRVAL, #{ordInsert.orderCode}, #{ordInsert.userNum},#{ordInsert.userId},#{ordInsert.orderDate},
+		DEFAULT,#{ordInsert.orderPayAmount},#{ordInsert.orderPayAmount},#{ordInsert.orderUserName},
+		#{ordInsert.orderPaymethod},#{ordInsert.orderCouponPrice}, #{ordInsert.orderImpCode}, #{ordInsert.orderPhone}, 0,'없음' )
+		
 		SELECT * FROM DUAL
 	</insert>
 	
-	<select id="upreadHowMany" resultType="_int">
+	<select id="unreadHowMany" resultType="_int">
 		SELECT COUNT(*) FROM CHATMESSAGE WHERE RECEIVER_NUM = #{receiverNum} AND IS_READ='N'
 	</select>
 	
+	<select id="getIfReserv" resultMap="ChatReserv">
+		SELECT *
+		FROM CHATRESERV
+		WHERE CHATROOM_ID = #{chatroomId}
+	</select>	
 	
+	<update id="reservApprove">UPDATE CHATRESERV SET IS_APPROVED='Y' WHERE CHATROOM_ID= #{chatroomId} AND IS_APPROVED='N'</update>
+	<update id="reservDeny">UPDATE CHATRESERV SET IS_APPROVED='D' WHERE CHATROOM_ID= #{chatroomId} AND IS_APPROVED='N'</update>
+
+	<!-- expertNum만으로 예약된 스케줄 모두 조회 -->
+	<select id="selectAllReservSchedule" resultType="HashMap">
+	SELECT 
+	TO_CHAR(RESERV_SCHEDULE, 'YYYY-MM-DD' ) DAYR,
+	TO_CHAR(RESERV_SCHEDULE, 'HH24:MI:SS' ) STARTR,
+	TO_CHAR((RESERV_SCHEDULE+(TO_NUMBER(RESERV_HOW_LONG)/(24*60))),'HH24:MI:SS') ENDR,
+	RESERV_HOW_LONG, IS_APPROVED, IS_COMPLETED
+	FROM CHATRESERV 
+	WHERE CHATROOM_ID IN (SELECT CHATROOM_ID FROM CHATROOM WHERE EXPERT_NUM = #{expertNum})
+	ORDER BY DAYR
+	</select>
+
+
 </mapper>

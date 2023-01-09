@@ -1,7 +1,8 @@
-package com.kh.young.chat.dto;
+package com.kh.young.chat.service;
 
 import java.util.ArrayList;
 
+import com.kh.young.chat.dao.GeneralcrDto;
 import com.kh.young.model.vo.ChatMessage;
 import com.kh.young.model.vo.ChatReserv;
 import com.kh.young.model.vo.Chatroom;
@@ -16,25 +17,20 @@ import lombok.ToString;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
 @Setter
+@Getter
 @ToString
-public class ChatroomDto {
-
+public class GeneralChatroomDto {
+	private int chatroomId;
 	private Chatroom chatroom;
-	/*
-	 * CHATROOM_ID CHATROOM_TIME EXPERT_NUM USER_NUM CHATROOM_STATUS
-	 */
-	
-	private ExpertRespDto expert; // 대답하는 전문가 -> expert.getMember().getUserNum() 이 expertNum
 	private Member general;
-	
-	private ChatReserv reserv;
-	/*
-	 * private int reservId; private int chatroomId; private int orderNum; private
-	 * String reservSchedule; private String isApproved; private String isCompleted;
-	 * private int reservHowLong;
-	 */
-	
+//	private ExpertRespDto myExpert;
 	private ArrayList<ChatMessage> messageList;
+	private ChatReserv reserv;
+	
+	public GeneralChatroomDto(GeneralcrDto g) {
+		this.chatroomId = g.getChatroom().getChatroomId();
+		this.chatroom = g.getChatroom();
+		this.general = g.getGeneral();
+	}
 }

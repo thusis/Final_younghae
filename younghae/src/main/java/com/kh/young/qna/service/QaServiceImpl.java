@@ -4,6 +4,7 @@ import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletContext;
@@ -20,6 +21,7 @@ import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Chatroom;
 import com.kh.young.model.vo.Clip;
+import com.kh.young.model.vo.Declaration;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
@@ -395,6 +397,16 @@ public class QaServiceImpl implements QaService {
 	@Override
 	public int updateIsSolved(int boardNum) {
 		return qdao.updateIsSolved(sqlSession, boardNum);
+	}
+
+	@Override
+	public int insertDeclare(Declaration declare) {
+		return qdao.insertDeclare(sqlSession, declare);
+	}
+
+	@Override
+	public ArrayList<HashMap> selectAllReservSchedule(int expertNum) {
+		return qdao.selectAllReservSchedule(sqlSession, expertNum);
 	}
 	
 }

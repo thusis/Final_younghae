@@ -60,11 +60,29 @@
             </table>
         </div>
 
-        <div class="product__pagination blog__pagination d-flex justify-content-center mt-3 ">
-          <a href="#">1</a>
-          <a href="#">2</a>
-          <a href="#">3</a>
-          <a href="#"><i class="fa fa-long-arrow-right"></i></a>
+		<div class="product__pagination blog__pagination d-flex justify-content-center mt-3 ">
+                   
+ 		<c:url var="goBack" value="${ loc }">
+ 			<c:param name="page" value="${pi.currentPage-1 }"></c:param>
+ 		</c:url>
+ 		<a href="${goBack}" aria-label="Previous">
+ 			<span aria-hidden="true"><i class="fa-solid fa-arrow-left-long"></i></span>
+ 		</a>
+      	
+      	<c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
+      		<c:url var="goNum" value="${loc }">
+      			<c:param name="page" value="${p }"></c:param>
+      		</c:url>
+       		<a href="${goNum }">${p }</a>	
+      	</c:forEach>
+      	
+   		<c:url var="goNext" value="${ loc }">
+   			<c:param name="page" value="${pi.currentPage+1 }"></c:param>
+   		</c:url>
+   		<a href="${goNext}" aria-label="Next">
+   			<span aria-hidden="true"><i class="fa fa-long-arrow-right"></i></span>
+   		</a>
+                   
         </div>
 
         <div class="row d-flex justify-content-center">

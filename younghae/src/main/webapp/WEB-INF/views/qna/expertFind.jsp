@@ -27,7 +27,7 @@
 
         <div class="row mt-5">
             <div class="input-group col">
-                <select class="form-select form-select-sm bn_detail-search ">
+                <select id="expertSort" onchange="sortEvent()" class="form-select form-select-sm bn_detail-search ">
                     <option selected>카테고리 선택</option>
                     <option value="sortAnswer">답변 많은 순 보기</option>
                     <option value="sortActivity">최근 활동순 보기</option>
@@ -36,16 +36,16 @@
             </div>
             <div class="col"></div>
             <div class="btn-group" role="group">
-                <button type="button" class="btn btn-light">전체</button>
-                <button type="button" class="btn btn-light">의사만</button>
-                <button type="button" class="btn btn-light">약사만</button>
+                <button type="button" class="btn btn-light" onclick="showAllExpert()">전체</button>
+                <button type="button" class="btn btn-light" onclick="showOnlyDoctors()">의사만</button>
+                <button type="button" class="btn btn-light" onclick="showOnlyChemists()">약사만</button>
             </div> 
         </div>
         <hr>
     </div>
 <!-- =================================전문가 섹션=========================================== -->
         <section class="bn_pro">
-            <div class="container">
+            <div class="container" id="expertsList">
 			<c:set var="i" value="0" /><c:set var="j" value="2" /> <!-- 1행에 2열씩 정렬하기 위함(1) -->
 
             	<c:forEach items="${erespList}" var="eresp">
@@ -58,7 +58,7 @@
 						<span  hidden="hidden">${eresp.expert.userNum }</span>
 	                    <h5 class="bn_pro-name">
 		                    <span >${eresp.member.userName}&nbsp;&nbsp;</span>
-		                    <span  class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
+		                    <span class="expertSortBadge"  class="badge rounded-pill" style="background-color: #24E082; color:#ffffff; padding-left: 0.35rem; padding-right:0.35rem;">
 		                    <c:if test="${eresp.expert.expertSort.trim() eq 'N' }">선택안함</c:if>
 		                    <c:if test="${eresp.expert.expertSort.trim() eq 'D' }">의사</c:if>
 		                    <c:if test="${eresp.expert.expertSort.trim() eq 'C' }">약사</c:if>
@@ -140,12 +140,11 @@
         
       <div class="row d-flex justify-content-center">
           <div class="input-group mt-3 col-lg-6 col-md-3">
-              <select class="form-select form-select-sm bn_detail-search">
+              <select id="expertsCategory" class="form-select form-select-sm bn_detail-search">
                   <option selected>카테고리 선택</option>
-                  <option value="제목내용">제목+내용</option>
-                  <option value="제목">제목</option>
-                  <option value="내용">내용</option>
-                  <option value="글쓴이">글쓴이</option>
+                  <option value="이름">이름</option>
+                  <option value="근무지">근무지</option>
+                  <option value="전문과목">전문과목</option>
               </select>
               <input type="text" class="form-control" id="bn_detail-search-point" placeholder="내용을 입력하세요">
               <button class="btn bn_btn_search2" >검색</button>
@@ -163,9 +162,66 @@
 <br>
 
 <script>
-//1 카테고리 선택 : 답변 많은 순, 최근 활동순, 최근 가입순
+//1 정렬기준 선택 : 답변 많은 순, 최근 활동순, 최근 가입순
 //2 전체 선택, 의사만 선택, 약사만 선택
-//3 검색 : 제목+내용, 제목, 내용, 이름
+//3 검색 : 이름, 근무지, 전문과목
+
+	const sortBadges = document.getElementsByClassName('expertSortBadge');
+	function showAllExpert(){
+		for(const sortBadge of sortBadges){
+			if(sortBadge.innerText != "의사"){
+				sortBadge.parentNode.parentNode.parentNode.parentNode.style.display = 'block';
+			}else{
+				sortBadge.parentNode.parentNode.parentNode.parentNode.style.display = 'block';
+			}
+		}
+	}
+	
+	function showOnlyDoctors(){
+		for(const sortBadge of sortBadges){
+			sortBadge.parentNode.parentNode.parentNode.parentNode.style.display = 'block';
+			if(sortBadge.innerText != "의사"){
+				sortBadge.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
+			} else {
+				sortBadge.parentNode.parentNode.parentNode.parentNode.style.display = 'block';
+			}
+		}
+	}
+	function showOnlyChemists(){
+		for(const sortBadge of sortBadges){
+			sortBadge.parentNode.parentNode.parentNode.parentNode.style.display = 'block';
+			if(sortBadge.innerText != "약사"){
+				sortBadge.parentNode.parentNode.parentNode.parentNode.style.display = 'none';
+			}else{
+				sortBadge.parentNode.parentNode.parentNode.parentNode.style.display = 'block';
+			}
+		}
+	}
+	function sortEvent(){
+		var sortSelect = document.getElementById("expertSort");
+		var selectValue = sortSelect.options[sortSelect.selectedIndex].value;
+		var sortParameter = 0;
+		
+		if(selectValue=="sortAnswer"){
+			sortParameter = 1;
+		} else if (selectValue=="sortActivity"){
+			sortParameter = 2;
+		} else if (selectValue=="sortEnrolldate"){
+			sortParameter = 3;
+		}
+		console.log("sort 시작");
+		ajax({
+			url: '${contextPath}/sortAnswerExpert.qa',
+			data: {number : sortParameter},
+			sucess: (erespList)=>{
+				console.log(eresp);
+			},
+			error: (erespList)=>{alert("실패");}
+		})
+	}
+
+
+
 
 
 </script>

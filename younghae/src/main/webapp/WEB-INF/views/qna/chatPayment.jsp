@@ -241,7 +241,7 @@
 		  '17:00', '17:20', '17:40', 
 		  '18:00', '18:20', '18:40', 
 		  '19:00', '19:20', '19:40', 
-		  '20:00', '20:20', '20:40'
+		  '20:00', '20:20'
 		 ],
 		});
 		
@@ -377,7 +377,7 @@
 			                     data: {
 			                    	 chatroomId : chatPayChatroomId,
 			                    	 reservSchedule : confirmedChatReservTime,
-			                    	 reservHowLong : confirmedChatPayHowLongValue , // ChatReserv 객체
+			                    	 reservHowLong : confirmedChatPayHowLongValue*10 , // ChatReserv 객체
 			                    	 
 			                         orderCode : rsp.merchant_uid,
 			                         userNum : "${ loginUser.userNum }",
