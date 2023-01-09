@@ -59,6 +59,7 @@ public class AdminController {
         return "adminCoupon";
     }
     
+    // 쿠폰
     @RequestMapping("couponCancer.ad")
     public String couponCancer(HttpSession session, Model model, Coupon C, @RequestParam("delConfirm") String delConfirm,
     		@RequestParam("couRegister") String couRegister) {
@@ -69,16 +70,12 @@ public class AdminController {
     	map.put("couRegister", couRegister);
     	map.put("id", id);
     	
-    	System.out.println(couRegister);
-    	System.out.println(delConfirm);
-    	
     	int result = aService.alertCouponCa(map);
-    	
-    	System.out.println(result);
-    	
+
         return "adminCoupon";
     }
     
+    // 쿠폰
     @RequestMapping("couponRegist.ad")
     public String couponRegist(HttpSession session, Model model, Coupon C, @RequestParam("delConfirm") String delConfirm,
     		@RequestParam("couRegister") String couRegister) {
@@ -89,14 +86,8 @@ public class AdminController {
     	map.put("couRegister", couRegister);
     	map.put("id", id);
     	
-    	System.out.println(couRegister);
-    	System.out.println(delConfirm);
-    	
     	int result = aService.alertCouponRe(map);
-    	
-    	System.out.println(result);
-    	
-    	
+
         return "adminCoupon";
     }
     

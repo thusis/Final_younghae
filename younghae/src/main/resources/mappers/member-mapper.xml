@@ -21,9 +21,16 @@
    </select>
    
    <insert id="insertMember">
+   <if test="userCNumber == 1">
       insert into member
       values(seq_user.nextval, #{userId}, #{userPwd}, #{userName}, #{userNickname},
           #{email}, #{gender}, #{userBirth}, #{userPhone},#{userRecommend},SYSDATE,#{userCNumber},DEFAULT,SYSDATE,DEFAULT)
+   </if>
+   <if test="userCNumber == 2">
+   	  insert into member
+      values(seq_user.nextval, #{userId}, #{userPwd}, #{userName}, #{userNickname},
+          #{email}, #{gender}, #{userBirth}, #{userPhone},#{userRecommend},SYSDATE,#{userCNumber},'D',SYSDATE,DEFAULT)
+   </if>
    </insert>
    
    <select id="selectMember" resultType="_int">
@@ -46,7 +53,7 @@
    <select id="login" resultMap="loginResultMap">
       select * 
       from member 
-      where user_id=#{userId} and user_status='Y'
+      where user_id=#{userId}
    </select>
    
    <update id="updateMember">
@@ -116,6 +123,11 @@
       where USER_ID=#{memberId}
    </update>
    
+   	<insert id="insertExpertAttmCheck">
+		insert into attachment
+		VALUES(SEQ_ATTACH.NEXTVAL, SYSDATE, #{attachName}, #{attachRename}, #{attachPath}, 9, #{userNum}, 'Y')
+	</insert>
+ 
    <resultMap type="Member" id="loginResultMap">
       <id column="USER_NUM" property="userNum"/>
       <result column="USER_ID" property="userId"/>

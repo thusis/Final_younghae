@@ -108,4 +108,11 @@ public class MemberServiceImpl implements MemberService {
 	public Member searchMyUserNum(String userId) {
 		return mDAO.searchMyUserNum(sqlSession,userId);
 	}
+	
+	@Override
+	public int insertExpertAttmCheck(HashMap<String, Object> map) {
+		return mDAO.insertExpertAttmCheck(sqlSession,map);
+	}
+	
+
 }
