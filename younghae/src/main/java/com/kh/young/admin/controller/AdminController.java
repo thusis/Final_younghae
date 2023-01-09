@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.young.admin.service.AdminService;
 import com.kh.young.member.exception.MemberException;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
@@ -174,7 +175,8 @@ public class AdminController {
     	
     	Member m = aService.selectMember(id);
         
-    	
+    	Attachment attm = aService.selectProfile(id);
+    	model.addAttribute("ExpertImage", attm);
 
         return "confirmExpert";
     }

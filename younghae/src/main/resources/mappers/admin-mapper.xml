@@ -62,6 +62,21 @@
 		where user_num = #{id}
 	</select>
 	
+	<select id="selectProfile" parameterType="map" resultMap="Attachment">
+		select *
+		from attachment 
+		where SERIALNUMBER=#{id} and BOARD_TYPE=9 and ATTACH_STATUS = 'Y'
+   </select>
+	<resultMap type="Attachment" id="Attachment">
+		<id column="ATTACH_NUM" property="attachNum"/>
+  		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
+  		<result column="ATTACH_NAME" property="attachName"/>
+  		<result column="ATTACH_RENAME" property="attachRename"/>
+  		<result column="ATTACH_PATH" property="attachPath"/>
+  		<result column="BOARD_TYPE" property="boardType"/>
+  		<result column="SERIALNUMBER" property="serialNumber"/>
+  		<result column="ATTACH_STATUS" property="attachStatus"/>
+	</resultMap>
 	
 	<resultMap type="ExpertUser" id="ExpertResultMap">
 		<id column="USER_NUM" property="userNum"/>
