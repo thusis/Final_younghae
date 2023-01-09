@@ -13,4 +13,6 @@ public interface AdminService {
 
 	int alertCouponRe(HashMap<String, Object> map);
 
+	int createCoupon(Coupon c);
+
 }

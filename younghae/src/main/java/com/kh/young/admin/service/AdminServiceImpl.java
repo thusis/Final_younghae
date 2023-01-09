@@ -33,4 +33,8 @@ public class AdminServiceImpl implements AdminService{
 		return aDAO.alertCouponRe(sqlSession, map);
 	}
 	
+	@Override
+	public int createCoupon(Coupon c) {
+		return aDAO.createCoupon(sqlSession, c);
+	}
 }
