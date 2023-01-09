@@ -327,13 +327,14 @@
                          	<c:if test="${ empty loginUser }">
 	                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
                          	</c:if>
-<%--                          	<c:if test="${ !empty loginUser }"> --%>
-<%--                          		<c:forEach items="zzim" var="z"> --%>
-<%--                          			<c:if test="${ z.proNum }== ${i.proNum }"> --%>
-<!-- 			                            <button class="btn btn_viewZzim"><i class="bi bi-heart-fill"></i>&nbsp;&nbsp;&nbsp;찜하기</button> -->
-<%--                          			</c:if> --%>
-<%--                          		</c:forEach> --%>
-<%--                          	</c:if> --%>
+                         	<c:if test="${ !empty loginUser }">
+                     			<c:if test="${ i.check eq 'Y'}">
+		                            <button class="btn btn_viewZzim"><i class="bi bi-heart-fill"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                               	</c:if>
+                               	<c:if test="${ i.check ne 'Y' }">
+		                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                               	</c:if>
+                         	</c:if>
                             <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;${i.reviewCount }</button>
                         </div>
 	                </div>
@@ -365,8 +366,18 @@
 	                    </div>
                         <div>
                          	<input type="hidden" class="proNum" value="${ i.proNum }">
-                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
-                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
+                            <c:if test="${ empty loginUser }">
+	                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                         	</c:if>
+                         	<c:if test="${ !empty loginUser }">
+                     			<c:if test="${ i.check eq 'Y'}">
+		                            <button class="btn btn_viewZzim"><i class="bi bi-heart-fill"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                               	</c:if>
+                               	<c:if test="${ i.check ne 'Y' }">
+		                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                               	</c:if>
+                         	</c:if>
+                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;${i.reviewCount }</button>
                         </div>
 	                </div>
                 </c:forEach>
@@ -398,8 +409,18 @@
 	                    </div>
                         <div>
                          	<input type="hidden" class="proNum" value="${ i.proNum }">
-                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
-                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
+                         	<c:if test="${ empty loginUser }">
+	                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                         	</c:if>
+                         	<c:if test="${ !empty loginUser }">
+                     			<c:if test="${ i.check eq 'Y'}">
+		                            <button class="btn btn_viewZzim"><i class="bi bi-heart-fill"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                               	</c:if>
+                               	<c:if test="${ i.check ne 'Y' }">
+		                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                               	</c:if>
+                         	</c:if>
+                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;${i.reviewCount }</button>
                         </div>
 	                </div>
                 </c:forEach>
@@ -446,7 +467,6 @@
 // 			}
 			
 	        $('#searchInput').on('keyup', ()=>{
-				console.log($('#searchInput').val());
 				$.ajax({
 					url:'${ contextPath }/searchCategory.sh',
 					data: {search:$('#searchInput').val()},
@@ -484,8 +504,8 @@
 								                '</div>'+
 							                    '<div id="djkf">'+
 						                         	'<input type="hidden" class="proNum" value="'+c.proNum+'">'+
-						                            '<button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>'+
-						                            '<button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>'+
+// 						                            '<button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>&nbsp;&nbsp;'+
+// 						                            '<button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>'+
 								                '</div>';
 							row.append(content);
 							const searchDives = document.getElementsByClassName('product_search_item');
@@ -544,8 +564,8 @@
 									                '</div>'+
 								                    '<div id="djkf">'+
 							                         	'<input type="hidden" class="proNum" value="'+c.proNum+'">'+
-							                            '<button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>'+
-							                            '<button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>'+
+// 							                            '<button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>&nbsp;&nbsp;'+
+// 							                            '<button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>'+
 									                '</div>';
 								row.append(content);
 								const searchDives = document.getElementsByClassName('product_search_item');
@@ -574,7 +594,6 @@
 					if(loginUser == ""){
 						alert('로그인 후 이용해주세요');
 					}else{
-// 		                $('.scrapIcon').children().on('click', function(){
 	                	var check = 'N';
 	                    if($(this).children().attr("class") != "bi bi-heart-fill"){
 	                        // 스크랩 버튼 활성화 됐을 때
@@ -585,20 +604,6 @@
 	                       $(this).children().attr("class", "bi bi-heart");
 	                        check = 'N';
 	                    }
-// 		                    $.ajax({
-// 		                    	url:'${ contextPath }/bookmark.st',
-// 		                    	data: {userNum: loginNum, boardNum: $(this).siblings()[0].value, 
-// 		                    			check: check},
-// 		                    	success:(data)=>{
-// 		                    		console.log(data);
-// 		                    	},
-// 		                    	error:(data)=>{
-// 		                    		console.log(data);
-// 		                    	}
-// 		                    });
-// 		                    console.log($(this).attr("class"));
-// 		                }); // 클래스 이름으로 비교해서 ajax 실행
-						
 	    				$.ajax({
 	    		    		url: '${contextPath}/insertZzim.sh',
 				    		data: {userNum : loginUser,

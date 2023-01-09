@@ -58,9 +58,64 @@ public class ShoppingDAO {
 	public ArrayList<Supplement> selectTrendList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectTrendList");
 	}
+	
+	public ArrayList<SupplementResp> selectsuppleRespTrendList(SqlSessionTemplate sqlSession) {
+		ArrayList<Supplement> list = selectTrendList(sqlSession);
+		ArrayList<SupplementResp> resultList = new ArrayList<>();
+		for(Supplement l : list) {
+			SupplementResp resp = new SupplementResp();
+			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+			resp.setProNum(l.getProNum());
+			resp.setProImage(l.getProImage());
+			resp.setProName(l.getProName());
+			resp.setProCompany(l.getProCompany());
+			resp.setProIngredient(l.getProIngredient());
+			resp.setProPrice(l.getProPrice());
+			resp.setProEffect(l.getProEffect());
+			resp.setProIntake(l.getProIntake());
+			resp.setProSaleStatus(l.getProSaleStatus());
+			resp.setProCreateDate(l.getProCreateDate());
+			resp.setProModifyDate(l.getProModifyDate());
+			resp.setProGrade(l.getProGrade());
+			resp.setProStatus(l.getProStatus());
+			resp.setCateNum(l.getCateNum());
+			resp.setFormatPrice(l.getFormatPrice());
+			resp.setReviewCount(reviewCount);
+			resultList.add(resp);
+		}
+		return resultList;
+	}
+	
 
 	public ArrayList<Supplement> selectBestsellerList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectBestsellerList");
+	}
+	
+	public ArrayList<SupplementResp> selectsuppleRespBestsellerList(SqlSessionTemplate sqlSession) {
+		ArrayList<Supplement> list = selectBestsellerList(sqlSession);
+		ArrayList<SupplementResp> resultList = new ArrayList<>();
+		for(Supplement l : list) {
+			SupplementResp resp = new SupplementResp();
+			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+			resp.setProNum(l.getProNum());
+			resp.setProImage(l.getProImage());
+			resp.setProName(l.getProName());
+			resp.setProCompany(l.getProCompany());
+			resp.setProIngredient(l.getProIngredient());
+			resp.setProPrice(l.getProPrice());
+			resp.setProEffect(l.getProEffect());
+			resp.setProIntake(l.getProIntake());
+			resp.setProSaleStatus(l.getProSaleStatus());
+			resp.setProCreateDate(l.getProCreateDate());
+			resp.setProModifyDate(l.getProModifyDate());
+			resp.setProGrade(l.getProGrade());
+			resp.setProStatus(l.getProStatus());
+			resp.setCateNum(l.getCateNum());
+			resp.setFormatPrice(l.getFormatPrice());
+			resp.setReviewCount(reviewCount);
+			resultList.add(resp);
+		}
+		return resultList;
 	}
 
 	public Supplement selectDetail(SqlSessionTemplate sqlSession, int proNum) {
@@ -154,6 +209,35 @@ public class ShoppingDAO {
 	public ArrayList<Supplement> selectCateList(SqlSessionTemplate sqlSession, String proEffect) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectCateList", proEffect);
 	}
+	
+	public ArrayList<SupplementResp> selectsuppleRespBestCateList(SqlSessionTemplate sqlSession, String proEffect) {
+		ArrayList<Supplement> list = selectCateList(sqlSession, proEffect);
+		ArrayList<SupplementResp> resultList = new ArrayList<>();
+		for(Supplement l : list) {
+			SupplementResp resp = new SupplementResp();
+			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+			resp.setProNum(l.getProNum());
+			resp.setProImage(l.getProImage());
+			resp.setProName(l.getProName());
+			resp.setProCompany(l.getProCompany());
+			resp.setProIngredient(l.getProIngredient());
+			resp.setProPrice(l.getProPrice());
+			resp.setProEffect(l.getProEffect());
+			resp.setProIntake(l.getProIntake());
+			resp.setProSaleStatus(l.getProSaleStatus());
+			resp.setProCreateDate(l.getProCreateDate());
+			resp.setProModifyDate(l.getProModifyDate());
+			resp.setProGrade(l.getProGrade());
+			resp.setProStatus(l.getProStatus());
+			resp.setCateNum(l.getCateNum());
+			resp.setFormatPrice(l.getFormatPrice());
+			resp.setReviewCount(reviewCount);
+			resultList.add(resp);
+		}
+		return resultList;
+	}
+	
+	
 
 	public Coupon selectUseCoupon(SqlSessionTemplate sqlSession, int couNum) {
 		return sqlSession.selectOne("shoppingMapper.selectUseCoupon", couNum);
@@ -183,6 +267,11 @@ public class ShoppingDAO {
 
 	public ArrayList<Zzim> selectZzim(SqlSessionTemplate sqlSession, int userNum) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectZzim", userNum);
+	}
+
+	public SupplementResp checkZzim(SqlSessionTemplate sqlSession, SupplementResp supplementResp) {
+		return sqlSession.selectOne("shoppingMapper.checkZzim", supplementResp);
+		
 	}
 
 

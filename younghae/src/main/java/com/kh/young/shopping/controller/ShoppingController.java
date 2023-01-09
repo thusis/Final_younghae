@@ -48,14 +48,49 @@ public class ShoppingController {
 		
 //		ArrayList<Supplement> list = shService.selectSupplementList();
 		ArrayList<SupplementResp> list = shService.selectsuppleRespList();
-		ArrayList<Supplement> trendList = shService.selectTrendList();
-		ArrayList<Supplement> bestsellerList = shService.selectBestsellerList();
+		ArrayList<SupplementResp> trendList = shService.selectsuppleRespTrendList();
+		ArrayList<SupplementResp> bestsellerList = shService.selectsuppleRespBestsellerList();
 		
 		Member m = (Member)session.getAttribute("loginUser");
 		
-		ArrayList<Zzim> zzim = null;
-		if(m != null) {
-			zzim = shService.selectZzim(m.getUserNum());
+		for(int i = 0; i < list.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(list.get(i));
+	             if(shService.checkZzim(list.get(i)) != null) {
+	                if(list.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	list.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 	list.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		for(int i = 0; i < trendList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(trendList.get(i));
+	             if(shService.checkZzim(trendList.get(i)) != null) {
+	                if(trendList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	trendList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 trendList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		
+		for(int i = 0; i < bestsellerList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(bestsellerList.get(i));
+	             if(shService.checkZzim(bestsellerList.get(i)) != null) {
+	                if(bestsellerList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	bestsellerList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 bestsellerList.get(i).setCheck("N");
+	             }
+			}
 		}
 		
 		ArrayList<String> cateTrend = shService.selectCateTrend();
@@ -64,26 +99,40 @@ public class ShoppingController {
 		model.addAttribute("bestsellerList", bestsellerList);
 		model.addAttribute("trendList", trendList);
 		model.addAttribute("cateTrend", cateTrend);
-		model.addAttribute("zzim", zzim);
-		
-//		Member mem = shService.selectMember(1);
-//		model.addAttribute("loginUser", mem);
 		
 		return "shoppingMain";
 	}
 	
 	// shopping all product view
 	@RequestMapping("allView.sh")
-	public String allView(Model model) {
+	public String allView(Model model, HttpSession session) {
 		
-		ArrayList<Supplement> allList = shService.selectSupplementList();
+		ArrayList<SupplementResp> allList = shService.selectsuppleRespList();
 		
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		for(int i = 0; i < allList.size(); i++) {
 			String price = formatter.format(allList.get(i).getProPrice());
 			allList.get(i).setFormatPrice(price);
 		}
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		for(int i = 0; i < allList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(allList.get(i));
+	             if(shService.checkZzim(allList.get(i)) != null) {
+	                if(allList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	allList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 allList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		ArrayList<String> cateTrend = shService.selectCateTrend();
 		model.addAttribute("allList", allList);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "allView";
 	}	
@@ -91,9 +140,9 @@ public class ShoppingController {
 	
 	// shopping trend view	
 	@RequestMapping("trendView.sh")
-	public String trendView(Model model) {
+	public String trendView(Model model, HttpSession session) {
 		
-		ArrayList<Supplement> trendList = shService.selectTrendList();
+		ArrayList<SupplementResp> trendList = shService.selectsuppleRespTrendList();
 		
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		for(int i = 0; i < trendList.size(); i++) {
@@ -101,16 +150,34 @@ public class ShoppingController {
 			trendList.get(i).setFormatPrice(price);
 		}
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		for(int i = 0; i < trendList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(trendList.get(i));
+	             if(shService.checkZzim(trendList.get(i)) != null) {
+	                if(trendList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	trendList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 trendList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		
+		ArrayList<String> cateTrend = shService.selectCateTrend();
+		
 		model.addAttribute("trendList", trendList);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "trendView";
 	}
 	
 	// shopping bestseller view
 	@RequestMapping("bestsellerView.sh")
-	public String bestsellerView(Model model) {
+	public String bestsellerView(Model model, HttpSession session) {
 		
-		ArrayList<Supplement> bestsellerList = shService.selectBestsellerList();
+		ArrayList<SupplementResp> bestsellerList = shService.selectsuppleRespBestsellerList();
 		
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		for(int i = 0; i < bestsellerList.size(); i++) {
@@ -118,7 +185,25 @@ public class ShoppingController {
 			bestsellerList.get(i).setFormatPrice(price);
 		}
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		for(int i = 0; i < bestsellerList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(bestsellerList.get(i));
+	             if(shService.checkZzim(bestsellerList.get(i)) != null) {
+	                if(bestsellerList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	bestsellerList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 bestsellerList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		
+		ArrayList<String> cateTrend = shService.selectCateTrend();
 		model.addAttribute("bestsellerList", bestsellerList);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "bestsellerView";
 	}
@@ -461,12 +546,29 @@ public class ShoppingController {
 	
 	
 	@RequestMapping("cateView.sh")
-	public String cateView(@RequestParam("proEffect") String proEffect, Model model){
+	public String cateView(@RequestParam("proEffect") String proEffect, Model model, HttpSession session){
 		
-		ArrayList<Supplement> cateList = shService.selectCateList(proEffect);
+		ArrayList<SupplementResp> cateList = shService.selectsuppleRespBestCateList(proEffect);
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		for(int i = 0; i < cateList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(cateList.get(i));
+	             if(shService.checkZzim(cateList.get(i)) != null) {
+	                if(cateList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	cateList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 cateList.get(i).setCheck("N");
+	             }
+			}
+		}
+		ArrayList<String> cateTrend = shService.selectCateTrend();
 		
 		model.addAttribute("cateList", cateList);
 		model.addAttribute("proEffect", proEffect);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "cateView";
 	}

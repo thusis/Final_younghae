@@ -197,5 +197,25 @@ public class ShoppingServiceImpl implements ShoppingService{
 	public ArrayList<Zzim> selectZzim(int userNum) {
 		return shDAO.selectZzim(sqlSession, userNum);
 	}
+	
+	@Override
+	public SupplementResp checkZzim(SupplementResp supplementResp) {
+		return shDAO.checkZzim(sqlSession, supplementResp);
+	}
+	
+	@Override
+	public ArrayList<SupplementResp> selectsuppleRespTrendList() {
+		return shDAO.selectsuppleRespTrendList(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<SupplementResp> selectsuppleRespBestsellerList() {
+		return shDAO.selectsuppleRespBestsellerList(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<SupplementResp> selectsuppleRespBestCateList(String proEffect) {
+		return shDAO.selectsuppleRespBestCateList(sqlSession, proEffect);
+	}
 
 }

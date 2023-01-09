@@ -29,4 +29,5 @@ public class Supplement {
 	private String proStatus;
 	private int cateNum;
 	private String formatPrice;
+
 }

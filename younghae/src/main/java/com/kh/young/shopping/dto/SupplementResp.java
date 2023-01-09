@@ -2,6 +2,8 @@ package com.kh.young.shopping.dto;
 
 import java.sql.Date;
 
+import com.kh.young.model.vo.Zzim;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,5 +32,7 @@ public class SupplementResp {
 	private int cateNum;
 	private String formatPrice;
 	private int reviewCount;
+	private String check;
+	private Zzim zzim;
 }
 

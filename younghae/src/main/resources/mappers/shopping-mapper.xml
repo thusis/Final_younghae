@@ -124,6 +124,24 @@
 		<result column="pro_num" property="proNum"/>
 	</resultMap>
 	
+	<resultMap type="SupplementResp" id="supplementRespResultSet">
+		<id column="PRO_NUM" property="proNum"/>
+		<result column="PRO_IMAGE" property="proImage"/>
+		<result column="PRO_NAME" property="proName"/>
+		<result column="PRO_COMPANY" property="proCompany"/>
+		<result column="PRO_INGREDIENT" property="proIngredient"/>
+		<result column="PRO_PRICE" property="proPrice"/>
+		<result column="PRO_EFFECT" property="proEffect"/>
+		<result column="PRO_INTAKE" property="proIntake"/>
+		<result column="PRO_SALE_STATUS" property="proSaleStatus"/>
+		<result column="PRO_CREATEDATE" property="proCreateDate"/>
+		<result column="PRO_MODIFYDATE" property="proModifyDate"/>
+		<result column="PRO_GRADE" property="proGrade"/>
+		<result column="PRO_STATUS" property="proStatus"/>
+		<result column="CATE_NUM" property="cateNum"/>
+		<association property="zzim" resultMap="zzimpResultSet" javaType="Zzim"/>
+	</resultMap>
+	
 	<select id="selectSupplementList" resultMap="supplementResultSet">
 		select *
 		from product
@@ -362,5 +380,11 @@
 		where user_num = #{userNum}
 	</select>
 		
+	<select id="checkZzim" resultMap="supplementRespResultSet">
+		select * 
+		from Zzim
+			join product using(pro_num)
+		where pro_num = #{proNum}
+	</select>
 
 </mapper>

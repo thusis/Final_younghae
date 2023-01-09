@@ -80,6 +80,11 @@ public interface ShoppingService {
 	int insertZzim(Zzim zim);
 	int deleteZzim(Zzim zim);
 	ArrayList<Zzim> selectZzim(int userNum);
+	SupplementResp checkZzim(SupplementResp supplementResp);
+	ArrayList<SupplementResp> selectsuppleRespTrendList();
+	ArrayList<SupplementResp> selectsuppleRespBestsellerList();
+	ArrayList<SupplementResp> selectsuppleRespBestCateList(String proEffect);
+	
 	
 	
 
