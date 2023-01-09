@@ -380,52 +380,51 @@ public class SupplementController {
 		
 		int result = 0;
 		
+		Attachment attm = new Attachment();
 		System.out.println(select);
 		
-//		result = sService.insertReview(r);
+		int attmResult = 0;
 		
-		return null;
-//		if (file != null) {
-//			if(!select.contains(file.get)) {
-//				System.out.println(file.getOriginalFilename());
-//				if(!file.getOriginalFilename().equals("")) {
-//					String[] returnArr = saveFile(file, request);
-//					
-//					attm.setAttachName(file.getOriginalFilename());
-//					attm.setAttachRename(returnArr[1]);
-//					attm.setAttachPath(returnArr[0]);
-//					System.out.println(returnArr[1]);
-//					System.out.println(returnArr[0]);
-//					
-//					attmResult = sService.insertReviewAttm(attm);
-//				}
-//			}
-//		}else {
-//			r.setImage("없음");
-//		}
-//				
-//		Supplement product = sService.selectPro(r.getProNum());
-//
-//		if (result + attmResult > 0) {
-//			model.addAttribute("product", product);
-//			model.addAttribute("loginUser", m);
-//			return "product_Detail";
-//		} else {
-//			throw new SupplementException("updateReview 혹은 updateReviewAttm 오류");
-//		}
+		if (file != null) {
+			System.out.println(file.getOriginalFilename());
+			if(!file.getOriginalFilename().equals("")) {
+				String[] returnArr = saveFile(file, request);
+				
+				attm.setAttachName(file.getOriginalFilename());
+				attm.setAttachRename(returnArr[1]);
+				attm.setAttachPath(returnArr[0]);
+				attm.setBoardType(7);
+				attm.setSerialNumber(r.getRvNum());
+				System.out.println(returnArr[1]);
+				System.out.println(returnArr[0]);
+				
+				attmResult = sService.updateReviewAttm(attm);
+			}
+		}else {
+			r.setImage("없음");
+		}
+		
+		result = sService.updateReview(r);
+		
+		Supplement product = sService.selectPro(r.getProNum());
+
+		if (result + attmResult > 0) {
+			model.addAttribute("product", product);
+			model.addAttribute("loginUser", m);
+			return "product_Detail";
+		} else {
+			throw new SupplementException("insertReview 혹은 insertReviewAttm 오류");
+		}
 	}
 	
 	@RequestMapping("reco.su")
-	public void reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check) {
+	public void reco(@RequestParam("rvNum") int rvnum, @RequestParam("userNum") int usernum, @RequestParam("check") String check,
+					@RequestParam("reviewCount") int reviewCount) {
 		Review r = new Review();
 		System.out.println(check);
 		
 		r.setRvNum(rvnum);
 		r.setUserNum(usernum);
-		
-		
-		
-		
 		
 		System.out.println(r);
 		
@@ -438,8 +437,11 @@ public class SupplementController {
 			
 		}else if(check.equals("D")) {
 			System.out.println("삭제");
-			result = sService.deleteReco(r);
-			result1 = sService.deleteReviewCount(r);
+			
+			if(reviewCount>0) {
+				result = sService.deleteReco(r);
+				result1 = sService.deleteReviewCount(r);
+			}
 		}
 	}
 	

@@ -146,5 +146,15 @@ public class SupplementServiceImpl implements SupplementService {
 		return pcDAO.insertProduct(sqlSession, supple);
 	}
 
+	@Override
+	public int updateReviewAttm(Attachment attm) {
+		return pcDAO.updateReviewAttm(sqlSession, attm);
+	}
+
+	@Override
+	public int updateReview(Review r) {
+		return pcDAO.updateReview(sqlSession, r);
+	}
+
 
 }

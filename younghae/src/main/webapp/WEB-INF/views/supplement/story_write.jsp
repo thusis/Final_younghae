@@ -244,7 +244,6 @@
 		  const img = $('#summernote').summernote('code');
 		  
 		  var thumbnail = img.substring(img.indexOf('/summer'), img.indexOf('src="')+44);
-		  console.log("얍"+thumbnail);
 		  
 		  document.getElementById('thumbnail').value = thumbnail;
 		  console.log(document.getElementById('thumbnail').value);

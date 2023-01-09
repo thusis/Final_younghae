@@ -60,4 +60,8 @@ public interface SupplementService {
 
 	int insertProduct(Supplement supple);
 
+	int updateReviewAttm(Attachment attm);
+
+	int updateReview(Review r);
+
 }

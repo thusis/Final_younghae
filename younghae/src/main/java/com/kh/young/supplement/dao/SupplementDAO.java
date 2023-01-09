@@ -125,4 +125,12 @@ public class SupplementDAO {
 		return sqlSession.insert("supplementMapper.insertProduct", supple);
 	}
 
+	public int updateReviewAttm(SqlSessionTemplate sqlSession, Attachment attm) {
+		return sqlSession.update("supplementMapper.updateReviewAttm", attm);
+	}
+
+	public int updateReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("supplementMapper.updateReview", r);
+	}
+
 }

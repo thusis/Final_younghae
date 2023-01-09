@@ -545,6 +545,8 @@
 		            		var loginCheck = "";
 		            		var imageYN = "";
 		            		
+// 		            		console.log("r.rvRecommend : " + r.rvRecommend);
+		            		
 		            		first = '<br><br><div class="product__details__quantity_1" id="reviewDetail"  style="border: 2px solid #24E082; border-radius: 10px; width: 100%; height: 300px; margin-right: 3%; padding: 2%;">'+
 		            				'<div class="row" style="margin-left: 10px;"><div id="reviewImg" style="float: left; padding-right: -20%;">'+'<input type="hidden" id="usernum" name="userNum" value="'+ r.userNum +'">'+
 		            				'<img src="resources/img/profile_yh.png" style="height: 70px; width: 70px; margin-top: 10%;"></div>'+
@@ -555,17 +557,17 @@
 		            				
   							loginCheck = '<div class="product__details__rating 1" style="float: left; margin-top: 3.2%; margin-left: 5%;">'+
 		            					 '<i name="reIcon" class="bi bi-hand-thumbs-up" style="color: rgb(0, 0, 0); font-size: 150%;"></i></div>'+
-		            					 '<input type="hidden" name="rvNum" value="${ r.rvNum }">'
+		            					 '<input type="hidden" name="rvNum" value="'+ r.rvNum +'">'+
 		            					 '<div name="reviewRank" style="float: left; padding-top: 3.5%; padding-left: 1%;">'+
 		            					 '<p style="color: black; font-size: 130%;">'+ r.rvRecommend +'</p></div></div>';
 		            		
 		            		imageYN = '<div class="row" style="margin-top: 1%; padding-left: 2%;">';
 		            		
 		            		if(r.image != "없음"){
-			            		imageYN = '<div name="reviewContent" class="col-9 text-left" >'+ r.rvContent +'</div>'+
+			            		imageYN += '<div name="reviewContent" class="col-9 text-left" >'+ r.rvContent +'</div>'+
 			            				  '<div name="reviewImg" class="col-3"><img src="resources/uploadFiles/'+ r.image +'" style="height: 200px; width: 200px; float: right; margin-right: 3%; margin-top: -10%;" class=".img-fluid"></div><br><br>';
 		            		}else{
-		            			imageYN = '<div name="reviewContent" class="col-12 text-left" style="padiing-right: 5%;">'+ r.rvContent +'</div><br><br>';
+		            			imageYN += '<div name="reviewContent" class="col-12 text-left" style="padiing-right: 5%;">'+ r.rvContent +'</div><br><br>';
 		            		}
 		            		
 		            				
@@ -590,21 +592,18 @@
 			            for(const up of update){
 			            	up.addEventListener('click' ,function(){
 			            		// 별점
-// 			            		console.log($(this).children().children()[4].innerText);
-			            		console.log($(this).parent().children().children()[4].innerText);
+// 			            		console.log($(this).parent().siblings().children().eq(3).text());
 			            		
 			            		// 유저넘버
-// 			            		console.log($(this).children().children()[0].value);
-			            		console.log($(this).parent().children().children()[0].value);
+// 			            		console.log($(this).parent().siblings().eq(0).children().eq(0).children().eq(0).val());
 			            		
 // 			            		리뷰 내용
-// 			            		console.log($(this).children().siblings()[6].innerText);
-			            		console.log($(this).parent().children().siblings()[6].innerText);
+// 			            		console.log($(this).text());
 			            		
 			            		
 			            		
 			            		if(login != null){
-				            		if( loginNum == $(this).parent().children().children()[0].value ){
+				            		if( loginNum == $(this).parent().siblings().eq(0).children().eq(0).children().eq(0).val() ){
 			            				updateModal.style.display = "block";
 				            			
 	// 				            			닫기 버튼
@@ -622,48 +621,66 @@
 				            	        }
 				            	    	
 				            	        const rating = document.getElementById("updaterating");
-				            	        rating.innerText = $(this).parent().children().children()[4].innerText;
+				            	        rating.innerText = $(this).parent().siblings().children().eq(3).text();
 				            	        
 										const content = document.getElementById('urvContent');
-			            	        	content.value = $(this).parent().children().siblings()[6].innerText;
+			            	        	content.value = $(this).text();
 				            		}
 			            		}
 			            	});
 			            }
 			            if(login != null){
-			            	const reco = document.getElementsByClassName('product__details__rating 1');
-			                for(var re of reco){
-			    	            re.addEventListener('click', function(){
-			    	            	console.log(this);
-			    	            	var check = '';
-			    	            	
-			    	            	if($(this).attr('class') != "bi bi-hand-thumbs-up-fill"){
-			    	            		console.log($(this).parent);
-				    	            	$(this).attr('class', 'bi bi-hand-thumbs-up-fill');
-			    	            		check = 'R';
-			    	            		console.log("눌렀담");
-			    	            	}else{
-			    	            		$(this).attr('class','bi bi-hand-thumbs-up');
-			    	            		check = 'D';
-			    	            		console.log("취소했담");
-			    	            	}
-			    	            	
-// 			    	            	console.log(this);
-			    	            	// rvNum
-			    	            	console.log($(this).parent().children()[7].value);
-// 			    	            	$.ajax({
-// 			    	            		url: '${contextPath}/reco.su',
-// 			    	            		data: {rvNum: $(this).parent().children()[7].value ,userNum: loginNum,
-// 			    	            				check: check},
-// 			    	            		success:(data)=>{
-			    	            			
-// 			    	            		},
-// 			    	            		error:(data)=>{
-// 			    	            			console.log(data);
-// 			    	            		}
-// 			    	            	});
-			    	            });
-			                }
+			    			const good = document.getElementsByClassName('product__details__rating 1');
+			    			
+			    			for(const g of good){
+			    				g.addEventListener('click', function(){
+			    					
+			    					// 리뷰 번호
+			    					const pnum = $(this).parent().siblings().eq(0);
+			    					console.log(pnum);
+			    					
+			    					// 유저번호
+			    					const unum = $(this).children()[2];
+// 			    					console.log(unum);
+			    					
+			    					// 추천수
+			    					const good = $(this).parent().children().eq(5).children().eq(1).val();
+			    					
+// 			    					console.log(good);					
+//			     					console.log($(this).children().eq(0).attr('class'));
+
+									// 리뷰 번호
+									const reviewNum = $(this);
+									
+// 									console.log(reviewNum);
+			    					
+			    					var check ="";
+			    					
+			    					if($(this).children().eq(0).attr('class') != "bi bi-hand-thumbs-up"){
+			    						$(this).children().eq(0).attr('class', 'bi bi-hand-thumbs-up');
+			    						check = 'R';
+			    						console.log("누름");
+			    					}else{
+			    						$(this).children().eq(0).attr('class', 'bi bi-hand-thumbs-up-fill');
+			    						check = 'D';
+			    						console.log("누른거 취소");
+			    					}
+			    					
+			    	 				$.ajax({
+			    	            		url: '${contextPath}/reco.su',
+			    	            		data: {pvNum: pnum ,userNum: loginNum,
+			    	            				check: check, reviewCount: good}
+			    	            		,
+			    	            		success:(data)=>{
+			    	            			console.log(data);
+			    	            		},
+			    	            		error:(data)=>{
+			    	            			console.log(data);
+			    	            		}
+			                		});
+			    					
+			    				});
+			    			}
 			            }
 	        		}
 	        	},

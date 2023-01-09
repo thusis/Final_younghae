@@ -136,31 +136,38 @@
 	<!-- 1. 제품 번호 순 -->
 	<select id="adminReviewListN" resultMap="ReviewResultSet">
         select 
-        PRO_NUM, USER_NUM, RV_NUM, RV_CONTENT, TO_CHAR(review.RV_CREATEDATE, 'YYYY-MM-DD') STR_CREATEDATE, TO_CHAR(RV_MODIFYDATE, 'YYYY-MM-DD') STR_MODIFYDATE, RV_STATUS, RV_STAR, RV_BUY, RV_RECOMMEND, USER_ID, USER_PWD, USER_NAME,
-        USER_NICKNAME, USER_GENDER, USER_BIRTH, USER_PHONE, USER_RECOMMEND, USER_ENROLLDATE, USER_CNUMBER, USER_STATUS, USER_MODIFYDATE, PRO_IMAGE,PRO_NAME, PRO_COMPANY, PRO_INGREDIENT, PRO_PRICE, PRO_EFFECT, PRO_INTAKE, PRO_SALE_STATUS, PRO_CREATEdATE, PRO_MODIFYDATE, PRO_GRADE,
-        PRO_STATUS, CATE_NUM from review
+        PRO_NUM, USER_NUM, RV_NUM, RV_CONTENT, TO_CHAR(review.RV_CREATEDATE, 'YYYY-MM-DD') STR_CREATEDATE, 
+        TO_CHAR(RV_MODIFYDATE, 'YYYY-MM-DD') STR_MODIFYDATE, RV_STATUS, RV_STAR, RV_BUY, RV_RECOMMEND, USER_ID, USER_PWD, USER_NAME,
+        USER_NICKNAME, USER_GENDER, USER_BIRTH, USER_PHONE, USER_RECOMMEND, USER_ENROLLDATE, USER_CNUMBER, USER_STATUS, USER_MODIFYDATE, 
+        PRO_IMAGE,PRO_NAME, PRO_COMPANY, PRO_INGREDIENT, PRO_PRICE, PRO_EFFECT, PRO_INTAKE, PRO_SALE_STATUS, PRO_CREATEdATE, PRO_MODIFYDATE, 
+        PRO_GRADE, PRO_STATUS, CATE_NUM 
+        from review
 		join member using (user_num)
         join product using (pro_num)
         order by pro_num asc
 	</select>
-	
 	<!-- 2. 제품 이름 순 -->
 	<select id="adminReviewListNa" resultMap="ReviewResultSet">
         select 
-        PRO_NUM, USER_NUM, RV_NUM, RV_CONTENT, TO_CHAR(RV_CREATEDATE, 'YYYY-MM-DD') STR_CREATEDATE, TO_CHAR(RV_MODIFYDATE, 'YYYY-MM-DD') STR_MODIFYDATE, RV_STATUS, RV_STAR, RV_BUY, RV_RECOMMEND, USER_ID, USER_PWD, USER_NAME,
-        USER_NICKNAME, USER_GENDER, USER_BIRTH, USER_PHONE, USER_RECOMMEND, USER_ENROLLDATE, USER_CNUMBER, USER_STATUS, USER_MODIFYDATE, PRO_IMAGE,PRO_NAME, PRO_COMPANY, PRO_INGREDIENT, PRO_PRICE, PRO_EFFECT, PRO_INTAKE, PRO_SALE_STATUS, PRO_CREATEdATE, PRO_MODIFYDATE, PRO_GRADE,
-        PRO_STATUS, CATE_NUM from review
+        PRO_NUM, USER_NUM, RV_NUM, RV_CONTENT, TO_CHAR(RV_CREATEDATE, 'YYYY-MM-DD') STR_CREATEDATE, 
+        TO_CHAR(RV_MODIFYDATE, 'YYYY-MM-DD') STR_MODIFYDATE, RV_STATUS, RV_STAR, RV_BUY, RV_RECOMMEND, USER_ID, USER_PWD, USER_NAME,
+        USER_NICKNAME, USER_GENDER, USER_BIRTH, USER_PHONE, USER_RECOMMEND, USER_ENROLLDATE, USER_CNUMBER, USER_STATUS, USER_MODIFYDATE,
+        PRO_IMAGE,PRO_NAME, PRO_COMPANY, PRO_INGREDIENT, PRO_PRICE, PRO_EFFECT, PRO_INTAKE, PRO_SALE_STATUS, PRO_CREATEdATE, PRO_MODIFYDATE,
+        PRO_GRADE, PRO_STATUS, CATE_NUM 
+        from review
 		join member using (user_num)
         join product using (pro_num)
         order by pro_name asc
 	</select>
-	
 	<!-- 3. 제품 추천 순 -->
 	<select id="adminReviewListG" resultMap="ReviewResultSet">
         select 
-        PRO_NUM, USER_NUM, RV_NUM, RV_CONTENT, TO_CHAR(RV_CREATEDATE, 'YYYY-MM-DD') STR_CREATEDATE, TO_CHAR(RV_MODIFYDATE, 'YYYY-MM-DD') STR_MODIFYDATE, RV_STATUS, RV_STAR, RV_BUY, RV_RECOMMEND, USER_ID, USER_PWD, USER_NAME,
-        USER_NICKNAME, USER_GENDER, USER_BIRTH, USER_PHONE, USER_RECOMMEND, USER_ENROLLDATE, USER_CNUMBER, USER_STATUS, USER_MODIFYDATE, PRO_IMAGE,PRO_NAME, PRO_COMPANY, PRO_INGREDIENT, PRO_PRICE, PRO_EFFECT, PRO_INTAKE, PRO_SALE_STATUS, PRO_CREATEdATE, PRO_MODIFYDATE, PRO_GRADE,
-        PRO_STATUS, CATE_NUM from review
+        PRO_NUM, USER_NUM, RV_NUM, RV_CONTENT, TO_CHAR(RV_CREATEDATE, 'YYYY-MM-DD') STR_CREATEDATE, 
+        TO_CHAR(RV_MODIFYDATE, 'YYYY-MM-DD') STR_MODIFYDATE, RV_STATUS, RV_STAR, RV_BUY, RV_RECOMMEND, USER_ID, USER_PWD, USER_NAME,
+        USER_NICKNAME, USER_GENDER, USER_BIRTH, USER_PHONE, USER_RECOMMEND, USER_ENROLLDATE, USER_CNUMBER, USER_STATUS, USER_MODIFYDATE, 
+        PRO_IMAGE,PRO_NAME, PRO_COMPANY, PRO_INGREDIENT, PRO_PRICE, PRO_EFFECT, PRO_INTAKE, PRO_SALE_STATUS, PRO_CREATEdATE, PRO_MODIFYDATE, 
+        PRO_GRADE, PRO_STATUS, CATE_NUM
+        from review
 		join member using (user_num)
         join product using (pro_num)
         order by rv_recommend desc
@@ -201,6 +208,13 @@
 		values(seq_pro.nextval, #{proImage}, #{proName}, #{proCompany}, #{proIngredient}, #{proPrice}, #{proEffect}, #{proIntake}, #{proSaleStatus}, sysdate, sysdate, 0, 'Y' ,#{cateNum} )
 	</insert>
 	
+	<!-- 리뷰 사진 업데이트 -->
+	<update id="updateReviewAttm">
+		update attachment
+		set ATTACH_NAME = #{ attachName }, ATTACH_RENAME = #{ attachRename  }, ATTACH_PATH = #{ attachPath } 
+		where board_type = 7 and SERIALNUMBER = #{ serialNumber }
+	</update>
+	
 	<!-- 성분 폼 -->
 	<resultMap type="ProCategory" id="CategoryResultSet">
 		<id column="CATE_NUM" property="cateNum"/>
@@ -229,7 +243,7 @@
 	
 	<!-- 첨부파일 폼 -->
 	<resultMap type="Attachment" id="AttmResultSet">
-		<id  column="ATTACH_NUM" property="attachNum"/>
+		<id column="ATTACH_NUM" property="attachNum"/>
 		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
 		<result column="ATTACH_NAME" property="attachName"/>
 		<result column="ATTACH_RENAME" property="attachRename"/>
@@ -255,6 +269,13 @@
 		<result column="RV_RECOMMEND" property="rvRecommend"/>
 		<association property="member" javaType="Member" resultMap="memberResultSet"/>
 		<association property="supplement" javaType="Supplement" resultMap="SupplementResultSet"/>
+		<association property="recommend" javaType="ReviewRecommend" resultMap="ReviewRecommendResultSet"/>
+	</resultMap>
+	
+	<!-- 리뷰 추천 폼 -->
+	<resultMap type="ReviewRecommend" id="ReviewRecommendResultSet">
+		<id column="RV_NUM" property="rvNum"/> 
+		<result column="USER_NUM" property="userNum"/>
 	</resultMap>
 	
    <select id="selemetMember" resultMap="memberResultSet">

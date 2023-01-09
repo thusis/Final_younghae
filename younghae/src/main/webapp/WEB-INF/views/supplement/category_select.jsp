@@ -321,16 +321,20 @@
 														style="float: left; padding-top: 3.5%; padding-left: 1%;">
 														<p style="color: black; font-size: 130%;">${ re.rvStar }</p>
 													</div>
-													<div class="product__details__rating_1"
-														style="float: left; margin-top: 3.5%; margin-left: 20%;">
-														<i class="bi bi-hand-thumbs-up"
-															style="color: rgb(0, 0, 0); font-size: 130%;"></i>
-														<input type="hidden" name="rvNum" value="${ re.rvNum }">
-													</div>
-													<div class="product__details__rating_1" name="reviewRank"
-														style="float: left; padding-top: 3.5%; padding-left: 1%;">
-														<p style="color: black; font-size: 130%;">${ re.rvRecommend }</p>
-													</div>
+													<c:if test="${ loginUser ne null }">
+														<div class="product__details__rating_1"
+															style="float: left; margin-top: 3.5%; margin-left: 20%;">
+															<i class="bi bi-hand-thumbs-up"
+																style="color: rgb(0, 0, 0); font-size: 130%;"></i>
+															<input type="hidden" name="rvNum" value="${ re.rvNum }">
+															<input type="hidden" name="userNum" value="${ re.member.userNum }">
+														</div>
+														<div class="product__details__rating_2" name="reviewRank"
+															style="float: left; padding-top: 3.5%; padding-left: 1%;">
+															<p style="color: black; font-size: 130%;">${ re.rvRecommend }</p>
+															<input type="hidden" name="reReco" value="${ re.rvRecommend }">
+														</div>
+													</c:if>
 												</div>
 												<div class="row reviewContent" style="margin-top: 1%; padding-left: 2%;">
 													<input type="hidden" name="productNum" value="${ re.rvNum }">
@@ -367,6 +371,9 @@
 </body>
 	<script>
 		window.onload=()=>{
+			const loginUser = "${ loginUser }";
+			const loginNum = "${ loginUser.userNum }";
+			
 			const productmore = document.getElementById("productMore");
 			productmore.addEventListener('click', ()=>{
 				const cateNum = document.getElementById('cateNum').value;
@@ -394,15 +401,48 @@
 			}
 			
 			const good = document.getElementsByClassName('product__details__rating_1');
+			
 			for(const g of good){
 				g.addEventListener('click', function(){
-					console.log($(this).parents().find('div[class="row reviewContent"]').children()[1]);
+// 					console.log($(this).children()[2]);
+// 					console.log($(this).children()[1]);
 					
 					// 제품번호
-					const pnum = $(this).children()[1].value;
+					const pnum = $(this).children()[1];
 					
 					// 유저번호
-					const unum = $(this);
+					const unum = $(this).children()[2];
+					
+					// 추천수
+					const good = $(this).parent().children().eq(5).children().eq(1).val();
+					
+					console.log(good);					
+// 					console.log($(this).children().eq(0).attr('class'));
+					
+					var check ="";
+					
+					if($(this).children().eq(0).attr('class') != "bi bi-hand-thumbs-up"){
+						$(this).children().eq(0).attr('class', 'bi bi-hand-thumbs-up');
+						check = 'R';
+						console.log("누름");
+					}else{
+						$(this).children().eq(0).attr('class', 'bi bi-hand-thumbs-up-fill');
+						check = 'D';
+						console.log("누른거 취소");
+					}
+					
+	 				$.ajax({
+	            		url: '${contextPath}/reco.su',
+	            		data: {rvNum: pnum ,userNum: loginNum,
+	            				check: check, reviewCount: good},
+	            		success:(data)=>{
+	            			console.log(data);
+	            		},
+	            		error:(data)=>{
+	            			console.log(data);
+	            		}
+            		});
+					
 				});
 			}
 			

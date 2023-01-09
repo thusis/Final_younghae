@@ -29,6 +29,8 @@ public class Review {
 	private Member member;
 	private Supplement supplement;
 	
+	private ReviewRecommend recommend;
+	
 	private String strCreateDate;
 	private String strMOdifyDate;
 }

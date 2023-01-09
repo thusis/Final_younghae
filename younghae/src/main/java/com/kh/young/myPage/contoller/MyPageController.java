@@ -268,7 +268,7 @@ public class MyPageController {
         	for(int i=0;i<CLT.size();i++) {
         		if(CLT.get(i).getCouRegister().equals(couponRegist)) {
         			result3 = 0;
-        			sService
+        			break;
         		}else {
         			result3 = 1;
         		}
