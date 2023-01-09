@@ -539,7 +539,7 @@
 		</div>
 	</div>
 	<!-- Modal3(배송지 수정) -->
-
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 

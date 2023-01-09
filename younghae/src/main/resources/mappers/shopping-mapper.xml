@@ -107,10 +107,21 @@
 		<result column="ORDER_QUANTITY" property="orderQuantity"/>
 	</resultMap>
 	
+	<resultMap type="ProCategory" id="CategoryResultSet">
+		<id column="CATE_NUM" property="cateNum"/>
+		<result column="CATE_NAME" property="cateName"/>
+		<result column="CATE_SUMMARY" property="cateSummary"/>
+		<result column="CATE_ICON" property="cateIcon"/>
+	</resultMap>
 	
 	<resultMap type="OrderListDTO" id="orderListResultSet">
 		<association property="orders" javaType="Orders" resultMap="ordersResultSet"/>
 		<association property="orderDetails" javaType="OrderDetails" resultMap="orderDetailsResultSet"/>
+	</resultMap>
+	
+	<resultMap type="Zzim" id="zzimpResultSet">
+		<result column="user_Num" property="userNum"/>
+		<result column="pro_num" property="proNum"/>
 	</resultMap>
 	
 	<select id="selectSupplementList" resultMap="supplementResultSet">
@@ -320,5 +331,36 @@
 		from coupon
 		where cou_number = #{couNum}
 	</select>
+	
+	<select id="selectCateTrend" resultMap="CategoryResultSet">
+		select cate_name
+		from product
+		  join sale_product using(pro_num)
+		  join product_category using(cate_num) 
+		order by pro_viewcount desc
+	</select>
+	
+	<select id="searchIngredientList" resultMap="supplementResultSet">
+		select  *
+		from product
+		where pro_ingredient like '%'||#{search}||'%'
+	</select>
+	
+	<insert id="insertZzim">
+		insert into zzim
+		values(#{userNum}, #{proNum})
+	</insert>
+	
+	<delete id="deleteZzim">
+		delete from zzim
+		where user_num = #{userNum} and pro_num = #{proNum}
+	</delete>
+	
+	<select id="selectZzim" resultMap="zzimpResultSet">
+		select *
+		from zzim
+		where user_num = #{userNum}
+	</select>
+		
 
 </mapper>

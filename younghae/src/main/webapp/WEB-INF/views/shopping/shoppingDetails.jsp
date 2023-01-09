@@ -656,7 +656,7 @@
     </div>
     <!-- /장바구니 모달창 -->
 </div>
-
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 <script>
     window.onload = function(){

@@ -26,7 +26,9 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.Story;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
@@ -42,16 +44,27 @@ public class ShoppingController {
 	
 	// shopping main view
 	@RequestMapping("shoppingMain.sh")
-	public String shoppingMain(Model model) {
+	public String shoppingMain(Model model, HttpSession session) {
 		
 //		ArrayList<Supplement> list = shService.selectSupplementList();
 		ArrayList<SupplementResp> list = shService.selectsuppleRespList();
 		ArrayList<Supplement> trendList = shService.selectTrendList();
 		ArrayList<Supplement> bestsellerList = shService.selectBestsellerList();
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		ArrayList<Zzim> zzim = null;
+		if(m != null) {
+			zzim = shService.selectZzim(m.getUserNum());
+		}
+		
+		ArrayList<String> cateTrend = shService.selectCateTrend();
+				
 		model.addAttribute("supplementList", list);
 		model.addAttribute("bestsellerList", bestsellerList);
 		model.addAttribute("trendList", trendList);
+		model.addAttribute("cateTrend", cateTrend);
+		model.addAttribute("zzim", zzim);
 		
 //		Member mem = shService.selectMember(1);
 //		model.addAttribute("loginUser", mem);
@@ -472,4 +485,45 @@ public class ShoppingController {
 		return result;
 	}
 	
+	@RequestMapping("searchIngredient.sh")
+	public void searchIngredient(@RequestParam("search") String search, HttpServletResponse response) {
+		System.out.println(search);
+		ArrayList<Supplement> list = shService.searchIngredientList(search);
+		
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		for(int i = 0; i < list.size(); i++) {
+			String price = formatter.format(list.get(i).getProPrice());
+			list.get(i).setFormatPrice(price);
+		}
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		// 시간 형식 지정해주기 
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}	
+	
+	@ResponseBody
+	@RequestMapping("insertZzim.sh")
+	public Integer insertZzim(@ModelAttribute Zzim zim, @RequestParam("check") String check) {
+		System.out.println(zim);
+		
+		int result = 0;
+		
+		if (check.equals("N")) {
+			System.out.println("delete 들어옴");
+			result = shService.deleteZzim(zim);
+		} else if (check.equals("Y")) {
+			System.out.println("insert 들어옴");
+			result = shService.insertZzim(zim);
+		}
+		
+		return result;
+	}	
 }
+

@@ -12,6 +12,7 @@ import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
@@ -71,7 +72,14 @@ public interface ShoppingService {
 	ArrayList<Supplement> selectCateList(String proEffect);
 	
 	Coupon selectUseCoupon(int couNum);
+	
 	ArrayList<SupplementResp> selectsuppleRespList();
+	
+	ArrayList<String> selectCateTrend();
+	ArrayList<Supplement> searchIngredientList(String search);
+	int insertZzim(Zzim zim);
+	int deleteZzim(Zzim zim);
+	ArrayList<Zzim> selectZzim(int userNum);
 	
 	
 

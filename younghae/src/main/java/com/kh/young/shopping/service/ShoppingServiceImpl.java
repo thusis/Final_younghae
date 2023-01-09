@@ -15,6 +15,7 @@ import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dao.ShoppingDAO;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
@@ -170,6 +171,31 @@ public class ShoppingServiceImpl implements ShoppingService{
 	@Override
 	public ArrayList<SupplementResp> selectsuppleRespList() {
 		return shDAO.selectsuppleRespList(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<String> selectCateTrend() {
+		return shDAO.selectCateTrend(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Supplement> searchIngredientList(String search) {
+		return shDAO.searchIngredientList(sqlSession, search);
+	}
+	
+	@Override
+	public int insertZzim(Zzim zim) {
+		return shDAO.insertZzim(sqlSession,zim);
+	}
+	
+	@Override
+	public int deleteZzim(Zzim zim) {
+		return shDAO.deleteZzim(sqlSession,zim);
+	}
+	
+	@Override
+	public ArrayList<Zzim> selectZzim(int userNum) {
+		return shDAO.selectZzim(sqlSession, userNum);
 	}
 
 }

@@ -13,7 +13,9 @@ import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
@@ -155,6 +157,32 @@ public class ShoppingDAO {
 
 	public Coupon selectUseCoupon(SqlSessionTemplate sqlSession, int couNum) {
 		return sqlSession.selectOne("shoppingMapper.selectUseCoupon", couNum);
+	}
+
+	public ArrayList<String> selectCateTrend(SqlSessionTemplate sqlSession) {
+		ArrayList<ProCategory> list = (ArrayList)sqlSession.selectList("shoppingMapper.selectCateTrend", sqlSession);
+		ArrayList<String> cateList = new ArrayList<String>();
+		for(ProCategory c : list) {
+            if(!cateList.contains(c.getCateName()))
+            	cateList.add(c.getCateName());
+		}
+		return cateList;
+	}
+
+	public ArrayList<Supplement> searchIngredientList(SqlSessionTemplate sqlSession, String search) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.searchIngredientList", search);
+	}
+
+	public int insertZzim(SqlSessionTemplate sqlSession, Zzim zim) {
+		return sqlSession.insert("shoppingMapper.insertZzim", zim);
+	}
+
+	public int deleteZzim(SqlSessionTemplate sqlSession, Zzim zim) {
+		return sqlSession.delete("shoppingMapper.deleteZzim", zim);
+	}
+
+	public ArrayList<Zzim> selectZzim(SqlSessionTemplate sqlSession, int userNum) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectZzim", userNum);
 	}
 
 
