@@ -2,6 +2,8 @@
 
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +13,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.kh.young.common.Pagination;
+import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.ProCategory;
 import com.kh.young.model.vo.Story;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.shopping.dto.SupplementResp;
 import com.kh.young.shopping.service.ShoppingService;
 import com.kh.young.story.service.StoryService;
 import com.kh.young.supplement.service.SupplementService;
@@ -37,10 +41,26 @@ public class HomeController {
 	private StoryService stService; //스토리
 	
 	   @RequestMapping(value = "/", method = RequestMethod.GET)
-	   public String home2(Model model) {
+	   public String home2(Model model, HttpSession session) {
 		   
 		   /**쇼핑===============================================================**/
-		   ArrayList<Supplement> supplementList = shService.selectSupplementList();
+			ArrayList<SupplementResp> supplementList = shService.selectsuppleRespList();
+			Member m = (Member)session.getAttribute("loginUser");
+			
+			for(int i = 0; i < supplementList.size(); i ++) {
+				if(m != null) {
+					SupplementResp s = shService.checkZzim(supplementList.get(i));
+		             if(shService.checkZzim(supplementList.get(i)) != null) {
+		                if(supplementList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+		                	supplementList.get(i).setCheck("Y");
+		                }
+		             }else {
+		            	 supplementList.get(i).setCheck("N");
+		             }
+				}
+			}		
+			ArrayList<String> cateTrend = shService.selectCateTrend();
+			
 		   /**쇼핑===============================================================**/
 
 		   /**영양제===============================================================**/
@@ -58,14 +78,30 @@ public class HomeController {
 		   model.addAttribute("supplementList",supplementList);
 		   model.addAttribute("jhSupplmentList",jhSupplmentList);
 		   model.addAttribute("columnlist",columnlist);
+		   model.addAttribute("cateTrend", cateTrend);
 		   
 	      return "/common/home";
 	   }
 	   
 	   @RequestMapping(value = "/home.do", method = RequestMethod.GET)
-	   public String home(Model model) {
+	   public String home(Model model, HttpSession session) {
 		   /**쇼핑===============================================================**/
-		   ArrayList<Supplement> supplementList = shService.selectSupplementList();
+			ArrayList<SupplementResp> supplementList = shService.selectsuppleRespList();
+			Member m = (Member)session.getAttribute("loginUser");
+			
+			for(int i = 0; i < supplementList.size(); i ++) {
+				if(m != null) {
+					SupplementResp s = shService.checkZzim(supplementList.get(i));
+		             if(shService.checkZzim(supplementList.get(i)) != null) {
+		                if(supplementList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+		                	supplementList.get(i).setCheck("Y");
+		                }
+		             }else {
+		            	 supplementList.get(i).setCheck("N");
+		             }
+				}
+			}		
+			ArrayList<String> cateTrend = shService.selectCateTrend();
 		   /**쇼핑===============================================================**/
 
 		   /**영양제===============================================================**/
@@ -83,6 +119,7 @@ public class HomeController {
 		   model.addAttribute("supplementList",supplementList);
 		   model.addAttribute("jhSupplmentList",jhSupplmentList);
 		   model.addAttribute("columnlist",columnlist);
+		   model.addAttribute("cateTrend", cateTrend);
 		   
 	      return "/common/home";
 	   }
