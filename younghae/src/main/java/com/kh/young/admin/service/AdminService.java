@@ -3,6 +3,7 @@ package com.kh.young.admin.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
@@ -29,5 +30,7 @@ public interface AdminService {
 	int deleteMember(int id);
 
 	int updateMember(int id);
+
+	Attachment selectProfile(int id);
 
 }

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
@@ -62,6 +63,11 @@ public class AdminDAO {
 	public int updateMember(SqlSessionTemplate sqlSession, int id) {
 		// TODO Auto-generated method stub
 		return sqlSession.update("adminMapper.updateMember", id);
+	}
+
+	public Attachment selectProfile(SqlSessionTemplate sqlSession, int id) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("adminMapper.selectProfile", id);
 	}
 	
 

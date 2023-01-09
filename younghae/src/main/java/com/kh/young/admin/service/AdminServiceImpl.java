@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.young.admin.dao.AdminDAO;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
@@ -69,6 +70,11 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int updateMember(int id) {
 		return aDAO.updateMember(sqlSession,id);
+	}
+	
+	@Override
+	public Attachment selectProfile(int id) {
+		return aDAO.selectProfile(sqlSession,id);
 	}
 	
 }
