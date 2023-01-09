@@ -138,8 +138,31 @@ order by b.board_num desc
 		where SERIALNUMBER=#{id} and BOARD_TYPE=6 and ATTACH_STATUS = 'Y'
    </select>
    
+   <select id="selectMyOrders" parameterType="map" resultMap="ordersResultSet">
+		select *
+		from orders join order_details using(order_code)
+		where user_num = #{id}
+   </select>
    
    
+   <resultMap type="OrderDto" id="ordersResultSet">
+		<id column="ORDER_NUM" property="orderNum"/>
+		<result column="ORDER_CODE" property="orderCode"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="USER_ID" property="userId"/>
+		<result column="ORDER_DATE" property="orderDate"/>
+		<result column="ORDER_STATUS" property="orderStatus"/>
+		<result column="ORDER_PAYAMOUNT" property="orderPayAmount"/>
+		<result column="ORDER_TOTALPRICE" property="orderTotalPrice"/>
+		<result column="ORDER_USERNAME" property="orderUserName"/>
+		<result column="ORDER_PAYMETHOD" property="orderPaymethod"/>
+		<result column="ORDER_COUPONPRICE" property="orderCouponPrice"/>
+		<result column="ORDER_IMPCODE" property="orderImpCode"/>
+		<result column="ORDER_PHONE" property="orderPhone"/>
+		<result column="ADDRESS_NUM" property="addressNum"/>
+		<result column="ORDER_REQUEST" property="orderRequest"/>
+		<result column="pro_name" property="proName"></result>
+	</resultMap>
    
    <resultMap type="ScrapDto" id="Scrap">
 		<id column="board_num" property="boardNum"/>
