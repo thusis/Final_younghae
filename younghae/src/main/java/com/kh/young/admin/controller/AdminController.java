@@ -33,12 +33,22 @@ public class AdminController {
 	
     //전문가 페이지
     @RequestMapping("adminPage.ad")
-    public String adminPage(Model model) {
+    public String adminPage(HttpSession session, Model model) {
     	SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
     	Date now = new Date();
     	String now_dt = format.format(now);
     	
     	model.addAttribute("Date",now_dt);
+    	
+    	int id = ((Member) session.getAttribute("loginUser")).getUserNum();
+    	
+    	ArrayList < Coupon > CL = aService.selectAdminCoupon(id);
+    	
+    	model.addAttribute("couponList",CL);
+    	
+    	ArrayList < Member > ML = aService.selectAllMember();
+    	
+    	model.addAttribute("memberList",ML);
     	
         return "adminPage";
     }

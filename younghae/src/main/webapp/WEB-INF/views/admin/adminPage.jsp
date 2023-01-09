@@ -11,12 +11,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>마이 페이지</title>
+    <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
+    <style>
+    	.product__details__tab .nav-tabs:before {
+            position: absolute;
+            left: 0;
+            top: 0px;
+            height: 0px;
+            width: 370px;
+            background: #ebebeb;
+            content: "";
+        }
+
+        .product__details__tab .nav-tabs:after {
+            position: absolute;
+            left: 0;
+            top: 0px;
+            height: 0px;
+            width: 370px;
+            background: #ebebeb;
+            content: "";
+        }
+    </style>
 </head>
 
 <body>
-    <nav>
-        <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
-    </nav>
     <section>
         <div class="container">
             <div class="row">
@@ -38,7 +57,7 @@
                     </div>
                 </div>
                 <div class="col-lg-10">
-                    <div style="margin-top:50px; margin-bottom:30px;">오늘의 매출 현황(${ Date }기준)</div><a></a>
+                    <div style="margin-top:50px; margin-bottom:30px;">오늘 날짜 : ${ Date })</div><a></a>
                     <div style="text-align:center; margin-top:100px;">
                         <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
@@ -53,9 +72,139 @@
                                 <path d="M8 13.5a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11zm0 .5A6 6 0 1 0 8 2a6 6 0 0 0 0 12z" />
                             </svg><div style="margin-right:100px; margin-left:30px;display:inline-block">환불<br>1</div>    
                 </div>
+            <div class="product__details__tab" style="padding-top: 0px;">
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tabs" role="tabpanel">
+                        <div class="product__details__tab__desc" style="padding-top: 0px;">
+                        <div>
+                                <ul class="nav nav-tabs col-lg-12" role="tablist" style="margin-top: 50px; justify-content: left;">
+                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">회원관리</a></li>
+                                </ul>
+                            </div>
+                            <div class="bn_boardlist mt-2">
+                                <button style="float: right; border: 0; margin-bottom: 5px;" onclick="location.href='${contextPath}/adminMember.ad'">+</button>
+                                <table class="table">
+                                    <thead>
+                                        <tr class="text-teal-100">
+                                            <th scope="col" class="col-lg-2">번호</th>
+                                            <th scope="col" class="col-lg-2">회원ID</th>
+                                            <th scope="col" class="col-lg-3">회원구분</th>
+                                            <th scope="col" class="col-lg-2">이메일</th>
+                                            <th scope="col" class="col-lg-2">가입날짜</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbody">
+                                        <c:if test="${ !empty memberList }">
+                                            <c:forEach begin="0" end="4" var="i">
+                                                <c:if test="${ !empty memberList[i] }">
+                                                    <tr>
+                                                        <td>${ memberList[i].userNum }</td>
+                                                        <td>${ memberList[i].userId }</td>
+                                                        <td>${ memberList[i].userStatus }</td>
+                                                        <td>${ memberList[i].email }</td>
+                                                        <td>${ memberList[i].userEnrollDate }</td>
+                                                    </tr>
+                                                </c:if>
+                                            </c:forEach>
+                                        </c:if>
+                                    </tbody>
+                                    <tbody>
+                                        <c:if test="${ !empty memberList }">
+                                            <c:if test="${ memberList.size()<4 }">
+                                                <c:forEach begin="0" end="${ 4-memberList.size() }">
+                                                    <tr>
+                                                        <td style="height: 50px;"></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </c:if>
+                                        </c:if>
+                                    </tbody>
+                                    <tbody>
+                                        <c:if test="${ empty memberList }">
+                                            <tr style="height: 300px;">
+                                                <td colspan="6" style="text-align:center; vertical-align: middle;">작성한 게시물이 없습니다.</td>
+                                            </tr>
+                                        </c:if>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="product__details__tab" style="padding-top: 0px;">
+                            <div>
+                                <ul class="nav nav-tabs col-lg-12" role="tablist" style="margin-top: 50px; justify-content: left;">
+                                    <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tabs-1" role="tab" aria-selected="true">쿠폰관리</a></li>
+                                </ul>
+                            </div>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="tabs-1" role="tabpanel">
+                                    <div class="product__details__tab__desc" style="padding-top: 0px;">
+                                        <div class="bn_boardlist mt-2">
+                                            <button style="float: right; border: 0; margin-bottom: 5px;" onclick="location.href='${contextPath}/adminCoupon.ad'">+</button>
+                                            <table class="table">
+                                                <thead>
+                                                    <tr class="text-teal-100">
+                                                        <th scope="col" class="col-lg-2">쿠폰번호</th>
+                                                        <th scope="col" class="col-lg-2">쿠폰내용</th>
+                                                        <th scope="col" class="col-lg-1">할인액</th>
+                                                        <th scope="col" class="col-lg-2">발급날짜</th>
+                                                        <th scope="col" class="col-lg-1">만료날짜</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="tbody">
+                                                    <c:if test="${ !empty couponList }">
+                                                        <c:forEach begin="0" end="4" var="i">
+                                                            <c:if test="${ !empty couponList[i] }">
+                                                                <tr>
+                                                                    <td>${ couponList[i].couRegister }</td>
+                                                                    <td>${ couponList[i].couIntro }</td>
+                                                                    <td>${ couponList[i].couDiscount }</td>
+                                                                    <td>${ couponList[i].couPublishDate }</td>
+                                                                    <td>${ couponList[i].couEndDate }</td>
+                                                                </tr>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </tbody>
+                                                <tbody>
+                                                    <c:if test="${ !empty couponList }">
+                                                        <c:if test="${ couponList.size()<4 }">
+                                                            <c:forEach begin="0" end="${ 4-couponList.size() }">
+                                                                <tr>
+                                                                    <td style="height: 50px;"></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                            </c:forEach>
+                                                        </c:if>
+                                                    </c:if>
+                                                </tbody>
+                                                <tbody>
+                                                    <c:if test="${ empty couponList }">
+                                                        <tr style="height: 300px;">
+                                                            <td colspan="5" style="text-align:center; vertical-align: middle;">작성한 리뷰가 없습니다.</td>
+                                                        </tr>
+                                                    </c:if>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
+    </div>
+    </div>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
     </section>
     <script>
     </script>
