@@ -25,6 +25,69 @@
       values(seq_cou.nextval,SYSDATE, #{couEndDate}, 'A',#{couDiscount},#{couIntro},#{userNum},#{couRegister})
 	</insert>
 	
+	<select id="selectAllMember" parameterType="map" resultMap="loginResultMap">
+		select *
+		from member
+	</select>
+	
+	<select id="selectMember" resultMap="loginResultMap">
+		select *
+		from member
+		where user_num = #{id}
+	</select>
+	
+	<update id="deleteMember">
+		update member
+		set user_status = 'N'
+		where user_num=#{id}
+	</update>
+	
+	<update id="updateMember">
+		update member
+		set user_status = 'Y'
+		where user_num=#{id}
+	</update>
+	
+	
+	
+	<select id="selectGeneral" resultMap="GeneralResultMap">
+		select *
+		from general_user
+		where user_num = #{id}
+	</select>
+
+	<select id="selectExpert" resultMap="ExpertResultMap">
+		select *
+		from expert_user
+		where user_num = #{id}
+	</select>
+	
+	
+	<resultMap type="ExpertUser" id="ExpertResultMap">
+		<id column="USER_NUM" property="userNum"/>
+		<result column="EXPERT_POSTADD" property="expertPostAdd"/>
+		<result column="EXPERT_ADDRESS" property="expertAddress"/>
+		<result column="EXPERT_ADD_DETAIL" property="expertAddDetail"/>
+		<result column="EXPERT_SORT" property="expertSort"/>
+		<result column="EXPERT_MEDI" property="expertMedi"/>
+		<result column="EXPERT_DEPT" property="expertDept"/>
+		<result column="EXPERT_PROFILE" property="expertProfile"/>
+		<result column="EXPERT_HOMEPAGE" property="expertHomepage"/>
+		<result column="EXPERT_CAREER" property="expertCareer"/>
+		<result column="EXPERT_ESTIMATE" property="expertEstimate"/>
+		<result column="EXPERT_LATITUDE" property="expertLatitude"/>
+		<result column="EXPERT_LONGITUDE" property="expertLongtitude"/>
+	</resultMap>
+	
+	<resultMap type="GeneralUser" id="GeneralResultMap">
+		<id column="USER_NUM" property="userNum"/>
+		<result column="USER_ZIPCODE" property="userZipcode"/>
+		<result column="USER_ADDRESS" property="userAddress"/>
+		<result column="USER_ADDRESS_DETAIL" property="userAddressDetail"/>
+		<result column="USER_HEALTH" property="userHealth"/>
+	</resultMap>
+	
+	
 	
 	<resultMap type="Coupon" id="couponResultMap">
 		<id column="COU_NUMBER" property="couNumber"/>
@@ -36,7 +99,23 @@
 		<result column="USER_NUM" property="userNum"/>
 		<result column="COU_REGISTER" property="couRegister"/>
 	</resultMap>
-	
+	<resultMap type="Member" id="loginResultMap">
+      <id column="USER_NUM" property="userNum"/>
+      <result column="USER_ID" property="userId"/>
+      <result column="USER_PWD" property="userPwd"/>
+      <result column="USER_NAME" property="userName"/>
+      <result column="USER_NICKNAME" property="userNickname"/>
+      <result column="USER_EMAIL" property="email"/>
+      <result column="USER_GENDER" property="gender"/>
+      <result column="USER_BIRTH" property="userBirth"/>
+      <result column="USER_PHONE" property="userPhone"/>
+      <result column="USER_RECOMMEND" property="userRecommend"/>
+      <result column="USER_ENROLLDATE" property="userEnrollDate"/>
+      <result column="USER_CNUMBER" property="userCNumber"/>
+      <result column="USER_STATUS" property="userStatus"/>
+      <result column="USER_MODIFYDATE" property="userModifyDate"/>
+      <result column="USER_POINT" property="userPoint"/>
+   </resultMap>
 	
 	
 </mapper>
