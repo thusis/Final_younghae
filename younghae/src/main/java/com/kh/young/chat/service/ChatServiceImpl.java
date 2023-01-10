@@ -66,7 +66,7 @@ public class ChatServiceImpl implements ChatService {
 			ex = new ExpertChatroomDto(e);
 			ex.setMessageList(selectMessageList(ex.getChatroomId()));
 			ex.setReserv(getIfReserv(ex.getChatroomId()));
-			System.out.println("ch서비스:"+ex);
+//			System.out.println("ch서비스:"+ex);
 		} else {
 			ex = null;
 		}
@@ -88,7 +88,7 @@ public class ChatServiceImpl implements ChatService {
 	@Override /**ok**/
 	public ArrayList<ExpertChatroomListDto> selectRoomList(int loginUserNum) {
 		ArrayList<ExpertcrDto> roomList = chDao.selectRoomList(sqlSession, loginUserNum);
-		System.out.println("ch서비스 97:" + roomList);
+//		System.out.println("ch서비스 97:" + roomList);
 		
 		ArrayList<ExpertChatroomListDto> resultRoomList = new ArrayList<>();
 
@@ -100,14 +100,14 @@ public class ChatServiceImpl implements ChatService {
 			resultRoomList.add(ex);
 		}
 		
-		System.out.println("ch서비스118:"+resultRoomList);
+//		System.out.println("ch서비스118:"+resultRoomList);
 		return resultRoomList;
 	}
 	
 	@Override /**ok**/
 	public ArrayList<GeneralChatroomListDto> selectExpertsRoomList(int loginUserNum) {
 		ArrayList<GeneralcrDto> roomList = chDao.selectExpertRoomList(sqlSession, loginUserNum);
-		System.out.println("ch서비스 97:" + roomList);
+//		System.out.println("ch서비스 97:" + roomList);
 		
 		ArrayList<GeneralChatroomListDto> resultRoomList = new ArrayList<>();
 
@@ -119,7 +119,7 @@ public class ChatServiceImpl implements ChatService {
 			resultRoomList.add(gn);
 		}
 		
-		System.out.println("ch서비스137:"+resultRoomList);
+//		System.out.println("ch서비스137:"+resultRoomList);
 		return resultRoomList;
 	}
 

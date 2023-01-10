@@ -113,6 +113,7 @@
                         </div>
                         <div class="row">
                         <div class="bn_content">${qresp.board.boardContent}</div></div>
+                        
 						<c:if test="${ qresp.qattach.attachNum ne 0}">
                         <div class="row" style="padding:3rem;">
 							<img src="${contextPath}/resources/uploadFiles/${qresp.qattach.attachRename}" alt="" class="img-fluid">
@@ -386,7 +387,6 @@
 		               </div>
 		           </div>
 		       </div>
-		
 	            <div class="col-lg-2"><!--관련영양제-->
 					<div>
 						<c:if test="${ empty ans.sresp }"> </c:if>

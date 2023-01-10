@@ -223,9 +223,12 @@
 								<c:if test="${cr.lastMessage.chatId eq 0 }">
 									<span style="color:grey;">아직 나눈 대화가 없어요</span>
 								</c:if>
+								<c:if test="${ cr.notReadCount>0 }">
+									<span class="chatNowNotReadCount" style="display:inline-block; width:18px; height:18px; border-radius:12px; background-color:orange; color:white; font-size:13px; font-weight:800; line-height:18px; text-align:center;">${cr.notReadCount}</span>
+								</c:if>
 							
 							</div>
-							<div class="col-10">
+							<div class="col-12">
 								<c:if test="${ cr.reserv.reservId eq 0}">
 									<span class="col badge">예약 내역이 없습니다</span>
 								</c:if>
@@ -239,9 +242,6 @@
 									<c:if test="${ cr.reserv.isApproved eq 'N'}">
 									<span class="col badge" style="color:grey; font-weight:700;">거절한 예약 일정입니다</span>
 									</c:if>
-								</c:if>
-								<c:if test="${ cr.notReadCount>0 }">
-									<span class="col badge" style="width:8px; height:8px; border-radius:8px; background-color:#24E082; color:white;">${cr.notReadCount}</span>
 								</c:if>
 							</div>
 						</a>

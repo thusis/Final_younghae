@@ -191,14 +191,14 @@ public class QaController {
 	/**댓글 입력**/
 	@PostMapping("insertreply.qa")
 	public void insertReply(@ModelAttribute Reply r, HttpServletResponse response) {
-		System.out.println("컨트롤러INSERT"+r);
+//		System.out.println("컨트롤러INSERT"+r);
 		int result = qService.insertReply(r);
-		System.out.println("컨트롤러"+result);
+//		System.out.println("컨트롤러"+result);
 		
 		response.setContentType("application/json; charset=UTF-8");
 		ArrayList<ReplyRespDto> replyList = getReplyList(r.getBoardNum());
 		
-		System.out.println("컨트롤러SELECTLIST"+replyList);
+//		System.out.println("컨트롤러SELECTLIST"+replyList);
 		
 		GsonBuilder gb = new GsonBuilder();
 		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd"); // 형식 지정 후

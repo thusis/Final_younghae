@@ -67,14 +67,7 @@
                 <h2>${expert.expertDept} </h2>
                 <hr style="width:50vw; border:2px solid #24E082; background-color: #24E082;">
             </div>
-            <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-6 text-center">
-                    <div class="contact__widget">
-                        <span class="icon_phone"></span>
-                        <h4>Phone</h4>
-                        <p>+01-3-8888-6868</p>
-                    </div>
-                </div>
+            <div class="row justify-content-between">
                 <div class="col-lg-3 col-md-3 col-sm-6 text-center">
                     <div class="contact__widget">
                         <span class="icon_pin_alt"></span>
@@ -85,8 +78,8 @@
                 <div class="col-lg-3 col-md-3 col-sm-6 text-center">
                     <div class="contact__widget">
                         <span class="icon_clock_alt"></span>
-                        <h4>Open time</h4>
-                        <p>10:00 am to 23:00 pm</p>
+                        <h4>영업 시간</h4>
+                        <p>09:00 시 - 20:00 시</p>
                     </div>
                 </div>
                 <div class="col-lg-3 col-md-3 col-sm-6 text-center">
@@ -101,7 +94,7 @@
         </section>
         
         <!-- Contact Section End -->
-         <section class="container align-center">
+         <section class="container align-center justify-content-between">
 	        <c:if test="${expert.expertDept ne 'N' }">
 	        <div id="map" style="width:45vw;height:20vw;"></div>
     	    </c:if>
@@ -116,7 +109,6 @@
 	<br>
 	<br>
 	<br>
-	${expert}
 
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=8b90a6a9e244fbb09fb6577c048f86d0&libraries=services"></script>
 	<script>
