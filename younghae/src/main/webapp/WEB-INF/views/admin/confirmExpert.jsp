@@ -26,7 +26,6 @@
                             <li><a href="#" onclick="location.href='${contextPath}/insertPage.su'">상품관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/adminMember.ad'">회원관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/adminCoupon.ad'">쿠폰관리</a></li>
-                            <li><a href="#" onclick="location.href='${contextPath}/adminPoint.ad'">포인트관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/AdminReview.su'">리뷰관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/AdminStoryList.st'">이야기 관리</a></li>
                             <li><a href="#" onclick="location.href='${contextPath}/AdminwriteStory.st'">이야기 작성</a></li>
