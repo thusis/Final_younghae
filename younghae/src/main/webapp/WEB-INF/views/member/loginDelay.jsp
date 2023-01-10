@@ -41,12 +41,7 @@
 	
         <section class="contact spad">
                <div class="section-title" style="padding: 5rem 5rem 5rem 5rem; border:0.5rem solid #24E082; ">
-               	   <c:if test="${ temp.userStatus eq 'D' }">
                    <h2> ${ temp.userNickname }유저는 회원가입 승인 대기중입니다. </h2>
-                   </c:if>
-                   <c:if test="${ temp.userStatus eq 'N' }">
-                   <h2> ${ temp.userNickname }유저는 탈퇴한 회원입니다. </h2>
-                   </c:if>
                    <a href="login.me">
                    다른아이디로 로그인
                    <img src="resources/img/logo_pill_white.svg" alt="흰로고">
