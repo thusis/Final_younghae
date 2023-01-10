@@ -21,12 +21,16 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonIOException;
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.Point;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
@@ -42,35 +46,95 @@ public class ShoppingController {
 	
 	// shopping main view
 	@RequestMapping("shoppingMain.sh")
-	public String shoppingMain(Model model) {
+	public String shoppingMain(Model model, HttpSession session) {
 		
 //		ArrayList<Supplement> list = shService.selectSupplementList();
 		ArrayList<SupplementResp> list = shService.selectsuppleRespList();
-		ArrayList<Supplement> trendList = shService.selectTrendList();
-		ArrayList<Supplement> bestsellerList = shService.selectBestsellerList();
+		ArrayList<SupplementResp> trendList = shService.selectsuppleRespTrendList();
+		ArrayList<SupplementResp> bestsellerList = shService.selectsuppleRespBestsellerList();
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		for(int i = 0; i < list.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(list.get(i));
+	             if(shService.checkZzim(list.get(i)) != null) {
+	                if(list.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	list.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 	list.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		for(int i = 0; i < trendList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(trendList.get(i));
+	             if(shService.checkZzim(trendList.get(i)) != null) {
+	                if(trendList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	trendList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 trendList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		
+		for(int i = 0; i < bestsellerList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(bestsellerList.get(i));
+	             if(shService.checkZzim(bestsellerList.get(i)) != null) {
+	                if(bestsellerList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	bestsellerList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 bestsellerList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		ArrayList<String> cateTrend = shService.selectCateTrend();
+				
 		model.addAttribute("supplementList", list);
 		model.addAttribute("bestsellerList", bestsellerList);
 		model.addAttribute("trendList", trendList);
-		
-//		Member mem = shService.selectMember(1);
-//		model.addAttribute("loginUser", mem);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "shoppingMain";
 	}
 	
 	// shopping all product view
 	@RequestMapping("allView.sh")
-	public String allView(Model model) {
+	public String allView(Model model, HttpSession session) {
 		
-		ArrayList<Supplement> allList = shService.selectSupplementList();
+		ArrayList<SupplementResp> allList = shService.selectsuppleRespList();
 		
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		for(int i = 0; i < allList.size(); i++) {
 			String price = formatter.format(allList.get(i).getProPrice());
 			allList.get(i).setFormatPrice(price);
 		}
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		for(int i = 0; i < allList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(allList.get(i));
+	             if(shService.checkZzim(allList.get(i)) != null) {
+	                if(allList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	allList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 allList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		ArrayList<String> cateTrend = shService.selectCateTrend();
 		model.addAttribute("allList", allList);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "allView";
 	}	
@@ -78,9 +142,9 @@ public class ShoppingController {
 	
 	// shopping trend view	
 	@RequestMapping("trendView.sh")
-	public String trendView(Model model) {
+	public String trendView(Model model, HttpSession session) {
 		
-		ArrayList<Supplement> trendList = shService.selectTrendList();
+		ArrayList<SupplementResp> trendList = shService.selectsuppleRespTrendList();
 		
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		for(int i = 0; i < trendList.size(); i++) {
@@ -88,16 +152,34 @@ public class ShoppingController {
 			trendList.get(i).setFormatPrice(price);
 		}
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		for(int i = 0; i < trendList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(trendList.get(i));
+	             if(shService.checkZzim(trendList.get(i)) != null) {
+	                if(trendList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	trendList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 trendList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		
+		ArrayList<String> cateTrend = shService.selectCateTrend();
+		
 		model.addAttribute("trendList", trendList);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "trendView";
 	}
 	
 	// shopping bestseller view
 	@RequestMapping("bestsellerView.sh")
-	public String bestsellerView(Model model) {
+	public String bestsellerView(Model model, HttpSession session) {
 		
-		ArrayList<Supplement> bestsellerList = shService.selectBestsellerList();
+		ArrayList<SupplementResp> bestsellerList = shService.selectsuppleRespBestsellerList();
 		
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		for(int i = 0; i < bestsellerList.size(); i++) {
@@ -105,7 +187,25 @@ public class ShoppingController {
 			bestsellerList.get(i).setFormatPrice(price);
 		}
 		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		for(int i = 0; i < bestsellerList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(bestsellerList.get(i));
+	             if(shService.checkZzim(bestsellerList.get(i)) != null) {
+	                if(bestsellerList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	bestsellerList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 bestsellerList.get(i).setCheck("N");
+	             }
+			}
+		}
+		
+		
+		ArrayList<String> cateTrend = shService.selectCateTrend();
 		model.addAttribute("bestsellerList", bestsellerList);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "bestsellerView";
 	}
@@ -114,17 +214,50 @@ public class ShoppingController {
 	@RequestMapping("supplementDetail.sh")
 	public String supplementDetail(@RequestParam("proNum") int proNum, Model model,HttpSession session) {
 		
-		Supplement supplementDetail = shService.selectDetail(proNum);
+		SupplementResp supplementDetail = shService.selectDetail(proNum);
 		
 		System.out.println(supplementDetail);
 		DecimalFormat formatter = new DecimalFormat("###,###");
 		String price = formatter.format(supplementDetail.getProPrice());
 		supplementDetail.setFormatPrice(price);
 		
-		model.addAttribute("supplementDetail", supplementDetail);
+		ArrayList<Review> rv = shService.selectReview(proNum);
+		
+		for(int i =  0; i < rv.size(); i++) {
+			Member m = shService.selectMember(rv.get(i).getUserNum());
+			Attachment image= shService.imageSelect(rv.get(i).getRvNum());
+
+			if(image == null) {
+				rv.get(i).setImage("없음");
+			}else {
+				rv.get(i).setImage(image.getAttachRename());
+			}
+			rv.get(i).setUserNickname(m.getUserNickname());
+		}
+		
+		int listCount = shService.getReviewListCount(proNum);
+		
+		Member mem = (Member)session.getAttribute("loginUser");
+		
+		if(mem != null) {
+			SupplementResp s = shService.checkZzim(supplementDetail);
+             if(shService.checkZzim(supplementDetail) != null) {
+                if(supplementDetail.getProNum() == s.getZzim().getProNum() && mem.getUserNum() == s.getZzim().getUserNum()) {
+                	supplementDetail.setCheck("Y");
+                }
+             }else {
+            	 supplementDetail.setCheck("N");
+             }
+		}
+		
 		Member m = (Member)session.getAttribute("loginUser");
+		model.addAttribute("supplementDetail", supplementDetail);
 		model.addAttribute("user", m);
+		model.addAttribute("review", rv);
+		model.addAttribute("reviewCount", listCount);
+		
 		return "shoppingDetails";
+		
 	}
 	
 	// 결제페이지 가기
@@ -313,7 +446,7 @@ public class ShoppingController {
 	@RequestMapping("selectCartDetail.sh")
 	public void selectCartDetail(@RequestParam("proNum") int proNum, HttpServletResponse response) {
 		System.out.println(proNum);
-		Supplement cartDetail = shService.selectDetail(proNum);
+		SupplementResp cartDetail = shService.selectDetail(proNum);
 		System.out.println(cartDetail);
 		
 		response.setContentType("application/json; charset=UTF-8");
@@ -372,51 +505,81 @@ public class ShoppingController {
 	@RequestMapping("successPay.sh")
 	public String successPay(@ModelAttribute Orders orders, @RequestParam(value="proNumList",required=false) String[] proNumList, 
 			@RequestParam(value="quantityList",required=false) String[] quantityList, @RequestParam(value="proName",required=false) String[] proNames,
-			@RequestParam(value="useCoupon",required=false) int couNum,
-			Model model) {
+			@RequestParam(value="useCoupon",required=false) int couNum, @RequestParam(value="usedPointAmount", required=false) int usedPointAmount,
+			HttpSession session, Model model) {
 		System.out.println("couNum : "+couNum);
 		System.out.println(orders);
 		System.out.println(Arrays.toString(proNumList));
 		System.out.println(Arrays.toString(quantityList));
+		System.out.println("사용포인트 : " +usedPointAmount);
 		
+		Member m = (Member)session.getAttribute("loginUser");
 //		주문 테이블 insert
+		
+		ArrayList<OrderListDTO> orderList = null;
 		int insertOrder = shService.insertOrders(orders);
 		if(insertOrder > 0) {
 			System.out.println("주문 인서트 성공");
+			OrderDetails od = new OrderDetails();
+			String orderCode = orders.getOrderCode();
+			for(int i = 0; i < proNumList.length; i++) {
+				int proNum = Integer.parseInt(proNumList[i]);
+				String proName = proNames[i];
+				int orderQuantity = Integer.parseInt(quantityList[i]);
+				od.setOrderCode(orderCode);
+				od.setProNum(proNum);
+				od.setProName(proName);
+				od.setOrderQuantity(orderQuantity);
+				
+				System.out.println(od);
+				
+				int insertOrderDetails = shService.insertOrderDetails(od);
+				if(insertOrderDetails > 0) {
+					System.out.println("주문상세 insert 성공");
+				}else {
+					System.out.println("주문상세 insert 실패");
+				}
+				
+				int deleteCart = shService.deleteCart(proNum);
+				if(deleteCart>0) {
+					System.out.println("카트 삭제 성공");
+				}else {
+					System.out.println("카트 삭제 실패");
+				}
+			}
+			orderList = shService.selectOrderList(orderCode);
+			
+			int updateCoupon = shService.updateCoupon(couNum);
+			if(updateCoupon>0) {
+				System.out.println("쿠폰 사용 수정 성공");
+			}else {
+				System.out.println("쿠폰 사용 수정 실패");
+			}
+			
+			Point p = new Point();
+			p.setPointAmount("-"+usedPointAmount);
+			p.setUserNum(m.getUserNum());
+			
+			int insertPoint = shService.insertUsedPointAmount(p);
+			if(insertPoint>0) {
+				System.out.println("포인트 사용내역 insert 성공");
+			}else {
+				System.out.println("포인트 사용내역 insert 실패");
+			}
+			
+			m.setUserPoint(usedPointAmount);
+			int updateMemberPoint = shService.updateMemberPoint(m);
+			
+			if(updateMemberPoint>0) {
+				System.out.println("포인트 사용내역 업데이트 성공");
+			}else {
+				System.out.println("포인트 사용내역 업데이트 실패");
+			}
 		}else {
 			System.out.println("주문 인서트 실패");
 		}
 		
-		OrderDetails od = new OrderDetails();
-		String orderCode = orders.getOrderCode();
-		for(int i = 0; i < proNumList.length; i++) {
-			int proNum = Integer.parseInt(proNumList[i]);
-			String proName = proNames[i];
-			int orderQuantity = Integer.parseInt(quantityList[i]);
-			od.setOrderCode(orderCode);
-			od.setProNum(proNum);
-			od.setProName(proName);
-			od.setOrderQuantity(orderQuantity);
-			
-			System.out.println(od);
-			
-			int insertOrderDetails = shService.insertOrderDetails(od);
-			if(insertOrderDetails > 0) {
-				System.out.println("주문상세 insert 성공");
-			}else {
-				System.out.println("주문상세 insert 실패");
-			}
-			
-			int deleteCart = shService.deleteCart(proNum);
-			if(deleteCart>0) {
-				System.out.println("카트 삭제 성공");
-			}else {
-				System.out.println("카트 삭제 실패");
-			}
-			
-		}
-		ArrayList<OrderListDTO> orderList = shService.selectOrderList(orderCode);
-		System.out.println(orderList);
+		
 		
 		model.addAttribute("orderList", orderList);
 		
@@ -448,12 +611,29 @@ public class ShoppingController {
 	
 	
 	@RequestMapping("cateView.sh")
-	public String cateView(@RequestParam("proEffect") String proEffect, Model model){
+	public String cateView(@RequestParam("proEffect") String proEffect, Model model, HttpSession session){
 		
-		ArrayList<Supplement> cateList = shService.selectCateList(proEffect);
+		ArrayList<SupplementResp> cateList = shService.selectsuppleRespBestCateList(proEffect);
+		
+		Member m = (Member)session.getAttribute("loginUser");
+		
+		for(int i = 0; i < cateList.size(); i ++) {
+			if(m != null) {
+				SupplementResp s = shService.checkZzim(cateList.get(i));
+	             if(shService.checkZzim(cateList.get(i)) != null) {
+	                if(cateList.get(i).getProNum() == s.getZzim().getProNum() && m.getUserNum() == s.getZzim().getUserNum()) {
+	                	cateList.get(i).setCheck("Y");
+	                }
+	             }else {
+	            	 cateList.get(i).setCheck("N");
+	             }
+			}
+		}
+		ArrayList<String> cateTrend = shService.selectCateTrend();
 		
 		model.addAttribute("cateList", cateList);
 		model.addAttribute("proEffect", proEffect);
+		model.addAttribute("cateTrend", cateTrend);
 		
 		return "cateView";
 	}
@@ -472,4 +652,45 @@ public class ShoppingController {
 		return result;
 	}
 	
+	@RequestMapping("searchIngredient.sh")
+	public void searchIngredient(@RequestParam("search") String search, HttpServletResponse response) {
+		System.out.println(search);
+		ArrayList<Supplement> list = shService.searchIngredientList(search);
+		
+		DecimalFormat formatter = new DecimalFormat("###,###");
+		for(int i = 0; i < list.size(); i++) {
+			String price = formatter.format(list.get(i).getProPrice());
+			list.get(i).setFormatPrice(price);
+		}
+		
+		response.setContentType("application/json; charset=UTF-8");
+		GsonBuilder gb = new GsonBuilder();
+		// 시간 형식 지정해주기 
+		GsonBuilder gb2 = gb.setDateFormat("yyyy-MM-dd");
+		Gson gson = gb2.create();
+		try {
+			gson.toJson(list, response.getWriter());
+		} catch (JsonIOException | IOException e) {
+			e.printStackTrace();
+		}
+	}	
+	
+	@ResponseBody
+	@RequestMapping("insertZzim.sh")
+	public Integer insertZzim(@ModelAttribute Zzim zim, @RequestParam("check") String check) {
+		System.out.println(zim);
+		
+		int result = 0;
+		
+		if (check.equals("N")) {
+			System.out.println("delete 들어옴");
+			result = shService.deleteZzim(zim);
+		} else if (check.equals("Y")) {
+			System.out.println("insert 들어옴");
+			result = shService.insertZzim(zim);
+		}
+		
+		return result;
+	}	
 }
+

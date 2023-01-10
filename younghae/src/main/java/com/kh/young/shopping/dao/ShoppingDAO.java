@@ -7,13 +7,18 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.Point;
+import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
@@ -56,12 +61,67 @@ public class ShoppingDAO {
 	public ArrayList<Supplement> selectTrendList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectTrendList");
 	}
+	
+	public ArrayList<SupplementResp> selectsuppleRespTrendList(SqlSessionTemplate sqlSession) {
+		ArrayList<Supplement> list = selectTrendList(sqlSession);
+		ArrayList<SupplementResp> resultList = new ArrayList<>();
+		for(Supplement l : list) {
+			SupplementResp resp = new SupplementResp();
+			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+			resp.setProNum(l.getProNum());
+			resp.setProImage(l.getProImage());
+			resp.setProName(l.getProName());
+			resp.setProCompany(l.getProCompany());
+			resp.setProIngredient(l.getProIngredient());
+			resp.setProPrice(l.getProPrice());
+			resp.setProEffect(l.getProEffect());
+			resp.setProIntake(l.getProIntake());
+			resp.setProSaleStatus(l.getProSaleStatus());
+			resp.setProCreateDate(l.getProCreateDate());
+			resp.setProModifyDate(l.getProModifyDate());
+			resp.setProGrade(l.getProGrade());
+			resp.setProStatus(l.getProStatus());
+			resp.setCateNum(l.getCateNum());
+			resp.setFormatPrice(l.getFormatPrice());
+			resp.setReviewCount(reviewCount);
+			resultList.add(resp);
+		}
+		return resultList;
+	}
+	
 
 	public ArrayList<Supplement> selectBestsellerList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectBestsellerList");
 	}
+	
+	public ArrayList<SupplementResp> selectsuppleRespBestsellerList(SqlSessionTemplate sqlSession) {
+		ArrayList<Supplement> list = selectBestsellerList(sqlSession);
+		ArrayList<SupplementResp> resultList = new ArrayList<>();
+		for(Supplement l : list) {
+			SupplementResp resp = new SupplementResp();
+			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+			resp.setProNum(l.getProNum());
+			resp.setProImage(l.getProImage());
+			resp.setProName(l.getProName());
+			resp.setProCompany(l.getProCompany());
+			resp.setProIngredient(l.getProIngredient());
+			resp.setProPrice(l.getProPrice());
+			resp.setProEffect(l.getProEffect());
+			resp.setProIntake(l.getProIntake());
+			resp.setProSaleStatus(l.getProSaleStatus());
+			resp.setProCreateDate(l.getProCreateDate());
+			resp.setProModifyDate(l.getProModifyDate());
+			resp.setProGrade(l.getProGrade());
+			resp.setProStatus(l.getProStatus());
+			resp.setCateNum(l.getCateNum());
+			resp.setFormatPrice(l.getFormatPrice());
+			resp.setReviewCount(reviewCount);
+			resultList.add(resp);
+		}
+		return resultList;
+	}
 
-	public Supplement selectDetail(SqlSessionTemplate sqlSession, int proNum) {
+	public SupplementResp selectDetail(SqlSessionTemplate sqlSession, int proNum) {
 		return sqlSession.selectOne("shoppingMapper.selectDetail", proNum);
 	}
 
@@ -152,9 +212,93 @@ public class ShoppingDAO {
 	public ArrayList<Supplement> selectCateList(SqlSessionTemplate sqlSession, String proEffect) {
 		return (ArrayList)sqlSession.selectList("shoppingMapper.selectCateList", proEffect);
 	}
+	
+	public ArrayList<SupplementResp> selectsuppleRespBestCateList(SqlSessionTemplate sqlSession, String proEffect) {
+		ArrayList<Supplement> list = selectCateList(sqlSession, proEffect);
+		ArrayList<SupplementResp> resultList = new ArrayList<>();
+		for(Supplement l : list) {
+			SupplementResp resp = new SupplementResp();
+			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+			resp.setProNum(l.getProNum());
+			resp.setProImage(l.getProImage());
+			resp.setProName(l.getProName());
+			resp.setProCompany(l.getProCompany());
+			resp.setProIngredient(l.getProIngredient());
+			resp.setProPrice(l.getProPrice());
+			resp.setProEffect(l.getProEffect());
+			resp.setProIntake(l.getProIntake());
+			resp.setProSaleStatus(l.getProSaleStatus());
+			resp.setProCreateDate(l.getProCreateDate());
+			resp.setProModifyDate(l.getProModifyDate());
+			resp.setProGrade(l.getProGrade());
+			resp.setProStatus(l.getProStatus());
+			resp.setCateNum(l.getCateNum());
+			resp.setFormatPrice(l.getFormatPrice());
+			resp.setReviewCount(reviewCount);
+			resultList.add(resp);
+		}
+		return resultList;
+	}
+	
+	
 
 	public Coupon selectUseCoupon(SqlSessionTemplate sqlSession, int couNum) {
 		return sqlSession.selectOne("shoppingMapper.selectUseCoupon", couNum);
+	}
+
+	public ArrayList<String> selectCateTrend(SqlSessionTemplate sqlSession) {
+		ArrayList<ProCategory> list = (ArrayList)sqlSession.selectList("shoppingMapper.selectCateTrend", sqlSession);
+		ArrayList<String> cateList = new ArrayList<String>();
+		for(ProCategory c : list) {
+            if(!cateList.contains(c.getCateName()))
+            	cateList.add(c.getCateName());
+		}
+		return cateList;
+	}
+
+	public ArrayList<Supplement> searchIngredientList(SqlSessionTemplate sqlSession, String search) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.searchIngredientList", search);
+	}
+
+	public int insertZzim(SqlSessionTemplate sqlSession, Zzim zim) {
+		return sqlSession.insert("shoppingMapper.insertZzim", zim);
+	}
+
+	public int deleteZzim(SqlSessionTemplate sqlSession, Zzim zim) {
+		return sqlSession.delete("shoppingMapper.deleteZzim", zim);
+	}
+
+	public ArrayList<Zzim> selectZzim(SqlSessionTemplate sqlSession, int userNum) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectZzim", userNum);
+	}
+
+	public SupplementResp checkZzim(SqlSessionTemplate sqlSession, SupplementResp supplementResp) {
+		return sqlSession.selectOne("shoppingMapper.checkZzim", supplementResp);
+		
+	}
+
+	public ArrayList<Review> selectReview(SqlSessionTemplate sqlSession, int proNum) {
+		return (ArrayList)sqlSession.selectList("shoppingMapper.selectReview", proNum);
+	}
+
+	public Attachment imageSelect(SqlSessionTemplate sqlSession, int rvNum) {
+		return sqlSession.selectOne("shoppingMapper.imageSelect", rvNum);
+	}
+
+	public int getReviewListCount(SqlSessionTemplate sqlSession, int proNum) {
+		return sqlSession.selectOne("shoppingMapper.getReviewListCount", proNum);
+	}
+
+	public int updateCoupon(SqlSessionTemplate sqlSession, int couNum) {
+		return sqlSession.update("shoppingMapper.updateCoupon", couNum);
+	}
+
+	public int insertUsedPointAmount(SqlSessionTemplate sqlSession, Point p) {
+		return sqlSession.insert("shoppingMapper.insertUsedPointAmount", p);
+	}
+
+	public int updateMemberPoint(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("shoppingMapper.updateMemberPoint", m);
 	}
 
 

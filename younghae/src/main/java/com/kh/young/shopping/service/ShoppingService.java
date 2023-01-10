@@ -4,14 +4,18 @@ package com.kh.young.shopping.service;
 import java.util.ArrayList;
 
 import com.kh.young.model.vo.Address;
+import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Cart;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.OrderDetails;
 import com.kh.young.model.vo.Orders;
+import com.kh.young.model.vo.Point;
 import com.kh.young.model.vo.ProCategory;
+import com.kh.young.model.vo.Review;
 import com.kh.young.model.vo.Supplement;
+import com.kh.young.model.vo.Zzim;
 import com.kh.young.shopping.dto.GetPayInfoDTO;
 import com.kh.young.shopping.dto.OrderListDTO;
 import com.kh.young.shopping.dto.PaymentDTO;
@@ -28,7 +32,7 @@ public interface ShoppingService {
 
 	ArrayList<Supplement> selectBestsellerList();
 
-	Supplement selectDetail(int proNum);
+	SupplementResp selectDetail(int proNum);
 	
 	int insertAddress(Address a);
 	
@@ -71,7 +75,25 @@ public interface ShoppingService {
 	ArrayList<Supplement> selectCateList(String proEffect);
 	
 	Coupon selectUseCoupon(int couNum);
+	
 	ArrayList<SupplementResp> selectsuppleRespList();
+	
+	ArrayList<String> selectCateTrend();
+	ArrayList<Supplement> searchIngredientList(String search);
+	int insertZzim(Zzim zim);
+	int deleteZzim(Zzim zim);
+	ArrayList<Zzim> selectZzim(int userNum);
+	SupplementResp checkZzim(SupplementResp supplementResp);
+	ArrayList<SupplementResp> selectsuppleRespTrendList();
+	ArrayList<SupplementResp> selectsuppleRespBestsellerList();
+	ArrayList<SupplementResp> selectsuppleRespBestCateList(String proEffect);
+	ArrayList<Review> selectReview(int proNum);
+	Attachment imageSelect(int rvNum);
+	int getReviewListCount(int proNum);
+	int updateCoupon(int couNum);
+	int insertUsedPointAmount(Point p);
+	int updateMemberPoint(Member m);
+	
 	
 	
 

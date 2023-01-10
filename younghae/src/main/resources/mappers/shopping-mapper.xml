@@ -107,11 +107,71 @@
 		<result column="ORDER_QUANTITY" property="orderQuantity"/>
 	</resultMap>
 	
+	<resultMap type="ProCategory" id="CategoryResultSet">
+		<id column="CATE_NUM" property="cateNum"/>
+		<result column="CATE_NAME" property="cateName"/>
+		<result column="CATE_SUMMARY" property="cateSummary"/>
+		<result column="CATE_ICON" property="cateIcon"/>
+	</resultMap>
 	
 	<resultMap type="OrderListDTO" id="orderListResultSet">
 		<association property="orders" javaType="Orders" resultMap="ordersResultSet"/>
 		<association property="orderDetails" javaType="OrderDetails" resultMap="orderDetailsResultSet"/>
 	</resultMap>
+	
+	<resultMap type="Zzim" id="zzimpResultSet">
+		<result column="user_Num" property="userNum"/>
+		<result column="pro_num" property="proNum"/>
+	</resultMap>
+	
+	<resultMap type="SupplementResp" id="supplementRespResultSet">
+		<id column="PRO_NUM" property="proNum"/>
+		<result column="PRO_IMAGE" property="proImage"/>
+		<result column="PRO_NAME" property="proName"/>
+		<result column="PRO_COMPANY" property="proCompany"/>
+		<result column="PRO_INGREDIENT" property="proIngredient"/>
+		<result column="PRO_PRICE" property="proPrice"/>
+		<result column="PRO_EFFECT" property="proEffect"/>
+		<result column="PRO_INTAKE" property="proIntake"/>
+		<result column="PRO_SALE_STATUS" property="proSaleStatus"/>
+		<result column="PRO_CREATEDATE" property="proCreateDate"/>
+		<result column="PRO_MODIFYDATE" property="proModifyDate"/>
+		<result column="PRO_GRADE" property="proGrade"/>
+		<result column="PRO_STATUS" property="proStatus"/>
+		<result column="CATE_NUM" property="cateNum"/>
+		<association property="zzim" resultMap="zzimpResultSet" javaType="Zzim"/>
+	</resultMap>
+	
+	<!-- 리뷰 폼 -->
+	<resultMap type="Review" id="ReviewResultSet">
+		<id column="RV_NUM" property="rvNum"/>
+		<result column="PRO_NUM" property="proNum"/>
+		<result column="USER_NUM" property="userNum"/>
+		<result column="RV_CONTENT" property="rvContent"/>
+		<result column="RV_CREAETEDATE" property="rvCreateDate"/>
+		<result column="RV_MODIFYDATE" property="rvMOdifyDate"/>
+		<result column="STR_CREAETEDATE" property="strCreateDate"/>
+		<result column="STR_MODIFYDATE" property="strMOdifyDate"/>
+		<result column="RV_STATUS" property="rvStatus"/>
+		<result column="RV_STAR" property="rvStar"/>
+		<result column="RV_BUY" property="rvBuy"/>
+		<result column="RV_RECOMMEND" property="rvRecommend"/>
+		<association property="member" javaType="Member" resultMap="memberResultSet"/>
+		<association property="supplement" javaType="Supplement" resultMap="supplementResultSet"/>
+	</resultMap>
+	
+	<!-- 첨부파일 폼 -->
+	<resultMap type="Attachment" id="AttmResultSet">
+		<id  column="ATTACH_NUM" property="attachNum"/>
+		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>
+		<result column="ATTACH_NAME" property="attachName"/>
+		<result column="ATTACH_RENAME" property="attachRename"/>
+		<result column="ATTACH_PATH" property="attachPath"/>
+		<result column="BOARD_TYPE" property="boardType"/>
+		<result column="SERIALNUMBER" property="serialNumber"/>
+		<result column="ATTACH_STATUS" property="attachStatus"/>
+	</resultMap>
+	
 	
 	<select id="selectSupplementList" resultMap="supplementResultSet">
 		select *
@@ -142,7 +202,7 @@
 	</select>
 	
 	
-	<select id="selectDetail" resultMap="supplementResultSet">
+	<select id="selectDetail" resultMap="supplementRespResultSet">
 		select *
 		from product
 			left outer join sale_product using(pro_num)
@@ -320,5 +380,80 @@
 		from coupon
 		where cou_number = #{couNum}
 	</select>
-
+	
+	<select id="selectCateTrend" resultMap="CategoryResultSet">
+		select cate_name
+		from product
+		  join sale_product using(pro_num)
+		  join product_category using(cate_num) 
+		order by pro_viewcount desc
+	</select>
+	
+	<select id="searchIngredientList" resultMap="supplementResultSet">
+		select  *
+		from product
+		where pro_ingredient like '%'||#{search}||'%'
+	</select>
+	
+	<insert id="insertZzim">
+		insert into zzim
+		values(#{userNum}, #{proNum})
+	</insert>
+	
+	<delete id="deleteZzim">
+		delete from zzim
+		where user_num = #{userNum} and pro_num = #{proNum}
+	</delete>
+	
+	<select id="selectZzim" resultMap="zzimpResultSet">
+		select *
+		from zzim
+		where user_num = #{userNum}
+	</select>
+		
+	<select id="checkZzim" resultMap="supplementRespResultSet">
+		select * 
+		from Zzim
+			join product using(pro_num)
+		where pro_num = #{proNum}
+	</select>
+	
+	<select id="selectReview" resultMap="ReviewResultSet">
+		select * 
+		from review
+		where pro_num = #{proNum}
+		order by rv_num desc
+	</select>
+	
+<!-- 	리뷰 수 불러오기 -->
+	<select id="getReviewListCount" resultType="_int">
+		select count(*)
+		from review
+			join product using(pro_num)
+		where pro_num = #{proNum}
+	</select>
+	
+	<!-- 리뷰 사진 불러오기 -->
+	<select id="imageSelect" resultMap="AttmResultSet">
+		select ATTACH_RENAME
+		from attachment
+		where BOARD_TYPE= 7 and SERIALNUMBER = #{rvNum}
+	</select>
+	
+	<update id="updateCoupon">
+		update coupon
+		set cou_used = 'Y'
+		where cou_number = #{couNum}
+	</update>
+	
+	<insert id="insertUsedPointAmount">
+		insert into point
+		values (seq_point.nextval, '영양제 구매 포인트 차감', #{pointAmount}, sysdate, #{userNum})
+	</insert>
+	
+	<update id="updateMemberPoint">
+		update member
+		set user_point = user_point - #{userPoint}
+		where user_num = #{userNum}
+	</update>
 </mapper>
