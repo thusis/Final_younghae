@@ -428,5 +428,17 @@ public class QaServiceImpl implements QaService {
 		}
 		return result;
 	}
+
+	@Override
+	public String selectDclMsg(int boardNum) {
+		int result = qdao.selectDclMsg(sqlSession, boardNum);
+		String dclMsg = "";
+		if(result>0) {
+			dclMsg = "1";
+		} else {
+			dclMsg = "0";
+		}
+		return dclMsg;
+	}
 	
 }

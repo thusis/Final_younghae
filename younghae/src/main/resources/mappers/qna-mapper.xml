@@ -331,5 +331,7 @@
 	ORDER BY DAYR
 	</select>
 	
-	
+	<select id="selectDclMsg" resultType="int">
+	 SELECT COUNT(*) FROM DECLARATION WHERE BOARD_NUM = #{boardNum}
+	</select>
 </mapper>
