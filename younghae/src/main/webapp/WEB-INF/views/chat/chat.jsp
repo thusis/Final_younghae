@@ -239,8 +239,8 @@
 									<c:if test="${ cr.reserv.isApproved eq 'Y'}">
 									<span class="col badge" style="color:blue; font-weight:700;">${ cr.reserv.reservSchedule }에 상담예정입니다</span>
 									</c:if>
-									<c:if test="${ cr.reserv.isApproved eq 'N'}">
-									<span class="col badge" style="color:grey; font-weight:700;">거절한 예약 일정입니다</span>
+									<c:if test="${ cr.reserv.isApproved eq 'D'}">
+									<span class="col badge" style="color:darkgrey; font-weight:700;">거절한 예약 일정입니다</span>
 									</c:if>
 								</c:if>
 							</div>
