@@ -656,12 +656,12 @@
 			    					
 			    					var check ="";
 			    					
-			    					if($(this).children().eq(0).attr('class') != "bi bi-hand-thumbs-up"){
-			    						$(this).children().eq(0).attr('class', 'bi bi-hand-thumbs-up');
+			    					if($(this).children().eq(0).attr('class') == "bi bi-hand-thumbs-up"){
+			    						$(this).children().eq(0).attr('class', 'bi bi-hand-thumbs-up-fill');
 			    						check = 'R';
 			    						console.log("누름");
-			    					}else{
-			    						$(this).children().eq(0).attr('class', 'bi bi-hand-thumbs-up-fill');
+			    					}else if($(this).children().eq(0).attr('class') == "bi bi-hand-thumbs-up-fill"){
+			    						$(this).children().eq(0).attr('class', 'bi bi-hand-thumbs-up');
 			    						check = 'D';
 			    						console.log("누른거 취소");
 			    					}
