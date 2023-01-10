@@ -79,9 +79,71 @@
 		border:none; 
 		background: none;
 	}
+	.bi-capsule{
+    	color: #24E082;
+	}
+
+	#declareBtn{
+		font-size: 20px;
+		margin-bottom: -25px;
+	}
+	
 </style>
+<script src="https://kit.fontawesome.com/7a738a6e1a.js" crossorigin="anonymous"></script>	
 </head>
 <body>
+
+
+<!-- 신고 모달창 -->
+	<div class="modal fade" id="declareModal" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header text-end" style="justify-content: flex-end;">
+	        <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close"><i class="bi bi-x-circle"></i></button>
+	      </div>
+		
+		<div class="modal-body" id="declareModalBody1">
+			<form action="${contextPath}/declare.bo" method="post" id="declareForm">
+	        <h4 class="modal-title fs-5">신고하기</h4>
+	                <h5>작성자 : ${b.member.userNickname }</h5>
+	                <h5>글 제목 : ${b.boardTitle}</h5>
+	                <input type="hidden" name="boardNum" value="${b.boardNum}">
+	            <hr>
+	            <div class="declareReason">
+	                <h4>신고 사유</h4>
+	                <div><input type="radio" name="declContent" id="1" value="1" class="declareReason">
+	                <label for="1"><h6>스팸홍보/도배글입니다.</h6></label></div>
+	                
+	                <div><input type="radio" name="declContent" id="2"  value="2" class="declareReason">
+	                <label for="2"><h6>음란물입니다</h6></label></div>
+	                
+	                <div><input type="radio" name="declContent" id="3"  value="3" class="declareReason">
+	                <label for="3"><h6>욕설/생명경시/혐오/차별적 표현입니다</h6></label></div>
+	                
+	                <div><input type="radio" name="declContent" id="4"  value="4" class="declareReason">
+	                <label for="4"><h6>불쾌한 표현이 있습니다</h6></label></div>
+	                
+	                <div><input type="radio" name="declContent" id="5"  value="5" class="declareReason">
+	                <label for="5"><h6>기타</h6></label></div>
+	            </div>
+	            <hr>
+	            <button type="button" class="btn btn-secondary" onclick="declare();">신고하기</button>
+			</form>
+       	</div>
+       	
+       	<div class="modal-body" id="declareModalBody2" style="display:none;">
+     		<h3 id="declaredMessage"></h3>
+     		<br><br>
+		 	<button type="button" class="btn btn-secondary text-end" data-bs-dismiss="modal" style="justify-content: flex-end;">닫기</button>
+	    </div>
+      </div>
+	    </div>
+	  </div>
+
+
+
+
+
 	<section class="blog spad">
 		<div class="container">
 			<div class="bn_index mt-5">
@@ -110,10 +172,10 @@
                         <div class="blog__sidebar__item">
                             <h4 style="color: #ffc53e;">Categories</h4>
                             <ul>
-                                <li class="ll 11">운동 (32)</li>
-                                <li class="ll 12">식단 (21)</li>
-                                <li class="ll 13">영양제 (54)</li>
-                                <li class="ll 14">자유 (47)</li>
+                                <li class="ll 11">운동🏓</li>
+                                <li class="ll 12">식단🥗</li>
+                                <li class="ll 13">영양제💊</li>
+                                <li class="ll 14">자유😀</li>
                             </ul>  
                         </div>
                         <div class="blog__sidebar__item">
@@ -213,7 +275,7 @@
 												target="_self" title="네이버밴드 새창열림">
 										<i class="fa-solid fa-b"></i>
 										</a>
-										<a href="#"><i class="fa-solid fa-link"></i></a> 
+										<a href="#" onclick="clip(); return false;"><i class="fa-solid fa-link"></i></a> 
 										<a href="#">
 											
 										</a>
@@ -234,11 +296,14 @@
 		<div class="row">
 
 			<div class="col-lg-10">
+			
 				<div class="row justify-content-end bn_board-meta">
-					<i class="bi bi-heart"></i><span class=" m-2">12</span>&nbsp;&nbsp;
+					<i class="bi bi-capsule" id="likeButton"></i><div id="likeCountDiv"><span class=" m-2" >${likeCount}</span></div>&nbsp;&nbsp;
 					<i class="fa-regular fa-eye"></i><span class=" m-2">${b.boardView }</span>&nbsp;&nbsp;
 					<i class="bi bi-chat-dots m-2"></i><span class=" m-2">${replyCount}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<div id="declareBtn"><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#declareModal"><i class="bi bi-lightning-fill"></i>신고하기</a></div>
 				</div>
+				
 
 			</div>
 			<div
@@ -305,7 +370,6 @@
 
  <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 
-	<!--소셜공유-->
 	 		<script>	
 	 		
 	 		
@@ -376,7 +440,7 @@
             }
             
             function shareTwitter() {
-              var sendText = "영해의 건강이야기 게시글을 공유합니다 :)";
+              var sendText = "영해💊의 건강이야기 게시글을 공유합니다 :)";
               const boardNum = '${b.boardNum}';
               const writer = '${b.userNum}';
               const page = '${page}';
@@ -387,6 +451,12 @@
               window.open("https://twitter.com/intent/tweet?text=" + sendText + "&url=" + sendUrl, "Y2K World", "height=480px, width=600px");
             }
             
+            function shareBand() {
+                var sendText = "http://localhost:8888/young/boardView.bo?boardCategory=" + ${b.boardType} + "%26boardNum=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page};
+                var sendUrl = "http://localhost:8888/young/boardView.bo?boardCategory=" + ${b.boardType} + "%26boardNum=" + ${b.boardNum} + "%26writer=" + "${b.userNum}" +"%26page=" + ${page};
+                window.open("http://www.band.us/plugin/share?body=" + sendText + "&url=" + sendUrl, "영해💊", "height=450px, width=350px");  
+              }
+            
            //button click action
             $(document).ready(function() {
             	
@@ -395,6 +465,10 @@
 			            });
 			            $("#twitter").click(function() {
 			                shareTwitter();
+			            });
+			            
+			            $("#band").click(function() {
+			            	shareBand();
 			            });
           });
     		/** boardCategories Bar */						
@@ -434,6 +508,65 @@
 
      	   
             </script>
+            
+            <!-- 링크복사 -->
+            <script type="text/javascript">
 
+			function clip(){
+			
+				var url = '';
+				var textarea = document.createElement("textarea");
+				document.body.appendChild(textarea);
+				url = window.document.location.href;
+				textarea.value = url;
+				textarea.select();
+				document.execCommand("copy");
+				document.body.removeChild(textarea);
+				alert("URL이 복사되었습니다.")
+			}
+			
+			//좋아요
+			
+			document.getElementById('likeButton').addEventListener('click', ()=> {
+				$.ajax({
+					url: '${contextPath}/likeCheck.bo',
+					data:{boardNum:${b.boardNum}, boardType:${b.boardType}},
+					success:(data) => {
+						const likeCountDiv = document.getElementById('likeCountDiv');
+						likeCountDiv.innerHTML = '';
+						likeCountDiv.innerHTML += (data);
+					}
+				});
+			});
+			
+			//신고하기
+			function declare(){
+				var declareForm = $("#declareForm").serialize();
+				$.ajax({
+					type:"post",
+		 			url:'${contextPath}/declare.bo',
+		 			data :declareForm,
+		 			dataType: 'json',
+		 			success : (data)=>{
+		 				console.log("성공")
+		 				document.getElementById('declareModalBody1').style.display = 'none';
+		 				document.getElementById('declareModalBody2').style.display = 'block';
+		 				
+		 				if(data == "1" ) {
+		 					document.getElementById('declaredMessage').innerText = "신고가 완료되었습니다";
+		 				} else if(data == "2") {
+		 					document.getElementById('declaredMessage').innerText = "신고가 접수되지 않았습니다";
+		 				}
+		 			},
+		 			error : (data)=> {
+		 				console.log("실패");
+		 				console.log(data);
+		 			}
+				});
+			}
+			
+			
+		</script>
+<textarea></textarea>
 </body>
 </html>

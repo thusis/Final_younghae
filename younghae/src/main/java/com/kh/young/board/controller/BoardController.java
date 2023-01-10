@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -37,6 +38,8 @@ import com.kh.young.board.service.BoardService;
 import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.Declaration;
+import com.kh.young.model.vo.Likes;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
@@ -68,7 +71,7 @@ public class BoardController {
 
 		System.out.println("boardCategory : " +  boardCategory);
 		
-		ArrayList<Board> bList = bService.selectBoardList(pi, boardCategory);
+		ArrayList<Story> bList = bService.selectBoardList(pi, boardCategory);
 		ArrayList<Board> topBoardList = bService.topBoardList();
 		ArrayList<Attachment> topBoardAttList = bService.topBoardAttList();
 		
@@ -162,7 +165,7 @@ public class BoardController {
 	//게시글 상세보기
 	@RequestMapping("boardView.bo")
 	public String detailBoard(@RequestParam(value="boardCategory") int boardCategory, @RequestParam(value="boardNum") int boardNum, @RequestParam(value="writer") int writer,
-											  @RequestParam(value = "page", required=false) Integer page, HttpServletRequest request, Model model) throws boardException{
+											  @RequestParam(value = "page", required=false) Integer page, HttpServletRequest request, Model model, @ModelAttribute Likes like) throws boardException{
 			
 			System.out.println("writer : " + writer);
 			System.out.println("게시글 상세 boardNum : " + boardNum);
@@ -180,7 +183,7 @@ public class BoardController {
 			int replyCount = bService.replyCount(boardNum);
 			System.out.println(replyCount);
 			//좋아요
-//			int likeCount = bService.likeCount(boardNum);
+			int likeCount = bService.likeCount(like);
 			
 			if(b != null) {
 				model.addAttribute("b", b);
@@ -189,7 +192,7 @@ public class BoardController {
 				model.addAttribute("replyCount", replyCount);
 				model.addAttribute("topBoardList", topBoardList);
 				model.addAttribute("topBoardAttList", topBoardAttList);
-//				model.addAttribute("likeCount", likeCount);
+				model.addAttribute("likeCount", likeCount);
 				return "boardDetail";
 			} else {
 				throw new boardException("Failed to Board details");
@@ -365,9 +368,42 @@ public class BoardController {
 	}
 	
 	//좋아요
-	@RequestMapping("likeCount.bo")
-	public String likeCheck(@RequestParam("boardNum") int boardNum) {
-		return null;
+	@RequestMapping("likeCheck.bo")
+	@ResponseBody
+	public String likeCheck(@RequestParam("boardNum") int boardNum, HttpSession session,
+											@ModelAttribute Likes like, @RequestParam("boardType") int boardType) {
+		
+		Member loginUser = (Member)session.getAttribute("loginUser");
+		int userNum = loginUser.getUserNum();
+		
+		like.setBoardNum(boardNum);
+		like.setUserNum(userNum);
+		like.setBoardType(boardType);
+		
+		int likeCheck = bService.likeCheck(like);
+		
+		if(likeCheck == 0) {
+			bService.likeInsert(like);
+		} else if(likeCheck == 1) {
+			bService.likeDelete(like);
+		}
+		
+		int likeCount = bService.likeCount(like);
+		
+		return likeCount+"";
+	}
+	
+	//신고하기
+	@RequestMapping("declare.bo")
+	@ResponseBody
+	public String declareBoard(@ModelAttribute Declaration declare, HttpServletResponse response) {
+		int result = bService.insertDeclare(declare);
+    	if(result>0) {
+    		return String.valueOf("1");
+    	}else {
+    		return String.valueOf("2");
+    	}
+
 	}
 	
 }

@@ -120,7 +120,10 @@ public class EventController {
 		  } else if(atCount == 30) { //5000포인트 추가
 			  point = 5000;
 			  point_amount = "+5000";
-		  } 
+		  }
+		  
+		  
+		  
 		  
 		  HashMap<String, Object> pointTable = new HashMap<>();
 		  pointTable.put("point", point);
