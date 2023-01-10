@@ -140,7 +140,7 @@
 									<ul>
 										<li><i class="fa fa-calendar-o"></i>&nbsp;${b.boardCreateDate}</li>
 										<li><i class="fa fa-comment-o"></i> ${b.replyCount }</li>
-										<li><i class="fa-regular fa-heart"></i> ${b.likeCount }</li>
+										<li><i class="bi bi-capsule" style="color:#ff4050;	"></i> ${b.likeCount }</li>
 										<li><i class="fa-regular fa-eye"></i>&nbsp;${b.boardView}</li>
 									</ul>
 									<h5>

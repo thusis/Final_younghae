@@ -84,7 +84,7 @@
 	<!-- 썸네일 업데이트 -->
 	<update id="updateThumbnail">
 		update attachment 
-		set attach_rename = #{attachment.attachrename},
+		set attach_rename = #{attachment.attachRename},
 			  attach_name = #{attachment.attachName}, attach_path = #{attachment.attachPath},
 			  board_type = #{boardType} where serialnumber = #{boardNum}
 	</update>
