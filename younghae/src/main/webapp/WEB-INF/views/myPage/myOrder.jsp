@@ -10,7 +10,9 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>나의 주문</title>
+    <link rel="icon" href="resources/img/younghae_icon.png"/>
+    <title>내정보보기 | 내주문보기</title>
+
 <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 <style>
 .bn_index ul li {

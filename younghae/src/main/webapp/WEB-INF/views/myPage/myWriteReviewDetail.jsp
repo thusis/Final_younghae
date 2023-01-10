@@ -10,7 +10,8 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>내가쓴 리뷰 상세보기</title>
+        <link rel="icon" href="resources/img/younghae_icon.png"/>
+    	<title>내정보보기 | 내가 쓴 리뷰 상세보기</title>
     <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
     <style>
         .bn_index ul li {

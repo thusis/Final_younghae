@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>질문게시판 - 내가 남긴 질문 더보기</title>
+    <link rel="icon" href="resources/img/younghae_icon.png"/>
+    <title>Q&A | 내가 남긴 질문 더보기</title>
 
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 

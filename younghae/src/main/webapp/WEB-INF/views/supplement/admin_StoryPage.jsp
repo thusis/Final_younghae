@@ -10,7 +10,8 @@
 <!--     <meta name="keywords" content="Ogani, unica, creative, html"> -->
 <!--     <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
 <!--     <meta http-equiv="X-UA-Compatible" content="ie=edge"> -->
-    <title>컬럼</title>
+        <link rel="icon" href="resources/img/younghae_icon.png"/>
+	    <title>관리 | 영해이야기 관리</title>
 
     <style>
 

@@ -9,7 +9,8 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>영양성분조회</title>
+            <link rel="icon" href="resources/img/younghae_icon.png"/>
+	    	<title>영양제 | 영양 성분</title>
 
     <style>
         /* 영양제 성분 카테고리*/

@@ -8,7 +8,8 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>컬럼 쓰기</title>
+            <link rel="icon" href="resources/img/younghae_icon.png"/>
+	    	<title>영해이야기 | 영해이야기 작성</title>
 
 <script
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"

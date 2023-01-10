@@ -12,7 +12,8 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Shopping | Details</title>
+        <link rel="icon" href="resources/img/younghae_icon.png"/>
+	    <title>쇼핑 | 상품 상세보기</title>
 
     <style>
             /*  구글 폰트
@@ -363,7 +364,7 @@
 	                        <div class="product__details" style="display: inline; float:right; font-size: 100%; margin-top: 2.5%;">
 	                            <a href="#tabs-3" aria-selected="false">
 	                            <span style="color: orange; text-decoration: underline;">${ reviewCount }개의 리뷰&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span></a>&nbsp;&nbsp;&nbsp;
-	                            <span id="compareproduct" style="color: rgb(242, 67, 230); text-decoration: underline;">상품 비교&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>
+<!-- 	                            <span id="compareproduct" style="color: rgb(242, 67, 230); text-decoration: underline;">상품 비교&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span> -->
 	                        </div>
 	
 	                        <div style="font-size: 250%; font-weight: 600;"><fmt:formatNumber value="${ supplementDetail.proPrice }" type="number"/>원</div>
