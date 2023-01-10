@@ -162,7 +162,7 @@
 									<span style="color:grey;">아직 나눈 대화가 없어요</span>
 								</c:if>
 								<c:if test="${ cr.notReadCount>0 }">
-									<span style="display:inline-block; width:18px; height:18px; border-radius:12px; background-color:orange; color:white; font-size:13px; font-weight:800; line-height:18px; text-align:center;">${cr.notReadCount}</span>
+									<span class="chatNowNotReadCount" style="display:inline-block; width:18px; height:18px; border-radius:12px; background-color:orange; color:white; font-size:13px; font-weight:800; line-height:18px; text-align:center;">${cr.notReadCount}</span>
 								</c:if>
 							
 							</div>
@@ -172,7 +172,7 @@
 								</c:if>
 								<c:if test="${ cr.reserv.reservId ne 0}">
 									<c:if test="${ cr.reserv.isApproved eq 'N'}">
-									<span class="badge" style="display:inline-block; color:red; font-weight:700;">확인하지 않은 예약 내역이 있습니다</span>
+									<span class="badge" style="display:inline-block; color:red; font-weight:700;">전문가가 아직 예약을 승인하지 않았습니다.</span>
 									</c:if>
 									<c:if test="${ cr.reserv.isApproved eq 'D'}">
 									<span class="badge" style="display:inline-block; color:grey; font-weight:700;">거절한 예약 일정입니다</span>
@@ -256,7 +256,7 @@
 		<div id="${nowChatroom.chatroom.chatroomId}_${nowChatroom.chatroom.expertNum}_${nowChatroom.chatroom.userNum}" 
 			class="chatMessageRoom d-flex flex-column align-items-stretch flex-shrink-0 bg-white"
 			style="width: 500px; height: 750px; border-left: 0.1rem solid rgba(20, 49, 82, 0.247); border-top: 0.2rem solid #24E082; background-color: #f8f8fa;">
-			<div id="chatMessageRoomTop" style="display:flex; overflow: auto; flex-direction:column_reverse;padding-bottom:5rem;background-color: #f8f8fa;">
+			<div id="chatMessageRoomTop" style="display:flex; overflow: auto; height: 750px; flex-direction:column_reverse;padding-bottom:5rem;background-color: #f8f8fa;">
 <!-- 			<div id="chatMessageRoomTop" style="overflow: auto; "> -->
 
 				<!--전문가-->
@@ -535,6 +535,14 @@
 						userNum : loginUserNum
 					},
 					success: (data)=>{
+						console.log(document.getElementById(selectChatroomInfo).querySelector('.chatNowNotReadCount').innerText);
+						console.log(document.getElementById(selectChatroomInfo).querySelector('.chatNowNotReadCount'));
+						console.log(document.getElementById(selectChatroomInfo).querySelector('.chatNowNotReadCount'));
+						
+						document.getElementById(selectChatroomInfo).querySelector('.chatNowNotReadCount').innerText = '';
+						document.getElementById(selectChatroomInfo).querySelector('.chatNowNotReadCount').style.backgroundColor = "transparent";
+						
+						
 // 						console.log(chatroomId+"방의 isRead를 업데이트 완료");
 					}
 				})
