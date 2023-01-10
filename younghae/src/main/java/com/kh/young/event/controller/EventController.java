@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.kh.young.event.exception.eventException;
 import com.kh.young.event.service.EventService;
 import com.kh.young.model.vo.Member;
@@ -75,37 +77,29 @@ public class EventController {
 		//당일 출석체크 여부
 		int attendanceCheck = eService.attendanceCheck(userNum);
 		
-//		HashMap<String, Object> map = new HashMap<>();
-//		map.put("userNum", userNum);
-//		int checkEvent = eService.checkEvent(userNum);
-		
 		System.out.println(attendanceCheck);
 		
 		if(attendanceCheck > 0) {
-//			throw new eventException("이미 출석체크를 하셨습니다.");
 			return String.valueOf("1");
 		} else {
 			int result = eService.insertAttendance(userNum);	
 		
 			if(result > 0) {
-//				return "redirect:attendanceEvent.ev";
 				return String.valueOf("2");
 			} else {
 				return String.valueOf("3");
-//				throw new eventException("출석체크 실패");
 			}
 		}
-//		return null;		
+
 	}
 	
 	@RequestMapping("attendanceEventAward.ev")
 	@ResponseBody
 	public String eventAward(HttpSession session, HttpServletResponse response, Model model) {
-//		int userNum = ((Member)session.getAttribute("loginUser")).getUserNum();
 
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNum = loginUser.getUserNum();
-		
+								
 		//출석 수 카운트
 		int atCount = eService.selectCountAttendance(userNum); 
 		System.out.println("출석 카운트 : " + atCount);
@@ -121,10 +115,7 @@ public class EventController {
 			  point = 5000;
 			  point_amount = "+5000";
 		  }
-		  
-		  
-		  
-		  
+		  		  
 		  HashMap<String, Object> pointTable = new HashMap<>();
 		  pointTable.put("point", point);
 		  pointTable.put("userNum", userNum);
@@ -141,19 +132,19 @@ public class EventController {
 		  if(attAwardCheck == 0) {
 			  
 			  if(attendanceAward > 0 && updatePoint > 0) {
+				
 				  return String.valueOf("1");  
 			  } else {
+				  
 				  return String.valueOf("0");
 			  }
 		  } else {
+			  
 			  return String.valueOf("2");
 		  }
-		  
-		  
 	}
 	
-	/** 생일 이벤트 
-	 * @throws Exception **/
+	/** 생일 이벤트 **/
 	@RequestMapping("birthdayEvent.ev")
 	@ResponseBody
 	public String checkBirth(HttpSession session, Model model, HttpServletResponse response) throws Exception {
@@ -161,18 +152,20 @@ public class EventController {
 		Member loginUser = (Member)session.getAttribute("loginUser");
 		int userNum = loginUser.getUserNum();
 		
+		//유저의 월
 		int checkBirth = eService.checkBirth(userNum);
-		System.out.println("checkBirth : " + checkBirth);
+		//현재 월
 		LocalDate month = LocalDate.now();
 		int nowMonth =  month.getMonthValue();
-		System.out.println("nowMonth : " + nowMonth);
-		System.out.println("checkBirth : " + checkBirth);
+		
+		//현재 날짜
 		String coupon = LocalDate.now().toString();
 		int disCount = 7;
 		String disCountContent = "HappyBirthday! 생일 기념 쿠폰!(7% 할인 쿠폰)";
 		String couponRegister = "xcvawersdfs";
 		
-		String couponTimeLimit = AddDate(coupon, 0, 1, 0);
+		//쿠폰 만료
+		String couponTimeLimit = AddDate(coupon, 0, 2, 0);
 		 HashMap<String, Object> map = new HashMap<>();
 		
 		 //쿠폰 지급내역이 있는지 없는지 확인
@@ -198,6 +191,7 @@ public class EventController {
 					return String.valueOf("4");
 		}
 	}
+	
 //현재 날짜 뽑아오기	
 private static String AddDate(String strDate, int year, int month, int day) throws Exception {
 		
@@ -210,9 +204,10 @@ private static String AddDate(String strDate, int year, int month, int day) thro
 		cal.setTime(dt);
         
 		cal.add(Calendar.YEAR,  year);
-		cal.add(Calendar.MONTH, month+2);
+		cal.add(Calendar.MONTH, month);
 		cal.add(Calendar.DATE,  day);
         
 		return dtFormat.format(cal.getTime());
 	}
+
 }
