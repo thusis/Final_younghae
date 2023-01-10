@@ -84,11 +84,6 @@ span {
 </head>
 
 <body>
-	<!-- Page Preloder -->
-	<div id="preloder">
-		<div class="loader"></div>
-	</div>
-
 	<jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 	<div class="container">
 		<div class="bn_index mt-5">

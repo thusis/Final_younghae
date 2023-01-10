@@ -104,7 +104,7 @@
    </select>
    
    <update id="deleteDeclaredBoard">UPDATE BOARD SET BOARD_STATUS = 'N' WHERE BOARD_NUM = #{boardNum}</update>
-   <update id="updateDeclareStatus">UPDATE DECLARATION SET DECL_STATUS = 'Y' AND ACTION_DATE = 'SYSDATE' WHERE DECL_NUM = #{declNum}</update>
+   <update id="updateDeclareStatus">UPDATE DECLARATION SET DECL_STATUS = 'Y', ACTION_DATE = SYSDATE WHERE DECL_NUM = #{declNum}</update>
    
 	<resultMap type="Attachment" id="Attachment">
 		<id column="ATTACH_NUM" property="attachNum"/>
