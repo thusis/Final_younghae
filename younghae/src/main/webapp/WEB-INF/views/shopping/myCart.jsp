@@ -218,6 +218,8 @@
 		</div>
 	</section>
 	
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+	
 	<script>
 		
 // 		전체선택 체크박스 (.checked)

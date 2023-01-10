@@ -305,7 +305,7 @@
 							
 							<div class="row">
 								<div class="col" style="margin-right: -5rem;">
-									<input id="pointUse" class="inputBox" style="width: 80%; padding: 10px;" placeholder="0" >
+									<input id="pointUse" name="usedPointAmount" class="inputBox" style="width: 80%; padding: 10px;" placeholder="0" >
 								</div>
 								<div class="col">
 									<button type="button" id="allPointUse" class="btn_pointAll">전액사용</button>
@@ -336,7 +336,7 @@
 										</c:if>
 									</li>
 									<li>쿠폰 사용<span><span>&nbsp;원</span><span id="useCouponPrice">0</span></span></li>
-									<li>포인트 사용<span>&nbsp;원</span><span id="totalUsePoint">0</span></li>
+									<li>포인트 사용<span>&nbsp;P</span><span id="totalUsePoint">0</span></li>
 								</ul>
 								<div class="checkout__order__subtotal" style="height: 5rem;">최종 결제 금액 
 									<span><span>&nbsp;원</span><span id="totalPayPrice" style="color: #24E082;">
@@ -539,7 +539,7 @@
 		</div>
 	</div>
 	<!-- Modal3(배송지 수정) -->
-
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
 
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
@@ -800,8 +800,9 @@
                    
                    
 //		결제 금액 영역
-		
-// 		할인율
+
+
+// 		쿠폰 할인율
 		var couDiscount = 0;
 // 		쿠폰 할인 금액
 		var useCouponAmount = 0;
@@ -814,6 +815,20 @@
 		var totalPayPriceSpan = document.getElementById('totalPayPrice');
 		var useCoupon = document.getElementById("useCoupon");
 		var totalPayBtn = document.getElementById("totalPayBtn");
+		
+		
+// 		배송비	
+		var deliveryPay = 0;
+		if(${totalPrice} > 50000){
+			deliveryPay = 0;
+		}else{
+			deliveryPay = 2500;
+		}
+		totalPayPrice = ${ totalPrice } + deliveryPay;
+		console.log("최최최종 금액 :" +totalPayPrice);
+		totalPayPriceSpan.innerText = totalPayPrice.toLocaleString();
+		totalPayBtn.innerText = totalPayPrice.toLocaleString();
+		
 		
 		useCoupon.addEventListener('change',function(){
 			var couNum = this.value;
@@ -828,7 +843,7 @@
 					console.log("useCouponAmount : " + useCouponAmount);
 					document.getElementById('useCouponPrice').innerText = useCouponAmount.toLocaleString();
 					
-					totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
+					totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount + deliveryPay;
 					console.log("최최최종 금액 :" +totalPayPrice);
 					totalPayPriceSpan.innerText = totalPayPrice.toLocaleString();
 					totalPayBtn.innerText = totalPayPrice.toLocaleString();
@@ -856,7 +871,7 @@
 			pointUse.value = userPoint;
 			usePointAmount = pointUse.value;
 			totalUsePoint.innerText = usePointAmount.toLocaleString();
-			totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
+			totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount + deliveryPay;
 			console.log("최최최종 금액 :" +totalPayPrice);
 			totalPayPriceSpan.innerText = totalPayPrice.toLocaleString();
 			totalPayBtn.innerText = totalPayPrice.toLocaleString();
@@ -866,7 +881,7 @@
 			usePointAmount = 0;
 			usePointAmount = this.value;
 			totalUsePoint.innerText = usePointAmount.toLocaleString();
-			totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount
+			totalPayPrice = ${ totalPrice } - useCouponAmount - usePointAmount + deliveryPay;
 			console.log("최최최종 금액 :" +totalPayPrice);
 			totalPayPriceSpan.innerText = totalPayPrice.toLocaleString();
 			totalPayBtn.innerText = totalPayPrice.toLocaleString();
@@ -994,7 +1009,8 @@
  	          pg: "html5_inicis",
  	          merchant_uid: 'YOUNG_' + new Date().getTime(),
  	          name: "${ infoList[0].cart.supplement.proName }" + overProduct,
- 	          amount: totalPayPriceSpan2,
+//  	          amount: totalPayPriceSpan2,
+ 	          amount: 100,
  	          buyer_email: "${loginUser.email}" ,
  	          buyer_name: orderName.value ,
  	          buyer_tel: oderPhone.value ,
@@ -1004,7 +1020,6 @@
  	          if (rsp.success) {
 				console.log("성공");
 				console.log(rsp);
-				
 				orderCode.value = rsp.merchant_uid;
 				orderPayAmount.value = rsp.paid_amount;
 				orderPaymethod.value = rsp.pay_method;

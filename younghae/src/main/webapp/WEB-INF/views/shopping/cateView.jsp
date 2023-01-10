@@ -196,17 +196,17 @@
 		      100% {margin-left:0;}
 		}
 
-        .btn_viewCart{
+        .btn_viewZzim{
         	background-color : white;
         	border-radius : 0.2rem;
             border: 1px solid rgb(0, 123, 255);
             color: rgb(0, 123, 255);
             font-size: 10px;
-            width: 90px;
+            width: 80px;
             height: 30px;
         }
         
-        .btn_viewCart:hover{
+        .btn_viewZzim:hover{
             border: 2px solid rgb(0, 123, 255);
             color: rgb(0, 123, 255);
             font-weight: bold;
@@ -238,9 +238,9 @@
    <div class="container2">
       <div class="main-view">
          <ul>
-            <li><a href="${contextPath }/reviewEvent.ev"><img src="resources/img/event/Review1.PNG" style="width:100%; height:350%;" /></a></li>
-            <li><a href="${contextPath }/attendanceEvent.ev"><img src="resources/img/event/attend3.png" style="width:100%; height:350%;"/></a></li>
-            <li><a href="${contextPath }/birthEvent.ev"><img src="resources/img/event/birth0.PNG" style="width:100%; height:350%;"/></a></li>
+            <li><a href="${contextPath }/birthEvent.ev"><img src="resources/img/shopping/review.png" style="width:100%; height:350%;"/></a></li>
+            <li><a href="${contextPath }/reviewEvent.ev"><img src="resources/img/shopping/attend.png" style="width:100%; height:350%;" /></a></li>
+            <li><a href="${contextPath }/attendanceEvent.ev"><img src="resources/img/shopping/birthday.png" style="width:100%; height:350%;"/></a></li>
          </ul>
       </div>
    </div>
@@ -266,20 +266,11 @@
 									<button type="button" class="btn btn-secondary"
 										style="background-color: white; color: rgb(112, 109, 109); border: none; font-weight: bold; font-size: 18px;">실시간
 										트렌드</button>
-									<button type="button" class="btn btn-secondary trend"
-										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">레시틴</button>
-									&nbsp;&nbsp;&nbsp;
-									<button type="button" class="btn btn-secondary trend"
-										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">밀크씨슬</button>
-									&nbsp;&nbsp;&nbsp;
-									<button type="button" class="btn btn-secondary trend"
-										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">종합비타민</button>
-									&nbsp;&nbsp;&nbsp;
-									<button type="button" class="btn btn-secondary trend"
-										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">비타민D</button>
-									&nbsp;&nbsp;&nbsp;
-									<button type="button" class="btn btn-secondary trend"
-										style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">보충제</button>
+									<c:forEach items="${cateTrend }" var="ct" end="3">
+										<button type="button" class="btn btn-secondary trend"
+											style="background-color: #24E082; border: none; border-radius: 30px; height: 28px; width: auto; font-weight: 600; font-size: 12px;">${ ct }</button>
+										&nbsp;&nbsp;&nbsp;
+									</c:forEach>
 								</div>
 							</div>
 						</div>					
@@ -287,9 +278,7 @@
 				</div>
 			</div><br><br><br><br>
 			
-
-            
-            
+ 
 			<div id="searchList">
             <div class="row">
                <span style="color: #FD9F28; font-weight: bold; font-size: 25px; background-color: white; border: none; margin-left: 30px;">${ proEffect }</span>
@@ -357,8 +346,6 @@
                 </div>
             </div>
 			
-			
-			
  			<div class="row">
                	<c:forEach items="${ cateList }" var="i">
 	                <div class="col-lg-2 col-md-4 col-sm-6" style="margin-right: 38px;">
@@ -376,8 +363,18 @@
 	                    </div>
                         <div>
                          	<input type="hidden" class="proNum" value="${ i.proNum }">
-                            <button class="btn btn_viewCart"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>
-                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>
+                         	<c:if test="${ empty loginUser }">
+	                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                         	</c:if>
+                         	<c:if test="${ !empty loginUser }">
+                     			<c:if test="${ i.check eq 'Y'}">
+		                            <button class="btn btn_viewZzim"><i class="bi bi-heart-fill"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                               	</c:if>
+                               	<c:if test="${ i.check ne 'Y' }">
+		                            <button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>
+                               	</c:if>
+                         	</c:if>
+                            <button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;${i.reviewCount }</button>
                         </div>
 	                </div>
                 </c:forEach>
@@ -388,75 +385,7 @@
         </div>
     </section>
 
-
-
-    <!-- Footer Section Begin -->
-    <footer class="footer spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-md-6 col-sm-6">
-                    <div class="footer__about">
-                        <div class="footer__about__logo">
-                            <a href="./index.html"><img src="resources/img/logo.png" alt=""></a>
-                        </div>
-                        <ul>
-                            <li>Address: 60-49 Road 11378 New York</li>
-                            <li>Phone: +65 11.188.888</li>
-                            <li>Email: hello@colorlib.com</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-6 col-sm-6 offset-lg-1">
-                    <div class="footer__widget">
-                        <h6>Useful Links</h6>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">About Our Shop</a></li>
-                            <li><a href="#">Secure Shopping</a></li>
-                            <li><a href="#">Delivery infomation</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
-                            <li><a href="#">Our Sitemap</a></li>
-                        </ul>
-                        <ul>
-                            <li><a href="#">Who We Are</a></li>
-                            <li><a href="#">Our Services</a></li>
-                            <li><a href="#">Projects</a></li>
-                            <li><a href="#">Contact</a></li>
-                            <li><a href="#">Innovation</a></li>
-                            <li><a href="#">Testimonials</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="footer__widget">
-                        <h6>Join Our Newsletter Now</h6>
-                        <p>Get E-mail updates about our latest shop and special offers.</p>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your mail">
-                            <button type="submit" class="site-btn">Subscribe</button>
-                        </form>
-                        <div class="footer__widget__social">
-                            <a href="#"><i class="fa fa-facebook"></i></a>
-                            <a href="#"><i class="fa fa-instagram"></i></a>
-                            <a href="#"><i class="fa fa-twitter"></i></a>
-                            <a href="#"><i class="fa fa-pinterest"></i></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="footer__copyright">
-                        <div class="footer__copyright__text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
-                        <div class="footer__copyright__payment"><img src="resources/img/payment-item.png" alt=""></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </footer>
+    <jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
    
    	<script>
 		window.onload =()=>{
@@ -469,29 +398,29 @@
 				});
 			}
 			
-			const listCartBtns = document.getElementsByClassName('btn_viewCart');
-			for(const cartBtn of listCartBtns){
-				cartBtn.addEventListener('click',function(){
-					var loginUser = "${loginUser.userNum}";
-					if(loginUser == ""){
-						alert('로그인 후 이용해주세요');
-					}else{
-	    				$.ajax({
-	    		    		url: '${contextPath}/insertCart.sh',
-				    		data: {userNum : loginUser,
-			    				proNum: $(this).siblings()[0].value,
-			    				cartQuantity : 1},
-	    	    			success:(data)=>{
-	    	    				if(data == 'YES'){
-	    	    					alert('이미 장바구니에 있는 상품입니다');
-	    	    				}else{
-		    	    				alert('상품이 장바구니에 추가되었습니다.');
-	    	    				}
-	    	    			}
-	    				})
-					}
-				});
-			}
+// 			const listCartBtns = document.getElementsByClassName('btn_viewCart');
+// 			for(const cartBtn of listCartBtns){
+// 				cartBtn.addEventListener('click',function(){
+// 					var loginUser = "${loginUser.userNum}";
+// 					if(loginUser == ""){
+// 						alert('로그인 후 이용해주세요');
+// 					}else{
+// 	    				$.ajax({
+// 	    		    		url: '${contextPath}/insertCart.sh',
+// 				    		data: {userNum : loginUser,
+// 			    				proNum: $(this).siblings()[0].value,
+// 			    				cartQuantity : 1},
+// 	    	    			success:(data)=>{
+// 	    	    				if(data == 'YES'){
+// 	    	    					alert('이미 장바구니에 있는 상품입니다');
+// 	    	    				}else{
+// 		    	    				alert('상품이 장바구니에 추가되었습니다.');
+// 	    	    				}
+// 	    	    			}
+// 	    				})
+// 					}
+// 				});
+// 			}
 			
 	        $('#searchInput').on('keyup', ()=>{
 				console.log($('#searchInput').val());
@@ -532,8 +461,8 @@
 								                '</div>'+
 							                    '<div id="djkf">'+
 						                         	'<input type="hidden" class="proNum" value="'+c.proNum+'">'+
-						                            '<button class="btn btn_viewCart" style="margin-right:0.5rem;"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>'+
-						                            '<button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>'+
+// 						                            '<button class="btn btn_viewCart" style="margin-right:0.5rem;"><i class="fa fa-shopping-cart"></i>&nbsp;&nbsp;&nbsp;장바구니</button>'+
+// 						                            '<button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>'+
 								                '</div>';
 							row.append(content);
 							const searchDives = document.getElementsByClassName('product_search_item');
@@ -550,6 +479,103 @@
 					}
 				});
 			});
+	        
+	        var cateTrend = document.getElementsByClassName('trend');
+	        for(const cateBtn of cateTrend){
+	        	cateBtn.addEventListener('click',function(){
+	        		console.log(this.innerText);
+	        		$.ajax({
+						url:'${ contextPath }/searchIngredient.sh',
+						data: {search: this.innerText },
+						success:(data)=>{
+							console.log(data);
+							
+							const div = document.getElementById('searchList');
+							div.innerHTML = '';
+							const row = document.createElement("div");
+							row.setAttribute('class', 'row');
+							row.setAttribute('style', 'margin-bottom:5rem;');
+							row.innerHTML = '<p class="col-6" style="color: #24E082; font-weight: bold; font-size: 30px;">검색 결과</p>'+
+	 						                '<button id="beforeBtn" class="col-6 text-end" style="color: #FD9F28; font-weight: bold; font-size: 15px; float:right; background-color: #ffffff; border: none; text-align:right;">이전페이지</button>';
+							div.append(row);
+					        document.getElementById('beforeBtn').addEventListener('click',function(){
+					        	location.href = '${contextPath}/allView.sh';
+					        });
+							
+							for(const c of data){
+								const content = document.createElement("div");
+								content.setAttribute('class', 'col-lg-3 col-md-4 col-sm-6');
+								content.setAttribute('style', 'width: 50px;');
+								
+								content.innerHTML = '<div class="product_search_item" style="margin-bottom: -10px; cursor: pointer;">'+
+								                        '<div class="product__item__pic set-bg" style="margin-bottom: -40px;">'+
+								                            '<img src="'+c.proImage+'"style="margin-top: 30px;">'+
+								                        '</div>'+
+								                        '<div class="product__item__text" style="text-align: left;">'+
+								                            '<span style="float: right; font-size: 18px; margin-top: -1%;"><i class="fa-solid fa-star star"></i>&nbsp;&nbsp;'+c.proGrade+'</span>'+
+								                            '<h6 style="display: inline-block;">'+c.proCompany+'</h6>'+
+								                            '<h5 style="height: 2rem;">'+c.proName+'</h5>'+
+								                            '<h5 style="margin-top : 1rem;" id="price">'+ c.formatPrice +'원</h5>'+
+								                            '<h6 style="margin-top : 1rem; color: #1a19197e; height: 2rem; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;">'+c.proEffect+'</h6>'+
+								                        '</div>'+
+									                '</div>'+
+								                    '<div id="djkf">'+
+							                         	'<input type="hidden" class="proNum" value="'+c.proNum+'">'+
+// 							                            '<button class="btn btn_viewZzim"><i class="bi bi-heart"></i>&nbsp;&nbsp;&nbsp;찜하기</button>'+
+// 							                            '<button class="btn btn_comment"><i class="fa-solid fa-comment"></i>&nbsp;&nbsp;&nbsp;193</button>'+
+									                '</div>';
+								row.append(content);
+								const searchDives = document.getElementsByClassName('product_search_item');
+								for(const divs of searchDives){
+									divs.addEventListener('click',function(){
+										const proNum = $(this).siblings().children()[0].value;
+										location.href='${contextPath}/supplementDetail.sh?proNum=' + proNum;
+									});
+								}
+							}
+						},
+						error: (data)=>{
+							console.log(data);
+						}
+					});
+	        		
+	        		
+	        	})
+	        }
+	        
+	        const viewZzim = document.getElementsByClassName('btn_viewZzim');
+	        for(const zzim of viewZzim){
+	        	zzim.addEventListener('click',function(){
+	        		console.log($(this).children());
+	        		var loginUser = "${loginUser.userNum}";
+					if(loginUser == ""){
+						alert('로그인 후 이용해주세요');
+					}else{
+	                	var check = 'N';
+	                    if($(this).children().attr("class") != "bi bi-heart-fill"){
+	                        // 스크랩 버튼 활성화 됐을 때
+	                        $(this).children().attr("class", "bi bi-heart-fill");
+	                        check = 'Y';
+	                    }else{
+	                        // 스크랩 버튼 비활성화
+	                       $(this).children().attr("class", "bi bi-heart");
+	                        check = 'N';
+	                    }
+	    				$.ajax({
+	    		    		url: '${contextPath}/insertZzim.sh',
+				    		data: {userNum : loginUser,
+			    				proNum: $(this).siblings()[0].value,
+			    				check: check},
+	    	    			success:(data)=>{
+	    	    				console.log(data);
+	    	    			},
+	    	    			error:(data)=>{
+	    	    				console.log(data);
+	    	    			}
+	    				})
+					}
+	        	})
+	        }
 	        
 		}
 	</script> 
