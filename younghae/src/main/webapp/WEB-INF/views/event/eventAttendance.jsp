@@ -27,7 +27,7 @@
 		<map name="attendanceMap" id="attendanceMap" >
 		<area shape="rect" coords="361, 854, 723, 946" style="cursor:pointer;">
 		</map>
-		<div style="left: 100px; width: 2400px; bottom: 80px; font-size: 2.2em; font-weight: bold; color:orange; position: absolute;">
+		<div style="left: 100px; width: 2400px; bottom: 20px; font-size: 2.2em; font-weight: bold; color:orange; position: absolute;">
 			${atCount }
 		</div>
 	</div>

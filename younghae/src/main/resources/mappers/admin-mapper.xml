@@ -68,6 +68,44 @@
 		from attachment 
 		where SERIALNUMBER=#{id} and BOARD_TYPE=9 and ATTACH_STATUS = 'Y'
    </select>
+   
+       <!-- ============신고========================== -->
+   <resultMap type="Board" id="Board">
+        <id column="BOARD_NUM" property="boardNum"/>
+        <result column="BOARD_TITLE" property="boardTitle"/>
+        <result column="BOARD_CONTENT" property="boardContent"/>
+        <result column="BOARD_CREATEDATE" property="boardCreateDate"/>
+        <result column="BOARD_MODIFYDATE" property="boardModifyDate"/>
+        <result column="BOARD_VIEW" property="boardView"/>
+        <result column="BOARD_STATUS" property="boardStatus"/>
+        <result column="USER_NUM" property="userNum"/>
+        <result column="BOARD_TYPE" property="boardType"/>
+     </resultMap>
+     
+     <resultMap type="Declaration" id="Declaration">
+          <id column="DECL_NUM" property="declNum"/>
+        <result column="BOARD_NUM" property="boardNum"/>
+        <result column="DECL_CONTENT" property="declContent"/>
+        <result column="DECL_STATUS" property="declStatus"/>
+        <result column="DECL_DATE" property="declDate"/>
+        <result column="ACTION_DATE" property="actionDate"/>
+     </resultMap>
+   
+   <select id="selectAdminDeclare" resultMap="Declaration">
+      SELECT * FROM DECLARATION
+   </select>
+   
+   <select id="getDeclareListCount" resultType="int">
+      SELECT COUNT(*) FROM DECLARATION
+   </select>
+   
+   <select id="selectBoardContent" resultMap="Board">
+      SELECT * FROM BOARD WHERE BOARD_NUM = #{boardNum}
+   </select>
+   
+   <update id="deleteDeclaredBoard">UPDATE BOARD SET BOARD_STATUS = 'N' WHERE BOARD_NUM = #{boardNum}</update>
+   <update id="updateDeclareStatus">UPDATE DECLARATION SET DECL_STATUS = 'Y' AND ACTION_DATE = 'SYSDATE' WHERE DECL_NUM = #{declNum}</update>
+   
 	<resultMap type="Attachment" id="Attachment">
 		<id column="ATTACH_NUM" property="attachNum"/>
   		<result column="ATTACH_UPLOADDATE" property="attachUploadDate"/>

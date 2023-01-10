@@ -166,6 +166,7 @@ public class MemberController {
  		m.setUserBirth(d);
  		
  		int resultPoint = 0;
+ 		//입력 받은 추천인코드 저장
  		String getUserRecommend = m.getUserRecommend();
  	
         //추천인코드자동부여
@@ -261,36 +262,36 @@ public class MemberController {
         map.put("userHealth", userHealth);
 
         int resultGenral = mService.insertMemberAddress(map); 
-        //추천인코드입력하고 다른 추천포인트올려주기.(포인트단하면서하기)
- 		
+        
+        //추천인 포인트
+        //추천인 코드 입력여부확인
  		if(getUserRecommend!="") {
- 			// 있는지없는지확인
+ 			//해당 추천인코드를 가진 회원있는지확인
  			resultPoint = mService.checkRecommend(getUserRecommend);
- 	 		System.out.println(resultPoint);
- 	 		//있으면
+ 	 		//추천인코드를 가진 회원이있으면
  			if(resultPoint >0) {
- 				//다른사람 추천인포인트
+ 				//해당 추천인코드를 가진 포인트증가
  				Member otherRecommend= mService.searchRecommend(getUserRecommend);
  				
  				HashMap<String, Object> recommendMap = new HashMap < String, Object > ();
  				recommendMap.put("id", otherRecommend.getUserNum());
  				recommendMap.put("updateName","추천인코드");
  				recommendMap.put("updatePoint", "+1000");
- 				//해당 usernum에 insert
+
  				mService.pointAdd(recommendMap);
- 				//해당 유저 총점수 업데이트.
+ 
  				mService.totalPoint(otherRecommend.getUserNum());
  				
- 				// 내 추천인 포인트
+ 				//내 포인트 증가
  				Member myRecommend= mService.searchMyUserNum(m.getUserId());
 				
 				HashMap<String, Object> MyPoint = new HashMap < String, Object > ();
 				MyPoint.put("id", myRecommend.getUserNum());
 				MyPoint.put("updateName","추천인코드");
 				MyPoint.put("updatePoint", "+1000");
-				//해당 usernum에 insert
+
 				mService.pointAdd(MyPoint);
-				//해당 유저 총점수 업데이트.
+
 				mService.totalPoint(myRecommend.getUserNum());
  				
  				

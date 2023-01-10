@@ -5,15 +5,19 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.kh.young.admin.service.AdminService;
 import com.kh.young.member.exception.MemberException;
@@ -22,6 +26,7 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.myPage.service.MyPageService;
 
 
@@ -190,4 +195,35 @@ public class AdminController {
 
         return "confirmExpert";
     }
+    
+    /**===============신고==========================**/
+    @GetMapping("adminDeclare.ad")
+    public String adminDeclare(@RequestParam(value="page", required=false) Integer page, Model model) {
+       
+       PageInfo pi = aService.getDeclarePageInfo(page);
+       ArrayList<HashMap> list = aService.selectAdminDeclare(page);
+       
+       model.addAttribute("pi", pi);
+       model.addAttribute("list", list);
+       return "adminDeclare";
+    }
+    
+    @PostMapping("deleteDeclaredBoard.ad")
+    @ResponseBody
+    public String deleteDeclaredBoard(HttpServletRequest request) {
+       String[] parameter = request.getParameterValues("parameter");
+       System.out.println(parameter);
+       int result = 0;
+       for(int i=0; i<parameter.length; i++) {
+          String str = parameter[i];
+          int boardNum = Integer.parseInt(str.split("-")[0]);
+          int declNum = Integer.parseInt(str.split("-")[1]);
+          result += aService.deleteDeclaredBoard(boardNum);
+          result += aService.updateDeclareStatus(declNum);
+       }
+       System.out.println("admin컨트롤"+result);
+       return String.valueOf(result);
+    }
+    
+    
 }

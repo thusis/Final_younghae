@@ -8,11 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.young.admin.dao.AdminDAO;
+import com.kh.young.common.Pagination;
 import com.kh.young.model.vo.Attachment;
+import com.kh.young.model.vo.Board;
 import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.myPage.dao.MyPageDAO;
 
 @Service("aService")
@@ -76,5 +79,48 @@ public class AdminServiceImpl implements AdminService{
 	public Attachment selectProfile(int id) {
 		return aDAO.selectProfile(sqlSession,id);
 	}
+	
+	  /**===============신고==========================**/
+	   @Override
+	   public ArrayList<HashMap> selectAdminDeclare(Integer page) {
+	      PageInfo pi = getDeclarePageInfo(page);
+	      ArrayList<HashMap> declareList = aDAO.selectAdminDeclare(sqlSession, pi);
+	      for(HashMap<String, Object> map :declareList) {
+	         Board b = (Board)map.get("board");
+	         b.setBoardContent(
+	               boardContentToString(b.getBoardContent())
+	         );
+	         map.put("board", b);
+	      }
+	      
+	      return declareList;
+	   }
+
+	   @Override
+	   public PageInfo getDeclarePageInfo(Integer page) {
+	      int listCount = aDAO.getDeclareListCount(sqlSession);
+	      int currentPage = 1;
+	      if(page!=null) {
+	         currentPage=page;
+	      }
+	      return Pagination.getPageInfo(currentPage, listCount, 10);
+	   }
+	   
+	   
+	   private String boardContentToString(String boardContent) {
+	      String str = boardContent;
+	      String newStr = str.replaceAll("<[^>]*>", " ");
+	      return newStr;
+	   }
+
+	   @Override
+	   public int deleteDeclaredBoard(int boardNum) {
+	      return aDAO.deleteDeclaredBoard(sqlSession, boardNum);
+	   }
+
+	   @Override
+	   public int updateDeclareStatus(int declNum) {
+	      return aDAO.updateDeclareStatus(sqlSession, declNum);
+	   }
 	
 }
