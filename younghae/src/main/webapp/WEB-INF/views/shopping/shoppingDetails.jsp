@@ -364,7 +364,7 @@
 	                        <div class="product__details" style="display: inline; float:right; font-size: 100%; margin-top: 2.5%;">
 	                            <a href="#tabs-3" aria-selected="false">
 	                            <span style="color: orange; text-decoration: underline;">${ reviewCount }개의 리뷰&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span></a>&nbsp;&nbsp;&nbsp;
-<!-- 	                            <span id="compareproduct" style="color: rgb(242, 67, 230); text-decoration: underline;">상품 비교&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span> -->
+	                            <span id="compareproduct" style="color: rgb(242, 67, 230); text-decoration: underline;">상품 비교&nbsp;&nbsp;<i class="fa-regular fa-square-plus"></i></span>
 	                        </div>
 	
 	                        <div style="font-size: 250%; font-weight: 600;"><fmt:formatNumber value="${ supplementDetail.proPrice }" type="number"/>원</div>
