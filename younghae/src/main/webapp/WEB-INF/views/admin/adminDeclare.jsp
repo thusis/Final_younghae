@@ -19,58 +19,48 @@
 
     <div class="container">
 		<div class="row text-center mb-1 d-flex align-items-center" style="margin-top:50px;">
-			<h1><strong>신고 관리 페이지</strong></h1>
-			<div class="text-center col-lg-6 align-content-center">
-				<div class="col-lg-6">
-					<h3>신고사유 구분</h3>
-				    <ul style="list-style:none;">
-				         <li>1 . 스팸홍보/도배글</li>
-				         <li>2 . 음란물</li>
-				         <li>3 . 욕설/생명경시/혐오/차별적 표현</li>
-				         <li>4 . 불쾌한 표현</li>
-				         <li>5 . 기타</li>
-				     </ul>
-				 </div>
-			</div>
+			<h3><strong>신고 관리 페이지</strong></h3>
 		</div>
 		<hr>
 		<div style="box-shadow: 0 4px 16px rgb(0 0 0 / 10%); height: 100%; border-radius: 30px; overflow: hidden;">
 			<table class="table table-striped m-2" style="table-layout:fixed; ">
 				<thead>
 				    <tr style="font-size:0.8rem; color:">
-				   	<th scope="col">선택</th>
-				       <th scope="col">신고<br>번호</th>
-				       <th scope="col" style="font-weight:600; color:#0d6efd;">신고당한<br>사용자</th>
+					   	<th scope="col">선택</th>
 				        <th scope="col">게시판</th>
 				        <th scope="col" class="col-lg-2">제목</th>
-				        <th scope="col" class="col-lg-5" >내용</th>
+				        <th scope="col" class="col-lg-3" >내용</th>
 				        <th scope="col">신고<br>사유</th>
+				        <th scope="col">신고<br>날짜</th>
 				        <th scope="col">처리<br>여부</th>
 				    </tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${list}" var="list">
 				   	<tr>
-						<td><input class="goToDelete" type="checkbox" name="boardNum" value="${list.boardNum}-${list.declNum}"></td>
-						<td>${ list.index }</td>
+						<td><input class="goToDelete" type="checkbox" name="boardNum" value="${list.declaration.boardNum}-${list.declaration.declNum}"></td>
 						<td>
-						<c:if test="${ list.boardType eq 1 }">질문</c:if>
-						<c:if test="${ list.boardType eq 2 }">응답</c:if>
-						<c:if test="${ list.boardType eq 3 }">자유</c:if>
+						<c:if test="${ list.board.boardType eq 5 }">질문</c:if>
+						<c:if test="${ list.board.boardType eq 8 }">응답</c:if>
+						<c:if test="${ list.board.boardType eq 11 }">자유</c:if>
+						<c:if test="${ list.board.boardType eq 12 }">자유</c:if>
+						<c:if test="${ list.board.boardType eq 13 }">자유</c:if>
+						<c:if test="${ list.board.boardType eq 14 }">자유</c:if>
 						</td>
-						<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ list.boardTitle }</td>
-						<td class="col-lg-3" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ list.boardContent }</td>
+						<td style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ list.board.boardTitle }</td>
+						<td class="col-lg-3" style="overflow:hidden;white-space:nowrap;text-overflow:ellipsis;">${ list.board.boardContent }</td>
 						
 						<td>
-						<c:if test="${ list.declContent eq 1 }">스팸홍보/도배글</c:if>
-						<c:if test="${ list.declContent eq 2 }">음란물</c:if>
-						<c:if test="${ list.declContent eq 3 }">욕설/생명경시/혐오/차별적 표현</c:if>
-						<c:if test="${ list.declContent eq 4 }">불쾌한 표현</c:if>
-						<c:if test="${ list.declContent eq 5 }">기타</c:if>
+						<c:if test="${ list.declaration.declContent eq 1 }">스팸홍보/도배글</c:if>
+						<c:if test="${ list.declaration.declContent eq 2 }">음란물</c:if>
+						<c:if test="${ list.declaration.declContent eq 3 }">욕설/생명경시/혐오/차별적 표현</c:if>
+						<c:if test="${ list.declaration.declContent eq 4 }">불쾌한 표현</c:if>
+						<c:if test="${ list.declaration.declContent eq 5 }">기타</c:if>
 						</td>
-						<td>
-						<c:if test="${ list.declareStatus eq Y }">O</c:if>
-						<c:if test="${ list.declareStatus ne Y }">X</c:if>
+						<td>${ list.declaration.declDate }</td>
+						<td class="checkedTd" id="${list.declaration.boardNum}-${list.declaration.declNum}" style="font-weight:700;">
+						<c:if test="${ list.declaration.declStatus eq 'Y' }">O</c:if>
+						<c:if test="${ list.declaration.declStatus ne 'Y' }">X</c:if>
 						</td>
 					</tr>
 				</c:forEach>
@@ -78,6 +68,33 @@
 		    </table>
 	    </div>
 	    <br>
+	    
+	    <div class="product__pagination blog__pagination d-flex justify-content-center mt-3 ">
+                   
+ 		<c:url var="goBack" value="${ loc }">
+ 			<c:param name="page" value="${pi.currentPage-1 }"></c:param>
+ 		</c:url>
+ 		<a href="${goBack}" aria-label="Previous">
+ 			<span aria-hidden="true"><i class="fa-solid fa-arrow-left-long"></i></span>
+ 		</a>
+      	
+      	<c:forEach begin="${pi.startPage}" end="${pi.endPage}" var="p">
+      		<c:url var="goNum" value="${loc }">
+      			<c:param name="page" value="${p }"></c:param>
+      		</c:url>
+       		<a href="${goNum }">${p }</a>	
+      	</c:forEach>
+      	
+   		<c:url var="goNext" value="${ loc }">
+   			<c:param name="page" value="${pi.currentPage+1 }"></c:param>
+   		</c:url>
+   		<a href="${goNext}" aria-label="Next">
+   			<span aria-hidden="true"><i class="fa fa-long-arrow-right"></i></span>
+   		</a>
+                   
+        </div>
+	    
+	    
 		<div class="row align-items">
 		    <div class="col"></div>
 		    <button onclick="deleteBoard()" class="btn btn-sm btn-primary col-lg-1">선택 게시글 비공개 처리</button>
@@ -86,25 +103,41 @@
     </div>
     
     <script>
-    function deleteBoard(){
-    	const checkBoxes=document.getElementsByClassName('goToDelete')
-    	const arr = [];
-    	for(const checkBox of checkBoxes){
-    		if(checkBox.checked==true){
-    			arr.push(checkBox.value);
-    		}
-    	}
-    	console.log(arr);
-    	$ajax({
-    		url:'${contextPath}/deleteDeclaredBoard.ad',
-    		data : arr,
-    		type : "post",
-    		success : (data)=>{
-    			conole.log(data);
-    		}
-    	})
-    }
-    
+	    function deleteBoard(){
+	    	const checkBoxes=document.getElementsByClassName('goToDelete');
+	    	const arr = [];
+	    	for(const checkBox of checkBoxes){
+	    		if(checkBox.checked==true){
+	    			arr.push(checkBox.value);
+	    		}
+	    	}
+	    	console.log(arr);
+	    	$.ajax({
+	    		url:'${contextPath}/deleteDeclaredBoard.ad',
+	    		type : 'POST',
+	    		traditional : true,
+	    		data : {
+	    			parameter : arr
+	    		},
+	    		success : (data)=>{
+	    			console.log(data);
+	    			
+	    	    	for(const checkBox of checkBoxes){
+	    	    		if(checkBox.checked==true){
+	    	    			const idCheck = checkBox.value;
+	    	    			console.log(checkBox.parentNode.parentNode);
+	    	    			const checkedTd = document.getElementById(idCheck);
+	    	    			checkedTd.innerText = 'O';
+	    	    		}
+	    	    		checkBox.checked = false;
+	    	    	}
+	    			// x -> 완료 로 바꿔야함
+	    		},
+	    		error : (data)=>{
+	    			alert('실패');
+	    		}
+	    	}); // ajax 끝
+	    } // 신고된 게시글 삭제 끝
     </script>
 
 </body>

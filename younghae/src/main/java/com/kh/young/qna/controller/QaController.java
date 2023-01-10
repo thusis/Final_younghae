@@ -343,5 +343,23 @@ public class QaController {
     		return String.valueOf("잘못된 경로입니다.");
     	}
     }
-    
+
+    @GetMapping("sortExpert.qa")
+    @ResponseBody
+    public String sortAnswerExpert(@RequestParam int number, @RequestParam Integer page) {
+    	
+    	/**		if(selectValue=="sortAnswer"){
+			sortParameter = 1;
+		} else if (selectValue=="sortActivity"){
+			sortParameter = 2;
+		} else if (selectValue=="sortEnrolldate"){
+			sortParameter = 3;
+		}**/
+
+		int listCount = qService.getExpertsListCount();
+		PageInfo pi = getPageInfo(page, listCount, 12);
+		ArrayList<ExpertRespDto> erespList =  qService.sortExpertList(pi, number);
+		
+		return "expertFind";
+    }
 }

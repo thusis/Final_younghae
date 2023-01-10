@@ -317,7 +317,7 @@
 	<update id="deleteQuestion">UPDATE BOARD SET BOARD_STATUS = 'N' WHERE BOARD_NUM = #{boardNum}</update>
 	<update id="updateIsSolved">UPDATE QUESTION SET IS_SOLVED = 'Y' WHERE QUESTION_NUM = #{boardNum}</update>
 	
-	<insert id="insertDeclare">INSERT INTO DECLARATION VALUES (SEQ_DECL.NEXTVAL, #{boardNum}, #{declContent}, DEFAULT)</insert>
+	<insert id="insertDeclare">INSERT INTO DECLARATION VALUES (SEQ_DECL.NEXTVAL, #{boardNum}, #{declContent}, DEFAULT, DEFAULT, SYSDATE)</insert>
 	
 	<!-- expertNum만으로 예약된 스케줄 모두 조회 -->
 	<select id="selectAllReservSchedule" resultType="HashMap">

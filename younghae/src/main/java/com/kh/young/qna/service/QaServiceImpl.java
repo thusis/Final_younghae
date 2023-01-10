@@ -408,5 +408,25 @@ public class QaServiceImpl implements QaService {
 	public ArrayList<HashMap> selectAllReservSchedule(int expertNum) {
 		return qdao.selectAllReservSchedule(sqlSession, expertNum);
 	}
+
+	@Override
+	public ArrayList<ExpertRespDto> sortExpertList(PageInfo pi, int number) {
+    	/**		if(selectValue=="sortAnswer"){
+			sortParameter = 1;
+		} else if (selectValue=="sortActivity"){
+			sortParameter = 2;
+		} else if (selectValue=="sortEnrolldate"){
+			sortParameter = 3;
+		}**/
+		ArrayList<ExpertRespDto> result = null;
+		if(number == 1) {
+			result = qdao.sortByAnswer(sqlSession, pi);
+		} else if(number == 2) {
+			result = qdao.sortByActivity(sqlSession, pi);
+		} else if(number == 3){
+			result = qdao.sortByEnrolldate(sqlSession, pi);
+		}
+		return result;
+	}
 	
 }

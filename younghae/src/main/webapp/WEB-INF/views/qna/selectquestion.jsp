@@ -521,6 +521,7 @@
  			data :declareForm,
  			dataType: 'json',
  			success : (data)=>{
+ 				console.log(data);
  				document.getElementById('declareModalBody1').style.display = 'none';
  				document.getElementById('declareModalBody2').style.display = 'block';
  				document.getElementById('declaredMessage').innerText = data;
