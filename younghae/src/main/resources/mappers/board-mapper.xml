@@ -196,10 +196,12 @@
    	</select>
    	
    	<insert id="insertDeclare">
-   		INSERT INTO DECLARATION VALUES (SEQ_DECL.NEXTVAL, #{boardNum}, #{declContent}, DEFAULT)
+   		INSERT INTO DECLARATION VALUES (SEQ_DECL.NEXTVAL, #{boardNum}, #{declContent}, DEFAULT, default, sysdate)
    	</insert>
    	
-   	
+   <select id="selectDclMsg" resultType="int">
+    SELECT COUNT(*) FROM DECLARATION WHERE BOARD_NUM = #{boardNum}
+   </select>
    	
    	<resultMap type="Member" id="memberResultSet">
       <id column="USER_NUM" property="userNum"/>

@@ -80,13 +80,25 @@
 		border:none; 
 		background: none;
 	}
+	
 	.bi-capsule{
-    	color: #24E082;
+		color:#24E082;
+		margin-top:8px;
+	}
+	
+	.bi-capsule:hover{
+		color:#004e27;
+		font-size: 25px;
 	}
 
+	#likeCountDiv{
+		margin-top: 8px;
+	}
+	
 	#declareBtn{
-		font-size: 20px;
-		margin-bottom: -25px;
+		font-size: 17px;
+		margin-top: 10px;
+		color: #ff4050;
 	}
 	
 </style>
@@ -104,6 +116,10 @@
 	      </div>
 		
 		<div class="modal-body" id="declareModalBody1">
+		 <c:if test="${dclMsg eq 1 }">
+            이미 신고된 게시글입니다.
+         </c:if>
+         <c:if test="${dclMsg eq 0 }">
 			<form action="${contextPath}/declare.bo" method="post" id="declareForm">
 	        <h4 class="modal-title fs-5">신고하기</h4>
 	                <h5>작성자 : ${b.member.userNickname }</h5>
@@ -130,6 +146,7 @@
 	            <hr>
 	            <button type="button" class="btn btn-secondary" onclick="declare();">신고하기</button>
 			</form>
+			 </c:if>
        	</div>
        	
        	<div class="modal-body" id="declareModalBody2" style="display:none;">
@@ -259,8 +276,8 @@
 							<div class="col-lg-6">
 								<div class="blog__details__widget" style="margin-top: 10px; margin-left: 30px;">
 									<ul>
-										<li><span style="color:gold;">Categories:</span> 운동</li>
-										<li><span style="color:gold;">Tags:</span> PT, 오운완, 버핏테스트, 인바디</li>
+										<li><span style="color:gold;">Categories:</span> ${typeString }</li>
+										<li><span style="color:gold;">Social Share:</span><!--  PT, 오운완, 버핏테스트, 인바디 --></li> 
 									</ul>
 									<div class="blog__details__social" style="margin-top: 10px;">
 										<a href="#" onclick="fn_sendFB('facebook');return false;" id="facebook"
@@ -299,7 +316,7 @@
 			<div class="col-lg-10">
 			
 				<div class="row justify-content-end bn_board-meta">
-					<i class="bi bi-capsule" id="likeButton"></i><div id="likeCountDiv"><span class=" m-2" >${likeCount}</span></div>&nbsp;&nbsp;
+					<i class="bi bi-capsule" id="likeButton"></i>&nbsp;&nbsp;<div id="likeCountDiv">${likeCount}</div>&nbsp;&nbsp;
 					<i class="fa-regular fa-eye"></i><span class=" m-2">${b.boardView }</span>&nbsp;&nbsp;
 					<i class="bi bi-chat-dots m-2"></i><span class=" m-2">${replyCount}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<div id="declareBtn"><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#declareModal"><i class="bi bi-lightning-fill"></i>신고하기</a></div>

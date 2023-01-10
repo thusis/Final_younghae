@@ -131,6 +131,10 @@ public class BoardDAO {
 		return sqlSession.insert("boardMapper.insertDeclare", declare);
 	}
 
+	public int selectDclMsg(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("boardMapper.selectDclMsg", boardNum);
+	}
+
 
 
 	
