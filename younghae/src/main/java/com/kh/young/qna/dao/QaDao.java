@@ -194,4 +194,43 @@ public class QaDao {
 		return result;
 	}
 
+	public ArrayList<ExpertRespDto> sortByAnswer(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		ArrayList<ExpertRespDto> erespList = (ArrayList)sqlSession.selectList("qnaMapper.sortByAnswer", null, rowBounds);
+		for(ExpertRespDto eresp : erespList) {
+			int userNum = eresp.getMember().getUserNum();
+			eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, userNum));
+		}
+		
+		return erespList;
+	}
+
+	public ArrayList<ExpertRespDto> sortByActivity(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		ArrayList<ExpertRespDto> erespList = (ArrayList)sqlSession.selectList("qnaMapper.sortByActivity", null, rowBounds);
+		for(ExpertRespDto eresp : erespList) {
+			int userNum = eresp.getMember().getUserNum();
+			eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, userNum));
+		}
+		
+		return erespList;
+	}
+
+	public ArrayList<ExpertRespDto> sortByEnrolldate(SqlSessionTemplate sqlSession, PageInfo pi) {
+		int offset = (pi.getCurrentPage()-1)*pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
+		
+		ArrayList<ExpertRespDto> erespList = (ArrayList)sqlSession.selectList("qnaMapper.sortByEnrolldate", null, rowBounds);
+		for(ExpertRespDto eresp : erespList) {
+			int userNum = eresp.getMember().getUserNum();
+			eresp.setAnswerListSize(selectExpertAnswerListSize(sqlSession, userNum));
+		}
+		
+		return erespList;
+	}
+
 }

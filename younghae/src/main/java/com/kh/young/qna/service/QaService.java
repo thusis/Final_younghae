@@ -11,6 +11,7 @@ import com.google.gson.JsonElement;
 import com.kh.young.chat.dto.ChatPaymentRespDto;
 import com.kh.young.model.vo.Clip;
 import com.kh.young.model.vo.Declaration;
+import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
 import com.kh.young.qna.dto.ExpertRespDto;
 import com.kh.young.qna.dto.QuestionInsertDto;
@@ -64,6 +65,8 @@ public interface QaService {
 	int insertDeclare(Declaration declare);
 
 	ArrayList<HashMap> selectAllReservSchedule(int expertNum);
+
+	ArrayList<ExpertRespDto> sortExpertList(PageInfo pi, int number);
 
 
 

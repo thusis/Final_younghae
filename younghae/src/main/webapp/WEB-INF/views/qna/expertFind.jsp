@@ -197,6 +197,7 @@
 			}
 		}
 	}
+	
 	function sortEvent(){
 		var sortSelect = document.getElementById("expertSort");
 		var selectValue = sortSelect.options[sortSelect.selectedIndex].value;
@@ -211,8 +212,8 @@
 		}
 		console.log("sort 시작");
 		ajax({
-			url: '${contextPath}/sortAnswerExpert.qa',
-			data: {number : sortParameter},
+			url: '${contextPath}/sortExpert.qa',
+			data: {number : sortParameter, page:${pi.currentPage}},
 			sucess: (erespList)=>{
 				console.log(eresp);
 			},
