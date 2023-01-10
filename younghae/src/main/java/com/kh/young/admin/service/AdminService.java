@@ -8,6 +8,7 @@ import com.kh.young.model.vo.Coupon;
 import com.kh.young.model.vo.ExpertUser;
 import com.kh.young.model.vo.GeneralUser;
 import com.kh.young.model.vo.Member;
+import com.kh.young.model.vo.PageInfo;
 
 public interface AdminService {
 
@@ -32,5 +33,15 @@ public interface AdminService {
 	int updateMember(int id);
 
 	Attachment selectProfile(int id);
+	
+    /**===============신고==========================**/
+
+   ArrayList<HashMap> selectAdminDeclare(Integer page);
+
+   int deleteDeclaredBoard(int boardNum);
+
+   int updateDeclareStatus(int declNum);
+
+   PageInfo getDeclarePageInfo(Integer page);
 
 }

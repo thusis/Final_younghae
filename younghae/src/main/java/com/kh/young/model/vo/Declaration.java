@@ -1,5 +1,7 @@
 package com.kh.young.model.vo;
 
+import java.sql.Date;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,4 +18,6 @@ public class Declaration {
 	private int boardNum;
 	private String declContent;
 	private String declStatus;
+	private Date declDate;
+	private Date actionDate;
 }
