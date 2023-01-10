@@ -27,97 +27,96 @@ import com.kh.young.shopping.dto.SupplementResp;
 @Repository
 public class ShoppingDAO {
 
-	public ArrayList<Supplement> selectSupplementList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("shoppingMapper.selectSupplementList");
-	}
+//	public ArrayList<Supplement> selectSupplementList(SqlSessionTemplate sqlSession) {
+//		return (ArrayList)sqlSession.selectList("shoppingMapper.selectSupplementList");
+//	}
 	
 	public ArrayList<SupplementResp> selectsuppleRespList(SqlSessionTemplate sqlSession) {
-		ArrayList<Supplement> list = selectSupplementList(sqlSession);
-		ArrayList<SupplementResp> resultList = new ArrayList<>();
-		for(Supplement l : list) {
-			SupplementResp resp = new SupplementResp();
-			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
-			resp.setProNum(l.getProNum());
-			resp.setProImage(l.getProImage());
-			resp.setProName(l.getProName());
-			resp.setProCompany(l.getProCompany());
-			resp.setProIngredient(l.getProIngredient());
-			resp.setProPrice(l.getProPrice());
-			resp.setProEffect(l.getProEffect());
-			resp.setProIntake(l.getProIntake());
-			resp.setProSaleStatus(l.getProSaleStatus());
-			resp.setProCreateDate(l.getProCreateDate());
-			resp.setProModifyDate(l.getProModifyDate());
-			resp.setProGrade(l.getProGrade());
-			resp.setProStatus(l.getProStatus());
-			resp.setCateNum(l.getCateNum());
-			resp.setFormatPrice(l.getFormatPrice());
-			resp.setReviewCount(reviewCount);
-			resultList.add(resp);
-		}
+		ArrayList<SupplementResp> resultList = (ArrayList)sqlSession.selectList("shoppingMapper.selectSupplementList");
+//		for(Supplement l : list) {
+//			SupplementResp resp = new SupplementResp();
+//			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+//			resp.setProNum(l.getProNum());
+//			resp.setProImage(l.getProImage());
+//			resp.setProName(l.getProName());
+//			resp.setProCompany(l.getProCompany());
+//			resp.setProIngredient(l.getProIngredient());
+//			resp.setProPrice(l.getProPrice());
+//			resp.setProEffect(l.getProEffect());
+//			resp.setProIntake(l.getProIntake());
+//			resp.setProSaleStatus(l.getProSaleStatus());
+//			resp.setProCreateDate(l.getProCreateDate());
+//			resp.setProModifyDate(l.getProModifyDate());
+//			resp.setProGrade(l.getProGrade());
+//			resp.setProStatus(l.getProStatus());
+//			resp.setCateNum(l.getCateNum());
+//			resp.setFormatPrice(l.getFormatPrice());
+//			resp.setReviewCount(reviewCount);
+//			resultList.add(resp);
+//		}
 		return resultList;
 	}
 
-	public ArrayList<Supplement> selectTrendList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("shoppingMapper.selectTrendList");
-	}
+//	public ArrayList<Supplement> selectTrendList(SqlSessionTemplate sqlSession) {
+//		return (ArrayList)sqlSession.selectList("shoppingMapper.selectTrendList");
+//	}
 	
 	public ArrayList<SupplementResp> selectsuppleRespTrendList(SqlSessionTemplate sqlSession) {
-		ArrayList<Supplement> list = selectTrendList(sqlSession);
-		ArrayList<SupplementResp> resultList = new ArrayList<>();
-		for(Supplement l : list) {
-			SupplementResp resp = new SupplementResp();
-			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
-			resp.setProNum(l.getProNum());
-			resp.setProImage(l.getProImage());
-			resp.setProName(l.getProName());
-			resp.setProCompany(l.getProCompany());
-			resp.setProIngredient(l.getProIngredient());
-			resp.setProPrice(l.getProPrice());
-			resp.setProEffect(l.getProEffect());
-			resp.setProIntake(l.getProIntake());
-			resp.setProSaleStatus(l.getProSaleStatus());
-			resp.setProCreateDate(l.getProCreateDate());
-			resp.setProModifyDate(l.getProModifyDate());
-			resp.setProGrade(l.getProGrade());
-			resp.setProStatus(l.getProStatus());
-			resp.setCateNum(l.getCateNum());
-			resp.setFormatPrice(l.getFormatPrice());
-			resp.setReviewCount(reviewCount);
-			resultList.add(resp);
-		}
+//		ArrayList<Supplement> list = selectTrendList(sqlSession);
+		ArrayList<SupplementResp> resultList = (ArrayList)sqlSession.selectList("shoppingMapper.selectTrendList");
+//		for(Supplement l : list) {
+//			SupplementResp resp = new SupplementResp();
+//			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+//			resp.setProNum(l.getProNum());
+//			resp.setProImage(l.getProImage());
+//			resp.setProName(l.getProName());
+//			resp.setProCompany(l.getProCompany());
+//			resp.setProIngredient(l.getProIngredient());
+//			resp.setProPrice(l.getProPrice());
+//			resp.setProEffect(l.getProEffect());
+//			resp.setProIntake(l.getProIntake());
+//			resp.setProSaleStatus(l.getProSaleStatus());
+//			resp.setProCreateDate(l.getProCreateDate());
+//			resp.setProModifyDate(l.getProModifyDate());
+//			resp.setProGrade(l.getProGrade());
+//			resp.setProStatus(l.getProStatus());
+//			resp.setCateNum(l.getCateNum());
+//			resp.setFormatPrice(l.getFormatPrice());
+//			resp.setReviewCount(reviewCount);
+//			resultList.add(resp);
+//		}
 		return resultList;
 	}
 	
 
-	public ArrayList<Supplement> selectBestsellerList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("shoppingMapper.selectBestsellerList");
-	}
+//	public ArrayList<Supplement> selectBestsellerList(SqlSessionTemplate sqlSession) {
+//		return (ArrayList)sqlSession.selectList("shoppingMapper.selectBestsellerList");
+//	}
 	
 	public ArrayList<SupplementResp> selectsuppleRespBestsellerList(SqlSessionTemplate sqlSession) {
-		ArrayList<Supplement> list = selectBestsellerList(sqlSession);
-		ArrayList<SupplementResp> resultList = new ArrayList<>();
-		for(Supplement l : list) {
-			SupplementResp resp = new SupplementResp();
-			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
-			resp.setProNum(l.getProNum());
-			resp.setProImage(l.getProImage());
-			resp.setProName(l.getProName());
-			resp.setProCompany(l.getProCompany());
-			resp.setProIngredient(l.getProIngredient());
-			resp.setProPrice(l.getProPrice());
-			resp.setProEffect(l.getProEffect());
-			resp.setProIntake(l.getProIntake());
-			resp.setProSaleStatus(l.getProSaleStatus());
-			resp.setProCreateDate(l.getProCreateDate());
-			resp.setProModifyDate(l.getProModifyDate());
-			resp.setProGrade(l.getProGrade());
-			resp.setProStatus(l.getProStatus());
-			resp.setCateNum(l.getCateNum());
-			resp.setFormatPrice(l.getFormatPrice());
-			resp.setReviewCount(reviewCount);
-			resultList.add(resp);
-		}
+//		ArrayList<Supplement> list = selectBestsellerList(sqlSession);
+		ArrayList<SupplementResp> resultList = (ArrayList)sqlSession.selectList("shoppingMapper.selectBestsellerList");
+//		for(Supplement l : list) {
+//			SupplementResp resp = new SupplementResp();
+//			int reviewCount = sqlSession.selectOne("shoppingMapper.selectReviewCount",l.getProNum());
+//			resp.setProNum(l.getProNum());
+//			resp.setProImage(l.getProImage());
+//			resp.setProName(l.getProName());
+//			resp.setProCompany(l.getProCompany());
+//			resp.setProIngredient(l.getProIngredient());
+//			resp.setProPrice(l.getProPrice());
+//			resp.setProEffect(l.getProEffect());
+//			resp.setProIntake(l.getProIntake());
+//			resp.setProSaleStatus(l.getProSaleStatus());
+//			resp.setProCreateDate(l.getProCreateDate());
+//			resp.setProModifyDate(l.getProModifyDate());
+//			resp.setProGrade(l.getProGrade());
+//			resp.setProStatus(l.getProStatus());
+//			resp.setCateNum(l.getCateNum());
+//			resp.setFormatPrice(l.getFormatPrice());
+//			resp.setReviewCount(reviewCount);
+//			resultList.add(resp);
+//		}
 		return resultList;
 	}
 

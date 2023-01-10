@@ -45,20 +45,20 @@ public class ShoppingServiceImpl implements ShoppingService{
 	}
 	
 	
-	@Override
-	public ArrayList<Supplement> selectSupplementList() {
-		return shDAO.selectSupplementList(sqlSession);
-	}
+//	@Override
+//	public ArrayList<Supplement> selectSupplementList() {
+//		return shDAO.selectSupplementList(sqlSession);
+//	}
 
-	@Override
-	public ArrayList<Supplement> selectTrendList() {
-		return shDAO.selectTrendList(sqlSession);
-	}
+//	@Override
+//	public ArrayList<Supplement> selectTrendList() {
+//		return shDAO.selectTrendList(sqlSession);
+//	}
 
-	@Override
-	public ArrayList<Supplement> selectBestsellerList() {
-		return shDAO.selectBestsellerList(sqlSession);
-	}
+//	@Override
+//	public ArrayList<Supplement> selectBestsellerList() {
+//		return shDAO.selectBestsellerList(sqlSession);
+//	}
 	
 	
 	@Override

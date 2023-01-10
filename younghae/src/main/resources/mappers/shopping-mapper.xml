@@ -139,6 +139,7 @@
 		<result column="PRO_GRADE" property="proGrade"/>
 		<result column="PRO_STATUS" property="proStatus"/>
 		<result column="CATE_NUM" property="cateNum"/>
+		<result column="RVCOUNT" property="reviewCount"/>
 		<association property="zzim" resultMap="zzimpResultSet" javaType="Zzim"/>
 	</resultMap>
 	
@@ -173,32 +174,59 @@
 	</resultMap>
 	
 	
-	<select id="selectSupplementList" resultMap="supplementResultSet">
-		select *
-		from product
-		where pro_sale_status = 'Y'
-		order by pro_num asc
+	<select id="selectSupplementList" resultMap="supplementRespResultSet">
+		SELECT PRO_NUM,PRO_IMAGE,PRO_NAME,PRO_COMPANY,PRO_INGREDIENT,PRO_PRICE,PRO_EFFECT,PRO_INTAKE,PRO_SALE_STATUS,
+                PRO_CREATEDATE,PRO_MODIFYDATE,PRO_GRADE,PRO_STATUS,CATE_NUM, COUNT(RV_NUM) RVCOUNT
+		FROM PRODUCT
+        LEFT JOIN REVIEW USING (PRO_NUM)
+		WHERE PRO_SALE_STATUS = 'Y'
+        GROUP BY PRO_NUM,PRO_IMAGE,PRO_NAME,PRO_COMPANY,PRO_INGREDIENT,PRO_PRICE,PRO_EFFECT,
+                PRO_INTAKE,PRO_SALE_STATUS,PRO_CREATEDATE,PRO_MODIFYDATE,PRO_GRADE,PRO_STATUS,CATE_NUM
+		ORDER BY PRO_NUM ASC
 	</select>
 	
 	<select id="selectReviewCount" resultType="_int">
 		SELECT COUNT (*) FROM REVIEW JOIN PRODUCT USING (PRO_NUM) WHERE PRO_NUM = #{proNum}
 	</select>
 	
-	<select id="selectTrendList" resultMap="supplementResultSet">
-		select *
-		from product
-			left outer join sale_product using(pro_num)
-		where pro_sale_status = 'Y'
-		order by pro_viewcount desc
+<!-- 	<select id="selectTrendList" resultMap="supplementResultSet"> -->
+<!-- 		select * -->
+<!-- 		from product -->
+<!-- 			left outer join sale_product using(pro_num) -->
+<!-- 		where pro_sale_status = 'Y' -->
+<!-- 		order by pro_viewcount desc -->
+<!-- 	</select> -->
+
+	<select id="selectTrendList" resultMap="supplementRespResultSet">
+		SELECT PRO_NUM,PRO_IMAGE,PRO_NAME,PRO_COMPANY,PRO_INGREDIENT,PRO_PRICE,PRO_EFFECT,PRO_INTAKE,PRO_SALE_STATUS,
+                PRO_CREATEDATE,PRO_MODIFYDATE,PRO_GRADE,PRO_STATUS,CATE_NUM, PRO_VIEWCOUNT, COUNT(RV_NUM) RVCOUNT
+		FROM PRODUCT
+			LEFT OUTER JOIN SALE_PRODUCT USING(PRO_NUM)
+            LEFT JOIN REVIEW USING (PRO_NUM)
+		WHERE PRO_SALE_STATUS = 'Y'
+        GROUP BY PRO_NUM,PRO_IMAGE,PRO_NAME,PRO_COMPANY,PRO_INGREDIENT,PRO_PRICE,PRO_EFFECT,
+                PRO_INTAKE,PRO_SALE_STATUS,PRO_CREATEDATE,PRO_MODIFYDATE,PRO_GRADE,PRO_STATUS,CATE_NUM, PRO_VIEWCOUNT
+		ORDER BY PRO_VIEWCOUNT DESC
 	</select>
 	
-	
-	<select id="selectBestsellerList" resultMap="supplementResultSet">
-		select *
-		from product
-			left outer join sale_product using(pro_num)
-		where pro_sale_status = 'Y'
-		order by pro_grade desc	
+<!-- 	<select id="selectBestsellerList" resultMap="supplementResultSet"> -->
+<!-- 		select * -->
+<!-- 		from product -->
+<!-- 			left outer join sale_product using(pro_num) -->
+<!-- 		where pro_sale_status = 'Y' -->
+<!-- 		order by pro_grade desc	 -->
+<!-- 	</select> -->
+
+	<select id="selectBestsellerList" resultMap="supplementRespResultSet">
+        SELECT  PRO_NUM,PRO_IMAGE,PRO_NAME,PRO_COMPANY,PRO_INGREDIENT,PRO_PRICE,PRO_EFFECT,PRO_INTAKE,PRO_SALE_STATUS,
+                PRO_CREATEDATE,PRO_MODIFYDATE,PRO_GRADE,PRO_STATUS,CATE_NUM, COUNT(RV_NUM) RVCOUNT
+		FROM PRODUCT
+			LEFT OUTER JOIN SALE_PRODUCT USING(PRO_NUM)
+            LEFT JOIN REVIEW USING (PRO_NUM)
+		WHERE PRO_SALE_STATUS = 'Y'
+        GROUP BY PRO_NUM,PRO_IMAGE,PRO_NAME,PRO_COMPANY,PRO_INGREDIENT,PRO_PRICE,PRO_EFFECT,
+                PRO_INTAKE,PRO_SALE_STATUS,PRO_CREATEDATE,PRO_MODIFYDATE,PRO_GRADE,PRO_STATUS,CATE_NUM
+		ORDER BY PRO_GRADE DESC
 	</select>
 	
 	

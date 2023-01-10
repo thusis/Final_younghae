@@ -26,11 +26,11 @@ public interface ShoppingService {
 	Member selectMember(int i);
 	ArrayList<GeneralUser> selectGu(int i);
 	
-	ArrayList<Supplement> selectSupplementList();
-
-	ArrayList<Supplement> selectTrendList();
-
-	ArrayList<Supplement> selectBestsellerList();
+//	ArrayList<Supplement> selectSupplementList();
+//
+//	ArrayList<Supplement> selectTrendList();
+//
+//	ArrayList<Supplement> selectBestsellerList();
 
 	SupplementResp selectDetail(int proNum);
 	
