@@ -60,6 +60,8 @@ public interface BoardService {
 
 	int insertDeclare(Declaration declare);
 
+	String selectDclMsg(int boardNum);
+
 
 
 

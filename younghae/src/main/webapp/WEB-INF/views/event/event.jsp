@@ -33,7 +33,7 @@
 	</nav>
 	<!-- ============================================-->
 	<!-- <section> begin ============================-->
- 	<section class="pb-5 pt-8">
+<%--  	<section class="pb-5 pt-8">
 
 		<div class="eventDiv" id="eventFirst">
 			<div class="row">
@@ -65,7 +65,7 @@
 					</div>
 				</div>
 			</div>
-		</div>
+		</div> --%>
 		<!-- end of .container-->
 
 	</section> 

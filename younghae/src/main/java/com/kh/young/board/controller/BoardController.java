@@ -166,11 +166,7 @@ public class BoardController {
 	@RequestMapping("boardView.bo")
 	public String detailBoard(@RequestParam(value="boardCategory") int boardCategory, @RequestParam(value="boardNum") int boardNum, @RequestParam(value="writer") int writer,
 											  @RequestParam(value = "page", required=false) Integer page, HttpServletRequest request, Model model, @ModelAttribute Likes like) throws boardException{
-			
-			System.out.println("writer : " + writer);
-			System.out.println("게시글 상세 boardNum : " + boardNum);
-			System.out.println("게시글 상세 boardCategory : " + boardCategory);
-			
+
 			//b 모든 요소 뽑아오기 (attach까지 같이)
 			Story b = bService.boardView(boardNum);
 			System.out.println("게시글 상세보기 b : " + b);
@@ -181,9 +177,22 @@ public class BoardController {
 			ArrayList<Reply> rList = bService.replyList(boardNum);
 			//댓글 수
 			int replyCount = bService.replyCount(boardNum);
-			System.out.println(replyCount);
 			//좋아요
+			like.setBoardType(boardCategory);
 			int likeCount = bService.likeCount(like);
+			//신고
+			model.addAttribute("dclMsg", bService.selectDclMsg(boardNum));
+			System.out.println("likeCount" + likeCount);
+			String typeString = null;
+			if(boardCategory == 11) {
+				typeString = "운동";
+			} else if (boardCategory == 12) {
+				typeString = "식단";
+			} else if (boardCategory == 13) {
+				typeString = "영양제";
+			} else if(boardCategory == 14) {
+				typeString = "자유";
+			}
 			
 			if(b != null) {
 				model.addAttribute("b", b);
@@ -193,6 +202,7 @@ public class BoardController {
 				model.addAttribute("topBoardList", topBoardList);
 				model.addAttribute("topBoardAttList", topBoardAttList);
 				model.addAttribute("likeCount", likeCount);
+				model.addAttribute("typeString", typeString);
 				return "boardDetail";
 			} else {
 				throw new boardException("Failed to Board details");
