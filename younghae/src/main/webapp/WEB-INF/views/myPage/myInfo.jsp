@@ -10,7 +10,8 @@
     <meta name="keywords" content="Ogani, unica, creative, html">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>내 정보</title>
+    <link rel="icon" href="resources/img/younghae_icon.png"/>
+    <title>영해 | 내 정보보기</title>
     <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');

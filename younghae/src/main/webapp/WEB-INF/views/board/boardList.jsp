@@ -9,7 +9,8 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>게시판 메인</title>
+    <link rel="icon" href="resources/img/younghae_icon.png"/>
+    <title>영해 | 건강이야기</title>
 <jsp:include page="/WEB-INF/views/common/topmenubar.jsp"></jsp:include>
 <!-- 추가 CSS -->
 <link rel="stylesheet" href="resources/css/soyeon.css" type="text/css">

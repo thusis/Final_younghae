@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>출석 이벤트</title>
+    <link rel="icon" href="resources/img/younghae_icon.png"/>
+    <title>이벤트 | 출석이벤트</title>
 
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 <!--Soyeon-->

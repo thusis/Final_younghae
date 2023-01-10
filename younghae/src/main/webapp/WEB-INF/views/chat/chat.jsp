@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>채팅</title>
+    <link rel="icon" href="resources/img/younghae_icon.png"/>
+    <title>영해 | 채팅상담</title>
 	
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 

@@ -9,7 +9,8 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>리뷰 이벤트</title>
+    <link rel="icon" href="resources/img/younghae_icon.png"/>
+    <title>이벤트 | 리뷰이벤트</title>
 
 <!--Soyeon-->
 <link rel="stylesheet" href="resources/css/soyeon.css" type="text/css">
