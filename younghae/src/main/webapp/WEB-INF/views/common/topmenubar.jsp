@@ -184,7 +184,7 @@
   	<button type="button" id="goToTopBtn" class="btn"  onclick="location.href='#'">
   		<i class="bi bi-arrow-up-circle-fill"></i>
   	</button>
-	<c:if test="${loginUser != null }">  	
+	<c:if test="${loginUser != null && loginUser.userCNumber ne '3' }">  	
   	<button type="button" id="goToChatBtn" class="btn"  onclick="location.href='${contextPath}/open.ch'">
   		<i class="bi bi-wechat"></i>
   	</button>
@@ -211,9 +211,10 @@
 <script>
 
 	var loginUser = "${loginUser.userNum}";
+	var loginUserCnumforChat = "${loginUser.userCNumber}";
 
 	$(function(){
-		   if(loginUser!=""){
+		   if(loginUser!="" && loginUserCnumforChat !="3"){
 		      setInterval(() => {
 			  	getUnreadHowMany();
 		      }, 2400);
