@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.Declaration;
+import com.kh.young.model.vo.Likes;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
@@ -21,11 +23,19 @@ public class BoardDAO {
 		return sqlSession.selectOne("boardMapper.getBoardListCount");
 	}
 
-	public ArrayList<Board> selectBoardList(SqlSessionTemplate sqlSession, PageInfo pi, Integer boardCategory) {
+	public ArrayList<Story> selectBoardList(SqlSessionTemplate sqlSession, PageInfo pi, Integer boardCategory) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, pi.getBoardLimit());
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", boardCategory, rowBounds);
+		ArrayList<Story> boardList = (ArrayList)sqlSession.selectList("boardMapper.selectBoardList", boardCategory, rowBounds);
+		for(Story b : boardList) {
+			Likes paraLike = new Likes(b.getUserNum(), b.getBoardNum(), b.getBoardType());
+			b.setLikeCount(sqlSession.selectOne("boardMapper.likeCount", paraLike));
+			b.setReplyCount(sqlSession.selectOne("boardMapper.replyCount", b.getBoardNum()));
+			
+			System.out.println("Dao Like Reply : " + b);
+		}
+		return boardList;
 	}
 
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
@@ -99,6 +109,26 @@ public class BoardDAO {
 
 	public ArrayList<Attachment> topBoardAttList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("boardMapper.topBoardAttList");
+	}
+
+	public int likeCheck(SqlSessionTemplate sqlSession, Likes like) {
+		return sqlSession.selectOne("boardMapper.likeCheck", like);
+	}
+
+	public void likeInsert(SqlSessionTemplate sqlSession, Likes like) {
+		sqlSession.insert("boardMapper.likeInsert", like);
+	}
+
+	public void likeDelete(SqlSessionTemplate sqlSession, Likes like) {
+		sqlSession.delete("boardMapper.likeDelete", like);
+	}
+
+	public int likeCount(SqlSessionTemplate sqlSession, Likes like) {
+		return sqlSession.selectOne("boardMapper.likeCount", like);
+	}
+
+	public int insertDeclare(SqlSessionTemplate sqlSession, Declaration declare) {
+		return sqlSession.insert("boardMapper.insertDeclare", declare);
 	}
 
 

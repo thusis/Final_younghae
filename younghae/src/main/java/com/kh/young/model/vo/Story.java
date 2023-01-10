@@ -30,5 +30,6 @@ public class Story {
 	private GeneralUser generaluser;
 	private Reply reply;
 	private Likes like;
-	
+	private int replyCount;
+	private int likeCount;
 }

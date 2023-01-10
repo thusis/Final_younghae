@@ -13,6 +13,8 @@ import org.springframework.stereotype.Service;
 import com.kh.young.board.dao.BoardDAO;
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.Declaration;
+import com.kh.young.model.vo.Likes;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
@@ -32,7 +34,7 @@ public class BoardServiceImpl implements BoardService{
 	 
 
 	@Override
-	public ArrayList<Board> selectBoardList(PageInfo pi, Integer boardCategory) {
+	public ArrayList<Story> selectBoardList(PageInfo pi, Integer boardCategory) {
 		return bDAO.selectBoardList(sqlSession, pi, boardCategory);
 	}
 
@@ -123,6 +125,38 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public ArrayList<Attachment> topBoardAttList() {
 		return bDAO.topBoardAttList(sqlSession);
+	}
+
+
+	@Override
+	public int likeCheck(Likes like) {
+		return bDAO.likeCheck(sqlSession, like);
+	}
+
+
+	@Override
+	public void likeInsert(Likes like) {
+		bDAO.likeInsert(sqlSession, like);
+		
+	}
+
+
+	@Override
+	public void likeDelete(Likes like) {
+		bDAO.likeDelete(sqlSession, like);
+		
+	}
+
+
+	@Override
+	public int likeCount(Likes like) {
+		return bDAO.likeCount(sqlSession, like);
+	}
+
+
+	@Override
+	public int insertDeclare(Declaration declare) {
+		return bDAO.insertDeclare(sqlSession, declare);
 	}
 
 

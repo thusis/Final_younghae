@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Likes {
-	private int user_num;
-	private int board_num;
-	private int board_type;
+	private int userNum;
+	private int boardNum;
+	private int boardType;
 }

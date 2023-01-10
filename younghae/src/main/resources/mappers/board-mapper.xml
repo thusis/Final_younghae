@@ -45,7 +45,7 @@
 			board_type in (11, 12, 13, 14)
 			</if>
 			<if test="boardCategory != 1 ">
-			board_type = #{boardCategory}		
+			board_type = #{boardCategory}
 			</if>
 			order by serialNumber desc
 	</select> -->
@@ -168,6 +168,38 @@
 		</choose>
 		order by board_num desc
 	</select>
+	
+	<!-- 좋아요 -->
+	
+	<select id="likeCheck" resultType="_int">
+		select count(*) from likes
+			where board_num = #{boardNum} 
+						and user_num = #{userNum} 
+						and board_type = ${boardType}
+	</select>
+	
+	<insert id="likeInsert">
+   		insert into likes values (#{userNum}, #{boardNum}, #{boardType})
+	</insert>
+   	
+   	<delete id="likeDelete">
+		delete from likes
+  			where user_num = #{userNum}
+  			and board_num = #{boardNum}
+  			and board_type = ${boardType}
+   	</delete>
+   	
+   	<select id="likeCount" resultType="_int">
+   		select count(*) from likes
+   		 where board_num = #{boardNum}
+   		 	and board_type = #{boardType} 
+   	</select>
+   	
+   	<insert id="insertDeclare">
+   		INSERT INTO DECLARATION VALUES (SEQ_DECL.NEXTVAL, #{boardNum}, #{declContent}, DEFAULT)
+   	</insert>
+   	
+   	
    	
    	<resultMap type="Member" id="memberResultSet">
       <id column="USER_NUM" property="userNum"/>
@@ -242,9 +274,9 @@
 	</resultMap>
 	
 	<resultMap type="Like" id="likeResultSet">
-		<id column="USER_NUM"  property="user_num"/>
-		<result column="BOARD_NUM" property="board_num"/>
-		<result column="BOARD_TYPE" property="board_type"/>
+		<id column="USER_NUM"  property="userNum"/>
+		<result column="BOARD_NUM" property="boardNum"/>
+		<result column="BOARD_TYPE" property="boardType"/>
 	</resultMap>
 	
 </mapper>

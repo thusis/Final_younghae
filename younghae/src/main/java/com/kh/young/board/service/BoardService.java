@@ -7,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.kh.young.model.vo.Attachment;
 import com.kh.young.model.vo.Board;
+import com.kh.young.model.vo.Declaration;
+import com.kh.young.model.vo.Likes;
 import com.kh.young.model.vo.Member;
 import com.kh.young.model.vo.PageInfo;
 import com.kh.young.model.vo.Reply;
@@ -16,7 +18,7 @@ public interface BoardService {
 
 	int getBoardListCount();
 
-	ArrayList<Board> selectBoardList(PageInfo pi, Integer boardCategory);
+	ArrayList<Story> selectBoardList(PageInfo pi, Integer boardCategory);
 	
 	int insertBoard(Board b);
 
@@ -47,6 +49,16 @@ public interface BoardService {
 	ArrayList<Board> topBoardList();
 
 	ArrayList<Attachment> topBoardAttList();
+
+	int likeCheck(Likes like);
+
+	void likeInsert(Likes like);
+
+	void likeDelete(Likes like);
+
+	int likeCount(Likes like);
+
+	int insertDeclare(Declaration declare);
 
 
 
