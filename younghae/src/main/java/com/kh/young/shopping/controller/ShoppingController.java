@@ -505,23 +505,19 @@ public class ShoppingController {
 	@RequestMapping("successPay.sh")
 	public String successPay(@ModelAttribute Orders orders, @RequestParam(value="proNumList",required=false) String[] proNumList, 
 			@RequestParam(value="quantityList",required=false) String[] quantityList, @RequestParam(value="proName",required=false) String[] proNames,
-			@RequestParam(value="useCoupon",required=false) int couNum, @RequestParam(value="usedPointAmount", required=false) int usedPointAmount,
+			@RequestParam(value="useCoupon",required=false) Integer couNum, @RequestParam(value="usedPointAmount", required=false) Integer usedPointAmount,
 			HttpSession session, Model model) {
-		System.out.println("couNum : "+couNum);
-		System.out.println(orders);
-		System.out.println(Arrays.toString(proNumList));
-		System.out.println(Arrays.toString(quantityList));
-		System.out.println("사용포인트 : " +usedPointAmount);
 		
 		Member m = (Member)session.getAttribute("loginUser");
-//		주문 테이블 insert
 		
+//		주문 테이블 insert
 		ArrayList<OrderListDTO> orderList = null;
 		int insertOrder = shService.insertOrders(orders);
 		if(insertOrder > 0) {
-			System.out.println("주문 인서트 성공");
 			OrderDetails od = new OrderDetails();
 			String orderCode = orders.getOrderCode();
+			
+//			주문 상세 insert
 			for(int i = 0; i < proNumList.length; i++) {
 				int proNum = Integer.parseInt(proNumList[i]);
 				String proName = proNames[i];
