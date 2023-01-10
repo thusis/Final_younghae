@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>질문게시판 - 최신글보기</title>
+    <link rel="icon" href="resources/img/younghae_icon.png"/>
+    <title>Q&A | 최신글 보기</title>
 
 	<jsp:include page="../common/topmenubar.jsp" flush="true"/>
 

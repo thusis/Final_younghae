@@ -11,7 +11,8 @@
 <meta name="keywords" content="Ogani, unica, creative, html">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>나의장바구니</title>
+        <link rel="icon" href="resources/img/younghae_icon.png"/>
+	    <title>마이페이지 | 장바구니</title>
 <style>
 /* 	설정 style ---------------------------- */
 	.bn_index ul li {
