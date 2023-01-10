@@ -544,32 +544,35 @@ public class ShoppingController {
 				}
 			}
 			orderList = shService.selectOrderList(orderCode);
-			
-			int updateCoupon = shService.updateCoupon(couNum);
-			if(updateCoupon>0) {
-				System.out.println("쿠폰 사용 수정 성공");
-			}else {
-				System.out.println("쿠폰 사용 수정 실패");
+			if(couNum != null) {
+				int updateCoupon = shService.updateCoupon(couNum);
+				if(updateCoupon>0) {
+					System.out.println("쿠폰 사용 수정 성공");
+				}else {
+					System.out.println("쿠폰 사용 수정 실패");
+				}
 			}
 			
-			Point p = new Point();
-			p.setPointAmount("-"+usedPointAmount);
-			p.setUserNum(m.getUserNum());
-			
-			int insertPoint = shService.insertUsedPointAmount(p);
-			if(insertPoint>0) {
-				System.out.println("포인트 사용내역 insert 성공");
-			}else {
-				System.out.println("포인트 사용내역 insert 실패");
-			}
-			
-			m.setUserPoint(usedPointAmount);
-			int updateMemberPoint = shService.updateMemberPoint(m);
-			
-			if(updateMemberPoint>0) {
-				System.out.println("포인트 사용내역 업데이트 성공");
-			}else {
-				System.out.println("포인트 사용내역 업데이트 실패");
+			if(usedPointAmount != null) {
+				Point p = new Point();
+				p.setPointAmount("-"+usedPointAmount);
+				p.setUserNum(m.getUserNum());
+				
+				int insertPoint = shService.insertUsedPointAmount(p);
+				if(insertPoint>0) {
+					System.out.println("포인트 사용내역 insert 성공");
+				}else {
+					System.out.println("포인트 사용내역 insert 실패");
+				}
+				
+				m.setUserPoint(usedPointAmount);
+				int updateMemberPoint = shService.updateMemberPoint(m);
+				
+				if(updateMemberPoint>0) {
+					System.out.println("포인트 사용내역 업데이트 성공");
+				}else {
+					System.out.println("포인트 사용내역 업데이트 실패");
+				}
 			}
 		}else {
 			System.out.println("주문 인서트 실패");
