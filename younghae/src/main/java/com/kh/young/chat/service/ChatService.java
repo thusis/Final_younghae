@@ -42,5 +42,9 @@ public interface ChatService {
 	int reservApprove(int chatroomId);
 	int reservDeny(int chatroomId);
 	
+	//01-10수정
+	ExpertChatroomDto selectGeneralNewChatroom(int loginUserNum);
+	GeneralChatroomDto selectExpertsNewChatroom(int loginUserNum);
+	
 
 }

@@ -231,6 +231,24 @@ public class ChatServiceImpl implements ChatService {
 		return chDao.reservDeny(sqlSession, chatroomId);
 	}
 
+	@Override
+	public ExpertChatroomDto selectGeneralNewChatroom(int loginUserNum) {
+		ExpertcrDto e = chDao.selectGeneralNewChatroom(sqlSession, loginUserNum);
+		ExpertChatroomDto ex = new ExpertChatroomDto(e);
+		ex.setReserv(getIfReserv(ex.getChatroomId()));
+		ex.setMessageList(selectMessageList(ex.getChatroomId()));
+		return ex;
+	}
+
+	@Override
+	public GeneralChatroomDto selectExpertsNewChatroom(int loginUserNum) {
+		GeneralcrDto g= chDao.selectExpertsNewChatroom(sqlSession,loginUserNum);
+		GeneralChatroomDto gn = new GeneralChatroomDto(g);
+		gn.setReserv(getIfReserv(gn.getChatroomId()));
+		gn.setMessageList(selectMessageList(gn.getChatroomId()));
+		return gn;
+	}
+
 
 
 

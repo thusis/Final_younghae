@@ -57,6 +57,9 @@ public class ChatController {
     		} else {
 //    			ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
     			ExpertChatroomDto nowChatroom = chService.selectGeneralRecentChatroom(loginUserNum);
+    			if(nowChatroom == null) {
+    				nowChatroom = chService.selectGeneralNewChatroom(loginUserNum);
+    			}
     			updateRead(nowChatroom, null);
     			model.addAttribute("nowChatroom", nowChatroom);
     			model.addAttribute("messageList",nowChatroom.getMessageList());
@@ -86,6 +89,9 @@ public class ChatController {
     			if(msgCount>0) {
 //    				ChatroomDto nowChatroom = chService.selectRecentChatroom(loginUserNum);
     				GeneralChatroomDto nowChatroom = chService.selectExpertsRecentChatroom(loginUserNum);
+        			if(nowChatroom == null) {
+        				nowChatroom = chService.selectExpertsNewChatroom(loginUserNum);
+        			}
     				updateRead(null, nowChatroom);
     				model.addAttribute("nowChatroom", nowChatroom);
     				model.addAttribute("messageList", nowChatroom.getMessageList());

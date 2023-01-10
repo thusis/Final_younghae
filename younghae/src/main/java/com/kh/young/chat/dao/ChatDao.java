@@ -144,6 +144,14 @@ public class ChatDao {
 		return sqlSession.update("chatMapper.reservDeny", chatroomId);
 	}
 
+	public ExpertcrDto selectGeneralNewChatroom(SqlSessionTemplate sqlSession, int loginUserNum) {
+		return sqlSession.selectOne("chatMapper.selectGeneralNewChatroom", loginUserNum);
+	}
+
+	public GeneralcrDto selectExpertsNewChatroom(SqlSessionTemplate sqlSession, int loginUserNum) {
+		return sqlSession.selectOne("chatMapper.selectExpertsNewChatroom", loginUserNum);
+	}
+
 
 	
 	
