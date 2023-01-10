@@ -85,7 +85,6 @@ public class QaDao {
 	public QuestionRespDto selectQuestion(SqlSessionTemplate sqlSession, int boardNum) {
 		QuestionRespDto qresp = sqlSession.selectOne("qnaMapper.selectQuestion", boardNum);
 		qresp.setSresp(getQuestSresp(sqlSession, qresp.getBoard().getBoardNum()));
-		
 		for(AnswerRespDto answer : qresp.getAnswerList()) {
 			answer.setSresp(getQuestSresp(sqlSession, answer.getBoard().getBoardNum()));
 			answer.setEresp(selectExpertResp(sqlSession, answer.getBoard().getUserNum()));

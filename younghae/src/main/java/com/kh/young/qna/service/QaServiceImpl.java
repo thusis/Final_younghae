@@ -7,10 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.reflection.SystemMetaObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -57,7 +55,7 @@ public class QaServiceImpl implements QaService {
 		int userNum = ((Member)request.getSession().getAttribute("loginUser")).getUserNum();
 		ArrayList<QuestionRespDto> myQuestions = qdao.getMyQuestions(sqlSession,userNum);
 	
-		System.out.println("test"+myQuestions);
+//		System.out.println("test"+myQuestions);
 
 		return myQuestions;
 	}
@@ -154,14 +152,14 @@ public class QaServiceImpl implements QaService {
 		quest.setUserNum(((Member)request.getSession().getAttribute("loginUser")).getUserNum());
 		
 		MultipartFile attachment = quest.getAttachment();
-		System.out.println("130+"+attachment);
+//		System.out.println("130+"+attachment);
 		
 		if(attachment.getOriginalFilename().trim().equals("") || attachment.getOriginalFilename()==null) { //값이 있으면 넘겨서 세팅하고
 			quest.setAttachParam(null);
 		} else {
 			quest.setAttachParam(getAttachParam(attachment, request));
 		}
-		System.out.println("135+" +quest);
+//		System.out.println("135+" +quest);
 		return qdao.insertQuestion(sqlSession, quest);
 	}
 
@@ -187,15 +185,15 @@ public class QaServiceImpl implements QaService {
 		
 		MultipartFile attachment = quest.getAttachment();
 		
-		System.out.println(attachment);
-		System.out.println(attachment.getOriginalFilename());
+//		System.out.println(attachment);
+//		System.out.println(attachment.getOriginalFilename());
 		
 		if(attachment.getOriginalFilename().trim().equals("") || attachment.getOriginalFilename()==null) { //값이 있으면 넘겨서 세팅하고
 			quest.setAttachParam(null);
 		} else {
 			quest.setAttachParam(getAttachParam(attachment, request));
 		}
-		System.out.println("226+"+quest.getAttachParam());
+//		System.out.println("226+"+quest.getAttachParam());
 		
 		return qdao.insertAnswer(sqlSession, quest);
 	}
@@ -209,7 +207,7 @@ public class QaServiceImpl implements QaService {
 			attachParam.setAttachRename(returnArr[1]);
 		}
 		
-		System.out.println("152+"+attachParam);
+//		System.out.println("152+"+attachParam);
 		return attachParam;
 	}
 	
@@ -249,7 +247,7 @@ public class QaServiceImpl implements QaService {
 		qresp.setWriterInfo(
 				writerInfoToString(getWriterInfoMap(qresp.getBoard().getUserNum()))
 		);
-		System.out.println("서비스224"+qresp.getScrapList());
+//		System.out.println("서비스224"+qresp.getScrapList());
 
 		for(AnswerRespDto answer : qresp.getAnswerList()) {
 			answer.setReplyList(
@@ -286,7 +284,7 @@ public class QaServiceImpl implements QaService {
 
 	private String expertProfileAddEnter(String expertProfile) {
 		String newStr = expertProfile.replaceAll("/", "<br>");
-		System.out.println(newStr);
+//		System.out.println(newStr);
 		return newStr;
 	}
 
@@ -318,7 +316,7 @@ public class QaServiceImpl implements QaService {
 					));
 		}
 		
-		System.out.println("서비스"+replyList);
+//		System.out.println("서비스"+replyList);
 
 		return replyList;
 	}
@@ -357,7 +355,7 @@ public class QaServiceImpl implements QaService {
 		PageInfo pi =  Pagination.getPageInfo(currentPage, listCount, 10);
 		
 		ArrayList<ExpertRespDto> erespList = qdao.selectExpertList(sqlSession, pi);
-		System.out.println("q서비스 332: "+erespList);
+//		System.out.println("q서비스 332: "+erespList);
 		return erespList;
 	}
 

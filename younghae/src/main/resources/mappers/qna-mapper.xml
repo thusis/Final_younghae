@@ -128,7 +128,7 @@
 		JOIN QUESTION ON (BOARD_NUM=QUESTION_NUM) 
 		LEFT JOIN ATTACHMENT ON (BOARD_NUM=SERIALNUMBER AND ATTACHMENT.BOARD_TYPE = '5' AND ATTACH_STATUS = 'Y')
 		WHERE BOARD.BOARD_TYPE='5' AND BOARD_STATUS='Y' AND USER_NUM = #{userNum}
-		ORDER BY BOARD_NUM
+		ORDER BY BOARD_NUM DESC
 	</select>
 
 	<!-- 	질문(boardNum)에 대한 답변 리스트 조회 -->
@@ -207,7 +207,7 @@
 			DEFAULT, DEFAULT)
 			<if test="attachParam != null ">
 <!-- 			<if test="attachParam != null or attachParam.attachRename != null or !attachParam.attachRename.equals('')"> -->
-				INTO ATTACHMENT VALUES (SEQ_ATTACH.NEXTVAL, DEFAULT, #{attachParam.attachName}, #{attachParam.attachRename}, #{attachParam.attachPath}, 5, SEQ_BOARD.CURRVAL, DEFAULT)
+				INTO ATTACHMENT VALUES (SEQ_ATTACH.NEXTVAL, DEFAULT, #{attachParam.attachName}, #{attachParam.attachRename}, #{attachParam.attachPath}, 5, SEQ_BOARD.CURRVAL, 'Y')
 			</if>
 		SELECT * FROM DUAL
 	</insert>
@@ -239,7 +239,7 @@
 				</if>
 			)
 			<if test="attachParam != null">
-				INTO ATTACHMENT VALUES (SEQ_ATTACH.NEXTVAL, DEFAULT, #{attachParam.attachName}, #{attachParam.attachRename}, #{attachParam.attachPath}, 8, SEQ_BOARD.CURRVAL, DEFAULT)
+				INTO ATTACHMENT VALUES (SEQ_ATTACH.NEXTVAL, DEFAULT, #{attachParam.attachName}, #{attachParam.attachRename}, #{attachParam.attachPath}, 8, SEQ_BOARD.CURRVAL, 'Y')
 			</if>
 		SELECT * FROM DUAL
 	</insert>
