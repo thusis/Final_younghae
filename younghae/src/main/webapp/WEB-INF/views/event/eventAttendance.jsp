@@ -180,7 +180,6 @@
 						} else if (data == 2) {
 							$('#modal2').modal('show');
 							console.log("출석체크 완료");
-							window.location.reload();
 						} else if (data == 3) {
 							$('#modal3').modal('show');
 							console.log("출석체크 실패");
