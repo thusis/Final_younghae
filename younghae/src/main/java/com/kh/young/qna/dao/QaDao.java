@@ -233,4 +233,8 @@ public class QaDao {
 		return erespList;
 	}
 
+	public int selectDclMsg(SqlSessionTemplate sqlSession, int boardNum) {
+		return sqlSession.selectOne("qnaMapper.selectDclMsg", boardNum);
+	}
+
 }

@@ -68,6 +68,8 @@ public interface QaService {
 
 	ArrayList<ExpertRespDto> sortExpertList(PageInfo pi, int number);
 
+	String selectDclMsg(int boardNum);
+
 
 
 

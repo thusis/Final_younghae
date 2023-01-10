@@ -30,6 +30,10 @@
 	      </div>
 		
 		<div class="modal-body" id="declareModalBody1">
+			<c:if test="${dclMsg eq 1 }">
+				이미 신고된 게시글입니다.
+			</c:if>
+			<c:if test="${dclMsg eq 0 }">
 			<form action="${contextPath}/declare.qa" method="post" id="declareForm">
 	        <h4 class="modal-title fs-5">신고하기</h4>
 	                <h5>작성자 : ${qresp.writerInfo}</h5>
@@ -56,6 +60,7 @@
 	            <hr>
 	            <button type="button" class="btn btn-secondary" onclick="declare();">신고하기</button>
 			</form>
+			</c:if>
        	</div>
        	
        	<div class="modal-body" id="declareModalBody2" style="display:none;">
@@ -524,7 +529,12 @@
  				console.log(data);
  				document.getElementById('declareModalBody1').style.display = 'none';
  				document.getElementById('declareModalBody2').style.display = 'block';
- 				document.getElementById('declaredMessage').innerText = data;
+ 				
+				if(data=="1"){
+	 				document.getElementById('declaredMessage').innerText = "신고가 정상적으로 접수되었습니다.";
+				} else if(data=="2"){
+	 				document.getElementById('declaredMessage').innerText = "신고가 접수되지 않았습니다.";
+				}
  			}
 		})
 	}

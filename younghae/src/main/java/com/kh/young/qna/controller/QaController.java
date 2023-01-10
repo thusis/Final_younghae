@@ -162,6 +162,7 @@ public class QaController {
 	/**게시글 조회**/
 	@GetMapping("question.qa")
 	public String selectQuestion(@RequestParam("boardNum") int boardNum, @RequestParam(value="page", required=false) Integer page, HttpServletRequest request, Model model) {
+		model.addAttribute("dclMsg", qService.selectDclMsg(boardNum));
 		model.addAttribute("qresp", qService.selectQuestion(boardNum, request));
 		return "selectquestion";
 	}
@@ -338,9 +339,9 @@ public class QaController {
     	System.out.println("334컨트롤러:" + declare);
     	int result = qService.insertDeclare(declare);
     	if(result>0) {
-    		return String.valueOf("신고가 정상적으로 처리되었습니다.");
+    		return String.valueOf("1");
     	}else {
-    		return String.valueOf("잘못된 경로입니다.");
+    		return String.valueOf("0");
     	}
     }
 
