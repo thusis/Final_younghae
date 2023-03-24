@@ -2,7 +2,7 @@
 💊 영해 | 영양제를 해석하다 - 영양제 정보 조회 및 판매 웹사이트
 ![younghaetitle](https://user-images.githubusercontent.com/102267039/227518280-e37c9cff-69c5-48b7-a519-bf4f5a307c9a.png)
 
-# Team 영양단
+## Team 영양단
 > 영양제 정보 조회 및 판매 웹사이트 ‘영해’ 프로젝트
 <br>
 
