@@ -54,9 +54,8 @@
 <br>
 
 ## Database Structure (ERD)
-( 수정사항을 반영하여 업데이트 예정입니다 ) 
+![YOUNGHAEERD](https://user-images.githubusercontent.com/102267039/227532779-98894296-38e7-4a78-8019-9df74ac85138.png)
 <br>
-
 
 ## 서비스 기능
 1. 영양제 관련 기능 
